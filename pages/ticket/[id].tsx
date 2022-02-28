@@ -6,6 +6,7 @@ import {
   Stack,
   Text,
   Flex,
+  Box,
 } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
@@ -81,13 +82,25 @@ const TicketDetails: NextPage = () => {
         Zapotrzebowanie
       </Heading>
 
-      <Flex>
+      <Flex padding="8px 0">
         <Heading as="h3" size="m">
-          Udostępnij
+          Udostępnij:
         </Heading>
-        <FacebookShareButton url={ticketUrl} >
-          <FacebookIcon />
-        </FacebookShareButton>
+        <Box paddingLeft="4px">
+          <FacebookShareButton url={ticketUrl} >
+            <FacebookIcon size={24} />
+          </FacebookShareButton>
+        </Box>
+        <Box paddingLeft="4px">
+          <TelegramShareButton url={ticketUrl}>
+            <TelegramIcon size={24} />
+          </TelegramShareButton>
+        </Box>
+        <Box paddingLeft="4px">
+          <TwitterShareButton url={ticketUrl} >
+            <TwitterIcon size={24} />
+          </TwitterShareButton>
+        </Box>
       </Flex>
 
       <Stack mb={8}>
