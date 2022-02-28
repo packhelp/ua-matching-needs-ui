@@ -78,10 +78,16 @@ const AddTicket: NextPage = () => {
 
   const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
     (newTicket) => {
-      const { phone, what } = newTicket
+      const { phone, what, where, who, count } = newTicket
       const newTicketData = {
         phone,
         description: what,
+        what,
+        where,
+        who,
+        count,
+        expirationTimestamp: Date.now(),
+        phone_public: true,
       }
 
       return axios.post(
