@@ -1,6 +1,7 @@
 import { Button, FormLabel, Heading, Input } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { FC, useCallback, useMemo, useState } from "react"
+import { useFinalLocale } from "../../hooks/final-locale"
 import { getUserInfo, signIn } from "../../services/auth"
 import { RouteDefinitions } from "../../utils/routes"
 import { Locales, translations } from "../../utils/translations"
@@ -8,13 +9,9 @@ import { Locales, translations } from "../../utils/translations"
 export const Login: FC = () => {
   const router = useRouter()
   const isLogged = getUserInfo()
+  const finalLocale = useFinalLocale()
 
   const [phone, setPhone] = useState<string | undefined>()
-
-  let finalLocale: Locales = "pl-PL"
-  if (router.locale != null) {
-    finalLocale = router.locale as any as Locales
-  }
 
   if (typeof window !== "undefined" && isLogged) {
     router.push(RouteDefinitions.AddTicket)

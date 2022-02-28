@@ -18,5 +18,6 @@ export const translations: Translation = {
         next: "Dalej",
       },
     },
+    "sign-out": "Wyloguj się",
   },
 }
