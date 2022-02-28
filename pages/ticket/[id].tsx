@@ -15,6 +15,7 @@ import {
   TICKET_STATUS,
   TicketData,
   TicketDetails,
+  TicketPostData,
 } from "../tickets/add"
 import Error from "next/error"
 import { getUserInfo } from "../../src/services/auth"
@@ -29,8 +30,9 @@ import {
 
 import { FacebookIcon, TelegramIcon, TwitterIcon } from "react-share"
 
-import { useQuery } from "react-query"
+import { useMutation, useQuery } from "react-query"
 import axios from "axios"
+import { RouteDefinitions } from "../../src/utils/routes"
 
 const getTicketDataFromEndpoint = async (
   id: number
@@ -64,6 +66,22 @@ const TicketDetails: NextPage = () => {
     }
   )
 
+  const removeTicketMutation = useMutation<number, Error, number>(
+    (id: number) => {
+      console.log("id :>>", id)
+
+      return axios.delete(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`
+      )
+    },
+    {
+      onSuccess: () => {
+        toast.success("Ogłoszenie usunięte. Mozesz dodać kolejne.")
+        return router.push(RouteDefinitions.AddTicket)
+      },
+    }
+  )
+
   if (isLoading) {
     return (
       <Container>
@@ -84,7 +102,11 @@ const TicketDetails: NextPage = () => {
   const isOwner = userInfo && userInfo.phone === ticket.phone
 
   const removeTicket = () => {
-    toast.error("Not implemented yet!")
+    if (id) {
+      removeTicketMutation.mutate(Number(id))
+    } else {
+      toast.error("Wystąpił błąd z usuwaniem zgłoszenia")
+    }
   }
 
   const formatedExpiration = ticket.expirationTimestamp
