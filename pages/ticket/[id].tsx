@@ -32,22 +32,9 @@ import { FacebookIcon, TelegramIcon, TwitterIcon } from "react-share"
 import { useQuery } from "react-query"
 import axios from "axios"
 
-const getLocallySavedTicketData = (id: number): TicketDetails | undefined => {
-  if (typeof window !== "undefined") {
-    const json = localStorage.getItem(LOCAL_STORAGE_KEY_ALL_TICKETS)
-    if (json) {
-      const allTickets = JSON.parse(json)
-
-      return allTickets.find((ticket) => ticket.id === id)
-    }
-  }
-}
-
-const getTicketDataFromEndpoint = async (id: number): TicketDetails => {
-  if (isNaN(id)) {
-    return
-  }
-
+const getTicketDataFromEndpoint = async (
+  id: number
+): Promise<TicketDetails> => {
   const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`
 
   const response = await axios.get(url)
@@ -64,9 +51,13 @@ const TicketDetails: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
 
-  const { data: ticket, isLoading } = useQuery<TicketDetails>(
+  const { data: ticket, isLoading } = useQuery<TicketDetails | undefined>(
     `ticket-data-${id}`,
-    () => getTicketDataFromEndpoint(Number(id))
+    () => {
+      if (id) {
+        return getTicketDataFromEndpoint(Number(id))
+      }
+    }
   )
 
   if (isLoading) {
