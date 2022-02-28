@@ -33,7 +33,7 @@ export const NavigationLinks = () => {
           {translations[finalLocale]["sign-out"]}
         </Button>
       )}
-      {/*<NavigationLink route={RouteDefinitions.Contact} />*/}
+      <NavigationLink route={RouteDefinitions.Contact} />
     </>
   )
 }
