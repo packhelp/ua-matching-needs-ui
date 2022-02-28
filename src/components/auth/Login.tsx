@@ -4,7 +4,8 @@ import React, { FC, useCallback, useMemo, useState } from "react"
 import { useFinalLocale } from "../../hooks/final-locale"
 import { getUserInfo, signIn } from "../../services/auth"
 import { RouteDefinitions } from "../../utils/routes"
-import { Locales, translations } from "../../utils/translations"
+import { translations } from "../../utils/translations"
+import { parsePhoneNumberFromString } from "libphonenumber-js/max"
 
 export const Login: FC = () => {
   const router = useRouter()
@@ -12,19 +13,38 @@ export const Login: FC = () => {
   const finalLocale = useFinalLocale()
 
   const [phone, setPhone] = useState<string | undefined>()
+  const [shouldValidate, setShouldValidate] = useState<boolean>(false)
 
   if (typeof window !== "undefined" && isLogged) {
     router.push(RouteDefinitions.AddTicket)
   }
 
-  const canSubmit = useMemo(() => phone && phone !== "", [phone])
+  const parsedPhone = useMemo(() => {
+    return parsePhoneNumberFromString(phone || "", "PL")
+  }, [phone])
+
+  const isPhoneValid = useMemo(() => {
+    if (!shouldValidate) {
+      return true
+    }
+    return parsedPhone?.isValid()
+  }, [shouldValidate, parsedPhone])
+
+  const canSubmit = useMemo(
+    () => phone && phone !== "" && isPhoneValid,
+    [phone, isPhoneValid]
+  )
+
+  const phoneNumber = useMemo(() => {
+    return parsedPhone?.number || phone
+  }, [parsedPhone, phone])
 
   const submitForm = useCallback(() => {
     if (!canSubmit) return
 
-    signIn(phone as string)
+    signIn(phoneNumber as string)
     router.push(RouteDefinitions.AddTicket)
-  }, [canSubmit, phone])
+  }, [canSubmit, phoneNumber])
 
   return (
     <>
@@ -41,6 +61,8 @@ export const Login: FC = () => {
             translations[finalLocale]["pages"]["sign-in"]["placeholder"]
           }
           onChange={(e) => setPhone(e.target.value)}
+          onBlur={() => setShouldValidate(true)}
+          isInvalid={!isPhoneValid}
         />
         <Button
           type="submit"
