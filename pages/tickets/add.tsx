@@ -16,21 +16,23 @@ import { useRouter } from "next/router"
 import { RouteDefinitions } from "../../src/utils/routes"
 import { toast } from "react-toastify"
 
-const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
-const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
+export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
+export const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
 
-type TicketFormData = {
+export type TicketFormData = {
   what?: string
   count?: number
   where?: string
   who?: string
 }
 
-type TicketPostData = TicketFormData & {
+export type TicketPostData = TicketFormData & {
   phone: string
 }
 
-type TicketData = TicketFormData & { id: number }
+export type TicketDetails = TicketPostData
+
+export type TicketData = TicketFormData & { id: number }
 
 const saveForFurtherUsage = (data: TicketFormData) => {
   localStorage.setItem(LOCAL_STORAGE_KEY_TICKET_DATA, JSON.stringify(data))
