@@ -13,6 +13,9 @@ export const translations: Translation = {
     pages: {
       "sign-in": {
         title: "Zaloguj się",
+        label: "Podaj numer telefonu",
+        placeholder: "Numer telefonu",
+        next: "Dalej",
       },
     },
   },
