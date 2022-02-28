@@ -60,42 +60,39 @@ const getInitialDataFromLocalStorage = () => {
   }
 }
 
-const createTicketLocally = (data: TicketFormData) => {
-  const currentTickets: TicketData[] = []
-
-  if (localStorage.getItem(LOCAL_STORAGE_KEY_ALL_TICKETS)) {
-    const json = localStorage.getItem(LOCAL_STORAGE_KEY_ALL_TICKETS)
-
-    // @ts-ignore
-    currentTickets.push(...JSON.parse(json))
-  }
-
-  const newId = currentTickets.length + 1
-
-  currentTickets.push({
-    ...data,
-    id: newId,
-    expirationTimestamp: Date.now(),
-    status: TICKET_STATUS.ACTIVE,
-  })
-
-  localStorage.setItem(
-    LOCAL_STORAGE_KEY_ALL_TICKETS,
-    JSON.stringify(currentTickets)
-  )
-
-  return newId
-}
-
 const AddTicket: NextPage = () => {
   const router = useRouter()
 
-  const addTicketMutation = useMutation<TicketPostData, Error>((newTicket) => {
-    return axios.post(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/tickets`,
-      newTicket
-    )
-  })
+  const onSuccess = (rawResponse) => {
+    const { data } = rawResponse.data
+    const id = data.id
+
+    toast.success("Zgłoszono potrzebę!")
+
+    setTimeout(() => {
+      return router.push(
+        RouteDefinitions.TicketDetails.replace(":id", String(id))
+      )
+    }, 1000)
+  }
+
+  const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
+    (newTicket) => {
+      const { phone, what } = newTicket
+      const newTicketData = {
+        phone,
+        description: what,
+      }
+
+      return axios.post(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need`,
+        newTicketData
+      )
+    },
+    {
+      onSuccess,
+    }
+  )
 
   const savedTicketFormData = getInitialDataFromLocalStorage()
   const useFormOptions: any = {}
@@ -115,17 +112,7 @@ const AddTicket: NextPage = () => {
     saveForFurtherUsage(data)
 
     const postData: TicketPostData = { ...data, phone: userInfo.phone }
-    const id = createTicketLocally(postData)
-
-    // addTicketMutation.mutate(data)
-
-    toast.success("Zgłoszono potrzebę!")
-
-    setTimeout(() => {
-      return router.push(
-        RouteDefinitions.TicketDetails.replace(":id", String(id))
-      )
-    }, 1000)
+    addTicketMutation.mutate(postData)
   }
 
   return (
