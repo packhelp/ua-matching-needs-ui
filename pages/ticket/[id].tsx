@@ -2,11 +2,10 @@ import {
   Button,
   Container,
   Heading,
-  Input,
   Link,
   Stack,
   Text,
-  Textarea,
+  Flex,
 } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
@@ -20,6 +19,17 @@ import { getUserInfo } from "../../src/services/auth"
 import { toast } from "react-toastify"
 import { parseISO, format } from "date-fns"
 import { pl } from "date-fns/locale"
+import {
+  FacebookShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+} from "react-share";
+
+import {
+  FacebookIcon,
+  TelegramIcon,
+  TwitterIcon,
+} from "react-share";
 
 const getLocallySavedTicketData = (id: number): TicketDetails | undefined => {
   if (typeof window !== "undefined") {
@@ -62,11 +72,23 @@ const TicketDetails: NextPage = () => {
       locale: pl,
     }
   )
+
+  const ticketUrl = window.location.href
+
   return (
     <Container>
       <Heading as="h1" size="xl">
         Zapotrzebowanie
       </Heading>
+
+      <Flex>
+        <Heading as="h3" size="m">
+          Udostępnij
+        </Heading>
+        <FacebookShareButton url={ticketUrl} >
+          <FacebookIcon />
+        </FacebookShareButton>
+      </Flex>
 
       <Stack mb={8}>
         {ticket.status === TICKET_STATUS.ACTIVE ? (
@@ -107,7 +129,7 @@ const TicketDetails: NextPage = () => {
       {ticket.who && (
         <Stack mb={8}>
           <Text color={"grey.200"} fontSize={"sm"}>
-            Kto zgłosić zapotrzebowanie?
+            Kto zgłosił zapotrzebowanie?
           </Text>
           <Text>{ticket.who}</Text>
         </Stack>
