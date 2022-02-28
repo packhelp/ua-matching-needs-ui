@@ -79,6 +79,9 @@ const AddTicket: NextPage = () => {
   const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
     (newTicket) => {
       const { phone, what, where, who, count } = newTicket
+      const now = new Date()
+      const expirationTimestamp = now.setHours(now.getHours() + 3)
+
       const newTicketData = {
         phone,
         description: what,
@@ -86,7 +89,7 @@ const AddTicket: NextPage = () => {
         where,
         who,
         count,
-        expirationTimestamp: Date.now(),
+        expirationTimestamp,
         phone_public: true,
       }
 

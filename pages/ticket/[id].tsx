@@ -47,6 +47,10 @@ const getTicketDataFromEndpoint = async (
   return ticketDetails
 }
 
+const isTicketActive = (ticket: TicketDetails): boolean => {
+  return ticket.expirationTimestamp > Date.now()
+}
+
 const TicketDetails: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
@@ -82,7 +86,6 @@ const TicketDetails: NextPage = () => {
   const removeTicket = () => {
     toast.error("Not implemented yet!")
   }
-  console.log("ticket.expirationTimestamp :>>", ticket.expirationTimestamp)
 
   const formatedExpiration = ticket.expirationTimestamp
     ? format(ticket.expirationTimestamp, "dd MMMM yyyy HH:mm", {
@@ -120,7 +123,7 @@ const TicketDetails: NextPage = () => {
       </Flex>
 
       <Stack mb={8}>
-        {ticket.status === TICKET_STATUS.ACTIVE ? (
+        {isTicketActive(ticket) ? (
           <Text color={"grey.500"}>
             Aktywne do:{" "}
             <Text as={"span"} fontWeight="bold">
