@@ -41,7 +41,7 @@ const getTicketDataFromEndpoint = async (
   const { data } = response.data
   const ticketDetails: TicketDetails = {
     ...data,
-    what: data.description,
+    expirationTimestamp: parseInt(data.expirationTimestamp),
   }
 
   return ticketDetails
@@ -82,6 +82,7 @@ const TicketDetails: NextPage = () => {
   const removeTicket = () => {
     toast.error("Not implemented yet!")
   }
+  console.log("ticket.expirationTimestamp :>>", ticket.expirationTimestamp)
 
   const formatedExpiration = ticket.expirationTimestamp
     ? format(ticket.expirationTimestamp, "dd MMMM yyyy HH:mm", {
