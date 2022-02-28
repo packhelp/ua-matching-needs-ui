@@ -30,9 +30,19 @@ export type TicketPostData = TicketFormData & {
   phone: string
 }
 
-export type TicketDetails = TicketPostData
+export enum TICKET_STATUS {
+  ACTIVE = "ACTIVE",
+  EXPIRED = "EXPIRED",
+  DELETED = "DELETED",
+}
 
-export type TicketData = TicketFormData & { id: number }
+export type TicketData = TicketFormData & {
+  id: number
+  expirationTimestamp: number
+  status: TICKET_STATUS
+}
+
+export type TicketDetails = TicketPostData & TicketData
 
 const saveForFurtherUsage = (data: TicketFormData) => {
   localStorage.setItem(LOCAL_STORAGE_KEY_TICKET_DATA, JSON.stringify(data))
@@ -62,8 +72,12 @@ const createTicketLocally = (data: TicketFormData) => {
 
   const newId = currentTickets.length + 1
 
-  currentTickets.push({ ...data, id: newId })
-  console.log("currentTickets :>>", currentTickets)
+  currentTickets.push({
+    ...data,
+    id: newId,
+    expirationTimestamp: Date.now(),
+    status: TICKET_STATUS.ACTIVE,
+  })
 
   localStorage.setItem(
     LOCAL_STORAGE_KEY_ALL_TICKETS,

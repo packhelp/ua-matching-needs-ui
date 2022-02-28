@@ -3,14 +3,21 @@ import {
   Container,
   Heading,
   Input,
+  Link,
   Stack,
   Text,
   Textarea,
 } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
-import { LOCAL_STORAGE_KEY_ALL_TICKETS, TicketDetails } from "../tickets/add"
+import {
+  LOCAL_STORAGE_KEY_ALL_TICKETS,
+  TICKET_STATUS,
+  TicketDetails,
+} from "../tickets/add"
 import Error from "next/error"
+import { getUserInfo } from "../../src/services/auth"
+import { toast } from "react-toastify"
 
 const getLocallySavedTicketData = (id: number): TicketDetails | undefined => {
   if (typeof window !== "undefined") {
@@ -39,16 +46,76 @@ const TicketDetails: NextPage = () => {
     )
   }
 
-  const expirationDate = "jutra"
+  const userInfo = getUserInfo()
+  const isOwner = userInfo && userInfo.phone === ticket.phone
+
+  const removeTicket = () => {
+    toast.error("Not implemented yet!")
+  }
 
   return (
     <Container>
-      <Stack>
-        <Heading as="h1" size="xl">
-          Zapotrzebowanie
-        </Heading>
-        <Text color={"grey.500"}>Aktywne do: {expirationDate}</Text>
+      <Heading as="h1" size="xl">
+        Zapotrzebowanie
+      </Heading>
+
+      <Stack mb={8}>
+        {ticket.status === TICKET_STATUS.ACTIVE ? (
+          <Text color={"grey.500"}>
+            Aktywne do:{" "}
+            <Text as={"span"} fontWeight="bold">
+              {new Date(ticket.expirationTimestamp).toString()}
+            </Text>
+          </Text>
+        ) : (
+          <Text color={"red"}>Zapotrzebowanie nieaktywne!</Text>
+        )}
       </Stack>
+
+      <Stack mb={8}>
+        <Text color={"grey.200"} fontSize={"sm"}>
+          Co potrzeba?
+        </Text>
+        <Text>{ticket.what}</Text>
+      </Stack>
+
+      {ticket.count && (
+        <Stack mb={8}>
+          <Text color={"grey.200"} fontSize={"sm"}>
+            Ile potrzeba?
+          </Text>
+          <Text>{ticket.what}</Text>
+        </Stack>
+      )}
+      {ticket.where && (
+        <Stack mb={8}>
+          <Text color={"grey.200"} fontSize={"sm"}>
+            Gdzie dostarczyć?
+          </Text>
+          <Text>{ticket.where}</Text>
+        </Stack>
+      )}
+      {ticket.who && (
+        <Stack mb={8}>
+          <Text color={"grey.200"} fontSize={"sm"}>
+            Kto zgłosić zapotrzebowanie?
+          </Text>
+          <Text>{ticket.who}</Text>
+        </Stack>
+      )}
+
+      <Stack mb={8}>
+        <Text color={"grey.200"} fontSize={"sm"}>
+          Telefon
+        </Text>
+        <Link href={`tel:${ticket.phone}`}>{ticket.phone}</Link>
+      </Stack>
+
+      {isOwner && (
+        <Stack>
+          <Button onClick={removeTicket}>Usuń</Button>
+        </Stack>
+      )}
     </Container>
   )
 }
