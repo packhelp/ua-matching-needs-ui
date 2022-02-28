@@ -13,6 +13,7 @@ import { useRouter } from "next/router"
 import {
   LOCAL_STORAGE_KEY_ALL_TICKETS,
   TICKET_STATUS,
+  TicketData,
   TicketDetails,
 } from "../tickets/add"
 import Error from "next/error"
@@ -20,6 +21,8 @@ import { getUserInfo } from "../../src/services/auth"
 import { toast } from "react-toastify"
 import { parseISO, format } from "date-fns"
 import { pl } from "date-fns/locale"
+import { useQuery } from "react-query"
+import axios from "axios"
 
 const getLocallySavedTicketData = (id: number): TicketDetails | undefined => {
   if (typeof window !== "undefined") {
@@ -32,13 +35,39 @@ const getLocallySavedTicketData = (id: number): TicketDetails | undefined => {
   }
 }
 
+const getTicketDataFromEndpoint = async (id: number): TicketDetails => {
+  if (isNaN(id)) {
+    return
+  }
+
+  const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`
+
+  const response = await axios.get(url)
+  const { data } = response.data
+  const ticketDetails: TicketDetails = {
+    ...data,
+    what: data.description,
+  }
+
+  return ticketDetails
+}
+
 const TicketDetails: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
 
-  const ticket: TicketDetails | undefined = getLocallySavedTicketData(
-    Number(id)
+  const { data: ticket, isLoading } = useQuery<TicketDetails>(
+    `ticket-data-${id}`,
+    () => getTicketDataFromEndpoint(Number(id))
   )
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Text>Ładowanie informacji o zapotrzebowaniu...</Text>
+      </Container>
+    )
+  }
 
   if (!ticket) {
     return (
@@ -55,13 +84,12 @@ const TicketDetails: NextPage = () => {
     toast.error("Not implemented yet!")
   }
 
-  const formatedExpiration = format(
-    ticket.expirationTimestamp,
-    "dd MMMM yyyy HH:mm",
-    {
-      locale: pl,
-    }
-  )
+  const formatedExpiration = ticket.expirationTimestamp
+    ? format(ticket.expirationTimestamp, "dd MMMM yyyy HH:mm", {
+        locale: pl,
+      })
+    : null
+
   return (
     <Container>
       <Heading as="h1" size="xl">
