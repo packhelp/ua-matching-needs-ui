@@ -20,6 +20,7 @@ export enum RouteDefinitions {
   AllActiveTickets = "/tickets/active",
   MyActiveTickets = "/tickets/active/mine",
   MyInactiveTickets = "/tickets/inactive/mine",
+  SignIn = "/sign-in",
 }
 
 export type Routes =
@@ -27,6 +28,7 @@ export type Routes =
   | RouteDefinitions.AllActiveTickets
   | RouteDefinitions.MyActiveTickets
   | RouteDefinitions.MyInactiveTickets
+  | RouteDefinitions.SignIn
 export const getRouteNameForLocale = (
   route: Routes,
   locale: Locale = LocaleDefinitions.PL

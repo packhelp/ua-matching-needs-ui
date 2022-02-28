@@ -62,6 +62,7 @@ const Mobile = () => {
         width={"100%"}
         paddingRight={"10px"}
       >
+        <Logo />
         <IconButton
           display={{ base: "flex", md: "none" }}
           alignItems={"center"}
@@ -72,7 +73,6 @@ const Mobile = () => {
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
           onClick={isOpen ? onClose : onOpen}
         />
-        <Logo />
       </Flex>
       {isOpen && (
         <Box width={"100%"}>

@@ -19,19 +19,19 @@ import "katex/dist/katex.min.css"
 // Override notion css
 import "./../public/notion-override.css"
 import { RootContainerWrapper } from "../src/services/_container.root-wrapper"
-
-// if (typeof global.navigator === 'undefined') global.navigator = {
-//     userAgentData: {
-//         mobile: false
-//     }
-// } as any;
+import { Guard } from "../src/components/auth/Guard"
+import { Container } from "../src/components/layout/Container"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
       <RootContainerWrapper>
         <HeaderNavigation />
-        <Component {...pageProps} />
+        <Container>
+          <Guard>
+            <Component {...pageProps} />
+          </Guard>
+        </Container>
         <FooterNavigation />
       </RootContainerWrapper>
     </ChakraProvider>

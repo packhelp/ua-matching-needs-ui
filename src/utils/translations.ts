@@ -5,9 +5,15 @@ type Translation = {
 
 export const translations: Translation = {
   "pl-PL": {
-    "/tickets/add": "",
-    "/tickets/active": "",
-    "/tickets/active/mine": "",
-    "/tickets/inactive/mine": "",
+    "/tickets/add": "Dodaj ticket",
+    "/tickets/active": "Wszystkie aktywne tickety",
+    "/tickets/active/mine": "Moje aktywne tickety",
+    "/tickets/inactive/mine": "Moje nieaktywne tickety",
+    "/sign-in": "Zaloguj się",
+    pages: {
+      "sign-in": {
+        title: "Zaloguj się",
+      },
+    },
   },
 }
