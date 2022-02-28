@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import {
   chakra,
   Flex,
@@ -11,6 +11,7 @@ import {
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons"
 import { NavigationLinks } from "./NavigationLinks"
 import { Logo } from "./Logo"
+import { useRouter } from "next/router"
 
 export const HeaderNavigation = () => {
   const bg = useColorModeValue("white", "blue.500")
@@ -49,6 +50,16 @@ const Desktop = () => {
 
 const Mobile = () => {
   const { isOpen = false, onOpen, onClose } = useDisclosure()
+  const router = useRouter()
+
+  useEffect(() => {
+    const unsubscribe = router.events.on(
+      "routeChangeStart",
+      (url, { shallow }) => {
+        onClose()
+      }
+    )
+  }, [])
 
   return (
     <Flex
