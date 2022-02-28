@@ -18,6 +18,8 @@ import {
 import Error from "next/error"
 import { getUserInfo } from "../../src/services/auth"
 import { toast } from "react-toastify"
+import { parseISO, format } from "date-fns"
+import { pl } from "date-fns/locale"
 
 const getLocallySavedTicketData = (id: number): TicketDetails | undefined => {
   if (typeof window !== "undefined") {
@@ -53,6 +55,13 @@ const TicketDetails: NextPage = () => {
     toast.error("Not implemented yet!")
   }
 
+  const formatedExpiration = format(
+    ticket.expirationTimestamp,
+    "dd MMMM yyyy HH:mm",
+    {
+      locale: pl,
+    }
+  )
   return (
     <Container>
       <Heading as="h1" size="xl">
@@ -64,7 +73,7 @@ const TicketDetails: NextPage = () => {
           <Text color={"grey.500"}>
             Aktywne do:{" "}
             <Text as={"span"} fontWeight="bold">
-              {new Date(ticket.expirationTimestamp).toString()}
+              {formatedExpiration}
             </Text>
           </Text>
         ) : (
@@ -84,7 +93,7 @@ const TicketDetails: NextPage = () => {
           <Text color={"grey.200"} fontSize={"sm"}>
             Ile potrzeba?
           </Text>
-          <Text>{ticket.what}</Text>
+          <Text>{ticket.count}</Text>
         </Stack>
       )}
       {ticket.where && (
