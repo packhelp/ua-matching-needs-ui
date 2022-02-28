@@ -25,13 +25,9 @@ import {
   FacebookShareButton,
   TelegramShareButton,
   TwitterShareButton,
-} from "react-share";
+} from "react-share"
 
-import {
-  FacebookIcon,
-  TelegramIcon,
-  TwitterIcon,
-} from "react-share";
+import { FacebookIcon, TelegramIcon, TwitterIcon } from "react-share"
 
 import { useQuery } from "react-query"
 import axios from "axios"
@@ -115,7 +111,7 @@ const TicketDetails: NextPage = () => {
           Udostępnij:
         </Heading>
         <Box paddingLeft="4px">
-          <FacebookShareButton url={ticketUrl} >
+          <FacebookShareButton url={ticketUrl}>
             <FacebookIcon size={24} />
           </FacebookShareButton>
         </Box>
@@ -125,7 +121,7 @@ const TicketDetails: NextPage = () => {
           </TelegramShareButton>
         </Box>
         <Box paddingLeft="4px">
-          <TwitterShareButton url={ticketUrl} >
+          <TwitterShareButton url={ticketUrl}>
             <TwitterIcon size={24} />
           </TwitterShareButton>
         </Box>

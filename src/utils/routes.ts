@@ -22,7 +22,7 @@ export enum RouteDefinitions {
   MyInactiveTickets = "/tickets/inactive/mine",
   SignIn = "/sign-in",
   TicketDetails = "/ticket/:id",
-  Contact = "/contact"
+  Contact = "/contact",
 }
 
 export type Routes =
