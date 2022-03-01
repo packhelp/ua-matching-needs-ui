@@ -6,14 +6,16 @@ import {
   Spinner,
   Text,
   Flex,
-  Divider, Button, useBreakpointValue,
+  Divider,
+  Button,
 } from "@chakra-ui/react"
 import { useQuery } from "react-query"
 import axios from "axios"
-import { getRouteNameForLocale, RouteDefinitions } from "../utils/routes"
+import { RouteDefinitions } from "../utils/routes"
 import { isTicketActive } from "../../pages/ticket/[id]"
 import { TICKET_STATUS } from "../../pages/tickets/add"
-import { getUserInfo } from "../services/auth"
+import { getUserInfo, signOut } from "../services/auth"
+import { useRouter } from "next/router"
 
 const isMineTicket = (item, userInfo) => {
   if (!userInfo) {
@@ -31,6 +33,7 @@ export const Tickets = ({
   status: TICKET_STATUS
 }) => {
   const userInfo = getUserInfo()
+  const router = useRouter()
 
   const { data: tickets, isLoading } = useQuery(
     `tickets-${status}-${mineOnly ? "mine" : "all"}`,
@@ -109,21 +112,22 @@ export const Tickets = ({
                       <Heading size="xs" marginBottom="8px">
                         Gdzie potrzebne:
                       </Heading>
-                      <Text fontSize='sm'>
+                      <Text fontSize='sm' marginBottom="8px">
                         {ticket.where}
                       </Text>
                     </Flex>
                   </Box>
-                  <Link href={RouteDefinitions.TicketDetails.replace(":id", ticket.id)}>
-                    <Button
-                      size="sm"
-                      variant={"solid"}
-                      width="100%"
-                      borderRadius="none"
-                    >
-                      Przejdz
-                    </Button>
-                  </Link>
+                  <Button
+                    size="sm"
+                    variant={"solid"}
+                    width="100%"
+                    borderRadius="md"
+                    borderTopRadius={0}
+                    colorScheme={"blue"}
+                    onClick={() => router.push(RouteDefinitions.TicketDetails.replace(":id", ticket.id))}
+                  >
+                    Przejdz
+                  </Button>
                 </Box>
               </Box>
             )
