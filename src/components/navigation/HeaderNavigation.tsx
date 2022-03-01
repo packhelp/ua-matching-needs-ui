@@ -71,13 +71,12 @@ const Mobile = () => {
       alignItems={"center"}
       flexDirection={"column"}
       display={{ base: "flex", sm: "flex", lg: "none" }}
-      mb={4}
     >
       <Flex
         alignItems={"center"}
         justifyContent={"space-between"}
         width={"100%"}
-        paddingRight={"10px"}
+        padding={"0 10px"}
       >
         <Logo />
         <IconButton
