@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import { MyTickets } from "../../../src/components/_tickets"
+import { MyTickets } from "../../../src/components/_my-tickets"
 import { TICKET_STATUS } from "../add"
 import { GetServerSidePropsContext } from "next"
 import axios from "axios"
