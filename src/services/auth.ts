@@ -1,3 +1,4 @@
+import { signOut as signOutNextAuth } from "next-auth/react"
 const AUTH_ITEM_NAME = "user_info"
 
 export type UserInfo = {
@@ -14,6 +15,7 @@ export const signIn = (phone: string): boolean => {
 export const signOut = (): boolean => {
   if (typeof window !== "undefined") {
     localStorage.removeItem(AUTH_ITEM_NAME)
+    signOutNextAuth()
   }
   return true
 }
