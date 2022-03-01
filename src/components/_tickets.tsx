@@ -92,7 +92,7 @@ export const Tickets = ({
                       </Box>
                     </Flex>
 
-                    <Divider marginBottom="16px" marginTop="16px"/>
+                    <Divider marginBottom="16px" marginTop="8px"/>
 
                     <Flex flexDirection="column" justifyContent="space-between">
                       <Heading size="xs" marginBottom="8px">
