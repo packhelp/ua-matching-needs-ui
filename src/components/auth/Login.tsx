@@ -57,6 +57,7 @@ export const Login: FC = () => {
           {translations[finalLocale]["pages"]["sign-in"]["label"]}
         </FormLabel>
         <Input
+          name={"phone"}
           placeholder={
             translations[finalLocale]["pages"]["sign-in"]["placeholder"]
           }
