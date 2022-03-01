@@ -23,7 +23,7 @@ const MainPage: NextPage = () => {
 
   return (
     <Box as="section" bg="bg-surface">
-      <Container py={{ base: "16", md: "24" }}>
+      <Container py={{ base: "16" }}>
         <Stack spacing={{ base: "8", md: "10" }} mb="80px">
           <Stack
             spacing={{ base: "4", md: "5" }}
@@ -53,7 +53,10 @@ const MainPage: NextPage = () => {
                 variant="solid"
                 size="lg"
                 colorScheme="blue"
-                marginBottom={useBreakpointValue({ base: "8px", sm: undefined })}
+                marginBottom={useBreakpointValue({
+                  base: "8px",
+                  sm: undefined,
+                })}
                 isFullWidth={useBreakpointValue({ base: true, sm: false })}
               >
                 {pageTranslations["show-all-button"]}

@@ -11,7 +11,7 @@ import {
 export const FooterNavigation = () => {
   const bg = useColorModeValue("white", "blue.500")
   return (
-    <div className="bg-gray-100 flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <Flex justifyContent={"center"} alignItems={"center"}>
         <Box p="2">
           <Image src="/svg/poland-flag.svg" alt="Poland" boxSize="15px" />
