@@ -31,27 +31,30 @@ export const Tickets = ({
 }) => {
   const userInfo = getUserInfo()
 
-  const { data: tickets, isLoading } = useQuery(`tickets-${status}`, () => {
-    return axios
-      .get(`${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need`)
-      .then((response) =>
-        response.data.data
-          .filter((item) => {
-            if (status === TICKET_STATUS.ACTIVE) {
-              return isTicketActive(item)
-            } else {
-              return !isTicketActive(item)
-            }
-          })
-          .filter((item) => {
-            if (mineOnly) {
-              return isMineTicket(item, userInfo)
-            } else {
-              return item
-            }
-          })
-      )
-  })
+  const { data: tickets, isLoading } = useQuery(
+    `tickets-${status}-${mineOnly ? "mine" : "all"}`,
+    () => {
+      return axios
+        .get(`${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need`)
+        .then((response) =>
+          response.data.data
+            .filter((item) => {
+              if (status === TICKET_STATUS.ACTIVE) {
+                return isTicketActive(item)
+              } else {
+                return !isTicketActive(item)
+              }
+            })
+            .filter((item) => {
+              if (mineOnly) {
+                return isMineTicket(item, userInfo)
+              } else {
+                return item
+              }
+            })
+        )
+    }
+  )
 
   return (
     <Container>
