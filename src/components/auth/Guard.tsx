@@ -14,8 +14,8 @@ export const Guard: FC = ({ children }) => {
 
   if (
     typeof window !== "undefined" &&
-    !isLogged &&
-    GUARDED_PATHS.includes(router.pathname as unknown as RouteDefinitions)
+    GUARDED_PATHS.includes(router.pathname as unknown as RouteDefinitions) &&
+    !isLogged
   ) {
     router.push(RouteDefinitions.SignIn)
   }
