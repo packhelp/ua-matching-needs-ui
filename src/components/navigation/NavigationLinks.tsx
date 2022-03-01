@@ -19,15 +19,15 @@ export const NavigationLinks = () => {
 
   return (
     <Flex
-      flexDirection={useBreakpointValue({ base: "column", sm: undefined })}
-      marginTop={useBreakpointValue({ base: "16px", sm: undefined })}
+      flexDirection={useBreakpointValue({ base: "column", lg: undefined })}
+      marginTop={useBreakpointValue({ base: "16px", lg: undefined })}
       justifyContent={ "space-between" }
     >
-      <Flex flexDirection={useBreakpointValue({ base: "column", sm: undefined })}>
+      <Flex flexDirection={useBreakpointValue({ base: "column", lg: undefined })}>
         <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="primary" />
         <NavigationLink route={RouteDefinitions.AddTicket} buttonType="secondary" />
       </Flex>
-      <Flex flexDirection={useBreakpointValue({ base: "column", sm: undefined })}>
+      <Flex flexDirection={useBreakpointValue({ base: "column", lg: undefined })}>
         {isLogged && (
           <>
             <NavigationLink route={RouteDefinitions.MyActiveTickets} />
