@@ -6,6 +6,7 @@ import {
   Link,
   Stack,
   Text,
+  Flex,
   useBreakpointValue,
 } from "@chakra-ui/react"
 import * as React from "react"
@@ -42,10 +43,9 @@ const MainPage: NextPage = () => {
               {pageTranslations.subheader}
             </Text>
           </Stack>
-          <Stack
-            spacing="3"
-            direction={{ base: "column", sm: "row" }}
-            justify="center"
+          <Flex
+            flexDirection={useBreakpointValue({ base: "column", sm: "row" })}
+            justifyContent="space-evenly"
           >
             <Link href={RouteDefinitions.AllActiveTickets}>
               <Button
@@ -53,6 +53,8 @@ const MainPage: NextPage = () => {
                 variant="solid"
                 size="lg"
                 colorScheme="blue"
+                marginBottom={useBreakpointValue({ base: "8px", sm: undefined })}
+                isFullWidth={useBreakpointValue({ base: true, sm: false })}
               >
                 {pageTranslations["show-all-button"]}
               </Button>
@@ -63,11 +65,12 @@ const MainPage: NextPage = () => {
                 variant="solid"
                 size="lg"
                 colorScheme="yellow"
+                isFullWidth={useBreakpointValue({ base: true, sm: false })}
               >
                 {pageTranslations["add-new-button"]}
               </Button>
             </Link>
-          </Stack>
+          </Flex>
         </Stack>
         <Stack>
           <Stack
