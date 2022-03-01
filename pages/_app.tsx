@@ -3,6 +3,7 @@ import type { AppProps } from "next/app"
 import { ChakraProvider } from "@chakra-ui/react"
 import { HeaderNavigation } from "../src/components/navigation/HeaderNavigation"
 import { FooterNavigation } from "../src/components/navigation/FooterNavigation"
+import { SessionProvider } from "next-auth/react"
 
 import "react-toastify/dist/ReactToastify.css"
 
@@ -28,7 +29,7 @@ import { Container } from "../src/components/layout/Container"
 import { useState } from "react"
 import { ToastContainer } from "react-toastify"
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
 
   return (
@@ -36,12 +37,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Hydrate state={pageProps.dehydratedState}>
         <ChakraProvider>
           <RootContainerWrapper>
-            <ToastContainer />
+            <ToastContainer style={{ zIndex: 9999999 }} />
             <HeaderNavigation />
             <Container>
-              <Guard>
-                <Component {...pageProps} />
-              </Guard>
+              <SessionProvider session={session}>
+                <Guard>
+                  <Component {...pageProps} />
+                </Guard>
+              </SessionProvider>
             </Container>
             <FooterNavigation />
           </RootContainerWrapper>

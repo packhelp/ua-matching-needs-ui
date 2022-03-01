@@ -17,6 +17,12 @@ export const translations: Translation = {
         label: "Podaj numer telefonu",
         placeholder: "Numer telefonu",
         next: "Dalej",
+        "phone-verification": {
+          title: "Zaloguj się",
+          label: "Podaj kod weryfikacyjny. Został on wysłany na twój numer telefonu w wiadomości SMS.",
+          placeholder: "123 456",
+          next: "Dalej",
+        },
       },
       main: {
         header: "Szybkie i proste zarządzenie potrzebami organizatorów",
