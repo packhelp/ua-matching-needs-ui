@@ -24,7 +24,6 @@ export const HeaderNavigation = () => {
       px={{ base: 2, sm: 4 }}
       py={4}
       shadow="md"
-      mb={10}
       position="sticky"
       top={0}
       zIndex="100000"
@@ -77,7 +76,7 @@ const Mobile = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
         width={"100%"}
-        paddingRight={"10px"}
+        padding={"0 10px"}
       >
         <Logo />
         <IconButton
