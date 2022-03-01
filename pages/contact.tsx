@@ -1,13 +1,13 @@
 import React from "react"
 import { NextPage } from "next"
-import { Heading, Flex, Box, Button } from "@chakra-ui/react"
+import { Heading, Flex, Box, Button, Container, Image, Text } from "@chakra-ui/react"
 
 import Link from "next/link"
 
 const Contact: NextPage = () => {
   return (
-    <>
-      <Heading as="h1" size="xl">
+    <Container>
+      <Heading as="h1" size="xl" mb="20px">
         Skontaktuj się z nami przez:
       </Heading>
       <Flex padding="16px" flexDirection="column">
@@ -23,7 +23,15 @@ const Contact: NextPage = () => {
           </Button>
         </Link>
       </Flex>
-    </>
+      <Heading as="h1" size="md" mt="50px" mb="20px">
+        Autorzy narzędzia
+      </Heading>
+      <Text mb="20px">
+        Narzędzie zostało stworzone przy współpracy Packhelp oraz Tech To The Rescue.
+      </Text>
+      <Image src="/logo-packhelp.svg" maxW="200px" ml="8px"/>
+      <Image src="/logo-tttr.png" maxW="230px" mt="20px"/>
+    </Container>
   )
 }
 

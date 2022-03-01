@@ -6,9 +6,9 @@ type Translation = {
 export const translations: Translation = {
   "pl-PL": {
     "/tickets/add": "Dodaj ticket",
-    "/tickets/active": "Wszystkie aktywne tickety",
-    "/tickets/active/mine": "Moje aktywne tickety",
-    "/tickets/inactive/mine": "Moje nieaktywne tickety",
+    "/tickets/active": "Potrzeby",
+    "/tickets/active/mine": "Moje potrzeby",
+    "/tickets/inactive/mine": "Moje nieaktywne potrzeby",
     "/sign-in": "Zaloguj się",
     "/contact": "Kontakt",
     pages: {

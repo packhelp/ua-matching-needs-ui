@@ -1,4 +1,4 @@
-import { Button, FormLabel, Heading, Input } from "@chakra-ui/react"
+import { Button, Container, FormLabel, Heading, Input } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { FC, useCallback, useMemo, useState } from "react"
 import { useFinalLocale } from "../../hooks/final-locale"
@@ -47,7 +47,7 @@ export const Login: FC = () => {
   }, [canSubmit, phoneNumber])
 
   return (
-    <>
+    <Container>
       <form onSubmit={submitForm}>
         <Heading as="h1" size="1xl" mb={4}>
           {translations[finalLocale]["pages"]["sign-in"]["title"]}
@@ -74,6 +74,6 @@ export const Login: FC = () => {
           {translations[finalLocale]["pages"]["sign-in"]["next"]}
         </Button>
       </form>
-    </>
+    </Container>
   )
 }
