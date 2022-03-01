@@ -1,4 +1,4 @@
-import { Button, Flex, useBreakpointValue } from "@chakra-ui/react"
+import { Button, Flex, HStack, useBreakpointValue, VStack } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React from "react"
 import { useFinalLocale } from "../../hooks/final-locale"
@@ -18,34 +18,65 @@ export const NavigationLinks = () => {
   }
 
   return (
-    <Flex
-      flexDirection={useBreakpointValue({ base: "column", lg: "row" })}
-      marginTop={useBreakpointValue({ base: "16px", lg: "0" })}
-      justifyContent={ "space-between" }
-    >
-      <Flex flexDirection={useBreakpointValue({ base: "column", lg: "row" })}>
-        <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="primary" />
-        <NavigationLink route={RouteDefinitions.AddTicket} buttonType="secondary" />
+    <>
+      <HStack
+        justifyContent="space-between"
+        display={{ base: 'none', lg: 'flex' }}
+      >
+        <HStack spacing={2} alignItems="center">
+          <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="primary" />
+          <NavigationLink route={RouteDefinitions.AddTicket} buttonType="secondary" />
+        </HStack>
+        <HStack spacing={2} alignItems="center">
+          {isLogged && (
+            <>
+              <NavigationLink route={RouteDefinitions.MyActiveTickets} />
+              <NavigationLink route={RouteDefinitions.MyInactiveTickets} />
+            </>
+          )}
+          {!isLogged && <NavigationLink route={RouteDefinitions.SignIn} />}
+          {isLogged && (
+            <Button
+              size="sm"
+              variant={"ghost"}
+              onClick={onSignOut}
+            >
+              {translations[finalLocale]["sign-out"]}
+            </Button>
+          )}
+          <NavigationLink route={RouteDefinitions.Contact} />
+        </HStack>
+      </HStack>
+      <Flex
+        flexDirection="column"
+        marginTop="16px"
+        justifyContent={ "space-between" }
+        display={{ base: 'flex', lg: 'none' }}
+      >
+        <Flex flexDirection="column">
+          <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="primary" />
+          <NavigationLink route={RouteDefinitions.AddTicket} buttonType="secondary" />
+        </Flex>
+        <Flex flexDirection="column">
+          {isLogged && (
+            <>
+              <NavigationLink route={RouteDefinitions.MyActiveTickets} />
+              <NavigationLink route={RouteDefinitions.MyInactiveTickets} />
+            </>
+          )}
+          {!isLogged && <NavigationLink route={RouteDefinitions.SignIn} />}
+          {isLogged && (
+            <Button
+              size="sm"
+              variant={"ghost"}
+              onClick={onSignOut}
+            >
+              {translations[finalLocale]["sign-out"]}
+            </Button>
+          )}
+          <NavigationLink route={RouteDefinitions.Contact} />
+        </Flex>
       </Flex>
-      <Flex flexDirection={useBreakpointValue({ base: "column", lg: "row" })}>
-        {isLogged && (
-          <>
-            <NavigationLink route={RouteDefinitions.MyActiveTickets} />
-            <NavigationLink route={RouteDefinitions.MyInactiveTickets} />
-          </>
-        )}
-        {!isLogged && <NavigationLink route={RouteDefinitions.SignIn} />}
-        {isLogged && (
-          <Button
-            size="sm"
-            variant={"ghost"}
-            onClick={onSignOut}
-          >
-            {translations[finalLocale]["sign-out"]}
-          </Button>
-        )}
-        <NavigationLink route={RouteDefinitions.Contact} />
-      </Flex>
-    </Flex>
+    </>
   )
 }

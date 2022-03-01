@@ -7,6 +7,7 @@ import {
   Flex,
   Divider,
   Button,
+  Tag,
 } from "@chakra-ui/react"
 import { useQuery } from "react-query"
 import axios from "axios"
@@ -37,7 +38,7 @@ export const Tickets = ({
   const { data: tickets, isLoading } = useQuery(
     `tickets-${status}-${mineOnly ? "mine" : "all"}`,
     () => {
-      const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status][_eq]=${TICKET_STATUS.ACTIVE}`
+      const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status][_eq]=${TICKET_STATUS.ACTIVE}&fields=*.*.*`
 
       return axios.get(url).then((response) =>
         response.data.data
@@ -87,7 +88,13 @@ export const Tickets = ({
                 >
                   <Box padding="8px">
                     <Flex justifyContent="space-between">
-                      <Box />
+                      <Box>
+                        <Heading size="xs">
+                          {ticket.need_tag_id.map((tag) =>
+                            <Tag colorScheme='yellow' variant="solid" borderRadius="full">{tag.need_tag_id.name}</Tag>
+                          )}
+                        </Heading>
+                      </Box>
                       <Box>
                         <Heading size="xs">
                           {dateFormatted}

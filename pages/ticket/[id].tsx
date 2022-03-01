@@ -7,6 +7,7 @@ import {
   Text,
   Flex,
   Box,
+  Tag,
 } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
@@ -29,16 +30,16 @@ import { useMutation, useQuery } from "react-query"
 import axios from "axios"
 import { RouteDefinitions } from "../../src/utils/routes"
 import Head from "next/head"
-import { useMemo } from "react"
+import React, { useMemo } from "react"
 import { metaData } from "../../src/utils/meta-data"
 import { translations } from "../../src/utils/translations"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 
 const getTicketDataFromEndpoint = async (
-  id: number
+  id: number,
 ): Promise<TicketDetails> => {
-  const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`
+  const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}?fields=*.*.*`
 
   const response = await axios.get(url)
   const { data } = response.data
@@ -53,6 +54,31 @@ export const isTicketActive = (ticket: TicketDetails): boolean => {
   )
 }
 
+export const Tags = ({ tags }: { tags: TicketDetails["need_tag_id"] }) => {
+
+  if (!tags)
+    return <></>
+
+  return (
+    <Stack mb={8}>
+      <Text color={"grey.200"} fontSize={"sm"}>
+        Rodzaj pomocy?
+      </Text>
+      {tags.map((tag) => {
+          return tag.need_tag_id &&
+            tag.need_tag_id.name &&
+            <div>
+              <Tag colorScheme="yellow" variant="solid" borderRadius="full">
+                <Text fontWeight="600" size="lg">{tag.need_tag_id.name}</Text>
+              </Tag>
+            </div>
+        },
+      )}
+    </Stack>
+  )
+}
+
+
 const TicketDetails: NextPage = () => {
   const router = useRouter()
   const finalLocale = useFinalLocale()
@@ -65,7 +91,7 @@ const TicketDetails: NextPage = () => {
       if (id) {
         return getTicketDataFromEndpoint(Number(id))
       }
-    }
+    },
   )
 
   const description = useMemo(() => {
@@ -75,7 +101,7 @@ const TicketDetails: NextPage = () => {
 
     const fullDescription = truncate(
       `${translations[finalLocale]["pages"]["ticket"]["description"]["need"]}: ${ticket?.what} | ${metaData.description}`,
-      100
+      100,
     )
 
     return `${fullDescription}...${translations[finalLocale]["pages"]["ticket"]["description"]["read-more"]}`
@@ -87,7 +113,7 @@ const TicketDetails: NextPage = () => {
         `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
         {
           ticket_status: TICKET_STATUS.DELETED,
-        }
+        },
       )
     },
     {
@@ -95,7 +121,7 @@ const TicketDetails: NextPage = () => {
         toast.success("Ogłoszenie usunięte. Mozesz dodać kolejne.")
         return router.push(RouteDefinitions.AddTicket)
       },
-    }
+    },
   )
 
   if (isLoading) {
@@ -187,6 +213,8 @@ const TicketDetails: NextPage = () => {
           </Text>
           <Text>{ticket.what}</Text>
         </Stack>
+
+        <Tags tags={ticket.need_tag_id} />
 
         {ticket.count && ticket.count > 0 ? (
           <Stack mb={8}>
