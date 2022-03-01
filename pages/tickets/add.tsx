@@ -148,6 +148,7 @@ const AddTicket: NextPage = () => {
               Ile potrzebujesz?
             </Heading>
             <Input
+              type="number"
               placeholder="W sztukach, jeśli dotyczy"
               variant={"outline"}
               {...register("count")}
