@@ -6,11 +6,11 @@ import {
   Spinner,
   Text,
   Flex,
-  Divider, Button, useBreakpointValue,
+  Divider, Button
 } from "@chakra-ui/react"
 import { useQuery } from "react-query"
 import axios from "axios"
-import { getRouteNameForLocale, RouteDefinitions } from "../utils/routes"
+import { RouteDefinitions } from "../utils/routes"
 import { isTicketActive } from "../../pages/ticket/[id]"
 import { TICKET_STATUS } from "../../pages/tickets/add"
 import { getUserInfo } from "../services/auth"
