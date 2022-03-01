@@ -6,11 +6,11 @@ import {
   Spinner,
   Text,
   Flex,
-  Divider,
+  Divider, Button, useBreakpointValue,
 } from "@chakra-ui/react"
 import { useQuery } from "react-query"
 import axios from "axios"
-import { RouteDefinitions } from "../utils/routes"
+import { getRouteNameForLocale, RouteDefinitions } from "../utils/routes"
 import { isTicketActive } from "../../pages/ticket/[id]"
 import { TICKET_STATUS } from "../../pages/tickets/add"
 import { getUserInfo } from "../services/auth"
@@ -74,48 +74,58 @@ export const Tickets = ({
           tickets.map((ticket) => {
             const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
             return (
-              <Link
+              <Box
                 key={ticket.id}
                 marginBottom="16px"
-                href={RouteDefinitions.TicketDetails.replace(":id", ticket.id)}
               >
                 <Box
                   borderWidth="1px"
                   borderRadius="md"
-                  padding="16px"
                 >
-                  <Flex justifyContent="space-between">
-                    <Box />
-                    <Box>
-                      <Heading size="xs">
-                        {dateFormatted}
+                  <Box padding="8px">
+                    <Flex justifyContent="space-between">
+                      <Box />
+                      <Box>
+                        <Heading size="xs">
+                          {dateFormatted}
+                        </Heading>
+                      </Box>
+                    </Flex>
+
+                    <Divider marginBottom="16px" marginTop="16px"/>
+
+                    <Flex flexDirection="column" justifyContent="space-between">
+                      <Heading size="xs" marginBottom="8px">
+                        Co potrzebne:
                       </Heading>
-                    </Box>
-                  </Flex>
+                      <Text fontSize='sm'>
+                        {ticket.what}
+                      </Text>
+                    </Flex>
 
-                  <Divider marginBottom="16px" marginTop="16px"/>
+                    <Divider marginBottom="16px" marginTop="16px"/>
 
-                  <Flex flexDirection="column" justifyContent="space-between">
-                    <Heading size="xs" marginBottom="8px">
-                      Co potrzebne:
-                    </Heading>
-                    <Text fontSize='sm'>
-                      {ticket.what}
-                    </Text>
-                  </Flex>
-
-                  <Divider marginBottom="16px" marginTop="16px"/>
-
-                  <Flex flexDirection="column" justifyContent="space-between">
-                    <Heading size="xs" marginBottom="8px">
-                      Gdzie potrzebne:
-                    </Heading>
-                    <Text fontSize='sm'>
-                      {ticket.where}
-                    </Text>
-                  </Flex>
+                    <Flex flexDirection="column" justifyContent="space-between">
+                      <Heading size="xs" marginBottom="8px">
+                        Gdzie potrzebne:
+                      </Heading>
+                      <Text fontSize='sm'>
+                        {ticket.where}
+                      </Text>
+                    </Flex>
+                  </Box>
+                  <Link href={RouteDefinitions.TicketDetails.replace(":id", ticket.id)}>
+                    <Button
+                      size="sm"
+                      variant={"solid"}
+                      width="100%"
+                      borderRadius="none"
+                    >
+                      Przejdz
+                    </Button>
+                  </Link>
                 </Box>
-              </Link>
+              </Box>
             )
           })}
       </Flex>
