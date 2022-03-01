@@ -1,8 +1,7 @@
 import {
   Container,
   Text,
-  Flex,
-  Box,
+  Stack,
   Tag,
 } from "@chakra-ui/react"
 import type { NextPage } from "next"
@@ -54,7 +53,7 @@ export const Tags = ({ tags }: { tags: TicketDetails["need_tag_id"] }) => {
     return <></>
 
   return (
-    <Stack mb={8}>
+    <Stack mb={2}>
       <Text color={"grey.200"} fontSize={"sm"}>
         Rodzaj pomocy?
       </Text>
@@ -151,6 +150,7 @@ const TicketDetails: NextPage = () => {
     .toString()
 
   const ticketUrl = window.location.href
+  const ticketTags = TicketDetails["need_tag_id"]
 
   return (
     <>
@@ -282,6 +282,25 @@ const TicketDetails: NextPage = () => {
                 </dd>
               </div>
 
+              {ticketTags && (
+                <div className="sm:col-span-2">
+                  <dt className="text-sm font-medium text-gray-500">Rodzaj pomocy</dt>
+                  <dd className="mt-1 text-lg text-gray-900">
+                    {ticketTags.map((tag) => {
+                      return tag.need_tag_id &&
+                        tag.need_tag_id.name &&
+                        <div>
+                          <Tag colorScheme="yellow" variant="solid" borderRadius="full">
+                            <Text fontWeight="600" size="lg">{tag.need_tag_id.name}</Text>
+                          </Tag>
+                        </div>
+                      }
+                    )}
+                  </dd>
+                </div>
+              )}
+
+
               {ticket.where && (
                 <div className="sm:col-span-2">
                   <dt className="text-sm font-medium text-gray-500">
@@ -367,92 +386,6 @@ const TicketDetails: NextPage = () => {
           </div>
       </section>
 
-
-||||||| 60248a7
-      <Container>
-        <Heading as="h1" size="xl">
-          Zapotrzebowanie
-        </Heading>
-
-        <Flex padding="8px 0">
-          <Heading as="h3" size="m">
-            Udostępnij:
-          </Heading>
-          <Box paddingLeft="4px">
-            <FacebookShareButton url={ticketUrl}>
-              <FacebookIcon size={24} />
-            </FacebookShareButton>
-          </Box>
-          <Box paddingLeft="4px">
-            <TelegramShareButton url={ticketUrl}>
-              <TelegramIcon size={24} />
-            </TelegramShareButton>
-          </Box>
-          <Box paddingLeft="4px">
-            <TwitterShareButton url={ticketUrl}>
-              <TwitterIcon size={24} />
-            </TwitterShareButton>
-          </Box>
-        </Flex>
-
-        <Stack mb={8}>
-          {isTicketActive(ticket) ? (
-            <Text color={"grey.500"}>
-              Aktywne do:{" "}
-              <Text as={"span"} fontWeight="bold">
-                {formattedExpiration}
-              </Text>
-            </Text>
-          ) : (
-            <Text color={"red"}>Zapotrzebowanie nieaktywne!</Text>
-          )}
-        </Stack>
-
-        <Stack mb={8}>
-          <Text color={"grey.200"} fontSize={"sm"}>
-            Co potrzeba?
-          </Text>
-          <Text>{ticket.what}</Text>
-        </Stack>
-
-        {ticket.count && ticket.count > 0 ? (
-          <Stack mb={8}>
-            <Text color={"grey.200"} fontSize={"sm"}>
-              Ile potrzeba?
-            </Text>
-            <Text>{ticket.count}</Text>
-          </Stack>
-        ) : null}
-        {ticket.where && (
-          <Stack mb={8}>
-            <Text color={"grey.200"} fontSize={"sm"}>
-              Gdzie dostarczyć?
-            </Text>
-            <Text>{ticket.where}</Text>
-          </Stack>
-        )}
-        {ticket.who && (
-          <Stack mb={8}>
-            <Text color={"grey.200"} fontSize={"sm"}>
-              Kto zgłosił zapotrzebowanie?
-            </Text>
-            <Text>{ticket.who}</Text>
-          </Stack>
-        )}
-
-        <Stack mb={8}>
-          <Text color={"grey.200"} fontSize={"sm"}>
-            Telefon
-          </Text>
-          <Link href={`tel:${ticket.phone}`}>{ticket.phone}</Link>
-        </Stack>
-
-        {isOwner && (
-          <Stack>
-            <Button onClick={removeTicket}>Usuń</Button>
-          </Stack>
-        )}
-      </Container>
     </>
   )
 }
