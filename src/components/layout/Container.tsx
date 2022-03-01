@@ -5,7 +5,6 @@ export const Container: FC = ({ children }) => {
   return (
     <Flex justifyContent={"center"} alignItems={"center"}>
       <Box
-        maxWidth={"420px"}
         w="100%"
         p={4}
         borderWidth="1px"

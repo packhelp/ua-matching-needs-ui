@@ -16,6 +16,7 @@ export type Locale = LocaleDefinitions.PL
 export const locales = [LocaleDefinitions.PL]
 
 export enum RouteDefinitions {
+  Main = "/",
   AddTicket = "/tickets/add",
   AllActiveTickets = "/tickets/active",
   MyActiveTickets = "/tickets/active/mine",
@@ -25,6 +26,7 @@ export enum RouteDefinitions {
 }
 
 export type Routes =
+  | RouteDefinitions.Main
   | RouteDefinitions.AddTicket
   | RouteDefinitions.AllActiveTickets
   | RouteDefinitions.MyActiveTickets

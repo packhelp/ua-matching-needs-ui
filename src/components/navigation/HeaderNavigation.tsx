@@ -6,11 +6,12 @@ import {
   Box,
   Stack,
   useColorModeValue,
-  useDisclosure,
+  useDisclosure, Link,
 } from "@chakra-ui/react"
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons"
 import { NavigationLinks } from "./NavigationLinks"
 import { Logo } from "./Logo"
+import { RouteDefinitions } from "../../utils/routes"
 
 export const HeaderNavigation = () => {
   const bg = useColorModeValue("white", "blue.500")
@@ -24,6 +25,7 @@ export const HeaderNavigation = () => {
       mb={10}
       position="sticky"
       top={0}
+      zIndex="100000"
     >
       <Desktop />
       <Mobile />
@@ -39,7 +41,9 @@ const Desktop = () => {
       alignItems={"center"}
       display={{ base: "none", sm: "none", md: "flex" }}
     >
-      <Logo />
+      <Link href={RouteDefinitions.Main}>
+        <Logo />
+      </Link>
       <div style={{ flex: 1, margin: "0 16px" }}>
         <NavigationLinks />
       </div>

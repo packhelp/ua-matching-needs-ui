@@ -15,9 +15,9 @@ export const Login: FC = () => {
   const [phone, setPhone] = useState<string | undefined>()
   const [shouldValidate, setShouldValidate] = useState<boolean>(false)
 
-  if (typeof window !== "undefined" && isLogged) {
-    router.push(RouteDefinitions.AddTicket)
-  }
+  // if (typeof window !== "undefined" && isLogged) {
+  //   router.push(RouteDefinitions.AddTicket)
+  // }
 
   const parsedPhone = useMemo(() => {
     return parsePhoneNumberFromString(phone || "", "PL")
