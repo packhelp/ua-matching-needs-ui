@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import { Button } from "@chakra-ui/react"
+import { Button, useBreakpointValue } from "@chakra-ui/react"
 import {
   getRouteNameForLocale,
   Locale,
@@ -12,18 +12,9 @@ import { AddIcon, SearchIcon } from "@chakra-ui/icons"
 
 type NavigationLinkProps = {
   route: Routes
-  buttonType?: "show-all" | "add-new"
+  buttonType?: "primary" | "secondary"
 }
-// <Link href={RouteDefinitions.AllActiveTickets}>
-//   <Button
-//     leftIcon={<SearchIcon />}
-//     variant="solid"
-//     size="lg"
-//     colorScheme="blue"
-//   >
-//     {pageTranslations["show-all-button"]}
-//   </Button>
-// </Link>
+
 export const NavigationLink = (props: NavigationLinkProps) => {
   const { route, buttonType } = props
   const { locale, asPath } = useRouter()
@@ -33,14 +24,14 @@ export const NavigationLink = (props: NavigationLinkProps) => {
   const isRouteActive = asPath === route
 
   const colorScheme =
-    buttonType === "add-new" ? "yellow" :
-    buttonType === "show-all" ? "blue" :
+    buttonType === "secondary" ? "yellow" :
+    buttonType === "primary" ? "blue" :
     route === RouteDefinitions.Contact ? "blue" :
       undefined
 
   const icon =
-    buttonType === "add-new" ? <AddIcon /> :
-      buttonType === "show-all" ? <SearchIcon /> :
+    buttonType === "secondary" ? <AddIcon /> :
+      buttonType === "primary" ? <SearchIcon /> :
         undefined
 
   return (
@@ -49,8 +40,8 @@ export const NavigationLink = (props: NavigationLinkProps) => {
         colorScheme={colorScheme}
         size="sm"
         variant={isRouteActive || buttonType ? "solid" : "ghost"}
-        mr="10px"
         leftIcon={icon}
+        margin={useBreakpointValue({ base: "8px 0 0 0", sm: "0 8px 0 0" })}
       >
         {getRouteNameForLocale(route, currentLocale)}
       </Button>

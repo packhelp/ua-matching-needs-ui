@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react"
+import { Button, Flex, useBreakpointValue } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React from "react"
 import { useFinalLocale } from "../../hooks/final-locale"
@@ -18,22 +18,30 @@ export const NavigationLinks = () => {
   }
 
   return (
-    <>
-      <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="show-all" />
-      <NavigationLink route={RouteDefinitions.AddTicket} buttonType="add-new" />
-      {isLogged && (
-        <>
-          <NavigationLink route={RouteDefinitions.MyActiveTickets} />
-          <NavigationLink route={RouteDefinitions.MyInactiveTickets} />
-        </>
-      )}
-      {!isLogged && <NavigationLink route={RouteDefinitions.SignIn} />}
-      {isLogged && (
-        <Button size="sm" variant={"ghost"} onClick={onSignOut}>
-          {translations[finalLocale]["sign-out"]}
-        </Button>
-      )}
-      <NavigationLink route={RouteDefinitions.Contact} />
-    </>
+    <Flex
+      flexDirection={useBreakpointValue({ base: "column", sm: undefined })}
+      marginTop={useBreakpointValue({ base: "16px", sm: undefined })}
+      justifyContent={ "space-between" }
+    >
+      <Flex flexDirection={useBreakpointValue({ base: "column", sm: undefined })}>
+        <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="primary" />
+        <NavigationLink route={RouteDefinitions.AddTicket} buttonType="secondary" />
+      </Flex>
+      <Flex flexDirection={useBreakpointValue({ base: "column", sm: undefined })}>
+        {isLogged && (
+          <>
+            <NavigationLink route={RouteDefinitions.MyActiveTickets} />
+            <NavigationLink route={RouteDefinitions.MyInactiveTickets} />
+          </>
+        )}
+        {!isLogged && <NavigationLink route={RouteDefinitions.SignIn} />}
+        {isLogged && (
+          <Button size="sm" variant={"ghost"} onClick={onSignOut}>
+            {translations[finalLocale]["sign-out"]}
+          </Button>
+        )}
+        <NavigationLink route={RouteDefinitions.Contact} />
+      </Flex>
+    </Flex>
   )
 }
