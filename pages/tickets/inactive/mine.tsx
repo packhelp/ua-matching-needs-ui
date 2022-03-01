@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import { MyTickets } from "../../../src/components/_my-tickets"
+import { Tickets } from "../../../src/components/Tickets"
 import { TICKET_STATUS } from "../add"
 import { GetServerSidePropsContext } from "next"
 import axios from "axios"
@@ -12,7 +12,7 @@ interface MineInactiveTicketsProps {
 }
 
 const MineInactiveTickets: NextPage = (props: MineInactiveTicketsProps) => {
-  return <MyTickets status={TICKET_STATUS.EXPIRED} tickets={props.tickets} />
+  return <Tickets status={TICKET_STATUS.EXPIRED} tickets={props.tickets} />
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {

@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import { MyTickets } from "../../../src/components/_my-tickets"
+import { Tickets } from "../../../src/components/Tickets"
 import { TICKET_STATUS } from "../add"
 import { GetServerSidePropsContext } from "next"
 import { Session } from "next-auth"
@@ -13,7 +13,7 @@ interface MineActiveTicketsProps {
 }
 
 const MineActiveTickets: NextPage = (props: MineActiveTicketsProps) => {
-  return <MyTickets status={TICKET_STATUS.ACTIVE} tickets={props.tickets}/>
+  return <Tickets status={TICKET_STATUS.ACTIVE} tickets={props.tickets}/>
 }
 
 export async function protectedRoutes(
