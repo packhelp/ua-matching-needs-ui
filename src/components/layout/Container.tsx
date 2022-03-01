@@ -43,7 +43,7 @@ export const Container: FC = ({ children }) => {
           key="icon"
         ></link>
       </Head>
-      <div className="h-screen bg-gray-100 flex items-center justify-center">
+      <div className="py-4 min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="rounded-lg shadow-lg bg-white p-6 w-960 group">
           {children}
         </div>
