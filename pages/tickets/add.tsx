@@ -39,7 +39,7 @@ export enum TICKET_STATUS {
 export type TicketData = TicketFormData & {
   id: number
   expirationTimestamp: number
-  status: TICKET_STATUS
+  ticket_status: TICKET_STATUS
 }
 
 export type TicketDetails = TicketPostData & TicketData

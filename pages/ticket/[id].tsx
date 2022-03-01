@@ -50,7 +50,10 @@ const getTicketDataFromEndpoint = async (
 }
 
 export const isTicketActive = (ticket: TicketDetails): boolean => {
-  return ticket.expirationTimestamp > Date.now()
+  return (
+    ticket.expirationTimestamp > Date.now() &&
+    ticket.ticket_status === TICKET_STATUS.ACTIVE
+  )
 }
 
 const TicketDetails: NextPage = () => {
@@ -189,14 +192,14 @@ const TicketDetails: NextPage = () => {
           <Text>{ticket.what}</Text>
         </Stack>
 
-      {ticket.count && ticket.count > 0 ? (
-        <Stack mb={8}>
-          <Text color={"grey.200"} fontSize={"sm"}>
-            Ile potrzeba?
-          </Text>
-          <Text>{ticket.count}</Text>
-        </Stack>
-      ) : null}
+        {ticket.count && ticket.count > 0 ? (
+          <Stack mb={8}>
+            <Text color={"grey.200"} fontSize={"sm"}>
+              Ile potrzeba?
+            </Text>
+            <Text>{ticket.count}</Text>
+          </Stack>
+        ) : null}
         {ticket.where && (
           <Stack mb={8}>
             <Text color={"grey.200"} fontSize={"sm"}>
