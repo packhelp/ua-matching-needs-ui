@@ -11,7 +11,7 @@ import {
 export const FooterNavigation = () => {
   const bg = useColorModeValue("white", "blue.500")
   return (
-    <chakra.footer bg={bg} w="full" px={{ base: 2, sm: 4 }} py={4}>
+    <div className="bg-gray-100 flex items-center justify-center">
       <Flex justifyContent={"center"} alignItems={"center"}>
         <Box p="2">
           <Image src="/svg/poland-flag.svg" alt="Poland" boxSize="15px" />
@@ -25,6 +25,6 @@ export const FooterNavigation = () => {
           <Image src="/svg/ukraine-flag.svg" alt="Ukraine" boxSize="15px" />
         </Box>
       </Flex>
-    </chakra.footer>
+    </div>
   )
 }

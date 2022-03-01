@@ -43,11 +43,11 @@ export const Container: FC = ({ children }) => {
           key="icon"
         ></link>
       </Head>
-      <Flex justifyContent={"center"} alignItems={"center"}>
-        <Box w="100%" p={4} borderWidth="1px" borderRadius="lg">
+      <div className="h-screen bg-gray-100 flex items-center justify-center">
+        <div className="rounded-lg shadow-lg bg-white p-6 w-960 group">
           {children}
-        </Box>
-      </Flex>
+        </div>
+      </div>
     </>
   )
 }
