@@ -10,6 +10,7 @@ export const translations: Translation = {
     "/tickets/active/mine": "Moje aktywne tickety",
     "/tickets/inactive/mine": "Moje nieaktywne tickety",
     "/sign-in": "Zaloguj się",
+    "/contact": "Kontakt",
     pages: {
       "sign-in": {
         title: "Zaloguj się",
