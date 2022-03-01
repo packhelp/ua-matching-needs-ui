@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 import Link from "next/link"
 import { Button, useBreakpointValue } from "@chakra-ui/react"
 import {
@@ -12,12 +12,13 @@ import { AddIcon, SearchIcon } from "@chakra-ui/icons"
 
 type NavigationLinkProps = {
   route: Routes
+  key?: string
   isMobile?: boolean
   buttonType?: "primary" | "secondary"
 }
 
 export const NavigationLink = (props: NavigationLinkProps) => {
-  const { route, buttonType, isMobile } = props
+  const { route, buttonType, isMobile, key } = props
   const { locale, asPath } = useRouter()
 
   const currentLocale = locale as Locale
@@ -54,7 +55,7 @@ export const NavigationLink = (props: NavigationLinkProps) => {
   }, [isRouteActive, isMobile])
 
   return (
-    <a href={route} className={classList}>
+    <a href={route} className={classList} key={key}>
       {" "}
       {getRouteNameForLocale(route, currentLocale)}{" "}
     </a>
