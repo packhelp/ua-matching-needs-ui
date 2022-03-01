@@ -68,10 +68,11 @@ const TicketDetails: NextPage = () => {
 
   const removeTicketMutation = useMutation<number, Error, number>(
     (id: number) => {
-      console.log("id :>>", id)
-
-      return axios.delete(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`
+      return axios.patch(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
+        {
+          ticket_status: TICKET_STATUS.DELETED,
+        }
       )
     },
     {
