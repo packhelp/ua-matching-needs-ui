@@ -44,7 +44,7 @@ export const Login: FC = () => {
 
     signIn(phoneNumber as string)
     router.push(RouteDefinitions.AddTicket)
-  }, [canSubmit, phoneNumber])
+  }, [canSubmit, phoneNumber, router])
 
   return (
     <Container>

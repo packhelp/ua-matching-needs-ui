@@ -82,7 +82,7 @@ const TicketDetails: NextPage = () => {
     )
 
     return `${fullDescription}...${translations[finalLocale]["pages"]["ticket"]["description"]["read-more"]}`
-  }, [ticket?.what, finalLocale])
+  }, [ticket?.what, finalLocale, ticket])
 
   const removeTicketMutation = useMutation<number, Error, number>(
     (id: number) => {
