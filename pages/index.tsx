@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
   Flex,
-  useBreakpointValue,
+  useBreakpointValue, HStack,
 } from "@chakra-ui/react"
 import * as React from "react"
 import { NextPage } from "next"
@@ -43,18 +43,22 @@ const MainPage: NextPage = () => {
               {pageTranslations.subheader}
             </Text>
           </Stack>
-          <Flex
-            flexDirection={useBreakpointValue({ base: "column", md: "row" })}
-            justifyContent="space-evenly"
-          >
+          {/*<Flex*/}
+          {/*  flexDirection={useBreakpointValue({ base: "column", md: "row" })}*/}
+          {/*  justifyContent="space-evenly"*/}
+          {/*>*/}
+            <HStack
+              justifyContent="space-evenly"
+              display={{ base: 'none', lg: 'flex' }}
+            >
             <Link href={RouteDefinitions.AllActiveTickets}>
               <Button
                 leftIcon={<SearchIcon />}
                 variant="solid"
                 size="lg"
                 colorScheme="blue"
-                marginBottom={useBreakpointValue({ base: "8px", md: "0" })}
-                isFullWidth={useBreakpointValue({ base: true, md: false })}
+                marginBottom={0}
+                isFullWidth={false}
               >
                 {pageTranslations["show-all-button"]}
               </Button>
@@ -65,7 +69,37 @@ const MainPage: NextPage = () => {
                 variant="solid"
                 size="lg"
                 colorScheme="yellow"
-                isFullWidth={useBreakpointValue({ base: true, md: false })}
+                isFullWidth={false}
+              >
+                {pageTranslations["add-new-button"]}
+              </Button>
+            </Link>
+          </HStack>
+          <Flex
+            flexDirection="column"
+            marginTop="16px"
+            justifyContent={ "space-between" }
+            display={{ base: 'flex', lg: 'none' }}
+          >
+            <Link href={RouteDefinitions.AllActiveTickets}>
+              <Button
+                leftIcon={<SearchIcon />}
+                variant="solid"
+                size="lg"
+                colorScheme="blue"
+                marginBottom={8}
+                isFullWidth={true}
+              >
+                {pageTranslations["show-all-button"]}
+              </Button>
+            </Link>
+            <Link href={RouteDefinitions.AddTicket}>
+              <Button
+                leftIcon={<AddIcon />}
+                variant="solid"
+                size="lg"
+                colorScheme="yellow"
+                isFullWidth={true}
               >
                 {pageTranslations["add-new-button"]}
               </Button>
@@ -79,7 +113,7 @@ const MainPage: NextPage = () => {
             align="center"
             textAlign="center"
           >
-            <Heading size={useBreakpointValue({ base: "md", md: "lg" })}>
+            <Heading size={useBreakpointValue({ base: "md", lg: "lg" })}>
               {pageTranslations["steps-section"]["header"]}
             </Heading>
           </Stack>
