@@ -15,6 +15,7 @@ import { getUserInfo } from "../../src/services/auth"
 import { useRouter } from "next/router"
 import { RouteDefinitions } from "../../src/utils/routes"
 import { toast } from "react-toastify"
+import dayjs from "dayjs"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
@@ -38,7 +39,9 @@ export enum TICKET_STATUS {
 
 export type TicketData = TicketFormData & {
   id: number
+  // @deprecated
   expirationTimestamp: number
+  expirationTimestampSane: string
   ticket_status: TICKET_STATUS
 }
 
@@ -80,7 +83,9 @@ const AddTicket: NextPage = () => {
     (newTicket) => {
       const { phone, what, where, who, count } = newTicket
       const now = new Date()
+      // @deprecated
       const expirationTimestamp = now.setHours(now.getHours() + 3)
+      const expirationTimestampSane = dayjs().add(3, "hour").format()
 
       const newTicketData = {
         phone,
@@ -89,7 +94,9 @@ const AddTicket: NextPage = () => {
         where,
         who,
         count: count ? count : 0,
+        // @deprecated
         expirationTimestamp,
+        expirationTimestampSane,
         phone_public: true,
       }
 

@@ -15,8 +15,8 @@ import { TICKET_STATUS, TicketDetails } from "../tickets/add"
 import Error from "next/error"
 import { getUserInfo } from "../../src/services/auth"
 import { toast } from "react-toastify"
-import { format } from "date-fns"
-import { pl } from "date-fns/locale"
+import "dayjs/locale/pl"
+import "dayjs/plugin/relativeTime"
 import {
   FacebookShareButton,
   TelegramShareButton,
@@ -33,6 +33,7 @@ import { useMemo } from "react"
 import { metaData } from "../../src/utils/meta-data"
 import { translations } from "../../src/utils/translations"
 import { useFinalLocale } from "../../src/hooks/final-locale"
+import dayjs from "dayjs"
 
 const getTicketDataFromEndpoint = async (
   id: number
@@ -41,17 +42,13 @@ const getTicketDataFromEndpoint = async (
 
   const response = await axios.get(url)
   const { data } = response.data
-  const ticketDetails: TicketDetails = {
-    ...data,
-    expirationTimestamp: parseInt(data.expirationTimestamp),
-  }
 
-  return ticketDetails
+  return data
 }
 
 export const isTicketActive = (ticket: TicketDetails): boolean => {
   return (
-    ticket.expirationTimestamp > Date.now() &&
+    dayjs(ticket.expirationTimestampSane) > dayjs(Date.now()) &&
     ticket.ticket_status === TICKET_STATUS.ACTIVE
   )
 }
@@ -128,11 +125,10 @@ const TicketDetails: NextPage = () => {
     }
   }
 
-  const formatedExpiration = ticket.expirationTimestamp
-    ? format(ticket.expirationTimestamp, "dd MMMM yyyy HH:mm", {
-        locale: pl,
-      })
-    : null
+  const formattedExpiration = dayjs(ticket.expirationTimestampSane)
+    .locale("pl")
+    .format("DD.MM.YYYY HH:mm")
+    .toString()
 
   const ticketUrl = window.location.href
 
@@ -177,7 +173,7 @@ const TicketDetails: NextPage = () => {
             <Text color={"grey.500"}>
               Aktywne do:{" "}
               <Text as={"span"} fontWeight="bold">
-                {formatedExpiration}
+                {formattedExpiration}
               </Text>
             </Text>
           ) : (
