@@ -1,13 +1,17 @@
 import { Button, Flex, useBreakpointValue } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useMemo } from "react"
 import { useFinalLocale } from "../../hooks/final-locale"
 import { getUserInfo, signOut } from "../../services/auth"
 import { RouteDefinitions } from "../../utils/routes"
 import { translations } from "../../utils/translations"
 import { NavigationLink } from "./NavigationLink"
 
-export const NavigationLinks = () => {
+export interface NavigationLinksProps {
+  type: "desktop" | "mobile"
+}
+
+export const NavigationLinks = ({ type }: NavigationLinksProps) => {
   const isLogged = getUserInfo()
   const finalLocale = useFinalLocale()
   const router = useRouter()
@@ -17,35 +21,44 @@ export const NavigationLinks = () => {
     }
   }
 
+  const isMobileMenu = useMemo(() => type === "mobile", [type])
+
   return (
-    <Flex
-      flexDirection={useBreakpointValue({ base: "column", lg: "row" })}
-      marginTop={useBreakpointValue({ base: "16px", lg: "0" })}
-      justifyContent={ "space-between" }
-    >
-      <Flex flexDirection={useBreakpointValue({ base: "column", lg: "row" })}>
-        <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="primary" />
-        <NavigationLink route={RouteDefinitions.AddTicket} buttonType="secondary" />
-      </Flex>
-      <Flex flexDirection={useBreakpointValue({ base: "column", lg: "row" })}>
-        {isLogged && (
-          <>
-            <NavigationLink route={RouteDefinitions.MyActiveTickets} />
-            <NavigationLink route={RouteDefinitions.MyInactiveTickets} />
-          </>
-        )}
-        {!isLogged && <NavigationLink route={RouteDefinitions.SignIn} />}
-        {isLogged && (
-          <Button
-            size="sm"
-            variant={"ghost"}
-            onClick={onSignOut}
-          >
-            {translations[finalLocale]["sign-out"]}
-          </Button>
-        )}
-        <NavigationLink route={RouteDefinitions.Contact} />
-      </Flex>
-    </Flex>
+    <div className={!isMobileMenu ? "flex" : ""}>
+      {!isLogged && (
+        <NavigationLink
+          route={RouteDefinitions.SignIn}
+          isMobile={isMobileMenu}
+        />
+      )}
+      <NavigationLink
+        route={RouteDefinitions.AllActiveTickets}
+        isMobile={isMobileMenu}
+      />
+      {isLogged && isMobileMenu && (
+        <>
+          <NavigationLink
+            route={RouteDefinitions.MyActiveTickets}
+            isMobile={isMobileMenu}
+          />
+          <NavigationLink
+            route={RouteDefinitions.MyInactiveTickets}
+            isMobile={isMobileMenu}
+          />
+        </>
+      )}
+      <NavigationLink
+        route={RouteDefinitions.Contact}
+        isMobile={isMobileMenu}
+      />
+      {isLogged && isMobileMenu && (
+        <button
+          className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium sm:pl-5 sm:pr-6 text-left"
+          onClick={onSignOut}
+        >
+          {translations[finalLocale]["sign-out"]}
+        </button>
+      )}
+    </div>
   )
 }
