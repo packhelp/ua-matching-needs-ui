@@ -1,11 +1,12 @@
+import React from "react"
 import {
   Box,
-  Container,
   Heading,
   Link,
   Spinner,
-  Stack,
   Text,
+  Flex,
+  Divider,
 } from "@chakra-ui/react"
 import { useQuery } from "react-query"
 import axios from "axios"
@@ -57,45 +58,67 @@ export const Tickets = ({
   )
 
   return (
-    <Container>
-      <Heading mb={4}>
-        {status === TICKET_STATUS.ACTIVE ? "Aktywne" : "Nieaktywne"}{" "}
-        zapotrzebowanie
-      </Heading>
-
-      {tickets && <Text>Wszystkich zgłoszeń: {tickets.length}</Text>}
+    <Box>
+      <Flex justifyContent="space-between">
+        <Heading size="md" mb={4}>
+          {status === TICKET_STATUS.ACTIVE ? "Aktywne" : "Nieaktywne"}{" "}
+          zapotrzebowanie
+        </Heading>
+        {tickets && <Text>Zgłoszeń: {tickets.length}</Text>}
+      </Flex>
 
       {isLoading && <Spinner />}
 
-      <Stack>
+      <Flex flexDirection="column">
         {tickets &&
           tickets.map((ticket) => {
+            const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
             return (
               <Link
                 key={ticket.id}
+                marginBottom="16px"
                 href={RouteDefinitions.TicketDetails.replace(":id", ticket.id)}
               >
                 <Box
-                  maxW="sm"
                   borderWidth="1px"
-                  borderRadius="lg"
-                  overflow="hidden"
+                  borderRadius="md"
+                  padding="16px"
                 >
-                  <Box
-                    mt="1"
-                    p={"4"}
-                    fontWeight="semibold"
-                    as="h4"
-                    lineHeight="tight"
-                    isTruncated
-                  >
-                    {ticket.what}
-                  </Box>
+                  <Flex justifyContent="space-between">
+                    <Box />
+                    <Box>
+                      <Heading size="xs">
+                        {dateFormatted}
+                      </Heading>
+                    </Box>
+                  </Flex>
+
+                  <Divider marginBottom="16px" marginTop="16px"/>
+
+                  <Flex flexDirection="column" justifyContent="space-between">
+                    <Heading size="xs" marginBottom="8px">
+                      Co potrzebne:
+                    </Heading>
+                    <Text fontSize='sm'>
+                      {ticket.what}
+                    </Text>
+                  </Flex>
+
+                  <Divider marginBottom="16px" marginTop="16px"/>
+
+                  <Flex flexDirection="column" justifyContent="space-between">
+                    <Heading size="xs" marginBottom="8px">
+                      Gdzie potrzebne:
+                    </Heading>
+                    <Text fontSize='sm'>
+                      {ticket.where}
+                    </Text>
+                  </Flex>
                 </Box>
               </Link>
             )
           })}
-      </Stack>
-    </Container>
+      </Flex>
+    </Box>
   )
 }
