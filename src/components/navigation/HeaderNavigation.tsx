@@ -24,7 +24,6 @@ export const HeaderNavigation = () => {
       px={{ base: 2, sm: 4 }}
       py={4}
       shadow="md"
-      mb={10}
       position="sticky"
       top={0}
       zIndex="100000"
