@@ -88,7 +88,7 @@ const AddTicket: NextPage = () => {
         what,
         where,
         who,
-        count,
+        count: count ? count : 0,
         expirationTimestamp,
         phone_public: true,
       }
