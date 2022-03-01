@@ -18,19 +18,29 @@ export const translations: Translation = {
         placeholder: "Numer telefonu",
         next: "Dalej",
       },
-      "main": {
+      main: {
         header: "Szybkie i proste zarządzenie potrzebami organizatorów",
-        subheader: "Zgłoś potrzebę a my ją przekażemy dalej. A jeśli skończy się potrzeba, usuniesz wpis jednym kliknięciem.",
+        subheader:
+          "Zgłoś potrzebę a my ją przekażemy dalej. A jeśli skończy się potrzeba, usuniesz wpis jednym kliknięciem.",
         "show-all-button": "Sprawdź potrzeby",
         "add-new-button": "Zgłoś potrzebę",
         "steps-section": {
           header: "Jak to działa?",
           "step-1-title": "Zgłaszasz potrzebę",
-          "step-1-description": "Podając numer telefonu, co potrzebujesz i gdzie to dostarczyć zgłaszasz u nas potrzebę.",
+          "step-1-description":
+            "Podając numer telefonu, co potrzebujesz i gdzie to dostarczyć zgłaszasz u nas potrzebę.",
           "step-2-title": "My publikujemy ją i szukamy rozwiązania",
-          "step-2-description": "Automatycznie publikujemy twoją potrzebę i wysyłamy dalej do organizacji i ludzi, którzy mają to czego potrzebujesz.",
+          "step-2-description":
+            "Automatycznie publikujemy twoją potrzebę i wysyłamy dalej do organizacji i ludzi, którzy mają to czego potrzebujesz.",
           "step-3-title": "Dezaktywujemy stare ogłoszenia",
-          "step-3-description": "Ogłoszenie wygasa automatycznie po 3 godzinach, lub wtedy kiedy je usuniesz, tak byś nie dostawał więcej telefonów",
+          "step-3-description":
+            "Ogłoszenie wygasa automatycznie po 3 godzinach, lub wtedy kiedy je usuniesz, tak byś nie dostawał więcej telefonów",
+        },
+      },
+      ticket: {
+        description: {
+          need: "Potrzeba",
+          "read-more": "Czytaj więcej",
         },
       },
     },
