@@ -91,7 +91,7 @@ export const Tickets = ({
                       <Box>
                         <Heading size="xs">
                           {ticket.need_tag_id.map((tag) =>
-                            <Tag colorScheme='yellow' variant="solid" borderRadius="full">{tag.need_tag_id.name}</Tag>
+                            <Tag colorScheme='yellow' key={tag.need_tag_id} variant="solid" borderRadius="full">{tag.need_tag_id.name}</Tag>
                           )}
                         </Heading>
                       </Box>
