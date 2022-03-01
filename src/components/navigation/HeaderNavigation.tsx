@@ -41,7 +41,8 @@ const Desktop = () => {
       justifyContent={"strech"}
       alignContent={"center"}
       alignItems={"center"}
-      display={{ base: "none", sm: "none", md: "flex" }}
+      textAlign={"center"}
+      display={{ base: "none", sm: "none", lg: "flex" }}
     >
       <Link href={RouteDefinitions.Main}>
         <Logo />
@@ -70,7 +71,7 @@ const Mobile = () => {
     <Flex
       alignItems={"center"}
       flexDirection={"column"}
-      display={{ base: "flex", sm: "flex", md: "none" }}
+      display={{ base: "flex", sm: "flex", lg: "none" }}
     >
       <Flex
         alignItems={"center"}
@@ -80,7 +81,7 @@ const Mobile = () => {
       >
         <Logo />
         <IconButton
-          display={{ base: "flex", md: "none" }}
+          display={{ base: "flex", lg: "none" }}
           alignItems={"center"}
           aria-label="Open menu"
           fontSize="20px"

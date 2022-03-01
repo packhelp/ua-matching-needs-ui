@@ -19,10 +19,10 @@ export const NavigationLinks = () => {
 
   return (
     <>
-      <NavigationLink route={RouteDefinitions.AllActiveTickets} />
+      <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="show-all" />
+      <NavigationLink route={RouteDefinitions.AddTicket} buttonType="add-new" />
       {isLogged && (
         <>
-          <NavigationLink route={RouteDefinitions.AddTicket} />
           <NavigationLink route={RouteDefinitions.MyActiveTickets} />
           <NavigationLink route={RouteDefinitions.MyInactiveTickets} />
         </>
