@@ -228,7 +228,7 @@ const TicketDetails: NextPage = () => {
 
                   {/* Twitter */}
                   <TwitterShareButton url={ticketUrl}>
-                    <button type="button" className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button type="button" className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" className="iconify iconify--logos w-7 h-7" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 209">
                         <path fill="#55acee" d="M256 25.45a105.04 105.04 0 0 1-30.166 8.27c10.845-6.5 19.172-16.793 23.093-29.057a105.183 105.183 0 0 1-33.351 12.745C205.995 7.201 192.346.822 177.239.822c-29.006 0-52.523 23.516-52.523 52.52c0 4.117.465 8.125 1.36 11.97c-43.65-2.191-82.35-23.1-108.255-54.876c-4.52 7.757-7.11 16.78-7.11 26.404c0 18.222 9.273 34.297 23.365 43.716a52.312 52.312 0 0 1-23.79-6.57c-.003.22-.003.44-.003.661c0 25.447 18.104 46.675 42.13 51.5a52.592 52.592 0 0 1-23.718.9c6.683 20.866 26.08 36.05 49.062 36.475c-17.975 14.086-40.622 22.483-65.228 22.483c-4.24 0-8.42-.249-12.529-.734c23.243 14.902 50.85 23.597 80.51 23.597c96.607 0 149.434-80.031 149.434-149.435c0-2.278-.05-4.543-.152-6.795A106.748 106.748 0 0 0 256 25.45"></path>
                       </svg>
@@ -237,7 +237,7 @@ const TicketDetails: NextPage = () => {
 
                   {/* Telegram */}
                   <TelegramShareButton url={ticketUrl}>
-                    <button type="button" className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button type="button" className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" className="iconify iconify--logos w-7 h-7" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256">
                         <path fill="#40B3E0" d="M128 0C57.307 0 0 57.307 0 128s57.307 128 128 128s128-57.307 128-128S198.693 0 128 0Z"></path>
                         <path fill="#FFF" d="M190.283 73.63L167.42 188.899s-3.197 7.994-11.99 4.157l-52.758-40.448l-19.184-9.272l-32.294-10.872s-4.956-1.758-5.436-5.595c-.48-3.837 5.596-5.915 5.596-5.915l128.376-50.36s10.552-4.636 10.552 3.038"></path>
@@ -249,7 +249,7 @@ const TicketDetails: NextPage = () => {
 
                   {/* Facebook */}
                   <FacebookShareButton url={ticketUrl}>
-                    <button type="button" className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button type="button" className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" className="iconify iconify--logos w-7 h-7" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256">
                         <path fill="#395185" d="M241.871 256.001c7.802 0 14.129-6.326 14.129-14.129V14.129C256 6.325 249.673 0 241.871 0H14.129C6.324 0 0 6.325 0 14.129v227.743c0 7.803 6.324 14.129 14.129 14.129h227.742"></path>
                         <path fill="#FFF" d="M176.635 256.001v-99.137h33.277l4.982-38.635h-38.259V93.561c0-11.186 3.107-18.809 19.148-18.809l20.459-.009V40.188c-3.54-.471-15.684-1.523-29.812-1.523c-29.498 0-49.692 18.005-49.692 51.071v28.493h-33.362v38.635h33.362v99.137h39.897"></path>
@@ -259,7 +259,7 @@ const TicketDetails: NextPage = () => {
 
                   {/* Link URL */}
                   <a href={ticketUrl} target="_blank" rel="noreferrer">
-                    <button type="button" className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button type="button" className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" className="iconify iconify--logos w-7 h-7" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                         <g fill="none" stroke="#888888" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
                           <path d="M10 14a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-.5.5"></path>
@@ -337,8 +337,8 @@ const TicketDetails: NextPage = () => {
               <a href={`tel:${ticket.phone}`}
                 className="inline-flex items-center w-full place-content-center 
                 rounded-md py-4 border border-transparent shadow-sm text-xl 
-                font-medium text-white bg-indigo-600 hover:bg-indigo-700 
-                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 
+                font-medium text-white bg-blue-600 hover:bg-blue-700 
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
                 text-white">
                 Zadzwoń {ticket.phone}
                 <svg className="ml-3 -mr-1 h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -351,7 +351,7 @@ const TicketDetails: NextPage = () => {
                 className="inline-flex items-center w-full place-content-center py-4
                 border border-transparent shadow-sm text-xl font-medium rounded-md text-white
                 bg-slate-400 hover:bg-slate-500 focus:outline-none focus:ring-2
-                focus:ring-offset-2 focus:ring-indigo-500 text-white">
+                focus:ring-offset-2 focus:ring-blue-500 text-white">
                 Chcesz pomóc? Zadzwoń {ticket.phone}
                 <svg className="ml-3 -mr-1 h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M17.924 2.617a.997.997 0 00-.215-.322l-.004-.004A.997.997 0 0017 2h-4a1 1 0 100 2h1.586l-3.293 3.293a1 1 0 001.414 1.414L16 5.414V7a1 1 0 102 0V3a.997.997 0 00-.076-.383z" />
