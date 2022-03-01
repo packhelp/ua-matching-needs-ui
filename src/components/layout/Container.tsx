@@ -4,7 +4,10 @@ import { metaData } from "../../utils/meta-data"
 import Head from "next/head"
 
 export const Container: FC = ({ children }) => {
-  const url = window.location.href
+  let url = ""
+  if (typeof window !== "undefined") {
+    url = window.location.href
+  }
 
   return (
     <>
