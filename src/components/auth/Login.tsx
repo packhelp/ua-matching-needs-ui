@@ -47,11 +47,11 @@ export const Login: FC = () => {
   }, [canSubmit, phoneNumber])
 
   return (
-    <Container>
+    <Container className="px-4 py-5 sm:p-6">
       <form onSubmit={submitForm}>
-        <Heading as="h1" size="1xl" mb={4}>
+        <h1 className="text-2xl mb-4 font-semibold">
           {translations[finalLocale]["pages"]["sign-in"]["title"]}
-        </Heading>
+        </h1>
 
         <FormLabel>
           {translations[finalLocale]["pages"]["sign-in"]["label"]}
