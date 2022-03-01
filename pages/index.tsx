@@ -1,4 +1,13 @@
-import { Box, Button, Container, Heading, Link, Stack, Text, useBreakpointValue } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Link,
+  Stack,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react"
 import * as React from "react"
 import { NextPage } from "next"
 import { AddIcon, SearchIcon } from "@chakra-ui/icons"
@@ -15,7 +24,11 @@ const MainPage: NextPage = () => {
     <Box as="section" bg="bg-surface">
       <Container py={{ base: "16", md: "24" }}>
         <Stack spacing={{ base: "8", md: "10" }} mb="80px">
-          <Stack spacing={{ base: "4", md: "5" }} align="center" textAlign="center">
+          <Stack
+            spacing={{ base: "4", md: "5" }}
+            align="center"
+            textAlign="center"
+          >
             <Heading size={useBreakpointValue({ base: "lg", md: "2xl" })}>
               {pageTranslations.header}
             </Heading>
@@ -29,36 +42,64 @@ const MainPage: NextPage = () => {
               {pageTranslations.subheader}
             </Text>
           </Stack>
-          <Stack spacing="3" direction={{ base: "column", sm: "row" }} justify="center">
+          <Stack
+            spacing="3"
+            direction={{ base: "column", sm: "row" }}
+            justify="center"
+          >
             <Link href={RouteDefinitions.AllActiveTickets}>
-              <Button leftIcon={<SearchIcon />} variant="solid" size="lg" colorScheme="blue">
+              <Button
+                leftIcon={<SearchIcon />}
+                variant="solid"
+                size="lg"
+                colorScheme="blue"
+              >
                 {pageTranslations["show-all-button"]}
               </Button>
             </Link>
             <Link href={RouteDefinitions.AddTicket}>
-              <Button leftIcon={<AddIcon />} variant="solid" size="lg" colorScheme="yellow">
+              <Button
+                leftIcon={<AddIcon />}
+                variant="solid"
+                size="lg"
+                colorScheme="yellow"
+              >
                 {pageTranslations["add-new-button"]}
               </Button>
             </Link>
           </Stack>
         </Stack>
         <Stack>
-          <Stack spacing={{ base: "4", md: "5" }} mb="5" align="center" textAlign="center">
+          <Stack
+            spacing={{ base: "4", md: "5" }}
+            mb="5"
+            align="center"
+            textAlign="center"
+          >
             <Heading size={useBreakpointValue({ base: "md", md: "lg" })}>
               {pageTranslations["steps-section"]["header"]}
             </Heading>
           </Stack>
-          <Step number="1." title={pageTranslations["steps-section"]["step-1-title"]}>
+          <Step
+            number="1."
+            title={pageTranslations["steps-section"]["step-1-title"]}
+          >
             {pageTranslations["steps-section"]["step-1-description"]}
           </Step>
-          <Step number="2." title={pageTranslations["steps-section"]["step-2-title"]}>
+          <Step
+            number="2."
+            title={pageTranslations["steps-section"]["step-2-title"]}
+          >
             {pageTranslations["steps-section"]["step-2-description"]}
           </Step>
-          <Step number="3." title={pageTranslations["steps-section"]["step-3-title"]}>
+          <Step
+            number="3."
+            title={pageTranslations["steps-section"]["step-3-title"]}
+          >
             {pageTranslations["steps-section"]["step-3-description"]}
           </Step>
         </Stack>
-        <div align="center">
+        <Stack align="center">
           <Link href={RouteDefinitions.AddTicket}>
             <Button
               leftIcon={<AddIcon />}
@@ -70,7 +111,7 @@ const MainPage: NextPage = () => {
               {pageTranslations["add-new-button"]}
             </Button>
           </Link>
-        </div>
+        </Stack>
       </Container>
     </Box>
   )

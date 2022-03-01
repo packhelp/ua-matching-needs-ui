@@ -49,7 +49,7 @@ const getTicketDataFromEndpoint = async (
   return ticketDetails
 }
 
-const isTicketActive = (ticket: TicketDetails): boolean => {
+export const isTicketActive = (ticket: TicketDetails): boolean => {
   return ticket.expirationTimestamp > Date.now()
 }
 
