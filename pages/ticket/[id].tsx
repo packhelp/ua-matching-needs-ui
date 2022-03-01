@@ -136,7 +136,12 @@ const TicketDetails: NextPage = () => {
   return (
     <>
       <Head>
-        <meta property="og:description" content={description} />
+        <meta property="description" content={description} key="description" />
+        <meta
+          property="og:description"
+          content={description}
+          key="og-description"
+        />
       </Head>
       <Container>
         <Heading as="h1" size="xl">
