@@ -8,10 +8,10 @@ import { translations } from "../../utils/translations"
 import { NavigationLink } from "./NavigationLink"
 
 export interface NavigationLinksProps {
-  type: "desktop" | "mobile"
+  type?: "desktop" | "mobile"
 }
 
-export const NavigationLinks = ({ type }: NavigationLinksProps) => {
+export const NavigationLinks = ({ type = "desktop" }: NavigationLinksProps) => {
   const isLogged = getUserInfo()
   const finalLocale = useFinalLocale()
   const router = useRouter()

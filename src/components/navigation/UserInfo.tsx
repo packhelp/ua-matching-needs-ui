@@ -64,13 +64,11 @@ export const UserInfo = () => {
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="user-menu-button"
-            tabindex="-1"
           >
             <a
               href={RouteDefinitions.MyActiveTickets}
               className="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
-              tabindex="-1"
               id="user-menu-item-0"
             >
               {getRouteNameForLocale(RouteDefinitions.MyActiveTickets)}
@@ -79,7 +77,6 @@ export const UserInfo = () => {
               href={RouteDefinitions.MyInactiveTickets}
               className="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
-              tabindex="-1"
               id="user-menu-item-1"
             >
               {getRouteNameForLocale(RouteDefinitions.MyInactiveTickets)}
@@ -89,7 +86,6 @@ export const UserInfo = () => {
               href="#"
               className="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
-              tabindex="-1"
               id="user-menu-item-2"
             >
               {translations[finalLocale]["sign-out"]}
