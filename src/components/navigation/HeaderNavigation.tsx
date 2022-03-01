@@ -71,6 +71,7 @@ const Mobile = () => {
       alignItems={"center"}
       flexDirection={"column"}
       display={{ base: "flex", sm: "flex", lg: "none" }}
+      mb={4}
     >
       <Flex
         alignItems={"center"}
