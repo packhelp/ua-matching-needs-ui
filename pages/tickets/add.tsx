@@ -132,7 +132,7 @@ const AddTicket: NextPage = () => {
   }
 
   return (
-    <Container>
+    <Container className="px-4 py-5 sm:p-6">
       <form onSubmit={handleSubmit(submitNeed)}>
         <Stack>
           <Heading as="h1" size="xl">

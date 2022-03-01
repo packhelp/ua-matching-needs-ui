@@ -6,7 +6,7 @@ import Link from "next/link"
 
 const Contact: NextPage = () => {
   return (
-    <Container>
+    <Container className="px-4 py-5 sm:p-6">
       <Heading as="h1" size="xl" mb="20px">
         Skontaktuj się z nami przez:
       </Heading>

@@ -60,7 +60,7 @@ export const Tickets = ({
   )
 
   return (
-    <Box>
+    <Box className="px-4 py-5 sm:p-6">
       <Flex justifyContent="space-between">
         <Heading size="md" mb={4}>
           {status === TICKET_STATUS.ACTIVE ? "Aktywne" : "Nieaktywne"}{" "}
