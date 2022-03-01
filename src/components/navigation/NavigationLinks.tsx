@@ -36,7 +36,11 @@ export const NavigationLinks = () => {
         )}
         {!isLogged && <NavigationLink route={RouteDefinitions.SignIn} />}
         {isLogged && (
-          <Button size="sm" variant={"ghost"} onClick={onSignOut}>
+          <Button
+            size="sm"
+            variant={"ghost"}
+            onClick={onSignOut}
+          >
             {translations[finalLocale]["sign-out"]}
           </Button>
         )}

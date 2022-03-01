@@ -41,8 +41,8 @@ export const NavigationLink = (props: NavigationLinkProps) => {
         size="sm"
         variant={isRouteActive || buttonType ? "solid" : "ghost"}
         leftIcon={icon}
-        marginRight={useBreakpointValue({ base: undefined, sm: "8px" })}
-        marginTop={useBreakpointValue({ base: "8px", sm: undefined })}
+        marginRight={useBreakpointValue({ base: "0", sm: "8px" })}
+        marginTop={useBreakpointValue({ base: "8px", sm: "0" })}
       >
         {getRouteNameForLocale(route, currentLocale)}
       </Button>
