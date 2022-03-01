@@ -136,6 +136,8 @@ const TicketDetails: NextPage = () => {
   const userInfo = getUserInfo()
   const isOwner = userInfo && userInfo.phone === ticket.phone
 
+  const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
+
   const removeTicket = () => {
     if (id) {
       removeTicketMutation.mutate(Number(id))
@@ -216,7 +218,7 @@ const TicketDetails: NextPage = () => {
               <div className="sm:col-span-2">
                 <dt className="text-sm font-medium text-gray-600">Dodano</dt>
                 <dd className="mt-1 text-sm text-gray-600">
-                  1 marca 9:34 (6h32m temu)
+                  {dateFormatted}
                 </dd>
               </div>
 
