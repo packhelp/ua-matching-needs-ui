@@ -2,7 +2,6 @@ import React from "react"
 import {
   Box,
   Heading,
-  Link,
   Spinner,
   Text,
   Flex,
@@ -14,7 +13,7 @@ import axios from "axios"
 import { RouteDefinitions } from "../utils/routes"
 import { isTicketActive } from "../../pages/ticket/[id]"
 import { TICKET_STATUS } from "../../pages/tickets/add"
-import { getUserInfo, signOut } from "../services/auth"
+import { getUserInfo } from "../services/auth"
 import { useRouter } from "next/router"
 
 const isMineTicket = (item, userInfo) => {
@@ -76,6 +75,7 @@ export const Tickets = ({
         {tickets &&
           tickets.map((ticket) => {
             const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
+            const tickerUrl = RouteDefinitions.TicketDetails.replace(":id", ticket.id)
             return (
               <Box
                 key={ticket.id}
@@ -124,9 +124,9 @@ export const Tickets = ({
                     borderRadius="md"
                     borderTopRadius={0}
                     colorScheme={"blue"}
-                    onClick={() => router.push(RouteDefinitions.TicketDetails.replace(":id", ticket.id))}
+                    onClick={() => router.push(tickerUrl)}
                   >
-                    Przejdz
+                    Szczegóły
                   </Button>
                 </Box>
               </Box>
