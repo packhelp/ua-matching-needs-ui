@@ -4,6 +4,8 @@ import { metaData } from "../../utils/meta-data"
 import Head from "next/head"
 
 export const Container: FC = ({ children }) => {
+  const url = window.location.href
+
   return (
     <>
       <Head>
@@ -19,6 +21,8 @@ export const Container: FC = ({ children }) => {
           content={metaData.description}
           key="og-description"
         />
+        <meta property="og:type" content="website" key="og-type" />
+        <meta property="og:url" content={url} key="og-url" />
         <meta
           property="og:image"
           content="http://ua-matching-needs.herokuapp.com/ukraine-flag.jpg"
