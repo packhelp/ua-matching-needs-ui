@@ -10,17 +10,12 @@ import {
 } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
-import {
-  LOCAL_STORAGE_KEY_ALL_TICKETS,
-  TICKET_STATUS,
-  TicketData,
-  TicketDetails,
-  TicketPostData,
-} from "../tickets/add"
+import truncate from "truncate"
+import { TICKET_STATUS, TicketDetails } from "../tickets/add"
 import Error from "next/error"
 import { getUserInfo } from "../../src/services/auth"
 import { toast } from "react-toastify"
-import { parseISO, format } from "date-fns"
+import { format } from "date-fns"
 import { pl } from "date-fns/locale"
 import {
   FacebookShareButton,
@@ -33,6 +28,11 @@ import { FacebookIcon, TelegramIcon, TwitterIcon } from "react-share"
 import { useMutation, useQuery } from "react-query"
 import axios from "axios"
 import { RouteDefinitions } from "../../src/utils/routes"
+import Head from "next/head"
+import { useMemo } from "react"
+import { metaData } from "../../src/utils/meta-data"
+import { translations } from "../../src/utils/translations"
+import { useFinalLocale } from "../../src/hooks/final-locale"
 
 const getTicketDataFromEndpoint = async (
   id: number
@@ -55,6 +55,8 @@ export const isTicketActive = (ticket: TicketDetails): boolean => {
 
 const TicketDetails: NextPage = () => {
   const router = useRouter()
+  const finalLocale = useFinalLocale()
+
   const { id } = router.query
 
   const { data: ticket, isLoading } = useQuery<TicketDetails | undefined>(
@@ -65,6 +67,19 @@ const TicketDetails: NextPage = () => {
       }
     }
   )
+
+  const description = useMemo(() => {
+    if (!ticket) {
+      return metaData.description
+    }
+
+    const fullDescription = truncate(
+      `${translations[finalLocale]["pages"]["ticket"]["description"]["need"]}: ${ticket?.what} | ${metaData.description}`,
+      100
+    )
+
+    return `${fullDescription}...${translations[finalLocale]["pages"]["ticket"]["description"]["read-more"]}`
+  }, [ticket?.what, finalLocale])
 
   const removeTicketMutation = useMutation<number, Error, number>(
     (id: number) => {
@@ -119,90 +134,95 @@ const TicketDetails: NextPage = () => {
   const ticketUrl = window.location.href
 
   return (
-    <Container>
-      <Heading as="h1" size="xl">
-        Zapotrzebowanie
-      </Heading>
-
-      <Flex padding="8px 0">
-        <Heading as="h3" size="m">
-          Udostępnij:
+    <>
+      <Head>
+        <meta property="og:description" content={description} />
+      </Head>
+      <Container>
+        <Heading as="h1" size="xl">
+          Zapotrzebowanie
         </Heading>
-        <Box paddingLeft="4px">
-          <FacebookShareButton url={ticketUrl}>
-            <FacebookIcon size={24} />
-          </FacebookShareButton>
-        </Box>
-        <Box paddingLeft="4px">
-          <TelegramShareButton url={ticketUrl}>
-            <TelegramIcon size={24} />
-          </TelegramShareButton>
-        </Box>
-        <Box paddingLeft="4px">
-          <TwitterShareButton url={ticketUrl}>
-            <TwitterIcon size={24} />
-          </TwitterShareButton>
-        </Box>
-      </Flex>
 
-      <Stack mb={8}>
-        {isTicketActive(ticket) ? (
-          <Text color={"grey.500"}>
-            Aktywne do:{" "}
-            <Text as={"span"} fontWeight="bold">
-              {formatedExpiration}
+        <Flex padding="8px 0">
+          <Heading as="h3" size="m">
+            Udostępnij:
+          </Heading>
+          <Box paddingLeft="4px">
+            <FacebookShareButton url={ticketUrl}>
+              <FacebookIcon size={24} />
+            </FacebookShareButton>
+          </Box>
+          <Box paddingLeft="4px">
+            <TelegramShareButton url={ticketUrl}>
+              <TelegramIcon size={24} />
+            </TelegramShareButton>
+          </Box>
+          <Box paddingLeft="4px">
+            <TwitterShareButton url={ticketUrl}>
+              <TwitterIcon size={24} />
+            </TwitterShareButton>
+          </Box>
+        </Flex>
+
+        <Stack mb={8}>
+          {isTicketActive(ticket) ? (
+            <Text color={"grey.500"}>
+              Aktywne do:{" "}
+              <Text as={"span"} fontWeight="bold">
+                {formatedExpiration}
+              </Text>
             </Text>
+          ) : (
+            <Text color={"red"}>Zapotrzebowanie nieaktywne!</Text>
+          )}
+        </Stack>
+
+        <Stack mb={8}>
+          <Text color={"grey.200"} fontSize={"sm"}>
+            Co potrzeba?
           </Text>
-        ) : (
-          <Text color={"red"}>Zapotrzebowanie nieaktywne!</Text>
+          <Text>{ticket.what}</Text>
+        </Stack>
+
+        {ticket.count && (
+          <Stack mb={8}>
+            <Text color={"grey.200"} fontSize={"sm"}>
+              Ile potrzeba?
+            </Text>
+            <Text>{ticket.count}</Text>
+          </Stack>
         )}
-      </Stack>
+        {ticket.where && (
+          <Stack mb={8}>
+            <Text color={"grey.200"} fontSize={"sm"}>
+              Gdzie dostarczyć?
+            </Text>
+            <Text>{ticket.where}</Text>
+          </Stack>
+        )}
+        {ticket.who && (
+          <Stack mb={8}>
+            <Text color={"grey.200"} fontSize={"sm"}>
+              Kto zgłosił zapotrzebowanie?
+            </Text>
+            <Text>{ticket.who}</Text>
+          </Stack>
+        )}
 
-      <Stack mb={8}>
-        <Text color={"grey.200"} fontSize={"sm"}>
-          Co potrzeba?
-        </Text>
-        <Text>{ticket.what}</Text>
-      </Stack>
-
-      {ticket.count && (
         <Stack mb={8}>
           <Text color={"grey.200"} fontSize={"sm"}>
-            Ile potrzeba?
+            Telefon
           </Text>
-          <Text>{ticket.count}</Text>
+          <Link href={`tel:${ticket.phone}`}>{ticket.phone}</Link>
         </Stack>
-      )}
-      {ticket.where && (
-        <Stack mb={8}>
-          <Text color={"grey.200"} fontSize={"sm"}>
-            Gdzie dostarczyć?
-          </Text>
-          <Text>{ticket.where}</Text>
-        </Stack>
-      )}
-      {ticket.who && (
-        <Stack mb={8}>
-          <Text color={"grey.200"} fontSize={"sm"}>
-            Kto zgłosił zapotrzebowanie?
-          </Text>
-          <Text>{ticket.who}</Text>
-        </Stack>
-      )}
 
-      <Stack mb={8}>
-        <Text color={"grey.200"} fontSize={"sm"}>
-          Telefon
-        </Text>
-        <Link href={`tel:${ticket.phone}`}>{ticket.phone}</Link>
-      </Stack>
-
-      {isOwner && (
-        <Stack>
-          <Button onClick={removeTicket}>Usuń</Button>
-        </Stack>
-      )}
-    </Container>
+        {isOwner && (
+          <Stack>
+            <Button onClick={removeTicket}>Usuń</Button>
+          </Stack>
+        )}
+      </Container>
+    </>
   )
 }
 

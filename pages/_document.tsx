@@ -1,17 +1,30 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript } from "next/document"
+import { metaData } from "../src/utils/meta-data"
 
 export default function _document() {
   return (
     <Html>
       <Head>
-        <meta property="og:title" content="Wesprzyj Ukraińców!" />
-        <meta property="og:description" content="Wejdź na naszą platformę, zapoznaj się z potrzebami różnych instytucji i osób i wesprzyj nas w pomocy!" />
-        <meta property="og:image" content="http://ua-matching-needs.herokuapp.com/ukraine-flag.jpg"/>
-        <meta property="og:image:secure_url" content="https://ua-matching-needs.herokuapp.com/ukraine-flag.jpg" />
+        <title>{metaData.title}</title>
+        <meta property="og:title" content={metaData.title} />
+        <meta property="og:description" content={metaData.description} />
+        <meta
+          property="og:image"
+          content="http://ua-matching-needs.herokuapp.com/ukraine-flag.jpg"
+        />
+        <meta
+          property="og:image:secure_url"
+          content="https://ua-matching-needs.herokuapp.com/ukraine-flag.jpg"
+        />
+        <link
+          rel="icon"
+          href="http://ua-matching-needs.herokuapp.com/ukraine.svg"
+          type="image/svg+xml"
+        ></link>
       </Head>
       <body>
-      <Main />
-      <NextScript />
+        <Main />
+        <NextScript />
       </body>
     </Html>
   )
