@@ -1,5 +1,4 @@
 import React, { FC } from "react"
-import { Box, Flex } from "@chakra-ui/react"
 import { metaData } from "../../utils/meta-data"
 import Head from "next/head"
 
@@ -44,12 +43,7 @@ export const Container: FC = ({ children }) => {
         ></link>
       </Head>
 
-      <div className="bg-slate-100 max-w-3xl mx-auto sm:px-6 lg:px-8 py-4 min-h-screen">
-        <div className="bg-white overflow-hidden shadow rounded-lg h-auto">
-          <div className="">{children}</div>
-          {/* <div className="px-4 py-5 sm:p-6">{children}</div> */}
-        </div>
-      </div>
+      <div className="bg-slate-100 mx-auto px-4 py-4">{children}</div>
     </>
   )
 }

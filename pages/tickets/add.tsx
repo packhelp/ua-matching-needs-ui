@@ -42,7 +42,7 @@ export type TicketData = TicketFormData & {
   // @deprecated
   expirationTimestamp: number
   expirationTimestampSane: string
-  date_created: number 
+  date_created: number
   ticket_status: TICKET_STATUS
   need_tag_id: {
     need_tag_id: {
@@ -138,79 +138,82 @@ const AddTicket: NextPage = () => {
   }
 
   return (
-    <Container className="px-4 py-5 sm:p-6">
-      <form onSubmit={handleSubmit(submitNeed)}>
-        <Stack>
-          <Heading as="h1" size="xl">
-            Dodaj potrzebę
-          </Heading>
-
+    <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
+      <Container className="px-4 py-5 sm:p-6">
+        <form onSubmit={handleSubmit(submitNeed)}>
           <Stack>
-            <Heading as={"h2"} size={"l"}>
-              Czego potrzebujesz?
+            <Heading as="h1" size="xl">
+              Dodaj potrzebę
             </Heading>
-            <Textarea
-              rows={6}
-              placeholder="Czego potrzebujesz?"
-              variant={"outline"}
-              {...register("what")}
-            />
-          </Stack>
-          <Stack>
-            <Heading as={"h2"} size={"l"}>
-              Ile potrzebujesz?
-            </Heading>
-            <Input
-              type="number"
-              placeholder="W sztukach, jeśli dotyczy"
-              variant={"outline"}
-              {...register("count")}
-            />
-          </Stack>
-          <Stack>
-            <Heading as={"h2"} size={"l"}>
-              Gdzie to potrzebujesz dostarczyć?
-            </Heading>
-            <Textarea
-              placeholder="Adres lub lokalizacja GPS"
-              variant={"outline"}
-              {...register("where")}
-            />
-          </Stack>
-          <Stack>
-            <Heading as={"h2"} size={"l"}>
-              Kto to potrzebuje?
-            </Heading>
-            <Text fontSize={"sm"}>
-              Twoje imię i nazwisko lub Twoja nazwa organizacji
-            </Text>
-            <Textarea
-              placeholder="Kto to potrzebuje?"
-              variant={"outline"}
-              {...register("who")}
-            />
-          </Stack>
 
-          {addTicketMutation.isError ? (
-            <Text color={"red"}>
-              Wystąpił błąd podczas dodawania: {addTicketMutation.error.message}
-            </Text>
-          ) : null}
+            <Stack>
+              <Heading as={"h2"} size={"l"}>
+                Czego potrzebujesz?
+              </Heading>
+              <Textarea
+                rows={6}
+                placeholder="Czego potrzebujesz?"
+                variant={"outline"}
+                {...register("what")}
+              />
+            </Stack>
+            <Stack>
+              <Heading as={"h2"} size={"l"}>
+                Ile potrzebujesz?
+              </Heading>
+              <Input
+                type="number"
+                placeholder="W sztukach, jeśli dotyczy"
+                variant={"outline"}
+                {...register("count")}
+              />
+            </Stack>
+            <Stack>
+              <Heading as={"h2"} size={"l"}>
+                Gdzie to potrzebujesz dostarczyć?
+              </Heading>
+              <Textarea
+                placeholder="Adres lub lokalizacja GPS"
+                variant={"outline"}
+                {...register("where")}
+              />
+            </Stack>
+            <Stack>
+              <Heading as={"h2"} size={"l"}>
+                Kto to potrzebuje?
+              </Heading>
+              <Text fontSize={"sm"}>
+                Twoje imię i nazwisko lub Twoja nazwa organizacji
+              </Text>
+              <Textarea
+                placeholder="Kto to potrzebuje?"
+                variant={"outline"}
+                {...register("who")}
+              />
+            </Stack>
 
-          {addTicketMutation.isSuccess ? (
-            <Text>Zgłoszenie przyjęte!</Text>
-          ) : null}
+            {addTicketMutation.isError ? (
+              <Text color={"red"}>
+                Wystąpił błąd podczas dodawania:{" "}
+                {addTicketMutation.error.message}
+              </Text>
+            ) : null}
 
-          <Button
-            disabled={addTicketMutation.isLoading}
-            colorScheme="blue"
-            type={"submit"}
-          >
-            Dodaj potrzebę
-          </Button>
-        </Stack>
-      </form>
-    </Container>
+            {addTicketMutation.isSuccess ? (
+              <Text>Zgłoszenie przyjęte!</Text>
+            ) : null}
+
+            <Button
+              disabled={addTicketMutation.isLoading}
+              colorScheme="blue"
+              type={"submit"}
+            >
+              Dodaj potrzebę
+            </Button>
+          </Stack>
+        </form>
+      </Container>
+    </div>
   )
 }
 

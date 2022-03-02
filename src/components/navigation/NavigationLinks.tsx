@@ -1,4 +1,10 @@
-import { Button, Flex, HStack, useBreakpointValue, VStack } from "@chakra-ui/react"
+import {
+  Button,
+  Flex,
+  HStack,
+  useBreakpointValue,
+  VStack,
+} from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React from "react"
 import { useFinalLocale } from "../../hooks/final-locale"
@@ -21,11 +27,17 @@ export const NavigationLinks = () => {
     <>
       <HStack
         justifyContent="space-between"
-        display={{ base: 'none', lg: 'flex' }}
+        display={{ base: "none", lg: "flex" }}
       >
         <HStack spacing={2} alignItems="center">
-          <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="primary" />
-          <NavigationLink route={RouteDefinitions.AddTicket} buttonType="secondary" />
+          <NavigationLink
+            route={RouteDefinitions.AllActiveTickets}
+            buttonType="primary"
+          />
+          <NavigationLink
+            route={RouteDefinitions.AddTicket}
+            buttonType="secondary"
+          />
         </HStack>
         <HStack spacing={2} alignItems="center">
           {isLogged && (
@@ -36,11 +48,7 @@ export const NavigationLinks = () => {
           )}
           {!isLogged && <NavigationLink route={RouteDefinitions.SignIn} />}
           {isLogged && (
-            <Button
-              size="sm"
-              variant={"ghost"}
-              onClick={onSignOut}
-            >
+            <Button size="sm" variant={"ghost"} onClick={onSignOut}>
               {translations[finalLocale]["sign-out"]}
             </Button>
           )}
@@ -50,12 +58,18 @@ export const NavigationLinks = () => {
       <Flex
         flexDirection="column"
         marginTop="16px"
-        justifyContent={ "space-between" }
-        display={{ base: 'flex', lg: 'none' }}
+        justifyContent={"space-between"}
+        display={{ base: "flex", lg: "none" }}
       >
         <Flex flexDirection="column">
-          <NavigationLink route={RouteDefinitions.AllActiveTickets} buttonType="primary" />
-          <NavigationLink route={RouteDefinitions.AddTicket} buttonType="secondary" />
+          <NavigationLink
+            route={RouteDefinitions.AllActiveTickets}
+            buttonType="primary"
+          />
+          <NavigationLink
+            route={RouteDefinitions.AddTicket}
+            buttonType="secondary"
+          />
         </Flex>
         <Flex flexDirection="column">
           {isLogged && (
@@ -66,11 +80,7 @@ export const NavigationLinks = () => {
           )}
           {!isLogged && <NavigationLink route={RouteDefinitions.SignIn} />}
           {isLogged && (
-            <Button
-              size="sm"
-              variant={"ghost"}
-              onClick={onSignOut}
-            >
+            <Button size="sm" variant={"ghost"} onClick={onSignOut}>
               {translations[finalLocale]["sign-out"]}
             </Button>
           )}

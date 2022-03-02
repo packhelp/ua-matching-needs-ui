@@ -47,34 +47,36 @@ export const Login: FC = () => {
   }, [canSubmit, phoneNumber])
 
   return (
-    <Container className="px-4 py-5 sm:p-6">
-      <form onSubmit={submitForm}>
-        <h1 className="text-2xl mb-4 font-semibold">
-          {translations[finalLocale]["pages"]["sign-in"]["title"]}
-        </h1>
+    <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
+      <Container className="px-4 py-5 sm:p-6">
+        <form onSubmit={submitForm}>
+          <h1 className="text-2xl mb-4 font-semibold">
+            {translations[finalLocale]["pages"]["sign-in"]["title"]}
+          </h1>
 
-        <FormLabel>
-          {translations[finalLocale]["pages"]["sign-in"]["label"]}
-        </FormLabel>
-        <Input
-          name={"phone"}
-          placeholder={
-            translations[finalLocale]["pages"]["sign-in"]["placeholder"]
-          }
-          onChange={(e) => setPhone(e.target.value)}
-          onBlur={() => setShouldValidate(true)}
-          isInvalid={!isPhoneValid}
-        />
-        <Button
-          type="submit"
-          mt={2}
-          colorScheme="blue"
-          isFullWidth
-          disabled={!canSubmit}
-        >
-          {translations[finalLocale]["pages"]["sign-in"]["next"]}
-        </Button>
-      </form>
-    </Container>
+          <FormLabel>
+            {translations[finalLocale]["pages"]["sign-in"]["label"]}
+          </FormLabel>
+          <Input
+            name={"phone"}
+            placeholder={
+              translations[finalLocale]["pages"]["sign-in"]["placeholder"]
+            }
+            onChange={(e) => setPhone(e.target.value)}
+            onBlur={() => setShouldValidate(true)}
+            isInvalid={!isPhoneValid}
+          />
+          <Button
+            type="submit"
+            mt={2}
+            colorScheme="blue"
+            isFullWidth
+            disabled={!canSubmit}
+          >
+            {translations[finalLocale]["pages"]["sign-in"]["next"]}
+          </Button>
+        </form>
+      </Container>
+    </div>
   )
 }
