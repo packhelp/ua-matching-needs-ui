@@ -37,13 +37,13 @@ export const Container: FC = ({ children }) => {
         />
         <link
           rel="icon"
-          href="http://ua-matching-needs.herokuapp.com/ukraine.svg"
+          href="http://ua-matching-needs.herokuapp.com/svg/ukraine.svg"
           type="image/svg+xml"
           key="icon"
         ></link>
       </Head>
 
-      <div className="bg-slate-100 mx-auto px-4 py-4">{children}</div>
+      <div className="px-4 py-4 mx-auto bg-slate-100">{children}</div>
     </>
   )
 }
