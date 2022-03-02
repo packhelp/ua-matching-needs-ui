@@ -9,15 +9,10 @@ import { parsePhoneNumberFromString } from "libphonenumber-js/max"
 
 export const Login: FC = () => {
   const router = useRouter()
-  const isLogged = getUserInfo()
   const finalLocale = useFinalLocale()
 
   const [phone, setPhone] = useState<string | undefined>()
   const [shouldValidate, setShouldValidate] = useState<boolean>(false)
-
-  // if (typeof window !== "undefined" && isLogged) {
-  //   router.push(RouteDefinitions.AddTicket)
-  // }
 
   const parsedPhone = useMemo(() => {
     return parsePhoneNumberFromString(phone || "", "PL")
