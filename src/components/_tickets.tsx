@@ -80,7 +80,7 @@ export const Tickets = ({
             )
 
             return (
-              <a href={ticketUrl}>
+              <a key={ticket.id} href={ticketUrl}>
                 <li className="bg-white rounded-lg shadow hover:outline-2 outline-blue-200 hover:outline col-span-1 divide-y divide-gray-200">
                   <div className="px-4 py-5 border-gray-200 sm:px-6">
                   <div className="mb-2">
