@@ -336,7 +336,10 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
               <dt className="text-sm font-medium text-gray-500">
                 Co potrzeba?
               </dt>
-              <dd className="mt-1 text-lg text-gray-900">
+              <dd
+                className="mt-1 text-lg text-gray-900"
+                style={{ whiteSpace: "pre-line" }}
+              >
                 {ticket.description}
               </dd>
             </div>
