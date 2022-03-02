@@ -1,4 +1,10 @@
-import { Box, Stack, Text, useBreakpointValue, useColorModeValue as mode } from "@chakra-ui/react"
+import {
+  Box,
+  Stack,
+  Text,
+  useBreakpointValue,
+  useColorModeValue as mode,
+} from "@chakra-ui/react"
 import * as React from "react"
 
 interface StepProps {
@@ -17,7 +23,7 @@ export const Step = (props: StepProps) => {
       pb="15px"
     >
       <Box
-        fontSize={useBreakpointValue({ base: '6xl', md: 'lg' })}
+        fontSize={useBreakpointValue({ base: "6xl", md: "lg" })}
         fontWeight="extrabold"
       >
         {number}

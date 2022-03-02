@@ -21,7 +21,7 @@ export const translations: Translation = {
       main: {
         header: "Szybkie i proste zarządzenie potrzebami organizatorów",
         subheader:
-          "Zgłoś potrzebę a my ją przekażemy dalej. A jeśli skończy się potrzeba, usuniesz wpis jednym kliknięciem.",
+          "Zgłoś potrzebę, a my ją przekażemy dalej. Gdy skończy się potrzeba, usuniesz wpis jednym kliknięciem.",
         "show-all-button": "Sprawdź potrzeby",
         "add-new-button": "Zgłoś potrzebę",
         "steps-section": {
@@ -41,9 +41,40 @@ export const translations: Translation = {
         description: {
           need: "Potrzeba",
           "read-more": "Czytaj więcej",
-        },
+        }
       },
+      "add-ticket": {
+        "add-need": "Dodaj potrzebę",
+        "what-do-you-need": "Czego potrzebujesz?",
+        "how-much-do-you-need": "Ile potrzebujesz?",
+        "in-pieces-if-applicable": "W sztukach, jeśli dotyczy",
+        "where-do-you-need-it-delivered": "Gdzie to potrzebujesz dostarczyć?",
+        "address-or-gps": "Adres lub lokalizacja GPS",
+        "who-needs-it": "Kto to potrzebuje?",
+        "name-surname-or-org-name": "Twoje imię i nazwisko lub Twoja nazwa organizacji",
+        "request-added": "Zgłoszenie przyjęte!",
+        "need-added": "Zgłoszono potrzebę!"
+      }
     },
     "sign-out": "Wyloguj się",
+    "terms-of-service": {
+      title: "Regulamin",
+      "title-alternate": "Regulamin serwisu",
+      agreemenent:
+        "Zgłoszenie potrzeby jest równoznaczne z akceptacją regulaminu działania serwisu",
+    },
+    contact: {
+      "contact-us-via": "Skontaktuj się z nami przez:",
+      discord: "Discord",
+      github: "Github",
+      authors: "Autorzy narzędzia",
+      "in-cooperation-with": "Narzędzie zostało stworzone przy współpracy:",
+    },
+    errors: {
+      "error-occured-while-adding": "Wystąpił błąd podczas dodawania: "
+    },
+    auth: {
+      "you-have-been-logged-out": "Zostałeś wylogowany"
+    }
   },
 }

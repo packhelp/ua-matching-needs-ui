@@ -20,6 +20,7 @@
     "@emotion/styled": "^11",
     "autoprefixer": "^10.4.2",
     "axios": "^0.26.0",
+    "color": "^4.2.1",
     "date-fns": "^2.28.0",
     "dayjs": "^1.10.8",
     "fetch-opengraph": "^1.0.35",
