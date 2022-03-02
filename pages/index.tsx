@@ -7,7 +7,8 @@ import {
   Stack,
   Text,
   Flex,
-  useBreakpointValue, HStack,
+  useBreakpointValue,
+  HStack,
 } from "@chakra-ui/react"
 import * as React from "react"
 import { NextPage } from "next"
@@ -48,10 +49,10 @@ const MainPage: NextPage = () => {
             {/*  flexDirection={useBreakpointValue({ base: "column", md: "row" })}*/}
             {/*  justifyContent="space-evenly"*/}
             {/*>*/}
-              <HStack
-                justifyContent="space-evenly"
-                display={{ base: 'none', lg: 'flex' }}
-              >
+            <HStack
+              justifyContent="space-evenly"
+              display={{ base: "none", lg: "flex" }}
+            >
               <Link href={RouteDefinitions.AllActiveTickets}>
                 <Button
                   leftIcon={<SearchIcon />}
@@ -79,8 +80,8 @@ const MainPage: NextPage = () => {
             <Flex
               flexDirection="column"
               marginTop="16px"
-              justifyContent={ "space-between" }
-              display={{ base: 'flex', lg: 'none' }}
+              justifyContent={"space-between"}
+              display={{ base: "flex", lg: "none" }}
             >
               <Link href={RouteDefinitions.AllActiveTickets}>
                 <Button

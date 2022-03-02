@@ -43,9 +43,7 @@ export const Container: FC = ({ children }) => {
         ></link>
       </Head>
 
-      <div className="bg-slate-100 mx-auto px-4 py-4">
-        {children}
-      </div>
+      <div className="bg-slate-100 mx-auto px-4 py-4">{children}</div>
     </>
   )
 }
