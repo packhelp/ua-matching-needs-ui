@@ -16,6 +16,8 @@ import { useRouter } from "next/router"
 import { RouteDefinitions } from "../../src/utils/routes"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
+import { useFinalLocale } from "../../src/hooks/final-locale"
+import { translations } from "../../src/utils/translations"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
@@ -76,7 +78,7 @@ const AddTicket: NextPage = () => {
     const { data } = rawResponse.data
     const id = data.id
 
-    toast.success("Zgłoszono potrzebę!")
+    toast.success(pageTranslations["pages"]["add-ticket"]["need-added"])
 
     setTimeout(() => {
       return router.push(
@@ -127,7 +129,7 @@ const AddTicket: NextPage = () => {
   const submitNeed = async (data: TicketFormData) => {
     const userInfo = getUserInfo()
     if (!userInfo) {
-      toast.error("Zostałeś wylogowany")
+      toast.error(pageTranslations["pages"]["auth"]["you-have-been-logged-out"])
       return router.push(RouteDefinitions.SignIn)
     }
 
@@ -137,56 +139,59 @@ const AddTicket: NextPage = () => {
     addTicketMutation.mutate(postData)
   }
 
+  const finalLocale = useFinalLocale()
+  const pageTranslations = translations[finalLocale]
+
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Container className="px-4 py-5 sm:p-6">
         <form onSubmit={handleSubmit(submitNeed)}>
           <Stack>
             <Heading as="h1" size="xl">
-              Dodaj potrzebę
+              {pageTranslations["pages"]["add-ticket"]["add-need"]}
             </Heading>
 
             <Stack>
               <Heading as={"h2"} size={"l"}>
-                Czego potrzebujesz?
+                {pageTranslations["pages"]["add-ticket"]["what-do-you-need"]}
               </Heading>
               <Textarea
                 rows={6}
-                placeholder="Czego potrzebujesz?"
+                placeholder={pageTranslations["pages"]["add-ticket"]["what-do-you-need"]}
                 variant={"outline"}
                 {...register("what")}
               />
             </Stack>
             <Stack>
               <Heading as={"h2"} size={"l"}>
-                Ile potrzebujesz?
+                {pageTranslations["pages"]["add-ticket"]["what-do-you-need"]}
               </Heading>
               <Input
                 type="number"
-                placeholder="W sztukach, jeśli dotyczy"
+                placeholder={pageTranslations["pages"]["add-ticket"]["in-pieces-if-applicable"]}
                 variant={"outline"}
                 {...register("count")}
               />
             </Stack>
             <Stack>
               <Heading as={"h2"} size={"l"}>
-                Gdzie to potrzebujesz dostarczyć?
+                {pageTranslations["pages"]["add-ticket"]["where-do-you-need-it-delivered"]}
               </Heading>
               <Textarea
-                placeholder="Adres lub lokalizacja GPS"
+                placeholder={pageTranslations["pages"]["add-ticket"]["address-or-gps"]}
                 variant={"outline"}
                 {...register("where")}
               />
             </Stack>
             <Stack>
               <Heading as={"h2"} size={"l"}>
-                Kto to potrzebuje?
+                {pageTranslations["pages"]["add-ticket"]["who-needs-it"]}
               </Heading>
               <Text fontSize={"sm"}>
-                Twoje imię i nazwisko lub Twoja nazwa organizacji
+                {pageTranslations["pages"]["add-ticket"]["name-surname-or-org-name"]}
               </Text>
               <Textarea
-                placeholder="Kto to potrzebuje?"
+                placeholder={pageTranslations["pages"]["add-ticket"]["who-needs-it"]}
                 variant={"outline"}
                 {...register("who")}
               />
@@ -194,13 +199,13 @@ const AddTicket: NextPage = () => {
 
             {addTicketMutation.isError ? (
               <Text color={"red"}>
-                Wystąpił błąd podczas dodawania:{" "}
+                {pageTranslations["errors"]["error-occured-while-adding"]}
                 {addTicketMutation.error.message}
               </Text>
             ) : null}
 
             {addTicketMutation.isSuccess ? (
-              <Text>Zgłoszenie przyjęte!</Text>
+              <Text>{pageTranslations["pages"]["add-ticket"]["request-added"]}</Text>
             ) : null}
 
             <Button
@@ -208,7 +213,7 @@ const AddTicket: NextPage = () => {
               colorScheme="blue"
               type={"submit"}
             >
-              Dodaj potrzebę
+              {pageTranslations["pages"]["add-ticket"]["add-need"]}
             </Button>
           </Stack>
         </form>

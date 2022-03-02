@@ -3,14 +3,13 @@ import { NextPage } from "next"
 import {
   Heading,
   Flex,
-  Box,
   Button,
   Image,
   Text,
   Divider,
   useBreakpointValue,
 } from "@chakra-ui/react"
-import { Link as ChakraLink } from '@chakra-ui/react'
+import { Link } from '@chakra-ui/react'
 
 import { useFinalLocale } from "../src/hooks/final-locale"
 import { translations } from "../src/utils/translations"
@@ -33,12 +32,12 @@ const Contact: NextPage = () => {
           flexDirection={useBreakpointValue({ base: "column", sm: "row" })}
           cursor="pointer"
         >
-          <ChakraLink href={externalUrls.packhelp}>
+          <Link href={externalUrls.packhelp}>
             <Image src="/logo-packhelp.svg" maxW="120px" />
-          </ChakraLink>
-          <ChakraLink href={externalUrls.techtotherescue}>
+          </Link>
+          <Link href={externalUrls.techtotherescue}>
             <Image src="/logo-tttr.png" maxW="160px" mt="8px"/>
-          </ChakraLink>
+          </Link>
         </Flex>
       </div>
 
@@ -49,24 +48,31 @@ const Contact: NextPage = () => {
           </Heading>
         </Flex>
         <Flex padding="16px" justifyContent="space-evenly">
-          <ChakraLink href={externalUrls.discord}>
+          <Link href={externalUrls.discord}>
             <Button size="sm" variant={"ghost"}>
               {pageTranslations["contact"]["discord"]}
             </Button>
-          </ChakraLink>
-          <ChakraLink href={externalUrls.github}>
+          </Link>
+          <Link href={externalUrls.github}>
             <Button size="sm" variant={"ghost"}>
               {pageTranslations["contact"]["github"]}
             </Button>
-          </ChakraLink>
+          </Link>
         </Flex>
-        <Divider />
+      </div>
+
+      <div className="bg-white shadow max-w-2xl mx-auto py-4 mb-4">
+        <Flex flexDirection="column" alignItems="center">
+          <Heading as="h2" size="sm" mt="8px" mb="16px">
+            {pageTranslations["terms-of-service"]["title"]}
+          </Heading>
+        </Flex>
         <Flex flexDirection="column" alignItems="center" marginTop="16px">
-          <ChakraLink href={externalUrls.terms} isExternal>
+          <Link href={externalUrls.terms} isExternal>
             <Text fontSize="xs" variant={"ghost"} cursor="pointer">
               {`[${pageTranslations["terms-of-service"]["title-alternate"]}]`}
             </Text>
-          </ChakraLink>
+          </Link>
         </Flex>
       </div>
     </>
