@@ -143,6 +143,8 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   }
   const ticketTags = TicketDetails["need_tag_id"]
 
+  let title = ticket.what ? ticket.what : ticket.description
+
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Head>
@@ -165,7 +167,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 id="applicant-information-title"
                 className="text-3xl leading-8 font-medium text-gray-900 truncate"
               >
-                {ticket.what}
+                {title}
               </h2>
 
               {!isTicketActive(ticket) && (
@@ -334,7 +336,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
               <dt className="text-sm font-medium text-gray-500">
                 Co potrzeba?
               </dt>
-              <dd className="mt-1 text-lg text-gray-900">{ticket.what}</dd>
+              <dd className="mt-1 text-lg text-gray-900">
+                {ticket.description}
+              </dd>
             </div>
 
             {ticketTags && (

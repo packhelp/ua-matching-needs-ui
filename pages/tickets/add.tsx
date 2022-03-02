@@ -44,6 +44,7 @@ export type TicketData = TicketFormData & {
   expirationTimestampSane: string
   date_created: number
   ticket_status: TICKET_STATUS
+  description: string
   need_tag_id: {
     need_tag_id: {
       name: string
@@ -194,7 +195,8 @@ const AddTicket: NextPage = () => {
 
             {addTicketMutation.isError ? (
               <Text color={"red"}>
-                Wystąpił błąd podczas dodawania: {addTicketMutation.error.message}
+                Wystąpił błąd podczas dodawania:{" "}
+                {addTicketMutation.error.message}
               </Text>
             ) : null}
 
