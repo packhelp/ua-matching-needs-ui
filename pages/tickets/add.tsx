@@ -149,7 +149,7 @@ const AddTicket: NextPage = () => {
       const now = new Date()
       // @deprecated
       const expirationTimestamp = now.setHours(now.getHours() + 3)
-      const expirationTimestampSane = dayjs().add(3, "hour").format()
+      const expirationTimestampSane = dayjs().add(24, "hour").format()
 
       const newTicketData = {
         phone,
