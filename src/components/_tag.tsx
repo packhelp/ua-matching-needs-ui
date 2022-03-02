@@ -17,7 +17,7 @@ export const Tag = ({
   return (
     <span
       key={tag.id}
-      className="flex-shrink-0 inline-block px-2 py-0.5 text-xs font-medium rounded-full"
+      className="flex-shrink-0 inline-block px-2 py-0.5 text-xs font-medium rounded-full mb-1 mr-1"
       style={{
         backgroundColor: backgroundColor.hex(),
         color: foregroundColor.hex(),

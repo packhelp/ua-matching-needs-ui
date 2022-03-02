@@ -77,7 +77,7 @@ export const Tickets = ({
                       <div className="mb-2">
                         <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-2">
                           <span>#{ticket.id}</span>
-                          <span className="flex space-x-2">
+                          <span className="">
                             {ticket.need_tag_id.map((tag) => {
                               if (
                                 !tag ||
