@@ -7,7 +7,7 @@ import { UserNavigation } from "./header-components/navigation/UserNavigation"
 export const Header = () => {
   return (
     <>
-      <nav className="bg-white shadow sticky top-0">
+      <nav className="bg-white shadow sticky top-0 z-1">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
