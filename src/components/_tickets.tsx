@@ -90,16 +90,18 @@ export const Tickets = ({
                       <Flex justifyContent="space-between">
                         <Box>
                           <Heading size="xs">
-                            {ticket.need_tag_id.map((tag) => (
-                              <Tag
-                                colorScheme="yellow"
-                                key={tag.need_tag_id}
-                                variant="solid"
-                                borderRadius="full"
-                              >
-                                {tag.need_tag_id.name}
-                              </Tag>
-                            ))}
+                            {ticket.need_tag_id.map((tag) =>
+                              tag && tag.need_tag_id && tag.need_tag_id.id ? (
+                                <Tag
+                                  colorScheme="yellow"
+                                  key={tag.need_tag_id}
+                                  variant="solid"
+                                  borderRadius="full"
+                                >
+                                  {tag.need_tag_id.name}
+                                </Tag>
+                              ) : null
+                            )}
                           </Heading>
                         </Box>
                         <Box>
