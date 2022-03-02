@@ -1,7 +1,7 @@
 import "../styles/globals.css"
 import type { AppProps } from "next/app"
 import { ChakraProvider } from "@chakra-ui/react"
-import { HeaderNavigation } from "../src/components/navigation/HeaderNavigation"
+import { Header } from "../src/components/navigation/Header"
 import { FooterNavigation } from "../src/components/navigation/FooterNavigation"
 
 import "react-toastify/dist/ReactToastify.css"
@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ChakraProvider>
           <RootContainerWrapper>
             <ToastContainer />
-            <HeaderNavigation />
+            <Header />
             <Container>
               <Guard>
                 <Component {...pageProps} />
