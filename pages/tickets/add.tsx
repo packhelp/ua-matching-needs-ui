@@ -42,7 +42,7 @@ export type TicketData = TicketFormData & {
   // @deprecated
   expirationTimestamp: number
   expirationTimestampSane: string
-  date_created: number 
+  date_created: number
   ticket_status: TICKET_STATUS
   need_tag_id: {
     need_tag_id: {
