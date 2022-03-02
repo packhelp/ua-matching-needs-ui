@@ -41,7 +41,7 @@ export type TicketFormData = {
 export type TicketPostData = TicketFormData & {
   phone: string
   need_tag_id: {
-    need_tag_id: Pick<NeedTagType, "id">
+    need_tag_id: Partial<NeedTagType>
   }[]
 }
 
