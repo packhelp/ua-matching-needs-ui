@@ -5,13 +5,30 @@ import maplibregl from "maplibre-gl"
 import "maplibre-gl/dist/maplibre-gl.css"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import { getAllActiveTickets } from "../../src/components/_tickets"
 import { getUserInfo } from "../../src/services/auth"
 import { TICKET_STATUS } from "./add"
+import axios from "axios"
+import { isTicketActive } from "../ticket/[id]"
+import { RouteDefinitions } from "../../src/utils/routes"
+
+const isActiveWithSingleLocation = (ticket: any): boolean => {
+  return (
+    isTicketActive(ticket) &&
+    !!ticket.location &&
+    ticket.location.type === "Point"
+  )
+}
+
+const getAllActiveTicketsWithLocation = async () => {
+  const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status][_eq]=${TICKET_STATUS.ACTIVE}&fields=*.*.*&sort[]=-date_created`
+
+  return axios
+    .get(url)
+    .then((response) => response.data.data.filter(isActiveWithSingleLocation))
+}
 
 const TicketsMap: NextPage = () => {
   const [map, setMap] = useState<any>()
-  const userInfo = getUserInfo()
 
   useEffect(() => {
     const map = new maplibregl.Map({
@@ -47,28 +64,34 @@ const TicketsMap: NextPage = () => {
     setMap(map)
   }, [])
 
-  const { data: tickets, isLoading } = useQuery(`tickets-active"}`, () => {
-    return Promise.resolve([
-      { location_lat: 21.966741438204284, location_lng: 50.48740809893026 },
-    ])
-    return getAllActiveTickets(TICKET_STATUS.ACTIVE, false, userInfo)
+  const { data: tickets } = useQuery(`tickets-active"}`, () => {
+    return getAllActiveTicketsWithLocation()
   })
 
   useEffect(() => {
     if (map) {
-      tickets.forEach((ticket) => {
-        if (ticket.location_lat && ticket.location_lng) {
-          const popup = new maplibregl.Popup({ offset: 25 })
-            .setHTML(
-              "<p>Testowa lokalizacja / Testowa lokalizacja / Testowa lokalizacja / Testowa lokalizacja / Testowa lokalizacja / Testowa lokalizacja / <br /><br /><a href='#'>sprawdź potrzebę</a></p>"
-            )
-            .trackPointer()
+      ;(tickets || []).forEach((ticket) => {
+        const [lat, lng] = ticket.location.coordinates
 
-          new maplibregl.Marker()
-            .setLngLat([ticket.location_lat, ticket.location_lng])
-            .setPopup(popup)
-            .addTo(map)
-        }
+        const description = ticket.description
+          .replaceAll(/(<([^>]+)>)/gi, "")
+          .slice(0, 150)
+          .replaceAll("\n", "<br />")
+
+        const tags = ticket.need_tag_id
+          .map((tag) => tag.need_tag_id.name)
+          .join(", ")
+
+        const popup = new maplibregl.Popup({ offset: 25 })
+          .setHTML(
+            `<p class="font-bold">${tags}</p><p>${description}<br /><br /><a href="${RouteDefinitions.TicketDetails.replace(
+              ":id",
+              ticket.id
+            )}" style="text-decoration: underline;">czytaj więcej</a></p>`
+          )
+          .trackPointer()
+
+        new maplibregl.Marker().setLngLat([lat, lng]).setPopup(popup).addTo(map)
       })
     }
   }, [tickets, map])
