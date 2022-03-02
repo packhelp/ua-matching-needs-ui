@@ -48,6 +48,13 @@ export const translations: Translation = {
     "terms-of-service": {
       title: "Regulamin",
       agreemenent: "Zgłoszenie potrzeby jest równoznaczne z akceptacją regulaminu działania serwisu"
+    },
+    contact: {
+      "contact-us-via": "Skontaktuj się z nami przez:",
+      discord: "Discord",
+      github: "Github",
+      authors: "Autorzy narzędzia",
+      "in-cooperation-with": "Narzędzie zostało stworzone przy współpracy:",
     }
   },
 }
