@@ -21,7 +21,7 @@ export const translations: Translation = {
       main: {
         header: "Szybkie i proste zarządzenie potrzebami organizatorów",
         subheader:
-          "Zgłoś potrzebę a my ją przekażemy dalej. A jeśli skończy się potrzeba, usuniesz wpis jednym kliknięciem.",
+          "Zgłoś potrzebę, a my ją przekażemy dalej. Gdy skończy się potrzeba, usuniesz wpis jednym kliknięciem.",
         "show-all-button": "Sprawdź potrzeby",
         "add-new-button": "Zgłoś potrzebę",
         "steps-section": {
