@@ -38,7 +38,7 @@ export const Tickets = ({
   const { data: tickets, isLoading } = useQuery(
     `tickets-${status}-${mineOnly ? "mine" : "all"}`,
     () => {
-      const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status][_eq]=${TICKET_STATUS.ACTIVE}&fields=*.*.*`
+      const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status][_eq]=${TICKET_STATUS.ACTIVE}&fields=*.*.*&sort[]=-date_created`
 
       return axios.get(url).then((response) =>
         response.data.data
