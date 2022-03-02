@@ -70,14 +70,12 @@ export const Tags = ({ tags }: { tags: TicketDetails["need_tag_id"] }) => {
 
 export async function getServerSideProps(context) {
   const { id } = context.query
-  const data = await getTicketDataFromEndpoint(Number(id))
+  const ticket = await getTicketDataFromEndpoint(Number(id))
 
-  return { props: { data } }
+  return { props: { ticket } }
 }
 
-const TicketDetails: NextPage<{ data: { ticket: TicketDetails } }> = ({
-  data: ticket,
-}) => {
+const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   const router = useRouter()
   const finalLocale = useFinalLocale()
 
