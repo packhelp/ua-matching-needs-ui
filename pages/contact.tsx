@@ -11,19 +11,18 @@ import {
 } from "@chakra-ui/react"
 import { Link } from '@chakra-ui/react'
 
-import { useFinalLocale } from "../src/hooks/final-locale"
 import { translations } from "../src/utils/translations"
 import { externalUrls } from "../src/utils/external-urls"
+import { useTranslations } from "../src/hooks/translations"
 
 const Contact: NextPage = () => {
-  const finalLocale = useFinalLocale()
-  const pageTranslations = translations[finalLocale]
+  const translations = useTranslations()
   return (
     <>
       <div className="bg-white shadow max-w-2xl mx-auto py-4 mb-4">
         <Flex flexDirection="column" alignItems="center">
           <Heading as="h2" size="sm" mt="8px" mb="16px">
-            {pageTranslations["contact"]["authors"]}
+            {translations["contact"]["authors"]}
           </Heading>
         </Flex>
         <Flex
@@ -44,18 +43,18 @@ const Contact: NextPage = () => {
       <div className="bg-white shadow max-w-2xl mx-auto py-4 mb-4">
         <Flex flexDirection="column" alignItems="center">
           <Heading as="h2" size="sm" mt="8px" mb="16px">
-            {pageTranslations["contact"]["contact-us-via"]}
+            {translations["contact"]["contact-us-via"]}
           </Heading>
         </Flex>
         <Flex padding="16px" justifyContent="space-evenly">
           <Link href={externalUrls.discord}>
             <Button size="sm" variant={"ghost"}>
-              {pageTranslations["contact"]["discord"]}
+              {translations["contact"]["discord"]}
             </Button>
           </Link>
           <Link href={externalUrls.github}>
             <Button size="sm" variant={"ghost"}>
-              {pageTranslations["contact"]["github"]}
+              {translations["contact"]["github"]}
             </Button>
           </Link>
         </Flex>
@@ -64,13 +63,13 @@ const Contact: NextPage = () => {
       <div className="bg-white shadow max-w-2xl mx-auto py-4 mb-4">
         <Flex flexDirection="column" alignItems="center">
           <Heading as="h2" size="sm" mt="8px" mb="16px">
-            {pageTranslations["terms-of-service"]["title"]}
+            {translations["terms-of-service"]["title"]}
           </Heading>
         </Flex>
         <Flex flexDirection="column" alignItems="center" marginTop="16px">
           <Link href={externalUrls.terms} isExternal>
             <Text fontSize="xs" variant={"ghost"} cursor="pointer">
-              {`[${pageTranslations["terms-of-service"]["title-alternate"]}]`}
+              {`[${translations["terms-of-service"]["title-alternate"]}]`}
             </Text>
           </Link>
         </Flex>

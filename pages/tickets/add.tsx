@@ -16,8 +16,7 @@ import { useRouter } from "next/router"
 import { RouteDefinitions } from "../../src/utils/routes"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
-import { useFinalLocale } from "../../src/hooks/final-locale"
-import { translations } from "../../src/utils/translations"
+import { useTranslations } from "../../src/hooks/translations"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
@@ -73,12 +72,13 @@ const getInitialDataFromLocalStorage = () => {
 
 const AddTicket: NextPage = () => {
   const router = useRouter()
+  const translations = useTranslations()
 
   const onSuccess = (rawResponse) => {
     const { data } = rawResponse.data
     const id = data.id
 
-    toast.success(pageTranslations["pages"]["add-ticket"]["need-added"])
+    toast.success(translations["pages"]["add-ticket"]["need-added"])
 
     setTimeout(() => {
       return router.push(
@@ -129,7 +129,7 @@ const AddTicket: NextPage = () => {
   const submitNeed = async (data: TicketFormData) => {
     const userInfo = getUserInfo()
     if (!userInfo) {
-      toast.error(pageTranslations["pages"]["auth"]["you-have-been-logged-out"])
+      toast.error(translations["pages"]["auth"]["you-have-been-logged-out"])
       return router.push(RouteDefinitions.SignIn)
     }
 
@@ -139,59 +139,56 @@ const AddTicket: NextPage = () => {
     addTicketMutation.mutate(postData)
   }
 
-  const finalLocale = useFinalLocale()
-  const pageTranslations = translations[finalLocale]
-
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Container className="px-4 py-5 sm:p-6">
         <form onSubmit={handleSubmit(submitNeed)}>
           <Stack>
             <Heading as="h1" size="xl">
-              {pageTranslations["pages"]["add-ticket"]["add-need"]}
+              {translations["pages"]["add-ticket"]["add-need"]}
             </Heading>
 
             <Stack>
               <Heading as={"h2"} size={"l"}>
-                {pageTranslations["pages"]["add-ticket"]["what-do-you-need"]}
+                {translations["pages"]["add-ticket"]["what-do-you-need"]}
               </Heading>
               <Textarea
                 rows={6}
-                placeholder={pageTranslations["pages"]["add-ticket"]["what-do-you-need"]}
+                placeholder={translations["pages"]["add-ticket"]["what-do-you-need"]}
                 variant={"outline"}
                 {...register("what")}
               />
             </Stack>
             <Stack>
               <Heading as={"h2"} size={"l"}>
-                {pageTranslations["pages"]["add-ticket"]["what-do-you-need"]}
+                {translations["pages"]["add-ticket"]["what-do-you-need"]}
               </Heading>
               <Input
                 type="number"
-                placeholder={pageTranslations["pages"]["add-ticket"]["in-pieces-if-applicable"]}
+                placeholder={translations["pages"]["add-ticket"]["in-pieces-if-applicable"]}
                 variant={"outline"}
                 {...register("count")}
               />
             </Stack>
             <Stack>
               <Heading as={"h2"} size={"l"}>
-                {pageTranslations["pages"]["add-ticket"]["where-do-you-need-it-delivered"]}
+                {translations["pages"]["add-ticket"]["where-do-you-need-it-delivered"]}
               </Heading>
               <Textarea
-                placeholder={pageTranslations["pages"]["add-ticket"]["address-or-gps"]}
+                placeholder={translations["pages"]["add-ticket"]["address-or-gps"]}
                 variant={"outline"}
                 {...register("where")}
               />
             </Stack>
             <Stack>
               <Heading as={"h2"} size={"l"}>
-                {pageTranslations["pages"]["add-ticket"]["who-needs-it"]}
+                {translations["pages"]["add-ticket"]["who-needs-it"]}
               </Heading>
               <Text fontSize={"sm"}>
-                {pageTranslations["pages"]["add-ticket"]["name-surname-or-org-name"]}
+                {translations["pages"]["add-ticket"]["name-surname-or-org-name"]}
               </Text>
               <Textarea
-                placeholder={pageTranslations["pages"]["add-ticket"]["who-needs-it"]}
+                placeholder={translations["pages"]["add-ticket"]["who-needs-it"]}
                 variant={"outline"}
                 {...register("who")}
               />
@@ -199,13 +196,13 @@ const AddTicket: NextPage = () => {
 
             {addTicketMutation.isError ? (
               <Text color={"red"}>
-                {pageTranslations["errors"]["error-occured-while-adding"]}
+                {translations["errors"]["error-occured-while-adding"]}
                 {addTicketMutation.error.message}
               </Text>
             ) : null}
 
             {addTicketMutation.isSuccess ? (
-              <Text>{pageTranslations["pages"]["add-ticket"]["request-added"]}</Text>
+              <Text>{translations["pages"]["add-ticket"]["request-added"]}</Text>
             ) : null}
 
             <Button
@@ -213,7 +210,7 @@ const AddTicket: NextPage = () => {
               colorScheme="blue"
               type={"submit"}
             >
-              {pageTranslations["pages"]["add-ticket"]["add-need"]}
+              {translations["pages"]["add-ticket"]["add-need"]}
             </Button>
           </Stack>
         </form>
