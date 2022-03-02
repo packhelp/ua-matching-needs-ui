@@ -45,5 +45,9 @@ export const translations: Translation = {
       },
     },
     "sign-out": "Wyloguj się",
+    "terms-of-service": {
+      title: "Regulamin",
+      agreemenent: "Zgłoszenie potrzeby jest równoznaczne z akceptacją regulaminu działania serwisu"
+    }
   },
 }

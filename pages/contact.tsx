@@ -35,9 +35,14 @@ const Contact: NextPage = () => {
         justifyContent={"space-around"}
         alignItems="center"
         flexDirection={useBreakpointValue({ base: "column", sm: "row" })}
+        cursor="pointer"
       >
-        <Image src="/logo-packhelp.svg" maxW="160px" ml="8px"/>
-        <Image src="/logo-tttr.png" maxW="230px"/>
+        <Link href={"https://packhelp.com/"}>
+          <Image src="/logo-packhelp.svg" maxW="160px" ml="8px"/>
+        </Link>
+        <Link href={"https://www.techtotherescue.org/"}>
+          <Image src="/logo-tttr.png" maxW="230px"/>
+        </Link>
       </Flex>
     </Container>
   )
