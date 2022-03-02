@@ -47,38 +47,10 @@ export const HeaderNavigation = () => {
                 >
                   <span className="sr-only">Open main menu</span>
                   {!isOpen && (
-                    <svg
-                      className="block h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    </svg>
+                    // CLOSE SVG
                   )}
                   {isOpen && (
-                    <svg
-                      className="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    // HAMBURGER SVG
                   )}
                 </button>
               </div>
@@ -95,19 +67,7 @@ export const HeaderNavigation = () => {
                   href={RouteDefinitions.AddTicket}
                   className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black bg-amber-300 shadow-sm hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  <svg
-                    className="-ml-1 mr-2 h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  {/* USER SVG */}
                   <span>Zgłoś potrzebę</span>
                 </a>
               </div>
@@ -125,24 +85,5 @@ export const HeaderNavigation = () => {
         )}
       </nav>
     </>
-  )
-}
-
-const Desktop = () => {
-  return (
-    <Flex
-      justifyContent={"strech"}
-      alignContent={"center"}
-      alignItems={"center"}
-      textAlign={"center"}
-      display={{ base: "none", sm: "none", lg: "flex" }}
-    >
-      <Link href={RouteDefinitions.Main}>
-        <Logo />
-      </Link>
-      <div style={{ flex: 1, margin: "0 16px" }}>
-        <NavigationLinks />
-      </div>
-    </Flex>
   )
 }

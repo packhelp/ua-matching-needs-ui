@@ -1,4 +1,10 @@
-import { Button, Flex, useBreakpointValue } from "@chakra-ui/react"
+import {
+  Button,
+  Flex,
+  HStack,
+  useBreakpointValue,
+  VStack,
+} from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { useEffect, useMemo, useState } from "react"
 import { useFinalLocale } from "../../hooks/final-locale"

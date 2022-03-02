@@ -21,6 +21,7 @@
     "autoprefixer": "^10.4.2",
     "axios": "^0.26.0",
     "date-fns": "^2.28.0",
+    "dayjs": "^1.10.8",
     "fetch-opengraph": "^1.0.35",
     "framer-motion": "^6",
     "iti": "^0.3.1-alpha",

@@ -69,7 +69,6 @@ export const UserInfo = () => {
               href={RouteDefinitions.MyActiveTickets}
               className="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
-              id="user-menu-item-0"
             >
               {getRouteNameForLocale(RouteDefinitions.MyActiveTickets)}
             </a>
@@ -77,7 +76,6 @@ export const UserInfo = () => {
               href={RouteDefinitions.MyInactiveTickets}
               className="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
-              id="user-menu-item-1"
             >
               {getRouteNameForLocale(RouteDefinitions.MyInactiveTickets)}
             </a>
@@ -86,7 +84,6 @@ export const UserInfo = () => {
               href="#"
               className="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
-              id="user-menu-item-2"
             >
               {translations[finalLocale]["sign-out"]}
             </a>
