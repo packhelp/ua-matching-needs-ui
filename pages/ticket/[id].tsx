@@ -34,9 +34,12 @@ const getTicketDataFromEndpoint = async (
     const { data } = response.data
     return data
   } catch (e: any) {
-    console.log("e :>>", e)
-    console.log("e.data :>>", e.data)
-    return null
+    // it's a Directus' bug
+    // https://github.com/directus/directus/blob/962af79dbcd773e4c00c2c6cd0b89a14155320b5/api/src/services/items.ts#L322
+    if (e.response.status === 403) {
+      return null
+    }
+    throw new Error(e.message)
   }
 }
 
