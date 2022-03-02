@@ -96,7 +96,8 @@ const TagsChooseForm = (props: {
         mb={2}
         variant={props.tagsSelected.includes(tag.id) ? "solid" : "outline"}
         onClick={() => props.onClickTag(tag.id)}
-        className={"cursor-pointer"}
+        className={"cursor-pointer "}
+        colorScheme={"blue"}
       >
         {tag.name}
       </Tag>
