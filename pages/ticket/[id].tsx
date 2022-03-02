@@ -1,9 +1,9 @@
-import { Container, Text, Stack, Tag } from "@chakra-ui/react"
+import { Container, Text, Stack, Tag, Link } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
 import truncate from "truncate"
 import { TICKET_STATUS, TicketDetails } from "../tickets/add"
-import Error from "next/error"
+import NextError from "next/error"
 import { getUserInfo } from "../../src/services/auth"
 import { toast } from "react-toastify"
 import "dayjs/locale/pl"
@@ -26,13 +26,18 @@ import dayjs from "dayjs"
 
 const getTicketDataFromEndpoint = async (
   id: number
-): Promise<TicketDetails> => {
+): Promise<TicketDetails | null> => {
   const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}?fields=*.*.*`
 
-  const response = await axios.get(url)
-  const { data } = response.data
-
-  return data
+  try {
+    const response = await axios.get(url)
+    const { data } = response.data
+    return data
+  } catch (e: any) {
+    console.log("e :>>", e)
+    console.log("e.data :>>", e.data)
+    return null
+  }
 }
 
 export const isTicketActive = (ticket: TicketDetails): boolean => {
@@ -94,7 +99,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     return `${fullDescription}...${translations[finalLocale]["pages"]["ticket"]["description"]["read-more"]}`
   }, [ticket?.what, finalLocale, ticket])
 
-  const removeTicketMutation = useMutation<number, Error, number>(
+  const removeTicketMutation = useMutation<number, NextError, number>(
     (id: number) => {
       return axios.patch(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
@@ -113,9 +118,10 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
 
   if (!ticket) {
     return (
-      <Error statusCode={404}>
-        Zgłoszenia nie znaleziono lub jest juz nieaktualne.
-      </Error>
+      <NextError statusCode={404}>
+        Zgłoszenia nie znaleziono lub jest juz nieaktualne. Ale pewnie się coś
+        znajdzie <Link href={RouteDefinitions.AllActiveTickets}>tutaj</Link>
+      </NextError>
     )
   }
 
