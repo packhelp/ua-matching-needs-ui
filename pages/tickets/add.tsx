@@ -45,6 +45,7 @@ export type TicketData = TicketFormData & {
   expirationTimestampSane: string
   date_created: number
   ticket_status: TICKET_STATUS
+  description: string
   need_tag_id: {
     need_tag_id: {
       name: string
