@@ -18,11 +18,14 @@ import { useMutation, useQuery } from "react-query"
 import axios from "axios"
 import { RouteDefinitions } from "../../src/utils/routes"
 import Head from "next/head"
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 import { metaData } from "../../src/utils/meta-data"
 import { translations } from "../../src/utils/translations"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
+
+const LOCAL_STORAGE_KEY_VISITS_COUNTER = "visits-counter"
+const TICKET_MARKED_AS_VISITED = "visited"
 
 const getTicketDataFromEndpoint = async (
   id: number
@@ -83,11 +86,69 @@ export async function getServerSideProps(context) {
   return { props: { ticket } }
 }
 
+const getLocalStorageVisitsCounterKey = (ticketId: number): string => {
+  return `${LOCAL_STORAGE_KEY_VISITS_COUNTER}-${ticketId}`
+}
+
+const shouldCountVisit = (ticketId: number): boolean => {
+  if (typeof window !== "undefined") {
+    return (
+      localStorage.getItem(getLocalStorageVisitsCounterKey(ticketId)) !==
+      TICKET_MARKED_AS_VISITED
+    )
+  }
+
+  return false
+}
+
+const blockVisitsCounterFor = (ticketId: number): void => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem(
+      getLocalStorageVisitsCounterKey(ticketId),
+      TICKET_MARKED_AS_VISITED
+    )
+  }
+}
+
+const countVisitOnce = (ticketId: number) => {
+  if (shouldCountVisit(ticketId)) {
+    try {
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${ticketId}`
+        )
+        .then((response) => {
+          const newVisits = response.data.data.visits + 1
+
+          axios
+            .patch(
+              `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${ticketId}`,
+              {
+                visits: newVisits,
+              }
+            )
+            .then(() => {
+              console.debug("Incremented visits counter")
+              blockVisitsCounterFor(ticketId)
+            })
+        })
+    } catch (e: any) {
+      console.debug("The visits counter hasn't been updated ")
+    }
+  }
+}
+
 const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   const router = useRouter()
   const finalLocale = useFinalLocale()
 
   const { id } = router.query
+
+  useEffect(() => {
+    if (id) {
+      void countVisitOnce(Number(id))
+    }
+  }, [id])
 
   const description = useMemo(() => {
     if (!ticket) {
@@ -461,6 +522,10 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 Zgłoszenie wygasło: {formattedExpiration}
               </p>
             )}
+
+            <p className="my-4 max-w-2xl text-center text-sm text-gray-500">
+              Odsłon: {ticket.visits + 1}
+            </p>
 
             {isOwner && (
               <div className="px-2 py-2 text-center">

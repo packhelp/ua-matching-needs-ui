@@ -62,6 +62,7 @@ export type TicketData = TicketFormData & {
   need_tag_id: {
     need_tag_id: NeedTagType
   }[]
+  visits: number
 }
 
 export type TicketDetails = TicketPostData & TicketData
