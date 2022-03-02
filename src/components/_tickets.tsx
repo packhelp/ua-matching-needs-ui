@@ -61,85 +61,87 @@ export const Tickets = ({
   )
 
   return (
-    <Box className="px-4 py-5 sm:p-6">
-      <Flex justifyContent="space-between">
-        <Heading size="md" mb={4}>
-          {status === TICKET_STATUS.ACTIVE ? "Aktywne" : "Nieaktywne"}{" "}
-          zapotrzebowanie
-        </Heading>
-        {tickets && <Text>Zgłoszeń: {tickets.length}</Text>}
-      </Flex>
+    <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
+      <Box className="px-4 py-5 sm:p-6">
+        <Flex justifyContent="space-between">
+          <Heading size="md" mb={4}>
+            {status === TICKET_STATUS.ACTIVE ? "Aktywne" : "Nieaktywne"}{" "}
+            zapotrzebowanie
+          </Heading>
+          {tickets && <Text>Zgłoszeń: {tickets.length}</Text>}
+        </Flex>
 
-      {isLoading && <Spinner />}
+        {isLoading && <Spinner />}
 
-      <Flex flexDirection="column">
-        {tickets &&
-          tickets.map((ticket) => {
-            const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
-            const tickerUrl = RouteDefinitions.TicketDetails.replace(":id", ticket.id)
-            return (
-              <Box
-                key={ticket.id}
-                marginBottom="16px"
-              >
+        <Flex flexDirection="column">
+          {tickets &&
+            tickets.map((ticket) => {
+              const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
+              const tickerUrl = RouteDefinitions.TicketDetails.replace(":id", ticket.id)
+              return (
                 <Box
-                  borderWidth="1px"
-                  borderRadius="md"
+                  key={ticket.id}
+                  marginBottom="16px"
                 >
-                  <Box padding="8px">
-                    <Flex justifyContent="space-between">
-                      <Box>
-                        <Heading size="xs">
-                          {ticket.need_tag_id.map((tag) =>
-                            <Tag colorScheme='yellow' key={tag.need_tag_id} variant="solid" borderRadius="full">{tag.need_tag_id.name}</Tag>
-                          )}
-                        </Heading>
-                      </Box>
-                      <Box>
-                        <Heading size="xs">
-                          {dateFormatted}
-                        </Heading>
-                      </Box>
-                    </Flex>
-
-                    <Divider marginBottom="16px" marginTop="8px"/>
-
-                    <Flex flexDirection="column" justifyContent="space-between">
-                      <Heading size="xs" marginBottom="8px">
-                        Co potrzebne:
-                      </Heading>
-                      <Text fontSize='sm'>
-                        {ticket.what}
-                      </Text>
-                    </Flex>
-
-                    <Divider marginBottom="16px" marginTop="16px"/>
-
-                    <Flex flexDirection="column" justifyContent="space-between">
-                      <Heading size="xs" marginBottom="8px">
-                        Gdzie potrzebne:
-                      </Heading>
-                      <Text fontSize='sm' marginBottom="8px">
-                        {ticket.where}
-                      </Text>
-                    </Flex>
-                  </Box>
-                  <Button
-                    size="sm"
-                    variant={"solid"}
-                    width="100%"
+                  <Box
+                    borderWidth="1px"
                     borderRadius="md"
-                    borderTopRadius={0}
-                    colorScheme={"blue"}
-                    onClick={() => router.push(tickerUrl)}
                   >
-                    Szczegóły
-                  </Button>
+                    <Box padding="8px">
+                      <Flex justifyContent="space-between">
+                        <Box>
+                          <Heading size="xs">
+                            {ticket.need_tag_id.map((tag) =>
+                              <Tag colorScheme='yellow' key={tag.need_tag_id} variant="solid" borderRadius="full">{tag.need_tag_id.name}</Tag>
+                            )}
+                          </Heading>
+                        </Box>
+                        <Box>
+                          <Heading size="xs">
+                            {dateFormatted}
+                          </Heading>
+                        </Box>
+                      </Flex>
+
+                      <Divider marginBottom="16px" marginTop="8px"/>
+
+                      <Flex flexDirection="column" justifyContent="space-between">
+                        <Heading size="xs" marginBottom="8px">
+                          Co potrzebne:
+                        </Heading>
+                        <Text fontSize='sm'>
+                          {ticket.what}
+                        </Text>
+                      </Flex>
+
+                      <Divider marginBottom="16px" marginTop="16px"/>
+
+                      <Flex flexDirection="column" justifyContent="space-between">
+                        <Heading size="xs" marginBottom="8px">
+                          Gdzie potrzebne:
+                        </Heading>
+                        <Text fontSize='sm' marginBottom="8px">
+                          {ticket.where}
+                        </Text>
+                      </Flex>
+                    </Box>
+                    <Button
+                      size="sm"
+                      variant={"solid"}
+                      width="100%"
+                      borderRadius="md"
+                      borderTopRadius={0}
+                      colorScheme={"blue"}
+                      onClick={() => router.push(tickerUrl)}
+                    >
+                      Szczegóły
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
-            )
-          })}
-      </Flex>
-    </Box>
+              )
+            })}
+        </Flex>
+      </Box>
+    </div>
   )
 }

@@ -155,7 +155,7 @@ const TicketDetails: NextPage = () => {
   const ticketTags = TicketDetails["need_tag_id"]
 
   return (
-    <>
+    <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Head>
         <meta property="description" content={description} key="description" />
         <meta
@@ -387,8 +387,7 @@ const TicketDetails: NextPage = () => {
             </div>
           </div>
       </section>
-
-    </>
+    </div>
   )
 }
 
