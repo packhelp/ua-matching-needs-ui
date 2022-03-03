@@ -186,7 +186,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
       return axios.patch(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
         {
-          ticket_status: TICKET_STATUS.DELETED,
+          ticket_status: TICKET_STATUS.CANCELED,
         }
       )
     },
