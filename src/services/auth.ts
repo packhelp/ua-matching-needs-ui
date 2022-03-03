@@ -1,3 +1,5 @@
+import { isJsonString } from "../utils/local-storage"
+
 const AUTH_ITEM_NAME = "user_info"
 
 export type UserInfo = {
@@ -21,7 +23,7 @@ export const signOut = (): boolean => {
 export const getUserInfo = (): UserInfo | null => {
   if (typeof window !== "undefined") {
     const authItem = localStorage.getItem(AUTH_ITEM_NAME)
-    if (authItem) {
+    if (isJsonString(authItem)) {
       return JSON.parse(authItem)
     }
   }

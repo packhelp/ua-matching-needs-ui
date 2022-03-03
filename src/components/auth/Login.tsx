@@ -34,12 +34,15 @@ export const Login: FC = () => {
     return parsedPhone?.number || phone
   }, [parsedPhone, phone])
 
-  const submitForm = useCallback(() => {
-    if (!canSubmit) return
+  const submitForm = (e: any) => {
+    e.preventDefault()
+    if (!canSubmit) {
+      return
+    }
 
     signIn(phoneNumber as string)
     router.push(RouteDefinitions.AddTicket)
-  }, [canSubmit, phoneNumber, router])
+  }
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">

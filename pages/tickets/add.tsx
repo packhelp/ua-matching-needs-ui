@@ -23,6 +23,8 @@ import { isTicketActive } from "../ticket/[id]"
 import { useState } from "react"
 import { AddTicketButton } from "../../src/components/AddTicketButton"
 import { getMainTags } from "../../src/utils/tags"
+import { PlusSVG } from "../../src/assets/styled-svgs/plus"
+import { isJsonString } from "../../src/utils/local-storage"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
@@ -89,7 +91,7 @@ const getInitialDataFromLocalStorage = () => {
 
   const data = localStorage.getItem(LOCAL_STORAGE_KEY_TICKET_DATA)
 
-  if (data) {
+  if (isJsonString(data)) {
     return JSON.parse(data)
   }
 }
@@ -119,7 +121,7 @@ const TagsChooseForm = (props: {
 const getPreviouslySavedTags = () => {
   if (typeof window !== "undefined") {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY_TAGS)
-    if (json) {
+    if (isJsonString(json)) {
       return JSON.parse(json)
     }
   }
@@ -298,13 +300,14 @@ const AddTicket: NextPage = () => {
               </Text>
             ) : null}
 
-            <Box
-              as="button"
+            <button
               type="submit"
               disabled={addTicketMutation.isLoading}
+              className="w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black bg-amber-300 shadow-sm hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              <AddTicketButton />
-            </Box>
+              <PlusSVG />
+              <span>{translations["/tickets/add"]}</span>
+            </button>
           </Stack>
         </form>
       </Container>
