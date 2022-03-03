@@ -1,13 +1,14 @@
 import React, { useState } from "react"
-import { Button, Container, FormLabel, Heading, Input } from "@chakra-ui/react"
+import { Button, ButtonSpinner, Container, FormLabel, Heading, Input } from "@chakra-ui/react"
 import { translations } from "../../utils/translations"
 import { useFinalLocale } from "../../hooks/final-locale"
 
 interface EnterPhoneNumberProps {
-  onSubmit: ({ verificationCode: number }) => void
+  onSubmit: ({ verificationCode: number }) => Promise<void>
 }
 
 export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
+  const [verifying, setVerifying] = useState(false)
   const [verificationCode, setVerificationCode] = useState("")
   const finalLocale = useFinalLocale()
 
@@ -16,7 +17,9 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
       <Container className="px-4 py-5 sm:p-6">
         <form onSubmit={(event) => {
           event.preventDefault()
+          setVerifying(true)
           onSubmit({ verificationCode })
+            .finally(() => setVerifying(false))
         }}>
           <Heading as="h1" size="1xl" mb={4}>
             {translations[finalLocale]["pages"]["sign-in"]["phone-verification"]["title"]}
@@ -30,6 +33,7 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
               translations[finalLocale]["pages"]["sign-in"]["phone-verification"]["placeholder"]
             }
             onChange={(event) => setVerificationCode(event.target.value)}
+            type="number"
           />
           <Button
             type="submit"
@@ -37,7 +41,7 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
             colorScheme="blue"
             isFullWidth
           >
-            {translations[finalLocale]["pages"]["sign-in"]["next"]}
+            { verifying ? <ButtonSpinner /> : translations[finalLocale]["pages"]["sign-in"]["next"] }
           </Button>
         </form>
       </Container>

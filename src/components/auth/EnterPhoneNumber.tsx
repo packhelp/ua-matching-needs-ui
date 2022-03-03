@@ -1,16 +1,17 @@
-import { Button, Container, FormLabel, Heading, Input } from "@chakra-ui/react"
+import { Button, ButtonSpinner, Container, FormLabel, Heading, Input } from "@chakra-ui/react"
 import React, { useMemo, useState } from "react"
 import { useFinalLocale } from "../../hooks/final-locale"
 import { translations } from "../../utils/translations"
 import { parsePhoneNumberFromString } from "libphonenumber-js/max"
 
 interface EnterPhoneNumberProps {
-  onSubmit: ({ phoneNumber: string }) => void
+  onSubmit: ({ phoneNumber: string }) => Promise<void>
 }
 
 export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
   const finalLocale = useFinalLocale()
 
+  const [processing, setProcessing] = useState(false)
   const [phone, setPhone] = useState<string | undefined>()
   const [shouldValidate, setShouldValidate] = useState<boolean>(false)
 
@@ -38,7 +39,9 @@ export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
     event.preventDefault()
     if (!canSubmit) return
 
+    setProcessing(true)
     onSubmit({ phoneNumber })
+      .finally(() => setProcessing(false))
   }
 
   return (
@@ -68,7 +71,7 @@ export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
             isFullWidth
             disabled={!canSubmit}
           >
-            {translations[finalLocale]["pages"]["sign-in"]["next"]}
+            { processing ? <ButtonSpinner /> : translations[finalLocale]["pages"]["sign-in"]["next"] }
           </Button>
         </form>
       </Container>
