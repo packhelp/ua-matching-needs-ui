@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import { Tickets } from "../../../src/components/_tickets"
+import { Tickets } from "../../../src/components/Tickets"
 import { TICKET_STATUS } from "../add"
 
 const MineActiveTickets: NextPage = () => {

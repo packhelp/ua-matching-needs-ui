@@ -5,7 +5,7 @@ import { RouteDefinitions } from "../utils/routes"
 import { isTicketActive } from "../../pages/ticket/[id]"
 import { TICKET_STATUS } from "../../pages/tickets/add"
 import { getUserInfo } from "../services/auth"
-import { Tag } from "./_tag"
+import { Tag } from "./Tag"
 
 const isMineTicket = (item, userInfo) => {
   if (!userInfo) {

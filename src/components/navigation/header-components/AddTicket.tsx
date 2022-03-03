@@ -1,6 +1,6 @@
 import { useTranslations } from "../../../hooks/translations"
 import { RouteDefinitions } from "../../../utils/routes"
-import { PlusSVG } from "./styled-svgs/plus"
+import { PlusSVG } from "../../../assets/styled-svgs/plus"
 
 export const AddTicket = () => {
   const translations = useTranslations()

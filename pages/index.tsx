@@ -1,9 +1,7 @@
 import {
   Box,
-  Button,
   Container,
   Heading,
-  Link,
   Stack,
   Text,
   Flex,
@@ -12,11 +10,11 @@ import {
 } from "@chakra-ui/react"
 import * as React from "react"
 import { NextPage } from "next"
-import { AddIcon, SearchIcon } from "@chakra-ui/icons"
 import { Step } from "../src/components/main/Step"
-import { RouteDefinitions } from "../src/utils/routes"
 import { translations } from "../src/utils/translations"
 import { useFinalLocale } from "../src/hooks/final-locale"
+import { AddTicketButton } from "../src/components/AddTicketButton"
+import { SearchTicketsButton } from "../src/components/SearchTicketsButton"
 
 const MainPage: NextPage = () => {
   const finalLocale = useFinalLocale()
@@ -45,67 +43,26 @@ const MainPage: NextPage = () => {
                 {pageTranslations.subheader}
               </Text>
             </Stack>
-            {/*<Flex*/}
-            {/*  flexDirection={useBreakpointValue({ base: "column", md: "row" })}*/}
-            {/*  justifyContent="space-evenly"*/}
-            {/*>*/}
             <HStack
               justifyContent="space-evenly"
-              display={{ base: "none", lg: "flex" }}
+              display={{ base: "none", md: "flex" }}
             >
-              <Link href={RouteDefinitions.AllActiveTickets}>
-                <Button
-                  leftIcon={<SearchIcon />}
-                  variant="solid"
-                  size="lg"
-                  colorScheme="blue"
-                  marginBottom={0}
-                  isFullWidth={false}
-                >
-                  {pageTranslations["show-all-button"]}
-                </Button>
-              </Link>
-              <Link href={RouteDefinitions.AddTicket}>
-                <Button
-                  leftIcon={<AddIcon />}
-                  variant="solid"
-                  size="lg"
-                  colorScheme="yellow"
-                  isFullWidth={false}
-                >
-                  {pageTranslations["add-new-button"]}
-                </Button>
-              </Link>
+              <SearchTicketsButton />
+              <AddTicketButton />
             </HStack>
             <Flex
               flexDirection="column"
+              alignItems="center"
               marginTop="16px"
-              justifyContent={"space-between"}
-              display={{ base: "flex", lg: "none" }}
+              justifyContent="space-between"
+              display={{ base: "flex", md: "none" }}
             >
-              <Link href={RouteDefinitions.AllActiveTickets}>
-                <Button
-                  leftIcon={<SearchIcon />}
-                  variant="solid"
-                  size="lg"
-                  colorScheme="blue"
-                  marginBottom={8}
-                  isFullWidth={true}
-                >
-                  {pageTranslations["show-all-button"]}
-                </Button>
-              </Link>
-              <Link href={RouteDefinitions.AddTicket}>
-                <Button
-                  leftIcon={<AddIcon />}
-                  variant="solid"
-                  size="lg"
-                  colorScheme="yellow"
-                  isFullWidth={true}
-                >
-                  {pageTranslations["add-new-button"]}
-                </Button>
-              </Link>
+              <div className="pb-4 w-64">
+                <SearchTicketsButton />
+              </div>
+              <div className="pb-4 w-64">
+                <AddTicketButton />
+              </div>
             </Flex>
           </Stack>
           <Stack>
@@ -138,18 +95,8 @@ const MainPage: NextPage = () => {
               {pageTranslations["steps-section"]["step-3-description"]}
             </Step>
           </Stack>
-          <Stack align="center">
-            <Link href={RouteDefinitions.AddTicket}>
-              <Button
-                leftIcon={<AddIcon />}
-                variant="solid"
-                size="lg"
-                colorScheme="yellow"
-                marginTop="60px"
-              >
-                {pageTranslations["add-new-button"]}
-              </Button>
-            </Link>
+          <Stack align="center" marginTop="16px">
+            <AddTicketButton />
           </Stack>
         </Container>
       </Box>
