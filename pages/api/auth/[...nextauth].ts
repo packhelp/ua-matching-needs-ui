@@ -10,6 +10,7 @@ const everifyAuthToken: string = `${process.env.EVERIFY_AUTH_TOKEN}`
 const secretAuthSalt: string = `${process.env.SECRET_AUTH_SALT}`
 const directusApiToken: string = `${process.env.DIRECTUS_API_AUTH}`
 const env: string = `${process.env.ENV}`.toUpperCase()
+import { withSentry } from "@sentry/nextjs"
 
 if (!everifyAuthToken) {
   // @ts-ignore
@@ -37,7 +38,7 @@ interface DirectusAuthResponse {
   id: string
 }
 
-export default function auth(req: NextApiRequest, res: NextApiResponse) {
+const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
   const providers = [
     CredentialsProvider<{}>({
       name: "Credentials",
@@ -170,3 +171,5 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
     },
   })
 }
+
+export default withSentry(handler)

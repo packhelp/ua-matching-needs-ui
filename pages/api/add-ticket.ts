@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
 import axios from "axios"
+import { withSentry } from "@sentry/nextjs"
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
@@ -20,3 +21,5 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
   return res.status(200).json(response.data)
 }
+
+export default withSentry(handler)

@@ -2,6 +2,7 @@ import Error from "next/error"
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
 import axios from "axios"
+import { withSentry } from "@sentry/nextjs"
 
 const getTicketsUrl = ({ mineOnly, tagId, phoneNumber, ticketStatus }) => {
   const filters: { key: string; value: any }[] = []
@@ -34,7 +35,7 @@ const getTicketsUrl = ({ mineOnly, tagId, phoneNumber, ticketStatus }) => {
   return fullUrl
 }
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
   const phoneNumber = session?.user?.name?.replace("+", "%2B")
   let { mineOnly, tagId, ticketStatus } = req.query
@@ -64,3 +65,5 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
   return res.status(200).json(tickets)
 }
+
+export default withSentry(handler)

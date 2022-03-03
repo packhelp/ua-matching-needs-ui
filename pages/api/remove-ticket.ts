@@ -2,8 +2,9 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
 import axios from "axios"
 import { TICKET_STATUS } from "../tickets/add"
+import { withSentry } from "@sentry/nextjs"
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
 
   console.debug(req.body)
@@ -23,3 +24,5 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
   return res.status(200).json(response.data)
 }
+
+export default withSentry(handler)
