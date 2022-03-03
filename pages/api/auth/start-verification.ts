@@ -3,7 +3,7 @@ import Error from "next/error"
 import { parsePhoneNumberFromString } from "libphonenumber-js/max"
 
 const everifyAuthToken: string = `${process.env.EVERIFY_AUTH_TOKEN}`
-const env: string = `${process.env.ENV}`
+const env: string = `${process.env.ENV}`.toUpperCase()
 
 if (!everifyAuthToken) {
   // @ts-ignore
@@ -12,7 +12,7 @@ if (!everifyAuthToken) {
 
 const everify = new Everify(everifyAuthToken)
 
-if (env.toUpperCase() !== "PRODUCTION") {
+if (env !== "PRODUCTION") {
   everify.sandbox() // take this out to send real SMS
 }
 
