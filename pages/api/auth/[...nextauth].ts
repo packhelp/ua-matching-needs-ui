@@ -9,6 +9,7 @@ import axios from "axios"
 const everifyAuthToken: string = `${process.env.EVERIFY_AUTH_TOKEN}`
 const secretAuthSalt: string = `${process.env.SECRET_AUTH_SALT}`
 const directusApiToken: string = `${process.env.DIRECTUS_API_AUTH}`
+const env: string = `${process.env.ENV}`
 
 if (!everifyAuthToken) {
   // @ts-ignore
@@ -21,6 +22,10 @@ if (!secretAuthSalt) {
 if (!directusApiToken) {
   // @ts-ignore
   throw new Error("Missing DIRECTUS_API_AUTH env!")
+}
+if (!env) {
+  // @ts-ignore
+  throw new Error("Missing ENV env!")
 }
 
 const everify = new Everify(everifyAuthToken)
@@ -54,12 +59,18 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
           return null
         }
 
-        const { status } = await everify.checkVerification({
-          phoneNumber: phoneNumber,
-          code: verificationCode,
-        })
+        let phoneVerificationStatus
+        if (env === "PRODUCTION") {
+          const { status } = await everify.checkVerification({
+            phoneNumber: phoneNumber,
+            code: verificationCode,
+          })
+          phoneVerificationStatus = status
+        } else {
+          phoneVerificationStatus = "SUCCESS"
+        }
 
-        if (status === "SUCCESS") {
+        if (phoneVerificationStatus === "SUCCESS") {
           const directusUserAuthResponse = await axios.post<DirectusAuthResponse>(
             `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/api/auth-user`,
             {

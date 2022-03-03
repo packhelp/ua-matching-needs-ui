@@ -1,7 +1,7 @@
 import "../styles/globals.css"
 import type { AppProps } from "next/app"
 import { ChakraProvider } from "@chakra-ui/react"
-import { HeaderNavigation } from "../src/components/navigation/HeaderNavigation"
+import { Header } from "../src/components/navigation/Header"
 import { FooterNavigation } from "../src/components/navigation/FooterNavigation"
 import { SessionProvider } from "next-auth/react"
 
@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         <ChakraProvider>
           <RootContainerWrapper>
             <ToastContainer style={{ zIndex: 9999999 }} />
-            <HeaderNavigation />
+            <Header />
             <Container>
               <SessionProvider session={session}>
                 <Guard>

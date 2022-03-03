@@ -1,5 +1,4 @@
 import React, { FC } from "react"
-import { Box, Flex } from "@chakra-ui/react"
 import { metaData } from "../../utils/meta-data"
 import Head from "next/head"
 
@@ -28,7 +27,7 @@ export const Container: FC = ({ children }) => {
         <meta property="og:url" content={url} key="og-url" />
         <meta
           property="og:image"
-          content="http://ua-matching-needs.herokuapp.com/ukraine-flag.jpg"
+          content="https://ua-matching-needs.herokuapp.com/ukraine-flag.jpg"
           key="og-image"
         />
         <meta
@@ -38,17 +37,13 @@ export const Container: FC = ({ children }) => {
         />
         <link
           rel="icon"
-          href="http://ua-matching-needs.herokuapp.com/ukraine.svg"
+          href="https://ua-matching-needs.herokuapp.com/svg/ukraine.svg"
           type="image/svg+xml"
           key="icon"
         ></link>
       </Head>
 
-      <div className="bg-slate-200 max-w-3xl mx-auto sm:px-6 lg:px-8 py-4 min-h-screen">
-        <div className="bg-white overflow-hidden shadow rounded-lg h-auto">
-          <div className="px-4 py-5 sm:p-6">{children}</div>
-        </div>
-      </div>
+      <div className="px-4 py-4 mx-auto bg-slate-100">{children}</div>
     </>
   )
 }

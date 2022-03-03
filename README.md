@@ -10,6 +10,9 @@ npm run dev
 yarn dev
 ```
 
+## Migrate prod to staging
+`heroku pg:copy ua-directus-prod::DATABASE DATABASE --app ua-directus-staging --confirm ua-directus-staging`
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.

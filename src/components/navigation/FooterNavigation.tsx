@@ -1,30 +1,19 @@
 import React from "react"
-import {
-  chakra,
-  Flex,
-  Image,
-  Text,
-  Box,
-  useColorModeValue,
-} from "@chakra-ui/react"
+import { externalUrls } from "../../utils/external-urls"
+import { useTranslations } from "../../hooks/translations"
 
 export const FooterNavigation = () => {
-  const bg = useColorModeValue("white", "blue.500")
+  const translations = useTranslations()
   return (
-    <div className="flex items-center justify-center">
-      <Flex justifyContent={"center"} alignItems={"center"}>
-        <Box p="2">
-          <Image src="/svg/poland-flag.svg" alt="Poland" boxSize="15px" />
-        </Box>
-        <Text>Poland</Text>
-        <Box p="1">
-          <Image src="/svg/love.svg" alt="love" boxSize="20px" />
-        </Box>
-        <Text>Ukraine</Text>
-        <Box p="2">
-          <Image src="/svg/ukraine-flag.svg" alt="Ukraine" boxSize="15px" />
-        </Box>
-      </Flex>
+    <div className="my-6 flex items-center justify-center flex-col space-x-2 text-gray-800">
+      <div className="flex items-center justify-center space-x-2 py-4">
+        <img src="/svg/poland-flag.svg" className="w-5 h-5" alt="Poland" />
+        <span className="text-sm font-semibold">Poland</span>
+        <img src="/svg/love.svg" className="w-5 h-5" alt="Poland" />
+        <span className="text-sm font-semibold">Ukraine</span>
+        <img src="/svg/ukraine-flag.svg" className="w-5 h-5" alt="Poland" />
+      </div>
+      <a className="text-xs" href={externalUrls.terms}>{`[${translations["terms-of-service"]["title-alternate"]}]`}</a>
     </div>
   )
 }
