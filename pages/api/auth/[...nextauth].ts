@@ -95,6 +95,7 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
               id: onlyDigitsOfPhoneNumber,
               name: phoneNumber,
               directusAccessToken: directusUserAuthResponse?.data?.accessToken,
+              phone: phoneNumber,
             }
           }
         }
@@ -120,6 +121,7 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
         // assign the directusAccessToken to the `token` object, so it will be available on the `session` callback
         if (user) {
           token.directusAccessToken = user.directusAccessToken
+          token.phoneNumber = user.phoneNumber
         }
         return token
       },
@@ -129,6 +131,7 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
         // Assign the directusAccessToken to the `session` object, so it will be available on our app through `useSession` hooks
         if (token) {
           session.directusAccessToken = token.directusAccessToken
+          session.phoneNumber = token.phoneNumber
         }
         return session
       },

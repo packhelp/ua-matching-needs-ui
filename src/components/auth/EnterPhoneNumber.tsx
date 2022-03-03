@@ -1,8 +1,6 @@
 import { Button, Container, FormLabel, Heading, Input } from "@chakra-ui/react"
-import { useRouter } from "next/router"
 import React, { useMemo, useState } from "react"
 import { useFinalLocale } from "../../hooks/final-locale"
-import { getUserInfo } from "../../services/auth"
 import { translations } from "../../utils/translations"
 import { parsePhoneNumberFromString } from "libphonenumber-js/max"
 

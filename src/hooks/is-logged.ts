@@ -1,22 +1,7 @@
-import { useCallback, useEffect, useState } from "react"
-import { getUserInfo } from "../services/auth"
-import { useRouteChanged } from "./root-changed"
+import { useSession } from "next-auth/react"
 
-export const useIsLogged = () => {
-  const [logged, setLogged] = useState(false)
+export const userIsLoggedIn = () => {
+  const { data: authSession, status: authStatus } = useSession()
 
-  const setLoggedCb = useCallback(() => {
-    /* hax to do it real time instead of ssr */
-    if (typeof window !== "undefined") {
-      setLogged(!!getUserInfo())
-    }
-  }, [setLogged])
-
-  useRouteChanged([setLoggedCb])
-
-  useEffect(() => {
-    setLoggedCb()
-  }, [])
-
-  return logged
+  return authSession?.user.name && authStatus === "authenticated"
 }

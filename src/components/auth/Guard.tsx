@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useState } from "react"
+import React, { FC, useEffect } from "react"
 import { useRouter } from "next/router"
-import { getUserInfo, signIn } from "../../services/auth"
 import { RouteDefinitions } from "../../utils/routes"
 import { useSession } from "next-auth/react"
 
@@ -16,25 +15,12 @@ const isRestricted = (routerPathName) =>
 
 
 export const Guard: FC = ({ children }) => {
-  const [rerender, setRerender] = useState(false);
   const { data: authSession, status: authStatus } = useSession()
   const router = useRouter()
-  const user = getUserInfo()
 
   useEffect(() => {
     if (isRestricted(router.pathname) && !authSession && authStatus === "unauthenticated") {
       router.push(RouteDefinitions.SignIn)
-    }
-
-    if (authSession?.user?.name && !user) {
-      signIn(authSession?.user?.name)
-      setRerender(true)
-    }
-
-    if (rerender) {
-      setRerender(false)
-      // @ts-ignore
-      router.reload(window.location.pathname)
     }
 
     // TODO(m) Add Sentry
@@ -43,7 +29,7 @@ export const Guard: FC = ({ children }) => {
     //     Sentry.setUser({ email: session.user.email });
     //   } catch (e) {}
     // }
-  }, [authSession, authStatus, rerender])
+  }, [authSession, authStatus])
 
   if (authStatus === "loading") {
     return <div>loading</div>

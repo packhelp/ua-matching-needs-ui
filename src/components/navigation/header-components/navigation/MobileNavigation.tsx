@@ -2,10 +2,9 @@ import { useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
-import { useIsLogged } from "../../../../hooks/is-logged"
+import { userIsLoggedIn } from "../../../../hooks/is-logged"
 import { useRouteChanged } from "../../../../hooks/root-changed"
 import { useTranslations } from "../../../../hooks/translations"
-import { signOut } from "../../../../services/auth"
 import {
   getRouteNameForLocale,
   Locale,
@@ -13,6 +12,7 @@ import {
 } from "../../../../utils/routes"
 import { CloseSVG } from "../../../../assets/styled-svgs/close"
 import { HamburgerSVG } from "../../../../assets/styled-svgs/hamburger"
+import { signOut } from "next-auth/react"
 
 interface MobileNavigationElementProps {
   route: RouteDefinitions
@@ -56,13 +56,13 @@ export const MobileNavigation = () => {
 }
 
 const MobilePopup = ({ isOpen }: { isOpen: boolean }) => {
-  const isLogged = useIsLogged()
+  const isLogged = userIsLoggedIn()
   const translations = useTranslations()
   const router = useRouter()
 
-  const onSignOut = () => {
-    if (signOut()) {
-      router.push(RouteDefinitions.SignIn)
+  const onSignOut = async () => {
+    if (await signOut()) {
+      await router.push(RouteDefinitions.SignIn)
     }
   }
 

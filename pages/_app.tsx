@@ -33,24 +33,24 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <ChakraProvider>
-          <RootContainerWrapper>
-            <ToastContainer style={{ zIndex: 9999999 }} />
-            <Header />
-            <Container>
-              <SessionProvider session={session}>
+    <SessionProvider session={session}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ChakraProvider>
+            <RootContainerWrapper>
+              <ToastContainer style={{ zIndex: 9999999 }} />
+              <Header />
+              <Container>
                 <Guard>
                   <Component {...pageProps} />
                 </Guard>
-              </SessionProvider>
-            </Container>
-            <FooterNavigation />
-          </RootContainerWrapper>
-        </ChakraProvider>
-      </Hydrate>
-    </QueryClientProvider>
+              </Container>
+              <FooterNavigation />
+            </RootContainerWrapper>
+          </ChakraProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </SessionProvider>
   )
 }
 
