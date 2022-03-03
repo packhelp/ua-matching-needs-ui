@@ -198,6 +198,25 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     }
   )
 
+  const markSolvedTicketMutation = useMutation<number, NextError, number>(
+    (id: number) => {
+      return axios.patch(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
+        {
+          ticket_status: TICKET_STATUS.SOLVED,
+        }
+      )
+    },
+    {
+      onSuccess: () => {
+        toast.success(
+          "Ogłoszenie zostało oznaczone jako rozwiąne! Mozesz dodać kolejne."
+        )
+        return router.push(RouteDefinitions.AddTicket)
+      },
+    }
+  )
+
   if (!ticket) {
     return (
       <NextError statusCode={404}>
@@ -217,6 +236,14 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
       removeTicketMutation.mutate(Number(id))
     } else {
       toast.error("Wystąpił błąd z usuwaniem zgłoszenia")
+    }
+  }
+
+  const markAsSolvedTicket = () => {
+    if (id) {
+      markSolvedTicketMutation.mutate(Number(id))
+    } else {
+      toast.error("Wystąpił błąd z oznaczeniem zgłoszenia jako rozwiąane")
     }
   }
 
@@ -258,8 +285,17 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 <span className="font-medium">Nr Zgłoszenia: #{ticket.id}</span>
                 {ticket.organization_id && (
                   <span className="flex space-x-1 font-medium text-blue-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5 text-blue-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     <span>Zweryfikowana organizacja</span>
                   </span>
@@ -493,7 +529,6 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                   </div>
                 ) : null}
 
-
                 {ticket.who && (
                   <div className="sm:col-span-2">
                     <dt className="text-sm font-medium text-gray-500">
@@ -502,9 +537,18 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                     <dd className="mt-1 text-lg text-gray-900">
                       {ticket.organization_id ? (
                         <span className="flex items-center space-x-1">
-                      <Tooltip label='Zweryfikowana organizacja'>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      <Tooltip label="Zweryfikowana organizacja">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-5 h-5 text-blue-400"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </Tooltip>
                       <span>{ticket.who}</span>
@@ -521,7 +565,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
         }
 
         <div className="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">
-          {isTicketActive(ticket) ? (
+          {isTicketActive(ticket) &&
             <>
               <a
                 href={`tel:${ticket.phone}`}
@@ -542,10 +586,67 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                 </svg>
               </a>
-              <p className="my-4 max-w-2xl text-center text-sm text-gray-500">
-                Zgłoszenie aktywne do: {formattedExpiration}
-              </p>
+              
+
+              {isOwner && (
+                <div className="px-2 py-2 text-center">
+                <span className="text-sm mr-2 text-gray-500 font-medium">
+                  Jesteś autorem tego zgłoszenia?
+                </span>
+                  <div className="flex space-x-1 items-center justify-center">
+                    <button
+                      onClick={markAsSolvedTicket}
+                      type="button"
+                      className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    >
+                      Problem rozwiązany!
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 ml-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      onClick={removeTicket}
+                      type="button"
+                      className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    >
+                      Usuń
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 ml-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
             </>
+          }
+
+          {isTicketActive(ticket) ? (
+            <p className="my-4 max-w-2xl text-center text-sm text-gray-500">
+              Zgłoszenie aktywne do: {formattedExpiration}
+            </p>
           ) : (
             <p className="my-4 max-w-2xl text-center text-sm font-medium text-red-600">
               Zgłoszenie wygasło: {formattedExpiration}
@@ -555,37 +656,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
           <p className="my-4 max-w-2xl text-center text-sm text-gray-500">
             Odsłon: {ticket.visits + 1}
           </p>
-
-          {isOwner && (
-            <div className="px-2 py-2 text-center">
-                <span className="text-sm mr-2 text-gray-500 font-medium">
-                  Jesteś autorem tego zgłoszenia
-                </span>
-              <button
-                onClick={removeTicket}
-                type="button"
-                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-              >
-                Usuń
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 ml-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-              </button>
-            </div>
-          )}
         </div>
-
       </section>
     </div>
   )
