@@ -9,7 +9,7 @@ import * as React from "react"
 
 interface StepProps {
   title: string
-  children: React.ReactNode
+  children?: React.ReactNode
   number: string
 }
 
@@ -32,7 +32,7 @@ export const Step = (props: StepProps) => {
         <Text fontWeight="extrabold" fontSize="lg">
           {title}
         </Text>
-        <Box color={mode("gray.600", "gray.400")}>{children}</Box>
+        {children && <Box color={mode("gray.600", "gray.400")}>{children}</Box>}
       </Stack>
     </Stack>
   )

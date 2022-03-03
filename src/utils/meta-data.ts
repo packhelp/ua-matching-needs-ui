@@ -1,5 +1,5 @@
 export const metaData = {
-  title: "Wesprzyj Ukraińców!",
+  title: "Pomóżmy Ukrainie!",
   description:
-    "Szybkie i proste zarządzenie potrzebami organizatorów. Zobacz gdzie możesz pomóc lub dodaj potrzebę.",
+    "Szybkie i proste zarządzanie organizacją pomocy humanitarnej. Pomagasz innym? Pomożemy Ci zorganizować tę pomoc!",
 }
