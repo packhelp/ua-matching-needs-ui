@@ -59,6 +59,7 @@ export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
             onChange={(e) => setPhone(e.target.value)}
             onBlur={() => setShouldValidate(true)}
             isInvalid={!isPhoneValid}
+            type="tel"
           />
           <Button
             type="submit"
