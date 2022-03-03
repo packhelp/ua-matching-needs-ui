@@ -3,6 +3,8 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
 import { Session } from "next-auth"
 import axios from "axios"
+import is from "@sindresorhus/is"
+import undefined = is.undefined
 
 const getTicketsUrl = ({ mineOnly, tagId, phoneNumber, ticketStatus }) => {
   const filters: { key: string, value: any }[] = []
@@ -57,8 +59,14 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   }
 
   const url = getTicketsUrl({ mineOnly, phoneNumber, tagId, ticketStatus })
-
-  const tickets = await axios.get(url).then((response) =>
+  const authRequestOptions = {
+    headers: {
+      "Authorization": `Bearer ${session?.user?.directusAuthToken}`,
+      "Content-Type": "application/json",
+    }
+  }
+  const requestOptions = session?.user.directusAuthToken ? authRequestOptions : {}
+  const tickets = await axios.get(url, requestOptions).then((response) =>
     response.data.data
   )
 

@@ -20,7 +20,12 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
   console.debug(req.body)
 
-  const response = await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need`, req.body)
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need`, req.body, {
+    headers: {
+      "Authorization": `Bearer ${user.directusAuthToken}`,
+      "Content-Type": "application/json",
+    },
+  })
 
   return res.status(200).json(response.data)
 }
