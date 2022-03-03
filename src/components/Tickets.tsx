@@ -7,7 +7,7 @@ import { TICKET_STATUS } from "../../pages/tickets/add"
 import { getUserInfo } from "../services/auth"
 import { Tag } from "./Tag"
 import { TagsFilter } from "./TagsFilter"
-import { Spinner } from "@chakra-ui/react"
+import { Tooltip } from '@chakra-ui/react'
 
 const isMineTicket = (item, userInfo) => {
   if (!userInfo) {
@@ -95,8 +95,19 @@ export const Tickets = ({
                   <li className="bg-white rounded-lg shadow hover:outline-2 outline-blue-200 hover:outline col-span-1 divide-y divide-gray-200">
                     <div className="px-4 py-5 border-gray-200 sm:px-6">
                       <div className="mb-2">
-                        <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-2">
-                          <span>#{ticket.id}</span>
+                        <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
+                          {ticket.organization_id ? (
+                            <>
+                              <Tooltip label='Zweryfikowany autor/NGO'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </Tooltip>
+                              <span className="pr-1 text-blue-400 font-medium">#{ticket.id}</span>
+                            </>
+                          ) : (
+                            <span className="pr-1 font-medium">#{ticket.id}</span>
+                          )}
                           <span className="">
                             {ticket.need_tag_id.map((tag) => {
                               if (
@@ -153,16 +164,19 @@ export const Tickets = ({
                       </div>
 
                       <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-8">
-                        {ticket.who && (
-                          <div className="sm:col-span-1">
-                            <dt className="text-xs font-medium text-gray-400">
-                              Kto zgłosił?
-                            </dt>
-                            <dd className="text-sm text-gray-900 truncate">
-                              {ticket.who}
-                            </dd>
-                          </div>
-                        )}
+                        <div className="sm:col-span-1">
+                          <dt className="text-xs font-medium text-gray-400">
+                            Kto zgłosił?
+                          </dt>
+                          <dd className="flex items-center text-sm text-gray-900 truncate">
+                            {ticket.organization_id ? (
+                              <span className="truncate">{ticket.organization_id.name}</span>
+                            ) : (
+                              <span className="truncate">{ticket.who}</span>
+                            )}
+                          </dd>
+                        </div>
+
                         <div className="sm:col-span-1">
                           <dt className="text-xs font-medium text-gray-400">
                             Dodano
