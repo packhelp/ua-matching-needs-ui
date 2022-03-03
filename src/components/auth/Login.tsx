@@ -1,4 +1,3 @@
-import { Button, Container, FormLabel, Heading, Input } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { FC, useState } from "react"
 import { EnterPhoneNumber } from "./EnterPhoneNumber"
@@ -7,9 +6,13 @@ import { signIn } from "next-auth/react"
 
 export const Login: FC = () => {
   const router = useRouter()
+  const { error: errorInUrlQuery } = router.query
   const [hasStartedVerification, setHasStartedVerification] = useState(false)
   const [credentials, setCredentials] = useState({ phoneNumber: null })
   const [error, setError] = useState<string>()
+  const errorMessage = "Nie udało się autoryzować twojego telefonu. Spróbuj jeszcze raz!"
+
+  errorInUrlQuery && !error && setError(errorMessage)
 
   const startVerification = async ({ phoneNumber }) => {
     const response = await fetch("/api/auth/start-verification", {
@@ -36,7 +39,7 @@ export const Login: FC = () => {
         redirect: true,
       })
     } catch (e) {
-      setError("Nie udało się autoryzować twojego telefonu. Spróbuj jeszcze raz!")
+      setError(errorMessage)
       setHasStartedVerification(false)
     }
   }
