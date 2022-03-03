@@ -30,9 +30,11 @@ const getAllTicketsUrl = (tagId?: number) => {
 export const Tickets = ({
   mineOnly,
   status,
+  title,
 }: {
   mineOnly: boolean
   status: TICKET_STATUS
+  title: string
 }) => {
   const userInfo = getUserInfo()
   const [tagIdFilter, setTagIdFilter] = useState<number | undefined>(undefined)
@@ -70,7 +72,7 @@ export const Tickets = ({
   return (
     <>
       <h1 className="my-4 text-3xl font-semibold text-center">
-        Aktualne Zapotrzebowanie
+        {title}
         {tickets && <span className="ml-2">({tickets.length})</span>}
       </h1>
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">

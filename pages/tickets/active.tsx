@@ -3,7 +3,7 @@ import { Tickets } from "../../src/components/Tickets"
 import { TICKET_STATUS } from "./add"
 
 const ActiveTickets: NextPage = () => {
-  return <Tickets mineOnly={false} status={TICKET_STATUS.ACTIVE} />
+  return <Tickets mineOnly={false} status={TICKET_STATUS.ACTIVE} title="Aktualne zapotrzebowanie" />
 }
 
 export default ActiveTickets
