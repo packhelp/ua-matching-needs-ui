@@ -38,8 +38,11 @@ export const translations: Translation = {
         },
       },
       ticket: {
-        description: {
+        metaTitle: {
           need: "Potrzeba",
+          cta: "Wesprzyj Ukraińców z potrzeby-ua.org",
+        },
+        description: {
           "read-more": "Czytaj więcej",
         },
       },

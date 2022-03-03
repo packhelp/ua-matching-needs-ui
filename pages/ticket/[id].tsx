@@ -150,18 +150,36 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     }
   }, [id])
 
-  const description = useMemo(() => {
+  const metaTitle = useMemo(() => {
+    if (!ticket) {
+      return metaData.title
+    }
+
+    const i18n = translations[finalLocale]["pages"]["ticket"]["metaTitle"]
+    const tagList = ticket.need_tag_id || []
+    const tag = tagList[0]?.need_tag_id?.name || ""
+    const where = ticket.where || ""
+
+    if (!tag && !where) {
+      return metaData.title
+    }
+
+    const spacer = tag && where ? " - " : ""
+    const title = `${i18n["need"]}: ${tag}${spacer}${where} | ${i18n["cta"]}`
+
+    return title
+  }, [ticket, finalLocale])
+
+  const metaDescription = useMemo(() => {
     if (!ticket) {
       return metaData.description
     }
 
-    const fullDescription = truncate(
-      `${translations[finalLocale]["pages"]["ticket"]["description"]["need"]}: ${ticket?.what} | ${metaData.description}`,
+    return truncate(
+      ticket.description || ticket.what || metaData.description,
       100
     )
-
-    return `${fullDescription}...${translations[finalLocale]["pages"]["ticket"]["description"]["read-more"]}`
-  }, [ticket?.what, finalLocale, ticket])
+  }, [ticket])
 
   const removeTicketMutation = useMutation<number, NextError, number>(
     (id: number) => {
@@ -218,10 +236,16 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Head>
-        <meta property="description" content={description} key="description" />
+        <title>{metaTitle}</title>
+        <meta property="og:title" content={metaTitle} key="og-title" />
+        <meta
+          property="description"
+          content={metaDescription}
+          key="description"
+        />
         <meta
           property="og:description"
-          content={description}
+          content={metaDescription}
           key="og-description"
         />
       </Head>
