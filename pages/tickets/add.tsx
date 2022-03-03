@@ -22,6 +22,7 @@ import { useTranslations } from "../../src/hooks/translations"
 import { isTicketActive } from "../ticket/[id]"
 import { useState } from "react"
 import { AddTicketButton } from "../../src/components/AddTicketButton"
+import { getMainTags } from "../../src/utils/tags"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
@@ -126,9 +127,7 @@ const AddTicket: NextPage = () => {
     useState<number[]>(previouslySavedTags)
 
   const { data: tags } = useQuery(`main-tags`, () => {
-    const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need_tag?filter[main_category][_eq]=1&fields=*.*.*`
-
-    return axios.get(url).then((response) => response.data.data)
+    return getMainTags()
   })
 
   const onSuccess = (rawResponse) => {
@@ -295,7 +294,11 @@ const AddTicket: NextPage = () => {
               </Text>
             ) : null}
 
-            <Box as="button" type="submit" disabled={addTicketMutation.isLoading}>
+            <Box
+              as="button"
+              type="submit"
+              disabled={addTicketMutation.isLoading}
+            >
               <AddTicketButton />
             </Box>
           </Stack>
