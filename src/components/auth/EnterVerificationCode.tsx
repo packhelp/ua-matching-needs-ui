@@ -7,13 +7,13 @@ interface EnterPhoneNumberProps {
   onSubmit: ({ verificationCode: number }) => void
 }
 
-export function EnterVerificationCode({ onSubmit }) {
+export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
   const [verificationCode, setVerificationCode] = useState("")
   const finalLocale = useFinalLocale()
 
   return (
-    <>
-      <Container>
+    <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
+      <Container className="px-4 py-5 sm:p-6">
         <form onSubmit={(event) => {
           event.preventDefault()
           onSubmit({ verificationCode })
@@ -41,6 +41,6 @@ export function EnterVerificationCode({ onSubmit }) {
           </Button>
         </form>
       </Container>
-    </>
+    </div>
   )
 }

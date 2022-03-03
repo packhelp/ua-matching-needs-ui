@@ -11,16 +11,10 @@ interface EnterPhoneNumberProps {
 }
 
 export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
-  const router = useRouter()
-  const isLogged = getUserInfo()
   const finalLocale = useFinalLocale()
 
   const [phone, setPhone] = useState<string | undefined>()
   const [shouldValidate, setShouldValidate] = useState<boolean>(false)
-
-  // if (typeof window !== "undefined" && isLogged) {
-  //   router.push(RouteDefinitions.AddTicket)
-  // }
 
   const parsedPhone = useMemo(() => {
     return parsePhoneNumberFromString(phone || "", "PL")
@@ -35,51 +29,50 @@ export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
 
   const canSubmit = useMemo(
     () => phone && phone !== "" && isPhoneValid,
-    [phone, isPhoneValid]
+    [phone, isPhoneValid],
   )
 
   const phoneNumber = useMemo(() => {
     return parsedPhone?.number || phone
   }, [parsedPhone, phone])
 
-  //useCallback(
-  //, [canSubmit, phoneNumber])
   const submitForm = (event) => {
     event.preventDefault()
     if (!canSubmit) return
 
     onSubmit({ phoneNumber })
-    // router.push(RouteDefinitions.AddTicket)
   }
 
   return (
-    <Container>
-      <form onSubmit={submitForm}>
-        <Heading as="h1" size="1xl" mb={4}>
-          {translations[finalLocale]["pages"]["sign-in"]["title"]}
-        </Heading>
+    <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
+      <Container className="px-4 py-5 sm:p-6">
+        <form onSubmit={submitForm}>
+          <Heading as="h1" size="1xl" mb={4}>
+            {translations[finalLocale]["pages"]["sign-in"]["title"]}
+          </Heading>
 
-        <FormLabel>
-          {translations[finalLocale]["pages"]["sign-in"]["label"]}
-        </FormLabel>
-        <Input
-          placeholder={
-            translations[finalLocale]["pages"]["sign-in"]["placeholder"]
-          }
-          onChange={(e) => setPhone(e.target.value)}
-          onBlur={() => setShouldValidate(true)}
-          isInvalid={!isPhoneValid}
-        />
-        <Button
-          type="submit"
-          mt={2}
-          colorScheme="blue"
-          isFullWidth
-          disabled={!canSubmit}
-        >
-          {translations[finalLocale]["pages"]["sign-in"]["next"]}
-        </Button>
-      </form>
-    </Container>
+          <FormLabel>
+            {translations[finalLocale]["pages"]["sign-in"]["label"]}
+          </FormLabel>
+          <Input
+            placeholder={
+              translations[finalLocale]["pages"]["sign-in"]["placeholder"]
+            }
+            onChange={(e) => setPhone(e.target.value)}
+            onBlur={() => setShouldValidate(true)}
+            isInvalid={!isPhoneValid}
+          />
+          <Button
+            type="submit"
+            mt={2}
+            colorScheme="blue"
+            isFullWidth
+            disabled={!canSubmit}
+          >
+            {translations[finalLocale]["pages"]["sign-in"]["next"]}
+          </Button>
+        </form>
+      </Container>
+    </div>
   )
 }
