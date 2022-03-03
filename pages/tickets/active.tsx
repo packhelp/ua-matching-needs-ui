@@ -1,9 +1,9 @@
 import type { NextPage } from "next"
 import { TICKET_STATUS } from "./add"
-import { AllTickets } from "../../src/components/_all-tickets"
+import { Tickets } from "../../src/components/Tickets"
 
 const ActiveTickets: NextPage = () => {
-  return <AllTickets status={TICKET_STATUS.ACTIVE} />
+  return <Tickets ticketStatus={TICKET_STATUS.ACTIVE} />
 }
 
 export default ActiveTickets
