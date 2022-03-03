@@ -91,8 +91,8 @@ export const Tickets = ({
               )
 
               return (
-                <a key={ticket.id} href={ticketUrl}>
-                  <li className="bg-white rounded-lg shadow hover:outline-2 outline-blue-200 hover:outline col-span-1 divide-y divide-gray-200">
+                <a key={ticket.id} href={ticketUrl} className={`ticket-item ${ticket.organization_id ? "verified" : ""}`}>
+                  <li className="ticket-item__content bg-white rounded-lg shadow outline-blue-200  col-span-1 divide-y divide-gray-200">
                     <div className="px-4 py-5 border-gray-200 sm:px-6">
                       <div className="mb-2">
                         <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
@@ -103,7 +103,7 @@ export const Tickets = ({
                                   xmlns="http://www.w3.org/2000/svg"
                                   className="w-5 h-5 text-blue-400"
                                   viewBox="0 0 20 20"
-                                  fill="currentColor"
+                                  fill="#61bd4f"
                                 >
                                   <path
                                     fillRule="evenodd"
@@ -112,7 +112,7 @@ export const Tickets = ({
                                   />
                                 </svg>
                               </Tooltip>
-                              <span className="pr-1 text-blue-400 font-medium">
+                              <span className="ticket-item__number pr-1 text-blue-400 font-medium">
                                 #{ticket.id}
                               </span>
                             </>

@@ -28,14 +28,14 @@ const Contact: NextPage = () => {
         <Flex
           justifyContent={"space-around"}
           alignItems="center"
-          flexDirection={useBreakpointValue({ base: "column", sm: "row" })}
+          flexDirection="row"
           cursor="pointer"
         >
           <Link href={externalUrls.packhelp}>
             <Image src="/logo-packhelp.svg" maxW="120px" />
           </Link>
           <Link href={externalUrls.techtotherescue}>
-            <Image src="/logo-tttr.png" maxW="160px" mt="8px" />
+            <Image src="/logo-tttr.png" maxW="160px" />
           </Link>
         </Flex>
       </div>
