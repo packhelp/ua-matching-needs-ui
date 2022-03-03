@@ -45,12 +45,17 @@ export async function getCurrentUser(req: NextApiRequest): Promise<Session["user
 }
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const user = await getCurrentUser(req)
-  const { mineOnly, tagId, ticketStatus } = req.query
+  const session = await getSession({ req })
+  const phoneNumber = session?.user?.name?.replace("+", "%2B")
+  let { mineOnly, tagId, ticketStatus } = req.query
 
   console.debug(req.query)
 
-  const phoneNumber = user.name?.replace("+", "%2B")
+  if (mineOnly && (!session || !session.user)) {
+    // @ts-ignore
+    throw new Error("Not authorized!")
+  }
+
   const url = getTicketsUrl({ mineOnly, phoneNumber, tagId, ticketStatus })
 
   const tickets = await axios.get(url).then((response) =>
