@@ -27,12 +27,12 @@ export const Container: FC = ({ children }) => {
         <meta property="og:url" content={url} key="og-url" />
         <meta
           property="og:image"
-          content="https://ua-matching-needs.herokuapp.com/ukraine-flag.jpg"
+          content="https://ua-matching-needs.herokuapp.com/share-banner.png"
           key="og-image"
         />
         <meta
           property="og:image:secure_url"
-          content="https://ua-matching-needs.herokuapp.com/ukraine-flag.jpg"
+          content="https://ua-matching-needs.herokuapp.com/share-banner.png"
           key="og-image-secure"
         />
         <link
