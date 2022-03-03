@@ -125,8 +125,7 @@ const AddTicket: NextPage = () => {
     useState<number[]>(previouslySavedTags)
 
   const { data: tags } = useQuery(`main-tags`, () => {
-    // const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need_tag?filter[main][_eq]=1&fields=*.*.*`
-    const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need_tag?fields=*.*.*`
+    const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need_tag?filter[main_category][_eq]=1&fields=*.*.*`
 
     return axios.get(url).then((response) => response.data.data)
   })
@@ -232,13 +231,6 @@ const AddTicket: NextPage = () => {
                 onClickTag={toggleTag}
                 tagsSelected={tagsSelected}
               />
-
-              {/*<Textarea*/}
-              {/*  rows={6}*/}
-              {/*  placeholder={translations["pages"]["add-ticket"]["tags"]}*/}
-              {/*  variant={"outline"}*/}
-              {/*  {...register("tags")}*/}
-              {/*/>*/}
             </Stack>
             <Stack>
               <Heading as={"h2"} size={"l"}>
