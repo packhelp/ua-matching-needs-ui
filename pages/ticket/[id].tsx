@@ -1,4 +1,4 @@
-import { Container, Text, Stack, Tag, Link } from "@chakra-ui/react"
+import { Tooltip, Text, Stack, Tag, Link } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
 import truncate from "truncate"
@@ -254,12 +254,20 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
         <div className="px-4 py-5 sm:px-6">
           <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
             <div className="sm:col-span-3">
-              <p className="mb-1 max-w-2xl text-sm text-gray-500">
-                Nr Zgłoszenia: #{ticket.id}
+              <p className="mb-1 max-w-2xl text-sm text-gray-500 flex items-center space-x-3">
+                <span className="font-medium">Nr Zgłoszenia: #{ticket.id}</span>
+                {ticket.organization_id && (
+                  <span className="flex space-x-1 font-medium text-blue-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Zweryfikowana organizacja</span>
+                  </span>
+                )}
               </p>
               <h2
                 id="applicant-information-title"
-                className="text-3xl leading-8 font-medium text-gray-900 truncate"
+                className="text-3xl leading-9 font-medium text-gray-900 truncate"
               >
                 {title}
               </h2>
@@ -484,12 +492,26 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
               </div>
             ) : null}
 
+
             {ticket.who && (
               <div className="sm:col-span-2">
                 <dt className="text-sm font-medium text-gray-500">
                   Kto zgłosił zapotrzebowanie?
                 </dt>
-                <dd className="mt-1 text-lg text-gray-900">{ticket.who}</dd>
+                <dd className="mt-1 text-lg text-gray-900">
+                  {ticket.organization_id ? (
+                    <span className="flex items-center space-x-1">
+                      <Tooltip label='Zweryfikowana organizacja'>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </Tooltip>
+                      <span>{ticket.who}</span>
+                    </span>
+                  ) : (
+                    <span>{ticket.who}</span>
+                  )}
+                </dd>
               </div>
             )}
           </dl>

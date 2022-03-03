@@ -53,6 +53,11 @@ export enum TICKET_STATUS {
   DELETED = "DELETED",
 }
 
+export type Organization = {
+  id: number
+  name: string
+}
+
 export type TicketData = TicketFormData & {
   id: number
   // @deprecated - use expirationTimestampSane instead
@@ -60,6 +65,7 @@ export type TicketData = TicketFormData & {
   expirationTimestampSane: string
   date_created: number
   ticket_status: TICKET_STATUS
+  organization_id?: Organization
   description: string
   need_tag_id: {
     need_tag_id: NeedTagType
