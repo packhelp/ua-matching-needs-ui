@@ -23,6 +23,7 @@ import { isTicketActive } from "../ticket/[id]"
 import { useState } from "react"
 import { AddTicketButton } from "../../src/components/AddTicketButton"
 import { getMainTags } from "../../src/utils/tags"
+import { compileNonPath } from "next/dist/shared/lib/router/utils/prepare-destination"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
@@ -164,9 +165,14 @@ const AddTicket: NextPage = () => {
         phone_public: true,
         need_tag_id,
       }
-
+      console.log("❤️")
+      console.log("❤️")
+      console.log("❤️")
+      console.log("❤️")
+      console.log("❤️")
+      console.log("❤️")
       return axios.post(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need`,
+        `/api/add-ticket`,
         newTicketData
       )
     },
