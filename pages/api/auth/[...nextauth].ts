@@ -1,24 +1,38 @@
 import Everify from "everify"
-
-const everifyAuthToken: string = `${process.env.EVERIFY_AUTH_TOKEN}`
-const secretAuthSalt: string = `${process.env.SECRET_AUTH_SALT}`
-
-if (!everifyAuthToken) {
-    // @ts-ignore
-    throw new Error("Missing EVERIFY_AUTH_TOKEN env!")
-}
-if (!secretAuthSalt) {
-    // @ts-ignore
-    throw new Error("Missing SECRET_AUTH_SALT env!")
-}
-
-const everify = new Everify(everifyAuthToken)
-
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { NextApiRequest, NextApiResponse } from "next"
 import Error from "next/error"
 import { parsePhoneNumberFromString } from "libphonenumber-js/max"
+import axios from "axios"
+
+const everifyAuthToken: string = `${process.env.EVERIFY_AUTH_TOKEN}`
+const secretAuthSalt: string = `${process.env.SECRET_AUTH_SALT}`
+const directusApiToken: string = `${process.env.DIRECTUS_API_AUTH}`
+
+if (!everifyAuthToken) {
+  // @ts-ignore
+  throw new Error("Missing EVERIFY_AUTH_TOKEN env!")
+}
+if (!secretAuthSalt) {
+  // @ts-ignore
+  throw new Error("Missing SECRET_AUTH_SALT env!")
+}
+if (!directusApiToken) {
+  // @ts-ignore
+  throw new Error("Missing DIRECTUS_API_AUTH env!")
+}
+
+const everify = new Everify(everifyAuthToken)
+
+
+
+interface DirectusAuthResponse {
+  accessToken: string
+  refreshToken: string
+  expires: number
+  id: string
+}
 
 export default function auth(req: NextApiRequest, res: NextApiResponse) {
   const providers = [
@@ -45,7 +59,29 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
           code: verificationCode,
         })
 
-        return status === "SUCCESS" ? { id: onlyDigitsOfPhoneNumber, name: phoneNumber } : null
+        if (status === "SUCCESS") {
+          const directusUserAuthResponse = await axios.post<DirectusAuthResponse>(
+            `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/api/auth-user`,
+            {
+              phone: phoneNumber,
+            }, {
+              headers: {
+                "Authorization": `Bearer ${process.env.DIRECTUS_API_AUTH}`,
+                "Content-Type": "application/json",
+              },
+            },
+          )
+          if (directusUserAuthResponse?.data?.accessToken) {
+            return {
+              id: onlyDigitsOfPhoneNumber,
+              name: phoneNumber,
+              directusAccessToken: directusUserAuthResponse?.data?.accessToken,
+            }
+          }
+        }
+
+        // Failed to login
+        return null
       },
     }),
   ]
@@ -59,7 +95,25 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
 
   return NextAuth(req, res, {
     providers: providers,
+    callbacks: {
+      async jwt({ token, user }) {
+        // the user object is what returned from the Credentials login, it has `directusAccessToken` from the server `/login` endpoint
+        // assign the directusAccessToken to the `token` object, so it will be available on the `session` callback
+        if (user) {
+          token.directusAccessToken = user.directusAccessToken
+        }
+        return token
+      },
 
+      async session({ session, token }) {
+        // the token object is what returned from the `jwt` callback, it has the `directusAccessToken` that we assigned before
+        // Assign the directusAccessToken to the `session` object, so it will be available on our app through `useSession` hooks
+        if (token) {
+          session.directusAccessToken = token.directusAccessToken
+        }
+        return session
+      }
+    },
     secret: secretAuthSalt,
     session: {
       // Use JSON Web Tokens for session instead of database sessions.
