@@ -3,7 +3,7 @@ import { getSession } from "next-auth/react"
 import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
 
   console.debug(req.body)

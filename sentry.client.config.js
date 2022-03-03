@@ -19,7 +19,10 @@ Sentry.init({
     if (event.exception) {
       Sentry.showReportDialog({
         eventId: event.event_id,
-        title: "Looks like you have encountered a bug!"
+        lang: "pl",
+        title: "Powstał błąd w aplikacji!",
+        subtitle: "Nasz zespół został poinformowany o twoim problemie. W celu szybszego rozwiązania problemu, proszę wypełnij poniższy formularz.",
+        labelComments: "Co się wydarzyło?",
       });
     }
     return event;
