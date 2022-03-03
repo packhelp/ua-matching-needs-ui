@@ -21,6 +21,7 @@ import dayjs from "dayjs"
 import { useTranslations } from "../../src/hooks/translations"
 import { isTicketActive } from "../ticket/[id]"
 import { useState } from "react"
+import { AddTicketButton } from "../../src/components/AddTicketButton"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
@@ -302,13 +303,9 @@ const AddTicket: NextPage = () => {
               </Text>
             ) : null}
 
-            <Button
-              disabled={addTicketMutation.isLoading}
-              colorScheme="blue"
-              type={"submit"}
-            >
-              {translations["pages"]["add-ticket"]["add-need"]}
-            </Button>
+            <Box as="button" type="submit" disabled={addTicketMutation.isLoading}>
+              <AddTicketButton />
+            </Box>
           </Stack>
         </form>
       </Container>

@@ -11,8 +11,8 @@ import {
   Locale,
   RouteDefinitions,
 } from "../../../../utils/routes"
-import { CloseSVG } from "../styled-svgs/close"
-import { HamburgerSVG } from "../styled-svgs/hamburger"
+import { CloseSVG } from "../../../../assets/styled-svgs/close"
+import { HamburgerSVG } from "../../../../assets/styled-svgs/hamburger"
 
 interface MobileNavigationElementProps {
   route: RouteDefinitions

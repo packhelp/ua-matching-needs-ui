@@ -9,7 +9,7 @@ import {
   getRouteNameForLocale,
   RouteDefinitions,
 } from "../../../../utils/routes"
-import { UserSVG } from "../styled-svgs/user"
+import { UserSVG } from "../../../../assets/styled-svgs/user"
 
 interface UserNavigationElementPropsWithRoute {
   route: RouteDefinitions

@@ -1,8 +1,8 @@
-import { AddTicket } from "./header-components/AddTicket"
 import { Logo } from "./header-components/Logo"
 import { DesktopNavigation } from "./header-components/navigation/DesktopNavigation"
 import { MobileNavigation } from "./header-components/navigation/MobileNavigation"
 import { UserNavigation } from "./header-components/navigation/UserNavigation"
+import { AddTicketButton } from "../AddTicketButton"
 
 export const Header = () => {
   return (
@@ -16,7 +16,7 @@ export const Header = () => {
               <DesktopNavigation />
             </div>
             <div className="flex items-center">
-              <AddTicket />
+              <AddTicketButton />
               <UserNavigation />
             </div>
           </div>
