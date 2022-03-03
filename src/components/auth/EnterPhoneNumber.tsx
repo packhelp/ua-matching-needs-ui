@@ -63,13 +63,14 @@ export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
             onBlur={() => setShouldValidate(true)}
             isInvalid={!isPhoneValid}
             type="tel"
+            name="phone"
           />
           <Button
             type="submit"
             mt={2}
             colorScheme="blue"
             isFullWidth
-            disabled={!canSubmit}
+            disabled={!canSubmit || processing}
           >
             { processing ? <ButtonSpinner /> : translations[finalLocale]["pages"]["sign-in"]["next"] }
           </Button>

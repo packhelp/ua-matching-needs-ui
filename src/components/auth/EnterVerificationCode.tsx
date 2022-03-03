@@ -40,6 +40,7 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
             mt={2}
             colorScheme="blue"
             isFullWidth
+            disabled={verifying}
           >
             { verifying ? <ButtonSpinner /> : translations[finalLocale]["pages"]["sign-in"]["next"] }
           </Button>
