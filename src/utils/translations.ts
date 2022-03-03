@@ -41,7 +41,7 @@ export const translations: Translation = {
         description: {
           need: "Potrzeba",
           "read-more": "Czytaj więcej",
-        }
+        },
       },
       "add-ticket": {
         "add-need": "Dodaj potrzebę",
@@ -51,10 +51,11 @@ export const translations: Translation = {
         "where-do-you-need-it-delivered": "Gdzie to potrzebujesz dostarczyć?",
         "address-or-gps": "Adres lub lokalizacja GPS",
         "who-needs-it": "Kto to potrzebuje?",
-        "name-surname-or-org-name": "Twoje imię i nazwisko lub Twoja nazwa organizacji",
+        "name-surname-or-org-name":
+          "Twoje imię i nazwisko lub Twoja nazwa organizacji",
         "request-added": "Zgłoszenie przyjęte!",
-        "need-added": "Zgłoszono potrzebę!"
-      }
+        "need-added": "Zgłoszono potrzebę!",
+      },
     },
     "sign-out": "Wyloguj się",
     "terms-of-service": {
@@ -65,16 +66,17 @@ export const translations: Translation = {
     },
     contact: {
       "contact-us-via": "Skontaktuj się z nami przez:",
+      slack: "Slack",
       discord: "Discord",
       github: "Github",
       authors: "Autorzy narzędzia",
       "in-cooperation-with": "Narzędzie zostało stworzone przy współpracy:",
     },
     errors: {
-      "error-occured-while-adding": "Wystąpił błąd podczas dodawania: "
+      "error-occured-while-adding": "Wystąpił błąd podczas dodawania: ",
     },
     auth: {
-      "you-have-been-logged-out": "Zostałeś wylogowany"
-    }
+      "you-have-been-logged-out": "Zostałeś wylogowany",
+    },
   },
 }

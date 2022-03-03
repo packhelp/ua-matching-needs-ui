@@ -9,7 +9,7 @@ import {
   Divider,
   useBreakpointValue,
 } from "@chakra-ui/react"
-import { Link } from '@chakra-ui/react'
+import { Link } from "@chakra-ui/react"
 
 import { translations } from "../src/utils/translations"
 import { externalUrls } from "../src/utils/external-urls"
@@ -35,7 +35,7 @@ const Contact: NextPage = () => {
             <Image src="/logo-packhelp.svg" maxW="120px" />
           </Link>
           <Link href={externalUrls.techtotherescue}>
-            <Image src="/logo-tttr.png" maxW="160px" mt="8px"/>
+            <Image src="/logo-tttr.png" maxW="160px" mt="8px" />
           </Link>
         </Flex>
       </div>
@@ -47,9 +47,9 @@ const Contact: NextPage = () => {
           </Heading>
         </Flex>
         <Flex padding="16px" justifyContent="space-evenly">
-          <Link href={externalUrls.discord}>
+          <Link href={externalUrls.slack}>
             <Button size="sm" variant={"ghost"}>
-              {translations["contact"]["discord"]}
+              {translations["contact"]["slack"]}
             </Button>
           </Link>
           <Link href={externalUrls.github}>
