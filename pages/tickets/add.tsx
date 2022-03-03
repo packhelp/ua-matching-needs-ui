@@ -49,8 +49,10 @@ export type TicketPostData = TicketFormData & {
 
 export enum TICKET_STATUS {
   ACTIVE = "ACTIVE",
+  SOLVED = "SOLVED",
   EXPIRED = "EXPIRED",
   DELETED = "DELETED",
+  HIDDEN = "HIDDEN",
 }
 
 export type Organization = {
