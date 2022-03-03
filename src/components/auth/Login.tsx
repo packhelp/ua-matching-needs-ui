@@ -9,6 +9,7 @@ export const Login: FC = () => {
   const router = useRouter()
   const [hasStartedVerification, setHasStartedVerification] = useState(false)
   const [credentials, setCredentials] = useState({ phoneNumber: null })
+  const [error, setError] = useState<string>()
 
   const startVerification = async ({ phoneNumber }) => {
     const response = await fetch("/api/auth/start-verification", {
@@ -27,16 +28,21 @@ export const Login: FC = () => {
   }
 
   const checkVerification = async ({ verificationCode }) => {
-    await signIn("credentials", {
-      phoneNumber: credentials.phoneNumber,
-      verificationCode,
-      callbackUrl: `/tickets/active/mine`, //${envs.applicationUrl}
-      redirect: true,
-    })
+    try {
+      await signIn("credentials", {
+        phoneNumber: credentials.phoneNumber,
+        verificationCode,
+        callbackUrl: `/tickets/active/mine`,
+        redirect: true,
+      })
+    } catch (e) {
+      setError("Nie udało się autoryzować twojego telefonu. Spróbuj jeszcze raz!")
+      setHasStartedVerification(false)
+    }
   }
 
   if (!hasStartedVerification) {
-    return <EnterPhoneNumber onSubmit={startVerification} />
+    return <EnterPhoneNumber onSubmit={startVerification} error={error} />
   } else {
     return <EnterVerificationCode onSubmit={checkVerification} />
   }

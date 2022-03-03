@@ -1,4 +1,13 @@
-import { Button, ButtonSpinner, Container, FormLabel, Heading, Input } from "@chakra-ui/react"
+import {
+  Alert, AlertDescription,
+  AlertIcon,
+  Button,
+  ButtonSpinner,
+  Container,
+  FormLabel,
+  Heading,
+  Input,
+} from "@chakra-ui/react"
 import React, { useMemo, useState } from "react"
 import { useFinalLocale } from "../../hooks/final-locale"
 import { translations } from "../../utils/translations"
@@ -6,9 +15,10 @@ import { parsePhoneNumberFromString } from "libphonenumber-js/max"
 
 interface EnterPhoneNumberProps {
   onSubmit: ({ phoneNumber: string }) => Promise<void>
+  error: string | undefined
 }
 
-export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
+export const EnterPhoneNumber = ({ onSubmit, error }: EnterPhoneNumberProps) => {
   const finalLocale = useFinalLocale()
 
   const [processing, setProcessing] = useState(false)
@@ -52,6 +62,13 @@ export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
             {translations[finalLocale]["pages"]["sign-in"]["title"]}
           </Heading>
 
+          { error &&
+            <Alert status="error" mb="20px">
+              <AlertIcon />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          }
+
           <FormLabel>
             {translations[finalLocale]["pages"]["sign-in"]["label"]}
           </FormLabel>
@@ -72,7 +89,7 @@ export const EnterPhoneNumber = ({ onSubmit }: EnterPhoneNumberProps) => {
             isFullWidth
             disabled={!canSubmit || processing}
           >
-            { processing ? <ButtonSpinner /> : translations[finalLocale]["pages"]["sign-in"]["next"] }
+            {processing ? <ButtonSpinner /> : translations[finalLocale]["pages"]["sign-in"]["next"]}
           </Button>
         </form>
       </Container>
