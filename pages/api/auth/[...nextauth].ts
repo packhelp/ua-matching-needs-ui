@@ -9,7 +9,7 @@ import axios from "axios"
 const everifyAuthToken: string = `${process.env.EVERIFY_AUTH_TOKEN}`
 const secretAuthSalt: string = `${process.env.SECRET_AUTH_SALT}`
 const directusApiToken: string = `${process.env.DIRECTUS_API_AUTH}`
-const env: string = `${process.env.ENV}`
+const env: string = `${process.env.ENV}`.toUpperCase()
 
 if (!everifyAuthToken) {
   // @ts-ignore
