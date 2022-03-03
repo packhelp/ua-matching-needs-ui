@@ -183,12 +183,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
 
   const removeTicketMutation = useMutation<number, NextError, number>(
     (id: number) => {
-      return axios.patch(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
-        {
-          ticket_status: TICKET_STATUS.DELETED,
-        }
-      )
+      return axios.post(`/api/remove-ticket`, { id: id })
     },
     {
       onSuccess: () => {

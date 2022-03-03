@@ -30,8 +30,6 @@ if (!env) {
 
 const everify = new Everify(everifyAuthToken)
 
-
-
 interface DirectusAuthResponse {
   accessToken: string
   refreshToken: string
@@ -44,7 +42,11 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
     CredentialsProvider<{}>({
       name: "Credentials",
       credentials: {
-        phoneNumber: { label: "Phone number", type: "text", placeholder: "+48 601 601 601" },
+        phoneNumber: {
+          label: "Phone number",
+          type: "text",
+          placeholder: "+48 601 601 601",
+        },
       },
       // @ts-ignore
       authorize: async ({ phoneNumber, verificationCode }) => {
@@ -52,7 +54,10 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
           return null
         }
 
-        const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber || "", "PL")
+        const parsedPhoneNumber = parsePhoneNumberFromString(
+          phoneNumber || "",
+          "PL"
+        )
         const onlyDigitsOfPhoneNumber = `${phoneNumber}`.match(/\d/g)?.join("")
 
         if (!parsedPhoneNumber?.isValid()) {
@@ -71,17 +76,20 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
         }
 
         if (phoneVerificationStatus === "SUCCESS") {
-          const directusUserAuthResponse = await axios.post<DirectusAuthResponse>(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/api/auth-user`,
-            {
-              phone: phoneNumber,
-            }, {
-              headers: {
-                "Authorization": `Bearer ${process.env.DIRECTUS_API_AUTH}`,
-                "Content-Type": "application/json",
+          const directusUserAuthResponse =
+            await axios.post<DirectusAuthResponse>(
+              `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/api/auth-user`,
+              {
+                phone: phoneNumber,
               },
-            },
-          )
+              {
+                headers: {
+                  Authorization: `Bearer ${process.env.DIRECTUS_API_AUTH}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+
           if (directusUserAuthResponse?.data?.accessToken) {
             return {
               id: onlyDigitsOfPhoneNumber,
@@ -97,8 +105,8 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
     }),
   ]
 
-
-  const isDefaultSigninPage = req.method === "GET" && req.query.nextauth.includes("signin")
+  const isDefaultSigninPage =
+    req.method === "GET" && req.query.nextauth.includes("signin")
 
   if (isDefaultSigninPage) {
     providers.pop()
@@ -123,7 +131,7 @@ export default function auth(req: NextApiRequest, res: NextApiResponse) {
           session.directusAccessToken = token.directusAccessToken
         }
         return session
-      }
+      },
     },
     secret: secretAuthSalt,
     session: {

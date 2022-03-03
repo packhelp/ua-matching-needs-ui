@@ -1,13 +1,10 @@
 import Error from "next/error"
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
-import { Session } from "next-auth"
 import axios from "axios"
-import is from "@sindresorhus/is"
-import undefined = is.undefined
 
 const getTicketsUrl = ({ mineOnly, tagId, phoneNumber, ticketStatus }) => {
-  const filters: { key: string, value: any }[] = []
+  const filters: { key: string; value: any }[] = []
   const baseUrl = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/`
   const baseSettingsUrlPart = `&fields=*.*.*&sort[]=-date_created`
 
@@ -21,29 +18,20 @@ const getTicketsUrl = ({ mineOnly, tagId, phoneNumber, ticketStatus }) => {
     filters.push({ key: "[need_tag_id][need_tag_id][id]", value: tagId })
   }
 
-  const filterUrlPart = filters.map((filter, index) => {
-    const prefix = index > 0 ? "&" : ""
-    const filterPrefix = filters.length > 1 ? "filter[_and][]" : "filter"
+  const filterUrlPart = filters
+    .map((filter, index) => {
+      const prefix = index > 0 ? "&" : ""
+      const filterPrefix = filters.length > 1 ? "filter[_and][]" : "filter"
 
-    return `${prefix}${filterPrefix}${filter.key}=${filter.value}`
-  }).join("")
+      return `${prefix}${filterPrefix}${filter.key}=${filter.value}`
+    })
+    .join("")
 
   const fullUrl = `${baseUrl}?${filterUrlPart}${baseSettingsUrlPart}`
 
   console.debug(fullUrl)
 
   return fullUrl
-}
-
-export async function getCurrentUser(req: NextApiRequest): Promise<Session["user"]> {
-  const session = await getSession({ req })
-
-  if (!session || !session.user) {
-    // @ts-ignore
-    throw new Error("Session does not exist")
-  }
-
-  return session.user
 }
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
@@ -61,14 +49,16 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   const url = getTicketsUrl({ mineOnly, phoneNumber, tagId, ticketStatus })
   const authRequestOptions = {
     headers: {
-      "Authorization": `Bearer ${session?.user?.directusAuthToken}`,
+      Authorization: `Bearer ${session?.directusAccessToken}`,
       "Content-Type": "application/json",
-    }
+    },
   }
-  const requestOptions = session?.user.directusAuthToken ? authRequestOptions : {}
-  const tickets = await axios.get(url, requestOptions).then((response) =>
-    response.data.data
-  )
+  const requestOptions = session?.user.directusAuthToken
+    ? authRequestOptions
+    : {}
+  const tickets = await axios
+    .get(url, requestOptions)
+    .then((response) => response.data.data)
 
   console.debug(`🔸 Api : ${tickets.length}`)
 
