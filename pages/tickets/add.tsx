@@ -63,8 +63,7 @@ export type Organization = {
 
 export type TicketData = TicketFormData & {
   id: number
-  // @deprecated - use expirationTimestampSane instead
-  expirationTimestamp: number
+
   expirationTimestampSane: string
   date_created: number
   ticket_status: TICKET_STATUS
@@ -156,8 +155,6 @@ const AddTicket: NextPage = () => {
     (newTicket) => {
       const { phone, what, where, who, count, need_tag_id } = newTicket
       const now = new Date()
-      // @deprecated
-      const expirationTimestamp = now.setHours(now.getHours() + 3)
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
       const newTicketData = {
@@ -167,8 +164,6 @@ const AddTicket: NextPage = () => {
         where,
         who,
         count: count ? count : 0,
-        // @deprecated
-        expirationTimestamp,
         expirationTimestampSane,
         phone_public: true,
         need_tag_id,
