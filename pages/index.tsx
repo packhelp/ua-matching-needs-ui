@@ -24,14 +24,17 @@ const MainPage: NextPage = () => {
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Box as="section" bg="bg-surface">
         <Container py={{ base: "16" }}>
-          <Stack spacing={{ base: "8", md: "10" }} mb="80px">
+          <Stack spacing={{ base: "8", md: "10" }} mb={20}>
             <Stack
               spacing={{ base: "4", md: "5" }}
               align="center"
               textAlign="center"
             >
-              <Heading size={useBreakpointValue({ base: "lg", md: "2xl" })}>
+              <Heading as="h1" mb={5}>
                 {pageTranslations.header}
+              </Heading>
+              <Heading as="h2" size="md">
+                {pageTranslations.subheader}
               </Heading>
               <Text
                 color="muted"
@@ -40,7 +43,7 @@ const MainPage: NextPage = () => {
                 fontSize={useBreakpointValue({ base: "md", md: "lg" })}
                 textColor="gray.600"
               >
-                {pageTranslations.subheader}
+                {pageTranslations.description}
               </Text>
             </Stack>
             <HStack
@@ -53,7 +56,7 @@ const MainPage: NextPage = () => {
             <Flex
               flexDirection="column"
               alignItems="center"
-              marginTop="16px"
+              marginTop={3}
               justifyContent="space-between"
               display={{ base: "flex", md: "none" }}
             >
@@ -72,9 +75,7 @@ const MainPage: NextPage = () => {
               align="center"
               textAlign="center"
             >
-              <Heading size={useBreakpointValue({ base: "md", lg: "lg" })}>
-                {pageTranslations["steps-section"]["header"]}
-              </Heading>
+              <Heading>{pageTranslations["steps-section"]["header"]}</Heading>
             </Stack>
             <Step
               number="1."
@@ -97,6 +98,30 @@ const MainPage: NextPage = () => {
           </Stack>
           <Stack align="center" marginTop="16px">
             <AddTicketButton />
+          </Stack>
+          <Stack mt={20}>
+            <Stack
+              spacing={{ base: "4", md: "5" }}
+              mb="5"
+              align="center"
+              textAlign="center"
+            >
+              <Heading>
+                {pageTranslations["for-whom-section"]["header"]}
+              </Heading>
+            </Stack>
+            <Step
+              number="1."
+              title={pageTranslations["for-whom-section"]["list-item-1"]}
+            />
+            <Step
+              number="2."
+              title={pageTranslations["for-whom-section"]["list-item-2"]}
+            />
+            <Step
+              number="3."
+              title={pageTranslations["for-whom-section"]["list-item-3"]}
+            />
           </Stack>
         </Container>
       </Box>

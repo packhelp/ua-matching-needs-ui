@@ -19,28 +19,36 @@ export const translations: Translation = {
         next: "Dalej",
       },
       main: {
-        header: "Szybkie i proste zarządzenie potrzebami organizatorów",
-        subheader:
-          "Zgłoś potrzebę, a my ją przekażemy dalej. Gdy skończy się potrzeba, usuniesz wpis jednym kliknięciem.",
+        header: "Szybkie i proste zarządzanie organizacją pomocy humanitarnej",
+        subheader: "Pomagasz innym? Pomożemy Ci zorganizować pomoc!",
+        description:
+          "Powiedz czego potrzebujesz, a my przekażemy Twoją prośbę do organizacji i osób, które pomogą Ci to zorganizować.",
         "show-all-button": "Sprawdź potrzeby",
         "add-new-button": "Zgłoś potrzebę",
         "steps-section": {
           header: "Jak to działa?",
           "step-1-title": "Zgłaszasz potrzebę",
           "step-1-description":
-            "Podając numer telefonu, co potrzebujesz i gdzie to dostarczyć zgłaszasz u nas potrzebę.",
-          "step-2-title": "My publikujemy ją i szukamy rozwiązania",
+            "Podajesz numer telefonu i wpisujesz to, czego potrzebujesz i gdzie chcesz to dostarczyć.",
+          "step-2-title": "My publikujemy potrzebę i szukamy rozwiązania",
           "step-2-description":
-            "Automatycznie publikujemy twoją potrzebę i wysyłamy dalej do organizacji i ludzi, którzy mają to czego potrzebujesz.",
-          "step-3-title": "Dezaktywujemy stare ogłoszenia",
+            "Twoją potrzebę przekazujemy organizacjom i osobom, które mają to, czego potrzebujesz i  pomogą Ci zorganizować pomoc.",
+          "step-3-title": "Dezaktywujemy stare potrzeby",
           "step-3-description":
-            "Ogłoszenie wygasa automatycznie po 3 godzinach, lub wtedy kiedy je usuniesz, tak byś nie dostawał więcej telefonów",
+            "Ogłoszenie wygasa automatycznie po 24 godzinach lub wtedy kiedy je usuniesz - nie będziesz dostawać setek telefonów.",
+        },
+        "for-whom-section": {
+          header: "Dla kogo jest ta platforma?",
+          "list-item-1":
+            "Dla organizatorów i koordynatorów zbiórek i pomocy dla Ukrainy",
+          "list-item-2": "Dla punktów recepcyjnych na granicach",
+          "list-item-3": "Dla każdego, kto chce zorganizować pomoc!",
         },
       },
       ticket: {
         metaTitle: {
           need: "Potrzeba",
-          cta: "Wesprzyj Ukraińców z potrzeby-ua.org",
+          cta: "Pomóż Ukrainie z potrzeby-ua.org",
         },
         description: {
           "read-more": "Czytaj więcej",
