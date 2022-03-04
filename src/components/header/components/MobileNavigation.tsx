@@ -94,7 +94,7 @@ const MobilePopup = ({ isOpen }: { isOpen: boolean }) => {
             </>
           )}
           <MobileNavigationElement route={RouteDefinitions.Contact} />
-          <MobileNavigationElement route={RouteDefinitions.Faq} />
+          {/*<MobileNavigationElement route={RouteDefinitions.Faq} />*/}
 
           {isLogged && (
             <button
