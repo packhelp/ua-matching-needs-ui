@@ -13,7 +13,10 @@ export const FooterNavigation = () => {
         <span className="text-sm font-semibold">Ukraine</span>
         <img src="/svg/ukraine-flag.svg" className="w-5 h-5" alt="Poland" />
       </div>
-      <a className="text-xs" href={externalUrls.terms}>{`[${translations["terms-of-service"]["title-alternate"]}]`}</a>
+      <a
+        className="text-xs"
+        href={externalUrls.terms}
+      >{`[${translations["terms-of-service"]["title-alternate"]}]`}</a>
     </div>
   )
 }

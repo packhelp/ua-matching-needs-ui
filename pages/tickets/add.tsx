@@ -19,6 +19,8 @@ import { useTranslations } from "../../src/hooks/translations"
 import { useState } from "react"
 import { AddTicketButton } from "../../src/components/AddTicketButton"
 import { getMainTags } from "../../src/utils/tags"
+import { PlusSVG } from "../../src/assets/styled-svgs/plus"
+import { isJsonString } from "../../src/utils/local-storage"
 import { useSession } from "next-auth/react"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
@@ -45,17 +47,25 @@ export type TicketPostData = TicketFormData & {
 
 export enum TICKET_STATUS {
   ACTIVE = "ACTIVE",
+  SOLVED = "SOLVED",
   EXPIRED = "EXPIRED",
   DELETED = "DELETED",
+  CANCELED = "CANCELED",
+  HIDDEN = "HIDDEN",
+}
+
+export type Organization = {
+  id: number
+  name: string
 }
 
 export type TicketData = TicketFormData & {
   id: number
-  // @deprecated - use expirationTimestampSane instead
-  expirationTimestamp: number
+
   expirationTimestampSane: string
   date_created: number
   ticket_status: TICKET_STATUS
+  organization_id?: Organization
   description: string
   need_tag_id: {
     need_tag_id: NeedTagType
@@ -77,7 +87,7 @@ const getInitialDataFromLocalStorage = () => {
 
   const data = localStorage.getItem(LOCAL_STORAGE_KEY_TICKET_DATA)
 
-  if (data) {
+  if (isJsonString(data)) {
     return JSON.parse(data)
   }
 }
@@ -107,7 +117,7 @@ const TagsChooseForm = (props: {
 const getPreviouslySavedTags = () => {
   if (typeof window !== "undefined") {
     const json = localStorage.getItem(LOCAL_STORAGE_KEY_TAGS)
-    if (json) {
+    if (isJsonString(json)) {
       return JSON.parse(json)
     }
   }
@@ -144,8 +154,6 @@ const AddTicket: NextPage = () => {
     (newTicket) => {
       const { phone, what, where, who, count, need_tag_id } = newTicket
       const now = new Date()
-      // @deprecated
-      const expirationTimestamp = now.setHours(now.getHours() + 3)
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
       const newTicketData = {
@@ -155,8 +163,6 @@ const AddTicket: NextPage = () => {
         where,
         who,
         count: count ? count : 0,
-        // @deprecated
-        expirationTimestamp,
         expirationTimestampSane,
         phone_public: true,
         need_tag_id,
@@ -290,13 +296,14 @@ const AddTicket: NextPage = () => {
               </Text>
             ) : null}
 
-            <Box
-              as="button"
+            <button
               type="submit"
               disabled={addTicketMutation.isLoading}
+              className="w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black bg-amber-300 shadow-sm hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              <AddTicketButton />
-            </Box>
+              <PlusSVG />
+              <span>{translations["/tickets/add"]}</span>
+            </button>
           </Stack>
         </form>
       </Container>

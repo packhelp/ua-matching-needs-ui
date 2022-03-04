@@ -40,7 +40,7 @@ const MainPage: NextPage = () => {
                 color="muted"
                 maxW="2xl"
                 textAlign="center"
-                fontSize={useBreakpointValue({ base: "md", md: "lg" })}
+                fontSize="md"
                 textColor="gray.600"
               >
                 {pageTranslations.description}
