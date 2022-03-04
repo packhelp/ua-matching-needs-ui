@@ -5,10 +5,10 @@ import maplibregl from "maplibre-gl"
 import "maplibre-gl/dist/maplibre-gl.css"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import { TICKET_STATUS } from "./add"
 import axios from "axios"
 import { isTicketActive } from "../ticket/[id]"
 import { RouteDefinitions } from "../../src/utils/routes"
+import { TICKET_STATUS } from "../../src/services/ticket.type"
 
 const isActiveWithSingleLocation = (ticket: any): boolean => {
   return (

@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
 import axios from "axios"
-import { TICKET_STATUS } from "../tickets/add"
 import { withSentry } from "@sentry/nextjs"
+import { TICKET_STATUS } from "../../src/services/ticket.type"
 
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
