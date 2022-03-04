@@ -565,7 +565,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
         )}
 
         <div className="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">
-          {isTicketActive(ticket) && (
+          {isTicketActive(ticket) && ticket.phone_public && (
             <>
               <a
                 href={`tel:${ticket.phone}`}
