@@ -12,6 +12,7 @@ const nextConfig = {
   },
   env: {
     SENTRY_DSN: process.env.SENTRY_DSN,
+    ENV: process.env.ENV
   }
 }
 
