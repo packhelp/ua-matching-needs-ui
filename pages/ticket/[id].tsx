@@ -23,6 +23,7 @@ import { translations } from "../../src/utils/translations"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
+import { CopyToClipboard } from "react-copy-to-clipboard"
 
 const LOCAL_STORAGE_KEY_VISITS_COUNTER = "visits-counter"
 const TICKET_MARKED_AS_VISITED = "visited"
@@ -228,6 +229,14 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     }
   }
 
+  const showSuccessShareTicketToast = (_, copied) => {
+    if (!copied) return
+
+    toast.success(
+      translations[finalLocale]["pages"]["ticket"]["shareButton"]["copySuccess"]
+    )
+  }
+
   const markAsSolvedTicket = () => {
     if (id) {
       markSolvedTicketMutation.mutate(Number(id))
@@ -248,6 +257,13 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   const ticketTags = TicketDetails["need_tag_id"]
 
   let title = ticket.what ? ticket.what : ticket.description
+
+  const copyToClipboardMessage = `${ticketUrl} ${truncate(
+    ticket.description,
+    100
+  )} ${
+    translations[finalLocale]["pages"]["ticket"]["shareButton"]["deliverTo"]
+  } ${ticket.where}`
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
@@ -432,9 +448,12 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                       </span>
                     </FacebookShareButton>
 
-                    {/* Link URL */}
-                    <a href={ticketUrl} target="_blank" rel="noreferrer">
-                      <span className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    {/* COPY URL */}
+                    <CopyToClipboard
+                      text={copyToClipboardMessage}
+                      onCopy={showSuccessShareTicketToast}
+                    >
+                      <span className="cursor-pointer inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           aria-hidden="true"
@@ -457,7 +476,8 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                           </g>
                         </svg>
                       </span>
-                    </a>
+                    </CopyToClipboard>
+                    {/* COPY URL */}
                   </div>
                 </div>
               </dl>

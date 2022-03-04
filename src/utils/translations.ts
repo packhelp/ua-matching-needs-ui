@@ -63,6 +63,10 @@ export const translations: Translation = {
         description: {
           "read-more": "Czytaj więcej",
         },
+        shareButton: {
+          deliverTo: "Gdzie dostarczyć:",
+          copySuccess: "Skopiowano do schowka!",
+        },
       },
       "add-ticket": {
         "add-need": "Dodaj potrzebę",
