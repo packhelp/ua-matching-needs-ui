@@ -1,6 +1,7 @@
 import { useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useMemo } from "react"
+import { DesktopNavigationElement } from "./DesktopNavigation"
 import { userIsLoggedIn } from "../../../hooks/is-logged"
 import { useRouteChanged } from "../../../hooks/root-changed"
 import { useTranslations } from "../../../hooks/translations"
@@ -36,14 +37,10 @@ export const UserNavigation = () => {
     onOpen()
   }, [isOpen])
 
-  if (!isLogged) {
-    return null
-  }
-
   return (
-    <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
-      <div className="ml-3 relative">
-        <div>
+    <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center  h-full">
+      <div className="ml-3 relative h-full flex">
+        {isLogged ? (
           <button
             onClick={onClick}
             type="button"
@@ -51,7 +48,9 @@ export const UserNavigation = () => {
           >
             <UserSVG />
           </button>
-        </div>
+        ) : (
+          <DesktopNavigationElement route={RouteDefinitions.SignIn} />
+        )}
         <UserPopup isOpen={isOpen} />
       </div>
     </div>

@@ -37,7 +37,7 @@ export const MobileNavigation = () => {
 
   return (
     <>
-      <div className="-ml-2 mr-2 flex items-center md:hidden">
+      <div className="flex items-center md:hidden">
         <button
           type="button"
           className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none"
