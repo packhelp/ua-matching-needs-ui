@@ -12,7 +12,7 @@ export const TagsFilter: VoidFunctionComponent<TagsFilterProps> = ({
   currentTagId,
   onChangeTag,
 }) => {
-  const { data: tags } = useQuery(`main-tags`, () => {
+  const { data: tags = [] } = useQuery(`main-tags`, () => {
     return getMainTags()
   })
 

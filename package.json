@@ -46,6 +46,7 @@
     "react-map-gl": "^7.0.7",
     "react-notion-x": "^4.16.0",
     "react-query": "^3.34.16",
+    "react-select": "^5.2.2",
     "react-share": "^4.4.0",
     "react-toastify": "^8.2.0",
     "tailwindcss": "^3.0.23",

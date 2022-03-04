@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { useQuery } from "react-query"
 import axios from "axios"
 import { RouteDefinitions } from "../utils/routes"
@@ -7,6 +7,8 @@ import { Tag } from "./Tag"
 import { TagsFilter } from "./TagsFilter"
 import { Center, Spinner } from "@chakra-ui/react"
 import { Tooltip } from "@chakra-ui/react"
+import { getMainTags } from "../utils/tags"
+import { FiltersDesktop, FiltersMobile } from "./Filters"
 
 export const Tickets = ({
   mineOnly,
@@ -17,7 +19,7 @@ export const Tickets = ({
   ticketStatus: TICKET_STATUS
   title: string
 }) => {
-  const [tagIdFilter, setTagIdFilter] = useState<number | undefined>(undefined)
+  const [ selectedTag, setSelectedTag ] = useState(0)
 
   const {
     data: tickets,
@@ -31,18 +33,22 @@ export const Tickets = ({
         params: {
           mineOnly: mineOnly,
           ticketStatus: ticketStatus,
-          tagId: tagIdFilter,
+          tagId: selectedTag,
         },
       })
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         return response.data
       })
   })
 
+  const { data: tags = [] } = useQuery(`main-tags`, () => {
+    return getMainTags()
+  })
+
   useEffect(() => {
     void refetch()
-  }, [tagIdFilter])
+  }, [selectedTag])
 
   return (
     <>
@@ -51,7 +57,16 @@ export const Tickets = ({
         {tickets && <span className="ml-2">({tickets.length})</span>}
       </h1>
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">
-        <TagsFilter currentTagId={tagIdFilter} onChangeTag={setTagIdFilter} />
+
+        <FiltersMobile
+          data={tags} onSelectFilter={setSelectedTag}
+        />
+
+        <FiltersDesktop
+          data={tags}
+          onSelectFilter={setSelectedTag}
+          activeTag={selectedTag}
+        />
 
         {isLoading && (
           <Center h="100px" color="yellow.400">
