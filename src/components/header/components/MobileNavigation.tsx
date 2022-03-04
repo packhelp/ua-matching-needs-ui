@@ -1,18 +1,23 @@
-import { useDisclosure } from "@chakra-ui/react"
+import { Box, useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
 import { userIsLoggedIn } from "../../../hooks/is-logged"
 import { useRouteChanged } from "../../../hooks/root-changed"
 import { useTranslations } from "../../../hooks/translations"
+import Link from "next/link"
 import {
   getRouteNameForLocale,
   Locale,
+  LocaleFlags,
+  LocaleNames,
+  locales,
   RouteDefinitions,
 } from "../../../utils/routes"
 import { CloseSVG } from "../../../assets/styled-svgs/close"
 import { HamburgerSVG } from "../../../assets/styled-svgs/hamburger"
 import { signOut } from "next-auth/react"
+import { Image, Flex } from "@chakra-ui/react"
 
 interface MobileNavigationElementProps {
   route: RouteDefinitions
@@ -89,6 +94,7 @@ const MobilePopup = ({ isOpen }: { isOpen: boolean }) => {
             </>
           )}
           <MobileNavigationElement route={RouteDefinitions.Contact} />
+
           {isLogged && (
             <button
               className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium sm:pl-5 sm:pr-6 text-left"
@@ -97,6 +103,23 @@ const MobilePopup = ({ isOpen }: { isOpen: boolean }) => {
               {translations["sign-out"]}
             </button>
           )}
+
+          <Box borderTop="1px solid #dedede" paddingTop={1}>
+            {locales.map((locale) => (
+              <Link key={locale} href={router.asPath} locale={locale}>
+                <a className="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium sm:pl-5 sm:pr-6">
+                  <Flex>
+                    <Box minWidth={"100px"}> {LocaleNames[locale]} </Box>
+                    <Image
+                      src={LocaleFlags[locale]}
+                      alt={LocaleNames[locale]}
+                      width={22}
+                    />
+                  </Flex>
+                </a>
+              </Link>
+            ))}
+          </Box>
         </div>
       </div>
     </MobilePopupPortal>
