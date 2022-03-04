@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const { withSentryConfig } = require('@sentry/nextjs');
+const { verifyEnvs } = require("./verify-envs")
+
+verifyEnvs()
 
 const nextConfig = {
   reactStrictMode: true,
@@ -9,13 +12,6 @@ const nextConfig = {
   },
   env: {
     SENTRY_DSN: process.env.SENTRY_DSN,
-  }
-}
-
-if (process.env.BUILD_FOR_E2E) {
-  nextConfig.typescript = {
-    ignoreDevErrors: true,
-    ignoreBuildErrors: true,
   }
 }
 
