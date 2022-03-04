@@ -18,7 +18,6 @@ import axios from "axios"
 import { RouteDefinitions } from "../../src/utils/routes"
 import Head from "next/head"
 import React, { useEffect, useMemo } from "react"
-import { metaData } from "../../src/utils/meta-data"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
@@ -150,8 +149,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   }, [id])
 
   const metaTitle = useMemo(() => {
+    const translations = useTranslations()
     if (!ticket) {
-      return metaData.title
+      return translations.metaData.title
     }
 
     const i18n = translations["pages"]["ticket"]["metaTitle"]
@@ -160,7 +160,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     const where = ticket.where || ""
 
     if (!tag && !where) {
-      return metaData.title
+      return translations.metaData.title
     }
 
     const spacer = tag && where ? " - " : ""
@@ -171,11 +171,11 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
 
   const metaDescription = useMemo(() => {
     if (!ticket) {
-      return metaData.description
+      return translations.metaData.description
     }
 
     return truncate(
-      ticket.description || ticket.what || metaData.description,
+      ticket.description || ticket.what || translations.metaData.description,
       100
     )
   }, [ticket])
@@ -186,7 +186,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     },
     {
       onSuccess: () => {
-        toast.success(translations['pages']['ticket']['ticketRemovedAddNew'])
+        toast.success(translations["pages"]["ticket"]["ticketRemovedAddNew"])
         return router.push(RouteDefinitions.AddTicket)
       },
     }
@@ -200,7 +200,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     },
     {
       onSuccess: () => {
-        toast.success(translations['pages']['ticket']['ticketSolvedAddNew'])
+        toast.success(translations["pages"]["ticket"]["ticketSolvedAddNew"])
         return router.push(RouteDefinitions.AddTicket)
       },
     }
@@ -209,9 +209,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   if (!ticket) {
     return (
       <NextError statusCode={404}>
-        {translations['pages']['ticket']['ticketNotFound']}
+        {translations["pages"]["ticket"]["ticketNotFound"]}
         <Link href={RouteDefinitions.AllActiveTickets}>
-          {translations['pages']['ticket']['here']}
+          {translations["pages"]["ticket"]["here"]}
         </Link>
       </NextError>
     )
@@ -225,7 +225,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     if (id) {
       removeTicketMutation.mutate(Number(id))
     } else {
-      toast.error(translations['pages']['ticket']['errorOnRemove'])
+      toast.error(translations["pages"]["ticket"]["errorOnRemove"])
     }
   }
 
@@ -233,14 +233,12 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     if (id) {
       markSolvedTicketMutation.mutate(Number(id))
     } else {
-      toast.error(translations['pages']['ticket']['errorOnRemove'])
+      toast.error(translations["pages"]["ticket"]["errorOnRemove"])
     }
   }
 
   const showSuccessShareTicketToast = () => {
-    toast.success(
-      translations["pages"]["ticket"]["shareButton"]["copySuccess"]
-    )
+    toast.success(translations["pages"]["ticket"]["shareButton"]["copySuccess"])
   }
 
   const formattedExpiration = dayjs(ticket.expirationTimestampSane)
@@ -259,7 +257,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   const copyToClipboardMessage = `${ticketUrl} ${truncate(
     ticket.description,
     100
-  )} ${translations["pages"]["ticket"]["shareButton"]["deliverTo"]} ${ticket.where}`
+  )} ${translations["pages"]["ticket"]["shareButton"]["deliverTo"]} ${
+    ticket.where
+  }`
 
   const copyShareLinkButtonClicked = () =>
     navigator.clipboard.writeText(copyToClipboardMessage).then(() => {
@@ -288,7 +288,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
           <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
             <div className="sm:col-span-3">
               <p className="mb-1 max-w-2xl text-sm text-gray-500 flex items-center space-x-3">
-                <span className="font-medium">{translations["pages"]["ticket"]["needNumber"]} #{ticket.id}</span>
+                <span className="font-medium">
+                  {translations["pages"]["ticket"]["needNumber"]} #{ticket.id}
+                </span>
 
                 {ticket.organization_id && (
                   <span className="flex space-x-1 font-medium text-blue-400">
@@ -304,7 +306,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span>{translations["pages"]["ticket"]["verifiedOrganisation"]}</span>
+                    <span>
+                      {translations["pages"]["ticket"]["verifiedOrganisation"]}
+                    </span>
                   </span>
                 )}
               </p>
@@ -335,19 +339,35 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                     </div>
                     <div className="ml-3">
                       <h3 className="text-sm font-medium text-red-800 uppercase">
-                        {translations["pages"]["ticket"]["warningTicketExpired"]}
+                        {
+                          translations["pages"]["ticket"][
+                            "warningTicketExpired"
+                          ]
+                        }
                       </h3>
 
                       <div className="mt-2 text-sm text-red-700">
                         <ul role="list" className="list-disc pl-5 space-y-1">
                           <li>
-                            {translations["pages"]["ticket"]["ticketExpiresAfterSetTime"]}
+                            {
+                              translations["pages"]["ticket"][
+                                "ticketExpiresAfterSetTime"
+                              ]
+                            }
                           </li>
                           <li>
-                            {translations["pages"]["ticket"]["requesterCanExpireTicketAtAnyTime"]}
+                            {
+                              translations["pages"]["ticket"][
+                                "requesterCanExpireTicketAtAnyTime"
+                              ]
+                            }
                           </li>
                           <li>
-                            {translations["pages"]["ticket"]["lookForAnotherTicketThanksForHelp"]}
+                            {
+                              translations["pages"]["ticket"][
+                                "lookForAnotherTicketThanksForHelp"
+                              ]
+                            }
                           </li>
                         </ul>
                       </div>
@@ -513,7 +533,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                         className="mt-1 text-lg text-gray-900"
                         style={{ whiteSpace: "pre-line" }}
                       >
-                        {ticket.has_pets ? translations["generic"]["yes"] : translations["generic"]["no"]}
+                        {ticket.has_pets
+                          ? translations["generic"]["yes"]
+                          : translations["generic"]["no"]}
                       </dd>
                     </div>
                   </>
@@ -589,7 +611,13 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                     <dd className="mt-1 text-lg text-gray-900">
                       {ticket.organization_id ? (
                         <span className="flex items-center space-x-1">
-                          <Tooltip label={translations["pages"]["ticket"]["verifiedOrganisation"]}>
+                          <Tooltip
+                            label={
+                              translations["pages"]["ticket"][
+                                "verifiedOrganisation"
+                              ]
+                            }
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="w-5 h-5 text-blue-400"
@@ -644,7 +672,11 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
               {isOwner && (
                 <div className="px-2 py-2 text-center">
                   <span className="text-sm mr-2 text-gray-500 font-medium">
-                    {translations["pages"]["ticket"]["areYouTheAuthorOfThisTicket"]}
+                    {
+                      translations["pages"]["ticket"][
+                        "areYouTheAuthorOfThisTicket"
+                      ]
+                    }
                   </span>
                   <div className="flex space-x-1 items-center justify-center">
                     <button
@@ -698,11 +730,13 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
 
           {isTicketActive(ticket) ? (
             <p className="my-4 max-w-2xl text-center text-sm text-gray-500">
-              {translations["pages"]["ticket"]["needActiveTill"]} {formattedExpiration}
+              {translations["pages"]["ticket"]["needActiveTill"]}{" "}
+              {formattedExpiration}
             </p>
           ) : (
             <p className="my-4 max-w-2xl text-center text-sm font-medium text-red-600">
-              {translations["pages"]["ticket"]["needExpired"]} {formattedExpiration}
+              {translations["pages"]["ticket"]["needExpired"]}{" "}
+              {formattedExpiration}
             </p>
           )}
 

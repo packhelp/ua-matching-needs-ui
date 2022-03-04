@@ -1,8 +1,10 @@
 import React, { FC } from "react"
-import { metaData } from "../../utils/meta-data"
 import Head from "next/head"
+import { useTranslations } from "../../hooks/translations"
 
 export const Container: FC = ({ children }) => {
+  const translations = useTranslations()
+
   let url = ""
   if (typeof window !== "undefined") {
     url = window.location.href
@@ -11,16 +13,20 @@ export const Container: FC = ({ children }) => {
   return (
     <>
       <Head>
-        <title>{metaData.title}</title>
+        <title>{translations.metaData.title}</title>
         <meta
           property="description"
-          content={metaData.description}
+          content={translations.metaData.description}
           key="description"
         />
-        <meta property="og:title" content={metaData.title} key="og-title" />
+        <meta
+          property="og:title"
+          content={translations.metaData.title}
+          key="og-title"
+        />
         <meta
           property="og:description"
-          content={metaData.description}
+          content={translations.metaData.description}
           key="og-description"
         />
         <meta property="og:type" content="website" key="og-type" />

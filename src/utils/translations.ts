@@ -83,21 +83,26 @@ const PL = {
       needNumber: "Numer zgłoszenia",
       details: "Szczegóły",
       ticketRemovedAddNew: "Ogłoszenie usunięte. Mozesz dodać kolejne.",
-      ticketSolvedAddNew: "Ogłoszenie zostało oznaczone jako rozwiąne! Mozesz dodać kolejne.",
-      ticketNotFound: "Zgłoszenia nie znaleziono lub jest juz nieaktualne. Ale pewnie się coś znajdzie ",
+      ticketSolvedAddNew:
+        "Ogłoszenie zostało oznaczone jako rozwiąne! Mozesz dodać kolejne.",
+      ticketNotFound:
+        "Zgłoszenia nie znaleziono lub jest juz nieaktualne. Ale pewnie się coś znajdzie ",
       here: "tutaj",
       errorOnRemove: "Wystąpił błąd z usuwaniem zgłoszenia",
       errorOnResolved: "Wystąpił błąd z oznaczeniem zgłoszenia jako rozwiąane",
       warningTicketExpired: "UWAGA: Zgłoszenie nieaktualne!",
-      ticketExpiresAfterSetTime: "Ogłoszenie wygasa po czasie ustalonym przez osobę zgłaszającą",
-      requesterCanExpireTicketAtAnyTime: "Osoba zgłąszająca w każdym momencie może wygasić ogłoszenie",
-      lookForAnotherTicketThanksForHelp: "Poszukaj innego zgłoszenia - dziękujemy za pomoc!",
+      ticketExpiresAfterSetTime:
+        "Ogłoszenie wygasa po czasie ustalonym przez osobę zgłaszającą",
+      requesterCanExpireTicketAtAnyTime:
+        "Osoba zgłąszająca w każdym momencie może wygasić ogłoszenie",
+      lookForAnotherTicketThanksForHelp:
+        "Poszukaj innego zgłoszenia - dziękujemy za pomoc!",
       helpType: "Rodzaj pomocy",
       call: "Zadzwoń",
       areYouTheAuthorOfThisTicket: "Jesteś autorem tego zgłoszenia?",
       problemSolved: "Problem rozwiązany!",
       remove: "Usuń",
-      needExpired: "Zgłoszenie wygasło"
+      needExpired: "Zgłoszenie wygasło",
     },
     "add-ticket": {
       "add-need": "Dodaj potrzebę",
@@ -143,8 +148,14 @@ const PL = {
   auth: {
     "you-have-been-logged-out": "Zostałeś wylogowany",
   },
-  faq: {
-
+  faq: {},
+  menu: {
+    open: "Open main menu",
+  },
+  metaData: {
+    title: "Pomóżmy Ukrainie!",
+    description:
+      "Szybkie i proste zarządzanie organizacją pomocy humanitarnej. Pomagasz innym? Pomożemy Ci zorganizować tę pomoc!",
   },
 }
 
@@ -245,7 +256,7 @@ const UA: Translation = {
       areYouTheAuthorOfThisTicket: "Ви є автором цього звіту",
       problemSolved: "Проблема вирішена!",
       remove: "Видалити",
-      needExpired: "<miss_translation>"
+      needExpired: "<miss_translation>",
     },
     "add-ticket": {
       "add-need": "Додай потребу",
@@ -255,13 +266,11 @@ const UA: Translation = {
       "has-pets": "<miss_translation>",
       "children-hint": "Дітей менш ніж 12 років",
       "what-do-you-need": "Що за потреба?",
-      "what-do-you-need-hint":
-        "<miss_translation>",
+      "what-do-you-need-hint": "<miss_translation>",
       "how-much-do-you-need": "<miss_translation>",
       "in-pieces-if-applicable": "<miss_translation>",
       "where-do-you-need-it-delivered": "Де ця потеба? Містло, локалізація",
-      "address-or-gps":
-        '<miss_translation>',
+      "address-or-gps": "<miss_translation>",
       "who-needs-it": "Хто потребує?",
       "name-surname-or-org-name": "Ім'я, прізвище або назва Oрганізаціі",
       "request-added": "Прийняли зголошення!",
@@ -273,8 +282,7 @@ const UA: Translation = {
   "terms-of-service": {
     title: "<miss_translation>",
     "title-alternate": "<miss_translation>",
-    agreemenent:
-      "<miss_translation>",
+    agreemenent: "<miss_translation>",
   },
   contact: {
     "contact-us-via": "<miss_translation>",
@@ -291,8 +299,16 @@ const UA: Translation = {
     "you-have-been-logged-out": "<miss_translation>",
   },
   faq: {
-    title: ""
-  }
+    title: "",
+  },
+  menu: {
+    open: "Open main menu",
+  },
+  metaData: {
+    title: "Допоможемо Україні!",
+    description:
+      "Швидке та просте управління організацією гуманітарної допомоги. Ви допомагаєте іншим? Ми допоможемо вам організувати цю допомогу!",
+  },
 }
 
 const getPL = () => PL
