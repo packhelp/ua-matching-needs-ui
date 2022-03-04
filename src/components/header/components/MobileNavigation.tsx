@@ -41,8 +41,6 @@ export const MobileNavigation = () => {
     onOpen()
   }, [isOpen])
 
-  const pageTranslations = translations.menu
-
   return (
     <>
       <div className="flex items-center md:hidden">
@@ -53,7 +51,7 @@ export const MobileNavigation = () => {
           aria-expanded="false"
           onClick={onClick}
         >
-          <span className="sr-only">{pageTranslations.open}</span>
+          <span className="sr-only">{translations.menu.open}</span>
           {!isOpen && <CloseSVG />}
           {isOpen && <HamburgerSVG />}
         </button>
