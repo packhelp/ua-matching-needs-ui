@@ -117,11 +117,11 @@ const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
   return NextAuth(req, res, {
     providers: providers,
     pages: {
-      signIn: '/sign-in',
-      signOut: '/',
-      error: '/sign-in', // Error code passed in query string as ?error=
-      verifyRequest: '/auth/verify-request', // (used for check email message)
-      newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+      signIn: "/sign-in",
+      signOut: "/",
+      error: "/sign-in", // Error code passed in query string as ?error=
+      verifyRequest: "/auth/verify-request", // (used for check email message)
+      newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
     },
     callbacks: {
       async jwt({ token, user }) {

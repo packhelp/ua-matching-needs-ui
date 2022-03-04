@@ -24,7 +24,7 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const parsedPhoneNumber = parsePhoneNumberFromString(phoneNumber || "", "PL")
 
   console.log(`🔸 phoneNumber: ${phoneNumber}`)
-  console.log(`🔸️ parsedPhoneNumber: ${parsedPhoneNumber?.format('NATIONAL')}`)
+  console.log(`🔸️ parsedPhoneNumber: ${parsedPhoneNumber?.format("NATIONAL")}`)
 
   if (!parsedPhoneNumber?.isValid()) {
     return res.status(403).send("Invalid credentials.")
@@ -32,7 +32,7 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
 
   await everify.startVerification({
     phoneNumber: phoneNumber,
-    method: "SMS"
+    method: "SMS",
   })
   return res.status(200).send("Success")
 }

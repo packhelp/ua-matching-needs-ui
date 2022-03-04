@@ -196,12 +196,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
 
   const markSolvedTicketMutation = useMutation<number, NextError, number>(
     (id: number) => {
-      return axios.patch(
-        `/api/set-ticket-to-solved`,
-        {
-          id: id,
-        }
-      )
+      return axios.patch(`/api/set-ticket-to-solved`, {
+        id: id,
+      })
     },
     {
       onSuccess: () => {

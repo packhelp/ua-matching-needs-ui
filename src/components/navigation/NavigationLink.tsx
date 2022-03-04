@@ -24,15 +24,20 @@ export const NavigationLink = (props: NavigationLinkProps) => {
   const isRouteActive = asPath === route
 
   const colorScheme =
-    buttonType === "secondary" ? "yellow" :
-    buttonType === "primary" ? "blue" :
-    route === RouteDefinitions.Contact ? "blue" :
-      undefined
+    buttonType === "secondary"
+      ? "yellow"
+      : buttonType === "primary"
+      ? "blue"
+      : route === RouteDefinitions.Contact
+      ? "blue"
+      : undefined
 
   const icon =
-    buttonType === "secondary" ? <AddIcon /> :
-      buttonType === "primary" ? <SearchIcon /> :
-        undefined
+    buttonType === "secondary" ? (
+      <AddIcon />
+    ) : buttonType === "primary" ? (
+      <SearchIcon />
+    ) : undefined
 
   return (
     <Link href={route}>
