@@ -1,0 +1,49 @@
+.wrapper {
+  max-width: 42rem;
+  margin: 0 auto 1rem;
+  background-color: #FFF;
+  text-align: center;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+  padding: 1.5rem 1rem;
+}
+
+.inner {
+  display: grid;
+  grid-gap: 30px;
+  justify-content: center;
+  grid-auto-flow: column;
+
+
+}
+
+.logos {
+  display: grid;
+  grid-gap: 30px;
+  justify-content: center;
+  align-content: center;
+  grid-auto-flow: column;
+
+  @media (max-width: 1280px) {
+    grid-auto-flow: row;
+    grid-gap: 20px;
+  }
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  align-self: center;
+  justify-self: center;
+}
+
+.image {
+  height: 20px;
+  margin: 0 0.5rem;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 500;
+}

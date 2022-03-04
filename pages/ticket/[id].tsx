@@ -310,7 +310,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
               </p>
               <h2
                 id="applicant-information-title"
-                className="text-3xl leading-9 font-medium text-gray-900 truncate"
+                className="text-2xl leading-9 font-medium text-gray-900 truncate"
               >
                 {title}
               </h2>
