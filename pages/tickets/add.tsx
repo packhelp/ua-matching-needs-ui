@@ -17,7 +17,6 @@ import { toast } from "react-toastify"
 import dayjs from "dayjs"
 import { useTranslations } from "../../src/hooks/translations"
 import { useState } from "react"
-import { AddTicketButton } from "../../src/components/AddTicketButton"
 import { getMainTags } from "../../src/utils/tags"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
 import { isJsonString } from "../../src/utils/local-storage"
@@ -94,7 +93,7 @@ const getInitialDataFromLocalStorage = () => {
 
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
-  tagsSelected: number[]
+  tagsSelected: number[] | undefined
   onClickTag: (tagId: number) => void
 }) => (
   <Box>
@@ -103,7 +102,7 @@ const TagsChooseForm = (props: {
         key={tag.id}
         mr={2}
         mb={2}
-        variant={props.tagsSelected.includes(tag.id) ? "solid" : "outline"}
+        variant={props.tagsSelected && props.tagsSelected.includes(tag.id) ? "solid" : "outline"}
         onClick={() => props.onClickTag(tag.id)}
         className={"cursor-pointer "}
         colorScheme={"blue"}
