@@ -1,14 +1,15 @@
 import { useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useMemo } from "react"
-import { userIsLoggedIn } from "../../../../hooks/is-logged"
-import { useRouteChanged } from "../../../../hooks/root-changed"
-import { useTranslations } from "../../../../hooks/translations"
+import { DesktopNavigationElement } from "./DesktopNavigation"
+import { userIsLoggedIn } from "../../../hooks/is-logged"
+import { useRouteChanged } from "../../../hooks/root-changed"
+import { useTranslations } from "../../../hooks/translations"
 import {
   getRouteNameForLocale,
   RouteDefinitions,
-} from "../../../../utils/routes"
-import { UserSVG } from "../../../../assets/styled-svgs/user"
+} from "../../../utils/routes"
+import { UserSVG } from "../../../assets/styled-svgs/user"
 import { signOut } from "next-auth/react"
 
 interface UserNavigationElementPropsWithRoute {
@@ -36,14 +37,10 @@ export const UserNavigation = () => {
     onOpen()
   }, [isOpen])
 
-  if (!isLogged) {
-    return null
-  }
-
   return (
-    <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
-      <div className="ml-3 relative">
-        <div>
+    <div className="hidden md:flex-shrink-0 md:flex md:items-center h-full">
+      <div className="ml-3 relative h-full flex">
+        {isLogged ? (
           <button
             onClick={onClick}
             type="button"
@@ -51,7 +48,9 @@ export const UserNavigation = () => {
           >
             <UserSVG />
           </button>
-        </div>
+        ) : (
+          <DesktopNavigationElement route={RouteDefinitions.SignIn} />
+        )}
         <UserPopup isOpen={isOpen} />
       </div>
     </div>
@@ -74,7 +73,7 @@ const UserPopup = ({ isOpen }: { isOpen: boolean }) => {
 
   return (
     <div
-      className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+      className="origin-top-right absolute top-12 right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="user-menu-button"
@@ -114,7 +113,7 @@ const UserNavigationElement = (props: UserNavigationElementProps) => {
     <a
       href={route}
       onClick={onClick}
-      className="block px-4 py-2 text-sm text-gray-700"
+      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
       role="menuitem"
     >
       {props.label}

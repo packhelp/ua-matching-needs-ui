@@ -1,11 +1,11 @@
 import { useRouter } from "next/router"
 import { useMemo } from "react"
-import { userIsLoggedIn } from "../../../../hooks/is-logged"
+import { userIsLoggedIn } from "../../../hooks/is-logged"
 import {
   getRouteNameForLocale,
   Locale,
   RouteDefinitions,
-} from "../../../../utils/routes"
+} from "../../../utils/routes"
 
 interface DesktopNavigationElementProps {
   route: RouteDefinitions
@@ -17,19 +17,15 @@ interface DesktopActiveNavigationElementProps {
 type DesktopInactiveNavigationElementProps = DesktopActiveNavigationElementProps
 
 export const DesktopNavigation = () => {
-  const isLogged = userIsLoggedIn()
   return (
-    <div className="hidden md:ml-6 md:flex md:space-x-8">
-      {!isLogged && (
-        <DesktopNavigationElement route={RouteDefinitions.SignIn} />
-      )}
+    <div className="hidden md:ml-6 md:flex md:space-x-8 h-full">
       <DesktopNavigationElement route={RouteDefinitions.AllActiveTickets} />
       <DesktopNavigationElement route={RouteDefinitions.Contact} />
     </div>
   )
 }
 
-const DesktopNavigationElement = ({ route }: DesktopNavigationElementProps) => {
+export const DesktopNavigationElement = ({ route }: DesktopNavigationElementProps) => {
   const { locale, asPath } = useRouter()
 
   const isActive = useMemo(() => asPath === route, [asPath, route])

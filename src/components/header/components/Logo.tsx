@@ -1,14 +1,13 @@
 import React from "react"
 import Link from "next/link"
 import { Image } from "@chakra-ui/react"
+import styles from "./Logo.module.scss"
 
 export const Logo = () => {
   return (
-    <div className="flex-shrink-0 flex items-center">
+    <div className={styles.logo}>
       <Link href="/">
-        <a>
-          <Image src="/svg/logo.svg" alt="IniSync" height={4} />
-        </a>
+        <Image src="/svg/logo.svg" alt="IniSync" className={styles.image} />
       </Link>
     </div>
   )

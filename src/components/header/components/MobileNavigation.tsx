@@ -2,16 +2,16 @@ import { useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
-import { userIsLoggedIn } from "../../../../hooks/is-logged"
-import { useRouteChanged } from "../../../../hooks/root-changed"
-import { useTranslations } from "../../../../hooks/translations"
+import { userIsLoggedIn } from "../../../hooks/is-logged"
+import { useRouteChanged } from "../../../hooks/root-changed"
+import { useTranslations } from "../../../hooks/translations"
 import {
   getRouteNameForLocale,
   Locale,
   RouteDefinitions,
-} from "../../../../utils/routes"
-import { CloseSVG } from "../../../../assets/styled-svgs/close"
-import { HamburgerSVG } from "../../../../assets/styled-svgs/hamburger"
+} from "../../../utils/routes"
+import { CloseSVG } from "../../../assets/styled-svgs/close"
+import { HamburgerSVG } from "../../../assets/styled-svgs/hamburger"
 import { signOut } from "next-auth/react"
 
 interface MobileNavigationElementProps {
@@ -37,7 +37,7 @@ export const MobileNavigation = () => {
 
   return (
     <>
-      <div className="-ml-2 mr-2 flex items-center md:hidden">
+      <div className="flex items-center md:hidden">
         <button
           type="button"
           className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none"

@@ -1,0 +1,11 @@
+.logo {
+  cursor: pointer;
+}
+
+.image {
+  height: 16px;
+
+  @media (max-width: 1280px) {
+    height: 12px;
+  }
+}

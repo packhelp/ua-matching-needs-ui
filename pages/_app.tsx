@@ -1,8 +1,8 @@
 import "../styles/globals.css"
 import type { AppProps } from "next/app"
 import { ChakraProvider } from "@chakra-ui/react"
-import { Header } from "../src/components/navigation/Header"
-import { FooterNavigation } from "../src/components/navigation/FooterNavigation"
+import { Header } from "../src/components/header/Header"
+import { Footer } from "../src/components/footer/Footer"
 import { SessionProvider } from "next-auth/react"
 
 import "react-toastify/dist/ReactToastify.css"
@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
                   <Component {...pageProps} />
                 </Guard>
               </Container>
-              <FooterNavigation />
+              <Footer />
             </RootContainerWrapper>
           </ChakraProvider>
         </Hydrate>
