@@ -22,6 +22,7 @@ const Contact: NextPage = () => {
     <>
       <Helmet>
         <title>Kontakt - Pomóżmy Ukrainie!</title>
+        <meta property="og:title" content="Kontakt - Pomóżmy Ukrainie!" />
       </Helmet>
       <div className="bg-white shadow max-w-2xl mx-auto py-4 mb-4">
         <Flex flexDirection="column" alignItems="center">
