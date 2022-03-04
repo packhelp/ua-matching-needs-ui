@@ -148,7 +148,42 @@ const PL = {
   auth: {
     "you-have-been-logged-out": "Zostałeś wylogowany",
   },
-  faq: {},
+  faq: {
+    header: "FAQ",
+    sectionOne: {
+      title: "Czym jest",
+      description: "Platforma powstała w celu usprawnienia organizacji pomocy humanitarnej dla ofiar wojny w Ukrainie. W prosty sposób możesz dodać ogłoszenie dotyczące jakiegokolwiek sposobu pomocy - jeśli szukasz mieszkania dla osób z Ukrainy, potrzebujesz transportu z granicy, lub też zapewnienia jedzenia lub leków. Następnie dodajesz lokalizację - czyli np, miejsce odbioru na granicy, lub docelowe iejsce w którym szukasz zakwaaterowania - oraz numer kontaktowy do siebie. Po dodaniu informacji my zajmujemy się szukaniem organizacji lub osób, które mogą pomóc z Twoim zgłoszeniem.",
+    },
+    sectionTwo: {
+      title: "Dlaczego podaję swój numer telefonu?",
+      description: "Zależy nam na sprawnym działaniu oraz szybkim rozwiązywaniu zapytań. Dlatego potrzebujemy numeru kontaktowego jedynie w celach określonych w opisie Twojej potrzeby. Twój numer nie zostaje przetrzymany ani nie będzie wykorzystany w żadnym innym celu.",
+    },
+    sectionThree: {
+      title: "Czy mogę udostępniać trwające zgłoszenia?",
+      description: "Tak, możesz udostępniać wszystkie zgłoszenia na Twitterze, Telegramie oraz Facebooku, a także jako bezpośredni link."
+    },
+    sectionFour: {
+      title: "Czy mogę kontaktować się bezpośrednio z osobami szukającymi pomocy?",
+      description: "Tak, podane numery służą do tego, by osoby mogące udzielić potrzebnej pomocy mogły szybko skontaktować się i zając się problemem."
+    },
+    sectionFive: {
+      title: "Czy ogłoszenia są usuwane automatycznie?",
+      description: "Tak, po 24 godzinach każde ogłoszenie zostaje automatycznie usunięte. Jeśli Twoje zgłoszenie zostało już wcześniej rozwiązane - np. udało Ci się znaleźć transport po kilku godzinach od wystawienia zgłoszenia - możesz je samodzielnie usunąć."
+    },
+    sectionSix: {
+      title: "Gdzie znajdę regulamin serwisu?",
+      description: "Regulamin serwisu znajdziesz",
+      here: "tutaj"
+    },
+    sectionSeven: {
+      title: "Czy korzystanie z platformy jest płatne?",
+      description: "Nie, platforma jest całkowicie bezpłatna. Naszym celem jest sprawne organizowanie pomocy humanitarnej."
+    },
+    sectionEight: {
+      title: "Do czego służą kategorie?",
+      description: "Kategorie pozwalają na precyzyjniejsze określenie rodzaju potrzebnej pomocy, a także sprawniejszemu wyszukiwaniu potencjalnych zgłoszeń dla osób chcących pomóc."
+    }
+  },
 }
 
 const UA: Translation = {
@@ -167,7 +202,7 @@ const UA: Translation = {
 
   pages: {
     active: {
-      title: " Поточний попит",
+      title: "Поточний попит",
     },
     "sign-in": {
       title: "Увійти",
@@ -299,7 +334,40 @@ const UA: Translation = {
     "you-have-been-logged-out": "Ви вийшли з системиmi",
   },
   faq: {
-    title: "",
+    header: "FAQ",
+    sectionOne: {
+      title: "<miss_translation>", // Czym jest https://potrzeby-ua.org?
+      description: "<miss_translation>",
+    },
+    sectionTwo: {
+      title: "<miss_translation>",
+      description: "<miss_translation>",
+    },
+    sectionThree: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    },
+    sectionFour: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    },
+    sectionFive: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    },
+    sectionSix: {
+      title: "<miss_translation>",
+      description: "<miss_translation>",
+      here: "<miss_translation>"
+    },
+    sectionSeven: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    },
+    sectionEight: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    }
   },
 }
 
