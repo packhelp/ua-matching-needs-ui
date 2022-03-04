@@ -5,10 +5,7 @@ import { DesktopNavigationElement } from "./DesktopNavigation"
 import { userIsLoggedIn } from "../../../hooks/is-logged"
 import { useRouteChanged } from "../../../hooks/root-changed"
 import { useTranslations } from "../../../hooks/translations"
-import {
-  getRouteNameForLocale,
-  RouteDefinitions,
-} from "../../../utils/routes"
+import { getRouteNameForLocale, RouteDefinitions } from "../../../utils/routes"
 import { UserSVG } from "../../../assets/styled-svgs/user"
 import { signOut } from "next-auth/react"
 
