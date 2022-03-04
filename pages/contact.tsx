@@ -6,12 +6,8 @@ import {
   Button,
   Image,
   Text,
-  Divider,
-  useBreakpointValue,
 } from "@chakra-ui/react"
 import { Link } from "@chakra-ui/react"
-
-import { translations } from "../src/utils/translations"
 import { externalUrls } from "../src/utils/external-urls"
 import { useTranslations } from "../src/hooks/translations"
 
