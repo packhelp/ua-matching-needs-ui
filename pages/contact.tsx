@@ -1,4 +1,5 @@
 import React from "react"
+import { Helmet} from "react-helmet"
 import { NextPage } from "next"
 import {
   Heading,
@@ -19,6 +20,9 @@ const Contact: NextPage = () => {
   const translations = useTranslations()
   return (
     <>
+      <Helmet>
+        <title>Kontakt - Pomóżmy Ukrainie!</title>
+      </Helmet>
       <div className="bg-white shadow max-w-2xl mx-auto py-4 mb-4">
         <Flex flexDirection="column" alignItems="center">
           <Heading as="h2" size="sm" mt="8px" mb="16px">
