@@ -13,19 +13,16 @@ type FiltersProps = {
 export const FiltersMobile = (props: FiltersProps) => {
   const { data, onSelectFilter } = props
   const { getTranslation } = useTagTranslation()
-
   const translation = useTranslations()
+
   const mappedTags = useMemo(() => {
-    const newTags = data.map((tag) => {
-      return { value: tag.id, label: getTranslation(tag) }
-    })
+    const newTags = data.map((tag) => ({
+      value: tag.id,
+      label: getTranslation(tag),
+    }))
 
     return [{ value: 0, label: translation["filters"]["all"] }, ...newTags]
   }, [data])
-
-  console.log({
-    mappedTags,
-  })
 
   return (
     <div className="block md:hidden">
