@@ -1,0 +1,31 @@
+.wrapper {
+  background-color: #FFF;
+  position: sticky;
+  width: 100%;
+  top: 0;
+  left: 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgb(0, 0, 0, 0.1);
+  z-index: 100;
+
+  @media (max-width: 1280px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.inner {
+  max-width: 80rem;
+  height: 4rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.button {
+  margin-left: auto;
+
+  @media (max-width: 1280px) {
+    margin-right: auto;
+  }
+}

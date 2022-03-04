@@ -49,6 +49,7 @@
     "react-select": "^5.2.2",
     "react-share": "^4.4.0",
     "react-toastify": "^8.2.0",
+    "sass": "^1.49.9",
     "tailwindcss": "^3.0.23",
     "toastify": "^2.0.1",
     "truncate": "^3.0.0"

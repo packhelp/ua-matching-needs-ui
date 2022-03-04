@@ -58,6 +58,7 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
             }
             onChange={(event) => setVerificationCode(event.target.value)}
             type="number"
+            autoFocus={true}
           />
           <Button
             type="submit"

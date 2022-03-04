@@ -47,10 +47,7 @@ const getTicketDataFromEndpoint = async (
 }
 
 export const isTicketActive = (ticket: TicketDetails): boolean => {
-  return (
-    dayjs(ticket.expirationTimestampSane) > dayjs(Date.now()) &&
-    ticket.ticket_status === TICKET_STATUS.ACTIVE
-  )
+  return ticket.ticket_status === TICKET_STATUS.ACTIVE
 }
 
 export const Tags = ({ tags }: { tags: TicketDetails["need_tag_id"] }) => {
@@ -239,6 +236,12 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     }
   }
 
+  const showSuccessShareTicketToast = () => {
+    toast.success(
+      translations[finalLocale]["pages"]["ticket"]["shareButton"]["copySuccess"]
+    )
+  }
+
   const formattedExpiration = dayjs(ticket.expirationTimestampSane)
     .locale("pl")
     .format("DD.MM.YYYY HH:mm")
@@ -251,6 +254,18 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   const ticketTags = TicketDetails["need_tag_id"]
 
   let title = ticket.what ? ticket.what : ticket.description
+
+  const copyToClipboardMessage = `${ticketUrl} ${truncate(
+    ticket.description,
+    100
+  )} ${
+    translations[finalLocale]["pages"]["ticket"]["shareButton"]["deliverTo"]
+  } ${ticket.where}`
+
+  const copyShareLinkButtonClicked = () =>
+    navigator.clipboard.writeText(copyToClipboardMessage).then(() => {
+      showSuccessShareTicketToast()
+    })
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
@@ -275,6 +290,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
             <div className="sm:col-span-3">
               <p className="mb-1 max-w-2xl text-sm text-gray-500 flex items-center space-x-3">
                 <span className="font-medium">Nr Zgłoszenia: #{ticket.id}</span>
+
                 {ticket.organization_id && (
                   <span className="flex space-x-1 font-medium text-blue-400">
                     <svg
@@ -435,39 +451,93 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                       </span>
                     </FacebookShareButton>
 
-                    {/* Link URL */}
-                    <a href={ticketUrl} target="_blank" rel="noreferrer">
-                      <span className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                          role="img"
-                          className="iconify iconify--logos w-7 h-7"
-                          width="32"
-                          height="32"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 24 24"
+                    {/* Copy Link URL */}
+
+                    <span
+                      className="cursor-pointer inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      onClick={copyShareLinkButtonClicked}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        role="img"
+                        className="iconify iconify--logos w-7 h-7"
+                        width="32"
+                        height="32"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          fill="none"
+                          stroke="#888888"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                         >
-                          <g
-                            fill="none"
-                            stroke="#888888"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                          >
-                            <path d="M10 14a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-.5.5"></path>
-                            <path d="M14 10a3.5 3.5 0 0 0-5 0l-4 4a3.5 3.5 0 0 0 5 5l.5-.5"></path>
-                          </g>
-                        </svg>
-                      </span>
-                    </a>
+                          <path d="M10 14a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-.5.5"></path>
+                          <path d="M14 10a3.5 3.5 0 0 0-5 0l-4 4a3.5 3.5 0 0 0 5 5l.5-.5"></path>
+                        </g>
+                      </svg>
+                    </span>
                   </div>
                 </div>
               </dl>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-              <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                <div className="sm:col-span-2">
+              <dl className="grid grid-cols-3 gap-x-4 gap-y-8 sm:grid-cols-2">
+                {ticket.adults > 0 ||
+                ticket.children > 0 ||
+                !!ticket.has_pets ? (
+                  <>
+                    <div className="col-span-1">
+                      <dt className="text-sm font-medium text-gray-500">
+                        {
+                          translations[finalLocale]["pages"]["add-ticket"][
+                            "adults"
+                          ]
+                        }
+                      </dt>
+                      <dd
+                        className="mt-1 text-lg text-gray-900"
+                        style={{ whiteSpace: "pre-line" }}
+                      >
+                        {ticket.adults}
+                      </dd>
+                    </div>
+                    <div className="col-span-1">
+                      <dt className="text-sm font-medium text-gray-500">
+                        {
+                          translations[finalLocale]["pages"]["add-ticket"][
+                            "children"
+                          ]
+                        }
+                      </dt>
+                      <dd
+                        className="mt-1 text-lg text-gray-900"
+                        style={{ whiteSpace: "pre-line" }}
+                      >
+                        {ticket.children}
+                      </dd>
+                    </div>
+                    <div className="col-span-1">
+                      <dt className="text-sm font-medium text-gray-500">
+                        {
+                          translations[finalLocale]["pages"]["add-ticket"][
+                            "has-pets"
+                          ]
+                        }
+                      </dt>
+                      <dd
+                        className="mt-1 text-lg text-gray-900"
+                        style={{ whiteSpace: "pre-line" }}
+                      >
+                        {ticket.has_pets ? "tak" : "nie"}
+                      </dd>
+                    </div>
+                  </>
+                ) : null}
+
+                <div className="col-span-3">
                   <dt className="text-sm font-medium text-gray-500">
                     Co potrzeba?
                   </dt>
@@ -480,7 +550,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 </div>
 
                 {ticketTags && (
-                  <div className="sm:col-span-2">
+                  <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
                       Rodzaj pomocy
                     </dt>
@@ -508,7 +578,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 )}
 
                 {ticket.where && (
-                  <div className="sm:col-span-2">
+                  <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
                       Gdzie dostarczyć?
                     </dt>
@@ -519,7 +589,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 )}
 
                 {ticket.count && ticket.count > 0 ? (
-                  <div className="sm:col-span-2">
+                  <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
                       Ile potrzeba?
                     </dt>
@@ -530,7 +600,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 ) : null}
 
                 {ticket.who && (
-                  <div className="sm:col-span-2">
+                  <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
                       Kto zgłosił zapotrzebowanie?
                     </dt>

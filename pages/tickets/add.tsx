@@ -3,6 +3,7 @@ import {
   Checkbox,
   Container,
   Heading,
+  Input,
   Stack,
   Tag,
   Text,
@@ -26,24 +27,14 @@ import { useSession } from "next-auth/react"
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_TAGS = "tags"
 
-export type NeedTagType = {
+export type Organization = {
   id: number
   name: string
 }
 
-export type TicketFormData = {
-  what?: string
-  count?: number
-  where?: string
-  who?: string
-  phone_public: boolean
-}
-
-export type TicketPostData = TicketFormData & {
-  phone: string
-  need_tag_id: {
-    need_tag_id: Partial<NeedTagType>
-  }[]
+export type NeedTagType = {
+  id: number
+  name: string
 }
 
 export enum TICKET_STATUS {
@@ -55,9 +46,22 @@ export enum TICKET_STATUS {
   HIDDEN = "HIDDEN",
 }
 
-export type Organization = {
-  id: number
-  name: string
+export type TicketFormData = {
+  what?: string
+  count?: number
+  where?: string
+  who?: string
+  phone_public: boolean
+  adults: number
+  children: number
+  has_pets: boolean
+}
+
+export type TicketPostData = TicketFormData & {
+  phone: string
+  need_tag_id: {
+    need_tag_id: Partial<NeedTagType>
+  }[]
 }
 
 export type TicketData = TicketFormData & {
@@ -156,8 +160,18 @@ const AddTicket: NextPage = () => {
 
   const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
     (newTicket) => {
-      const { phone, what, where, who, count, need_tag_id, phone_public } =
-        newTicket
+      const {
+        phone,
+        what,
+        where,
+        who,
+        count,
+        need_tag_id,
+        phone_public,
+        adults,
+        children,
+        has_pets,
+      } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
       const newTicketData = {
@@ -166,10 +180,18 @@ const AddTicket: NextPage = () => {
         what,
         where,
         who,
-        count: count ? count : 0,
+        // @deprecated - I've set to 0, because it was fetched from my localStorage from the days when it was used.
+        // Now it is not, but if it is set, it will be shown in ticket details view, so we don't want to set it.
+        count: 0,
         expirationTimestampSane,
         phone_public,
         need_tag_id,
+        // The problem that might arise is that we store data in localStorage,
+        // so if we hide it somehow on the form, it might be pulled from localStorage anyway
+        // so make sure it works correctly.
+        adults: adults ? adults : 0,
+        children: children ? children : 0,
+        has_pets,
       }
 
       return axios.post(`/api/add-ticket`, newTicketData)
@@ -235,6 +257,43 @@ const AddTicket: NextPage = () => {
                 tagsSelected={tagsSelected}
               />
             </Stack>
+
+            <Stack>
+              <Heading as={"h2"} size={"l"}>
+                {translations["pages"]["add-ticket"]["adults"]}
+              </Heading>
+              <Input
+                min={0}
+                type={"number"}
+                placeholder={translations["pages"]["add-ticket"]["adults-hint"]}
+                variant={"outline"}
+                {...register("adults")}
+              />
+            </Stack>
+
+            <Stack>
+              <Heading as={"h2"} size={"l"}>
+                {translations["pages"]["add-ticket"]["children"]}
+              </Heading>
+              <Input
+                min={0}
+                type={"number"}
+                placeholder={
+                  translations["pages"]["add-ticket"]["children-hint"]
+                }
+                variant={"outline"}
+                {...register("children")}
+              />
+            </Stack>
+
+            <Checkbox
+              value={1}
+              defaultChecked={false}
+              {...register("has_pets")}
+            >
+              {translations["pages"]["add-ticket"]["has-pets"]}
+            </Checkbox>
+
             <Stack>
               <Heading as={"h2"} size={"l"}>
                 {translations["pages"]["add-ticket"]["what-do-you-need"]}
