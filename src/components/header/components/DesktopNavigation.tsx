@@ -25,7 +25,9 @@ export const DesktopNavigation = () => {
   )
 }
 
-export const DesktopNavigationElement = ({ route }: DesktopNavigationElementProps) => {
+export const DesktopNavigationElement = ({
+  route,
+}: DesktopNavigationElementProps) => {
   const { locale, asPath } = useRouter()
 
   const isActive = useMemo(() => asPath === route, [asPath, route])

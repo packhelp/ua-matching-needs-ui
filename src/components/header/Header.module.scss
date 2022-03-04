@@ -1,5 +1,5 @@
 .wrapper {
-  background-color: #FFF;
+  background-color: #fff;
   position: sticky;
   width: 100%;
   top: 0;
@@ -28,4 +28,8 @@
   @media (max-width: 1280px) {
     margin-right: auto;
   }
+}
+
+.regionSwitcher {
+  display: flex;
 }

@@ -2,18 +2,21 @@ import { translations } from "./translations"
 
 export enum LocaleDefinitions {
   PL = "pl-PL",
+  UA = "uk-UA",
 }
 
 export enum LocaleFlags {
-  "pl-PL" = "svg/poland.svg",
+  "pl-PL" = "/svg/poland.svg",
+  "uk-UA" = "/svg/ukraine.svg",
 }
 
 export enum LocaleNames {
   "pl-PL" = "Polski",
+  "uk-UA" = "Ukraiński",
 }
 
-export type Locale = LocaleDefinitions.PL
-export const locales = [LocaleDefinitions.PL]
+export type Locale = LocaleDefinitions.PL | LocaleDefinitions.UA
+export const locales = [LocaleDefinitions.PL, LocaleDefinitions.UA]
 
 export enum RouteDefinitions {
   Main = "/",
