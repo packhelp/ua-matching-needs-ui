@@ -2,66 +2,40 @@ import React, { useEffect, useState } from "react"
 import { useQuery } from "react-query"
 import axios from "axios"
 import { RouteDefinitions } from "../utils/routes"
-import { isTicketActive } from "../../pages/ticket/[id]"
 import { TICKET_STATUS } from "../../pages/tickets/add"
-import { getUserInfo } from "../services/auth"
 import { Tag } from "./Tag"
 import { TagsFilter } from "./TagsFilter"
+import { Center, Spinner } from "@chakra-ui/react"
 import { Tooltip } from "@chakra-ui/react"
-
-const isMineTicket = (item, userInfo) => {
-  if (!userInfo) {
-    return true
-  } else {
-    return item.phone === userInfo.phone
-  }
-}
-
-const getAllTicketsUrl = (tagId?: number) => {
-  const baseUrl = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status][_eq]=${TICKET_STATUS.ACTIVE}&fields=*.*.*&sort[]=-date_created`
-
-  if (tagId) {
-    return `${baseUrl}&filter[need_tag_id][need_tag_id][id]=${tagId}`
-  }
-
-  return baseUrl
-}
 
 export const Tickets = ({
   mineOnly,
-  status,
+  ticketStatus,
   title,
 }: {
-  mineOnly: boolean
-  status: TICKET_STATUS
+  mineOnly?: boolean
+  ticketStatus: TICKET_STATUS
   title: string
 }) => {
-  const userInfo = getUserInfo()
   const [tagIdFilter, setTagIdFilter] = useState<number | undefined>(undefined)
 
   const {
     data: tickets,
     isLoading,
     refetch,
-  } = useQuery(`tickets-${status}-${mineOnly ? "mine" : "all"}`, () => {
-    const url = getAllTicketsUrl(tagIdFilter)
+  } = useQuery(`tickets-${ticketStatus}-${mineOnly ? "mine" : "all"}`, () => {
+    const url = `/api/get-tickets`
 
-    return axios.get(url).then((response) =>
-      response.data.data
-        .filter((item) => {
-          if (status === TICKET_STATUS.ACTIVE) {
-            return isTicketActive(item)
-          } else {
-            return !isTicketActive(item)
-          }
-        })
-        .filter((item) => {
-          if (mineOnly) {
-            return isMineTicket(item, userInfo)
-          } else {
-            return item
-          }
-        })
+    return axios.get(url, {
+      params: {
+        mineOnly: mineOnly,
+        ticketStatus: ticketStatus,
+        tagId: tagIdFilter,
+      },
+    }).then((response) => {
+        console.log(response.data)
+        return response.data
+      },
     )
   })
 
@@ -77,6 +51,12 @@ export const Tickets = ({
       </h1>
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">
         <TagsFilter currentTagId={tagIdFilter} onChangeTag={setTagIdFilter} />
+
+        {isLoading &&
+          <Center h="100px" color="yellow.400">
+            <Spinner size="xl" thickness="6px" />
+          </Center>
+        }
 
         <ul
           role="list"

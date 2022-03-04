@@ -12,11 +12,20 @@ export const translations: Translation = {
     "/sign-in": "Zaloguj się",
     "/contact": "Kontakt",
     pages: {
+      "active": {
+        title: "Aktualne Zapotrzebowanie",
+      },
       "sign-in": {
         title: "Zaloguj się",
         label: "Podaj numer telefonu",
-        placeholder: "Numer telefonu",
+        placeholder: "601601601",
         next: "Dalej",
+        "phone-verification": {
+          title: "Podaj kod weryfikacyjny",
+          label: "Wysłaliśmy kod weryfikacyjny, na twój numer telefonu, w wiadomości SMS. Wpisz go poniżej aby zalogować się.",
+          placeholder: "123 456",
+          next: "Dalej",
+        },
       },
       main: {
         header: "Szybkie i proste zarządzanie organizacją pomocy humanitarnej",
@@ -57,10 +66,11 @@ export const translations: Translation = {
       "add-ticket": {
         "add-need": "Dodaj potrzebę",
         "what-do-you-need": "Czego potrzebujesz?",
+        "what-do-you-need-hint": "Na przykład: Materac 2-osobowy dla mamy z dzieckiem. Dlaczego i jak pilnie jest potrzebne: miałyśmy przyjąć uchodźców (mamę z dzieckiem) do naszego domu, ale ostatecznnie teraz gościmy już babcię, 3 mamy i 2 dzieci. Nie mamy gdzie ich położyć. Dodatkowe informacje: Nie mamy transportu. Prośba o przywiezienie do nas.",
         "how-much-do-you-need": "Ile potrzebujesz?",
         "in-pieces-if-applicable": "W sztukach, jeśli dotyczy",
         "where-do-you-need-it-delivered": "Gdzie to potrzebujesz dostarczyć?",
-        "address-or-gps": "Adres lub lokalizacja GPS",
+        "address-or-gps": "Adres lub lokalizacja GPS (na przykład \"Malczewskiego 5, Warszawa\", albo \"Szpital Dziecięcy w Poznaniu\")",
         "who-needs-it": "Kto to potrzebuje?",
         "name-surname-or-org-name":
           "Twoje imię i nazwisko lub Twoja nazwa organizacji",

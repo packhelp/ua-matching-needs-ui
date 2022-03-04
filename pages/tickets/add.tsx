@@ -1,9 +1,7 @@
 import {
   Box,
-  Button,
   Container,
   Heading,
-  Input,
   Stack,
   Tag,
   Text,
@@ -13,21 +11,19 @@ import type { NextPage } from "next"
 import { useForm } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
 import axios from "axios"
-import { getUserInfo } from "../../src/services/auth"
 import { useRouter } from "next/router"
 import { RouteDefinitions } from "../../src/utils/routes"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
 import { useTranslations } from "../../src/hooks/translations"
-import { isTicketActive } from "../ticket/[id]"
 import { useState } from "react"
 import { AddTicketButton } from "../../src/components/AddTicketButton"
 import { getMainTags } from "../../src/utils/tags"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
 import { isJsonString } from "../../src/utils/local-storage"
+import { useSession } from "next-auth/react"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
-export const LOCAL_STORAGE_KEY_ALL_TICKETS = "all_tickets"
 export const LOCAL_STORAGE_KEY_TAGS = "tags"
 
 export type NeedTagType = {
@@ -133,6 +129,7 @@ const AddTicket: NextPage = () => {
   const router = useRouter()
   const translations = useTranslations()
   const previouslySavedTags = getPreviouslySavedTags()
+  const { data: authSession, status: authStatus } = useSession()
   const [tagsSelected, setTagsSelected] =
     useState<number[]>(previouslySavedTags)
 
@@ -172,7 +169,7 @@ const AddTicket: NextPage = () => {
       }
 
       return axios.post(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need`,
+        `/api/add-ticket`,
         newTicketData
       )
     },
@@ -190,8 +187,7 @@ const AddTicket: NextPage = () => {
   const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
 
   const submitNeed = async (data: TicketFormData) => {
-    const userInfo = getUserInfo()
-    if (!userInfo) {
+    if (!authSession?.user || authStatus === "unauthenticated") {
       toast.error(translations["pages"]["auth"]["you-have-been-logged-out"])
       return router.push(RouteDefinitions.SignIn)
     }
@@ -204,7 +200,7 @@ const AddTicket: NextPage = () => {
 
     const postData: TicketPostData = {
       ...data,
-      phone: userInfo.phone,
+      phone: authSession.user.phoneNumber,
       need_tag_id: tagsData,
     }
     addTicketMutation.mutate(postData)
@@ -245,7 +241,7 @@ const AddTicket: NextPage = () => {
               <Textarea
                 rows={6}
                 placeholder={
-                  translations["pages"]["add-ticket"]["what-do-you-need"]
+                  translations["pages"]["add-ticket"]["what-do-you-need-hint"]
                 }
                 variant={"outline"}
                 {...register("what")}

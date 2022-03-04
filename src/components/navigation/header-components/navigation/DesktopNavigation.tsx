@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useMemo } from "react"
-import { useIsLogged } from "../../../../hooks/is-logged"
+import { userIsLoggedIn } from "../../../../hooks/is-logged"
 import {
   getRouteNameForLocale,
   Locale,
@@ -17,7 +17,7 @@ interface DesktopActiveNavigationElementProps {
 type DesktopInactiveNavigationElementProps = DesktopActiveNavigationElementProps
 
 export const DesktopNavigation = () => {
-  const isLogged = useIsLogged()
+  const isLogged = userIsLoggedIn()
   return (
     <div className="hidden md:ml-6 md:flex md:space-x-8">
       {!isLogged && (

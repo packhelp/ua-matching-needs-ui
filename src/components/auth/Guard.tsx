@@ -1,23 +1,43 @@
-import React, { FC } from "react"
+import React, { FC, useEffect } from "react"
 import { useRouter } from "next/router"
-import { getUserInfo } from "../../services/auth"
 import { RouteDefinitions } from "../../utils/routes"
+import { useSession } from "next-auth/react"
 
 export const GUARDED_PATHS = [
   RouteDefinitions.AddTicket,
   RouteDefinitions.MyActiveTickets,
   RouteDefinitions.MyInactiveTickets,
 ]
+
+const isRestricted = (routerPathName) =>
+    typeof window !== "undefined" &&
+    GUARDED_PATHS.includes(routerPathName as unknown as RouteDefinitions)
+
+
 export const Guard: FC = ({ children }) => {
-  const isLogged = getUserInfo()
+  const { data: authSession, status: authStatus } = useSession()
   const router = useRouter()
 
-  if (
-    typeof window !== "undefined" &&
-    GUARDED_PATHS.includes(router.pathname as unknown as RouteDefinitions) &&
-    !isLogged
-  ) {
+  useEffect(() => {
+    if (isRestricted(router.pathname) && !authSession && authStatus === "unauthenticated") {
+      router.push(RouteDefinitions.SignIn)
+    }
+
+    // TODO(m) Add Sentry
+    // if (session?.user?.email) {
+    //   try {
+    //     Sentry.setUser({ email: session.user.email });
+    //   } catch (e) {}
+    // }
+  }, [authSession, authStatus])
+
+  if (authStatus === "loading") {
+    return <div>loading</div>
+  }
+
+  if (isRestricted(router.pathname) && (!authSession || authStatus === "unauthenticated")) {
     router.push(RouteDefinitions.SignIn)
+    return <div>Brak autoryzacji - przenoszę na stronę logowania...</div>
   }
 
   return <>{children}</>

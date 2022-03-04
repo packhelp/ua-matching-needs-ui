@@ -1,15 +1,15 @@
 import { useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useMemo } from "react"
-import { useIsLogged } from "../../../../hooks/is-logged"
+import { userIsLoggedIn } from "../../../../hooks/is-logged"
 import { useRouteChanged } from "../../../../hooks/root-changed"
 import { useTranslations } from "../../../../hooks/translations"
-import { signOut } from "../../../../services/auth"
 import {
   getRouteNameForLocale,
   RouteDefinitions,
 } from "../../../../utils/routes"
 import { UserSVG } from "../../../../assets/styled-svgs/user"
+import { signOut } from "next-auth/react"
 
 interface UserNavigationElementPropsWithRoute {
   route: RouteDefinitions
@@ -24,7 +24,7 @@ type UserNavigationElementProps =
   | UserNavigationElementPropsWithOnClick
 
 export const UserNavigation = () => {
-  const isLogged = useIsLogged()
+  const isLogged = userIsLoggedIn()
   const { isOpen = false, onOpen, onClose } = useDisclosure()
 
   useRouteChanged([onClose])
@@ -62,9 +62,9 @@ const UserPopup = ({ isOpen }: { isOpen: boolean }) => {
   const translations = useTranslations()
   const router = useRouter()
 
-  const onSignOut = () => {
-    if (signOut()) {
-      router.push(RouteDefinitions.SignIn)
+  const onSignOut = async () => {
+    if (await signOut()) {
+      await router.push(RouteDefinitions.SignIn)
     }
   }
 
