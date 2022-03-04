@@ -70,7 +70,12 @@ export const translations: Translation = {
       },
       "add-ticket": {
         "add-need": "Dodaj potrzebę",
-        "what-do-you-need": "Czego potrzebujesz?",
+        adults: "Dorosłych",
+        "adults-hint": "Liczba osób > 12 lat",
+        children: "Dzieci",
+        "has-pets": "Zwierzęta",
+        "children-hint": "Liczba osób < 12 lat",
+        "what-do-you-need": "Opis potrzeby",
         "what-do-you-need-hint":
           "Na przykład: Materac 2-osobowy dla mamy z dzieckiem. Dlaczego i jak pilnie jest potrzebne: miałyśmy przyjąć uchodźców (mamę z dzieckiem) do naszego domu, ale ostatecznnie teraz gościmy już babcię, 3 mamy i 2 dzieci. Nie mamy gdzie ich położyć. Dodatkowe informacje: Nie mamy transportu. Prośba o przywiezienie do nas.",
         "how-much-do-you-need": "Ile potrzebujesz?",
