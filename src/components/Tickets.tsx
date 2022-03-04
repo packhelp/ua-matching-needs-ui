@@ -76,9 +76,8 @@ export const Tickets = ({
               )
 
               return (
-                <Link href={ticketUrl} locale={locale}>
+                <Link key={ticket.id} href={ticketUrl} locale={locale}>
                   <a
-                    key={ticket.id}
                     className={`ticket-item ${
                       ticket.organization_id ? "verified" : ""
                     }`}
