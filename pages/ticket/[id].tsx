@@ -23,6 +23,7 @@ import { translations } from "../../src/utils/translations"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
+import { useTranslations } from "../../src/hooks/translations"
 
 const LOCAL_STORAGE_KEY_VISITS_COUNTER = "visits-counter"
 const TICKET_MARKED_AS_VISITED = "visited"
@@ -272,6 +273,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
             <div className="sm:col-span-3">
               <p className="mb-1 max-w-2xl text-sm text-gray-500 flex items-center space-x-3">
                 <span className="font-medium">Nr Zgłoszenia: #{ticket.id}</span>
+
                 {ticket.organization_id && (
                   <span className="flex space-x-1 font-medium text-blue-400">
                     <svg
@@ -463,8 +465,60 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
               </dl>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-              <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                <div className="sm:col-span-2">
+              <dl className="grid grid-cols-3 gap-x-4 gap-y-8 sm:grid-cols-2">
+                {ticket.adults > 0 ||
+                ticket.children > 0 ||
+                !!ticket.has_pets ? (
+                  <>
+                    <div className="col-span-1">
+                      <dt className="text-sm font-medium text-gray-500">
+                        {
+                          translations[finalLocale]["pages"]["add-ticket"][
+                            "adults"
+                          ]
+                        }
+                      </dt>
+                      <dd
+                        className="mt-1 text-lg text-gray-900"
+                        style={{ whiteSpace: "pre-line" }}
+                      >
+                        {ticket.adults}
+                      </dd>
+                    </div>
+                    <div className="col-span-1">
+                      <dt className="text-sm font-medium text-gray-500">
+                        {
+                          translations[finalLocale]["pages"]["add-ticket"][
+                            "children"
+                          ]
+                        }
+                      </dt>
+                      <dd
+                        className="mt-1 text-lg text-gray-900"
+                        style={{ whiteSpace: "pre-line" }}
+                      >
+                        {ticket.children}
+                      </dd>
+                    </div>
+                    <div className="col-span-1">
+                      <dt className="text-sm font-medium text-gray-500">
+                        {
+                          translations[finalLocale]["pages"]["add-ticket"][
+                            "has-pets"
+                          ]
+                        }
+                      </dt>
+                      <dd
+                        className="mt-1 text-lg text-gray-900"
+                        style={{ whiteSpace: "pre-line" }}
+                      >
+                        {ticket.has_pets ? "tak" : "nie"}
+                      </dd>
+                    </div>
+                  </>
+                ) : null}
+
+                <div className="col-span-3">
                   <dt className="text-sm font-medium text-gray-500">
                     Co potrzeba?
                   </dt>
@@ -477,7 +531,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 </div>
 
                 {ticketTags && (
-                  <div className="sm:col-span-2">
+                  <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
                       Rodzaj pomocy
                     </dt>
@@ -505,7 +559,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 )}
 
                 {ticket.where && (
-                  <div className="sm:col-span-2">
+                  <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
                       Gdzie dostarczyć?
                     </dt>
@@ -516,7 +570,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 )}
 
                 {ticket.count && ticket.count > 0 ? (
-                  <div className="sm:col-span-2">
+                  <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
                       Ile potrzeba?
                     </dt>
@@ -527,7 +581,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 ) : null}
 
                 {ticket.who && (
-                  <div className="sm:col-span-2">
+                  <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
                       Kto zgłosił zapotrzebowanie?
                     </dt>
