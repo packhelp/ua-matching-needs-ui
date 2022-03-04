@@ -200,7 +200,7 @@ const AddTicket: NextPage = () => {
 
     const postData: TicketPostData = {
       ...data,
-      phone: authSession.user.phoneNumber,
+      phone: authSession.phoneNumber,
       need_tag_id: tagsData,
     }
     addTicketMutation.mutate(postData)

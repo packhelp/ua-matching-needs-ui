@@ -96,7 +96,7 @@ const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
               id: onlyDigitsOfPhoneNumber,
               name: phoneNumber,
               directusAccessToken: directusUserAuthResponse?.data?.accessToken,
-              phone: phoneNumber,
+              phoneNumber: phoneNumber,
             }
           }
         }
@@ -139,6 +139,7 @@ const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
         // Assign the directusAccessToken to the `session` object, so it will be available on our app through `useSession` hooks
         if (token) {
           session.directusAccessToken = token.directusAccessToken
+          // @ts-ignore
           session.phoneNumber = token.phoneNumber
         }
         return session

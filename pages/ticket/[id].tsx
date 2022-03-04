@@ -194,13 +194,12 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     }
   )
 
-  // TODO Move to next.js api/...
   const markSolvedTicketMutation = useMutation<number, NextError, number>(
     (id: number) => {
       return axios.patch(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
+        `/api/set-ticket-to-solved`,
         {
-          ticket_status: TICKET_STATUS.SOLVED,
+          id: id,
         }
       )
     },
@@ -223,7 +222,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     )
   }
 
-  const isOwner = authSession?.user?.phoneNumber === ticket.phone
+  const isOwner = authSession?.phoneNumber === ticket.phone
 
   const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
 
