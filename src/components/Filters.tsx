@@ -12,14 +12,11 @@ export const FiltersMobile = (props: FiltersProps) => {
   const { data, onSelectFilter } = props
 
   const mappedTags = useMemo(() => {
-    let newTags = data.map((tag) =>  {
+    let newTags = data.map((tag) => {
       return { value: tag.id, label: tag.name }
     })
 
-    return [
-      { value: 0, label: "Wszystkie" },
-      ...newTags
-    ]
+    return [{ value: 0, label: "Wszystkie" }, ...newTags]
   }, [data])
 
   return (
