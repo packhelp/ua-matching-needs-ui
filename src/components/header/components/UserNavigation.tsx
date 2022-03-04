@@ -38,7 +38,7 @@ export const UserNavigation = () => {
   }, [isOpen])
 
   return (
-    <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center  h-full">
+    <div className="hidden md:flex-shrink-0 md:flex md:items-center h-full">
       <div className="ml-3 relative h-full flex">
         {isLogged ? (
           <button
@@ -73,7 +73,7 @@ const UserPopup = ({ isOpen }: { isOpen: boolean }) => {
 
   return (
     <div
-      className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+      className="origin-top-right absolute top-12 right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="user-menu-button"
@@ -113,7 +113,7 @@ const UserNavigationElement = (props: UserNavigationElementProps) => {
     <a
       href={route}
       onClick={onClick}
-      className="block px-4 py-2 text-sm text-gray-700"
+      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
       role="menuitem"
     >
       {props.label}
