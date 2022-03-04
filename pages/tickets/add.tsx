@@ -180,10 +180,15 @@ const AddTicket: NextPage = () => {
         what,
         where,
         who,
-        count: count ? count : 0,
+        // @deprecated - I've set to 0, because it was fetched from my localStorage from the days when it was used.
+        // Now it is not, but if it is set, it will be shown in ticket details view, so we don't want to set it.
+        count: 0,
         expirationTimestampSane,
         phone_public,
         need_tag_id,
+        // The problem that might arise is that we store data in localStorage,
+        // so if we hide it somehow on the form, it might be pulled from localStorage anyway
+        // so make sure it works correctly.
         adults: adults ? adults : 0,
         children: children ? children : 0,
         has_pets,
