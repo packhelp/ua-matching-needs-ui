@@ -15,12 +15,8 @@ export const FiltersMobile = (props: FiltersProps) => {
   const { getTranslation } = useTagTranslation()
 
   const translation = useTranslations()
-
   const mappedTags = useMemo(() => {
-    let newTags = data.map((tag) => {
-      console.log({
-        a: tag.name,
-      })
+    const newTags = data.map((tag) => {
       return { value: tag.id, label: getTranslation(tag) }
     })
 
