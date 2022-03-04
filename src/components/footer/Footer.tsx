@@ -2,7 +2,7 @@ import React from "react"
 import { externalUrls } from "../../utils/external-urls"
 import { useTranslations } from "../../hooks/translations"
 
-export const FooterNavigation = () => {
+export const Footer = () => {
   const translations = useTranslations()
   return (
     <div className="my-6 flex items-center justify-center flex-col space-x-2 text-gray-800">

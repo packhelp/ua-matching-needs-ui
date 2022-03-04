@@ -12,7 +12,10 @@ const nextConfig = {
   },
   env: {
     SENTRY_DSN: process.env.SENTRY_DSN,
-  }
+  },
+  compiler: {
+    styledComponents: true,
+  },
 }
 
 const sentryWebpackPluginOptions = {

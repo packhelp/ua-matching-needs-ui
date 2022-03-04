@@ -2,16 +2,16 @@ import { useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
-import { userIsLoggedIn } from "../../../../hooks/is-logged"
-import { useRouteChanged } from "../../../../hooks/root-changed"
-import { useTranslations } from "../../../../hooks/translations"
+import { userIsLoggedIn } from "../../../hooks/is-logged"
+import { useRouteChanged } from "../../../hooks/root-changed"
+import { useTranslations } from "../../../hooks/translations"
 import {
   getRouteNameForLocale,
   Locale,
   RouteDefinitions,
-} from "../../../../utils/routes"
-import { CloseSVG } from "../../../../assets/styled-svgs/close"
-import { HamburgerSVG } from "../../../../assets/styled-svgs/hamburger"
+} from "../../../utils/routes"
+import { CloseSVG } from "../../../assets/styled-svgs/close"
+import { HamburgerSVG } from "../../../assets/styled-svgs/hamburger"
 import { signOut } from "next-auth/react"
 
 interface MobileNavigationElementProps {

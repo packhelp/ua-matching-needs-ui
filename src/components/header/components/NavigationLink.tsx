@@ -6,7 +6,7 @@ import {
   Locale,
   RouteDefinitions,
   Routes,
-} from "../../utils/routes"
+} from "../../../utils/routes"
 import { useRouter } from "next/router"
 import { AddIcon, SearchIcon } from "@chakra-ui/icons"
 

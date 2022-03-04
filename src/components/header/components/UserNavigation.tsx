@@ -1,14 +1,14 @@
 import { useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useMemo } from "react"
-import { userIsLoggedIn } from "../../../../hooks/is-logged"
-import { useRouteChanged } from "../../../../hooks/root-changed"
-import { useTranslations } from "../../../../hooks/translations"
+import { userIsLoggedIn } from "../../../hooks/is-logged"
+import { useRouteChanged } from "../../../hooks/root-changed"
+import { useTranslations } from "../../../hooks/translations"
 import {
   getRouteNameForLocale,
   RouteDefinitions,
-} from "../../../../utils/routes"
-import { UserSVG } from "../../../../assets/styled-svgs/user"
+} from "../../../utils/routes"
+import { UserSVG } from "../../../assets/styled-svgs/user"
 import { signOut } from "next-auth/react"
 
 interface UserNavigationElementPropsWithRoute {

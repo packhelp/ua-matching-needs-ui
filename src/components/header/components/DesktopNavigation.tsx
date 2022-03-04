@@ -1,11 +1,11 @@
 import { useRouter } from "next/router"
 import { useMemo } from "react"
-import { userIsLoggedIn } from "../../../../hooks/is-logged"
+import { userIsLoggedIn } from "../../../hooks/is-logged"
 import {
   getRouteNameForLocale,
   Locale,
   RouteDefinitions,
-} from "../../../../utils/routes"
+} from "../../../utils/routes"
 
 interface DesktopNavigationElementProps {
   route: RouteDefinitions
