@@ -23,7 +23,6 @@ import { translations } from "../../src/utils/translations"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
-
 import { CopyToClipboard } from "react-copy-to-clipboard"
 
 const LOCAL_STORAGE_KEY_VISITS_COUNTER = "visits-counter"
