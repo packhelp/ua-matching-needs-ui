@@ -32,8 +32,6 @@ export type Organization = {
   name: string
 }
 
-// export type SingleTagTranslation =
-
 export type NeedTagType = {
   id: number
   name: string
