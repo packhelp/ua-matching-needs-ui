@@ -202,7 +202,7 @@ const UA: Translation = {
 
   pages: {
     active: {
-      title: " Поточний попит",
+      title: "Поточний попит",
     },
     "sign-in": {
       title: "Увійти",
