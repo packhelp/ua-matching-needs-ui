@@ -27,6 +27,7 @@ export enum RouteDefinitions {
   SignIn = "/sign-in",
   TicketDetails = "/ticket/:id",
   Contact = "/contact",
+  Faq = "/faq"
 }
 
 export type Routes =
@@ -38,6 +39,7 @@ export type Routes =
   | RouteDefinitions.SignIn
   | RouteDefinitions.TicketDetails
   | RouteDefinitions.Contact
+  | RouteDefinitions.Faq
 
 export const getRouteNameForLocale = (
   route: Routes,

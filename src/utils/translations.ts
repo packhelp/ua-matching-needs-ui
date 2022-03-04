@@ -7,6 +7,13 @@ const PL = {
   "/tickets/inactive/mine": "Moje nieaktywne potrzeby",
   "/sign-in": "Zaloguj się",
   "/contact": "Kontakt",
+  "/faq": "FAQ",
+
+  generic: {
+    yes: "yes",
+    no: "no",
+  },
+
   pages: {
     active: {
       title: "Aktualne Zapotrzebowanie",
@@ -63,6 +70,34 @@ const PL = {
         deliverTo: "Gdzie dostarczyć:",
         copySuccess: "Skopiowano do schowka!",
       },
+      verifiedOrganisation: "Zweryfikowana organizacja",
+      whoRequested: "Kto zgłosił?",
+      whoRequestedNeed: "Kto zgłosił zpotrzebowanie?",
+      whereToDeliver: "Gdzie dostarczyć?",
+      added: "Dodano",
+      share: "Udostępnij",
+      whatsNeeded: "Co potrzeba?",
+      howMuchIsNeeded: "Ile potrzeba?",
+      needActiveTill: "Zgłoszenie aktywne do",
+      views: "Odsłon",
+      needNumber: "Numer zgłoszenia",
+      details: "Szczegóły",
+      ticketRemovedAddNew: "Ogłoszenie usunięte. Mozesz dodać kolejne.",
+      ticketSolvedAddNew: "Ogłoszenie zostało oznaczone jako rozwiąne! Mozesz dodać kolejne.",
+      ticketNotFound: "Zgłoszenia nie znaleziono lub jest juz nieaktualne. Ale pewnie się coś znajdzie ",
+      here: "tutaj",
+      errorOnRemove: "Wystąpił błąd z usuwaniem zgłoszenia",
+      errorOnResolved: "Wystąpił błąd z oznaczeniem zgłoszenia jako rozwiąane",
+      warningTicketExpired: "UWAGA: Zgłoszenie nieaktualne!",
+      ticketExpiresAfterSetTime: "Ogłoszenie wygasa po czasie ustalonym przez osobę zgłaszającą",
+      requesterCanExpireTicketAtAnyTime: "Osoba zgłąszająca w każdym momencie może wygasić ogłoszenie",
+      lookForAnotherTicketThanksForHelp: "Poszukaj innego zgłoszenia - dziękujemy za pomoc!",
+      helpType: "Rodzaj pomocy",
+      call: "Zadzwoń",
+      areYouTheAuthorOfThisTicket: "Jesteś autorem tego zgłoszenia?",
+      problemSolved: "Problem rozwiązany!",
+      remove: "Usuń",
+      needExpired: "Zgłoszenie wygasło"
     },
     "add-ticket": {
       "add-need": "Dodaj potrzebę",
@@ -108,6 +143,9 @@ const PL = {
   auth: {
     "you-have-been-logged-out": "Zostałeś wylogowany",
   },
+  faq: {
+
+  },
 }
 
 const UA: Translation = {
@@ -117,6 +155,13 @@ const UA: Translation = {
   "/tickets/inactive/mine": "Мої неактивні потреби",
   "/sign-in": "Увійти",
   "/contact": "Сконтактуватись",
+  "/faq": "<miss_translation>",
+
+  generic: {
+    yes: "yes",
+    no: "no",
+  },
+
   pages: {
     active: {
       title: " Поточний попит",
@@ -167,28 +212,56 @@ const UA: Translation = {
         cta: "Допоможи Україні на potrzeby-ua.org",
       },
       description: {
-        "read-more": "Czytaj więcej",
+        "read-more": "<miss_translation>",
       },
       shareButton: {
-        deliverTo: "Gdzie dostarczyć:",
-        copySuccess: "Skopiowano do schowka!",
+        deliverTo: "<miss_translation>",
+        copySuccess: "<miss_translation>",
       },
+      verifiedOrganisation: "<miss_translation>",
+      whoRequested: "<miss_translation>",
+      whoRequestedNeed: "<miss_translation>",
+      whereToDeliver: "<miss_translation>",
+      added: "<miss_translation>",
+      share: "<miss_translation>",
+      whatsNeeded: "<miss_translation>",
+      howMuchIsNeeded: "<miss_translation>",
+      needActiveTill: "<miss_translation>",
+      views: "<miss_translation>",
+      needNumber: "<miss_translation>",
+      details: "<miss_translation>",
+      ticketRemovedAddNew: "<miss_translation>",
+      ticketSolvedAddNew: "<miss_translation>",
+      ticketNotFound: "<miss_translation>",
+      here: "<miss_translation>",
+      errorOnRemove: "<miss_translation>",
+      errorOnResolved: "<miss_translation>",
+      warningTicketExpired: "<miss_translation>",
+      ticketExpiresAfterSetTime: "<miss_translation>",
+      requesterCanExpireTicketAtAnyTime: "<miss_translation>",
+      lookForAnotherTicketThanksForHelp: "<miss_translation>",
+      helpType: "<miss_translation>",
+      call: "<miss_translation>",
+      areYouTheAuthorOfThisTicket: "<miss_translation>",
+      problemSolved: "<miss_translation>",
+      remove: "<miss_translation>",
+      needExpired: "<miss_translation>"
     },
     "add-ticket": {
       "add-need": "Додай потребу",
       adults: "Дорислих",
       "adults-hint": "Дорослих більш ніж 12 років",
-      children: "Dzieci",
-      "has-pets": "Zwierzęta",
+      children: "<miss_translation>",
+      "has-pets": "<miss_translation>",
       "children-hint": "Дітей менш ніж 12 років",
       "what-do-you-need": "Що за потреба?",
       "what-do-you-need-hint":
-        "Na przykład: Materac 2-osobowy dla mamy z dzieckiem. Dlaczego i jak pilnie jest potrzebne: miałyśmy przyjąć uchodźców (mamę z dzieckiem) do naszego domu, ale ostatecznnie teraz gościmy już babcię, 3 mamy i 2 dzieci. Nie mamy gdzie ich położyć. Dodatkowe informacje: Nie mamy transportu. Prośba o przywiezienie do nas.",
-      "how-much-do-you-need": "Ile potrzebujesz?",
-      "in-pieces-if-applicable": "W sztukach, jeśli dotyczy",
+        "<miss_translation>",
+      "how-much-do-you-need": "<miss_translation>",
+      "in-pieces-if-applicable": "<miss_translation>",
       "where-do-you-need-it-delivered": "Де ця потеба? Містло, локалізація",
       "address-or-gps":
-        'Adres lub lokalizacja GPS (na przykład "Malczewskiego 5, Warszawa", albo "Szpital Dziecięcy w Poznaniu")',
+        '<miss_translation>',
       "who-needs-it": "Хто потребує?",
       "name-surname-or-org-name": "Ім'я, прізвище або назва Oрганізаціі",
       "request-added": "Прийняли зголошення!",
@@ -198,25 +271,28 @@ const UA: Translation = {
   },
   "sign-out": "Вийти",
   "terms-of-service": {
-    title: "Regulamin",
-    "title-alternate": "Regulamin serwisu",
+    title: "<miss_translation>",
+    "title-alternate": "<miss_translation>",
     agreemenent:
-      "Zgłoszenie potrzeby jest równoznaczne z akceptacją regulaminu działania serwisu",
+      "<miss_translation>",
   },
   contact: {
-    "contact-us-via": "Skontaktuj się z nami przez:",
+    "contact-us-via": "<miss_translation>",
     slack: "Slack",
     discord: "Discord",
     github: "Github",
-    authors: "Autorzy narzędzia",
-    "in-cooperation-with": "Narzędzie zostało stworzone przy współpracy:",
+    authors: "<miss_translation>",
+    "in-cooperation-with": "<miss_translation>",
   },
   errors: {
-    "error-occured-while-adding": "Wystąpił błąd podczas dodawania: ",
+    "error-occured-while-adding": "<miss_translation>",
   },
   auth: {
-    "you-have-been-logged-out": "Zostałeś wylogowany",
+    "you-have-been-logged-out": "<miss_translation>",
   },
+  faq: {
+    title: ""
+  }
 }
 
 const getPL = () => PL

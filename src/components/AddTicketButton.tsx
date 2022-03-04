@@ -1,13 +1,10 @@
 import Link from "next/link"
 import { useTranslations } from "../hooks/translations"
 import {
-  getRouteNameForLocale,
-  Locale,
   RouteDefinitions,
 } from "../utils/routes"
 import { PlusSVG } from "../assets/styled-svgs/plus"
 import { useRouter } from "next/router"
-import { useMemo } from "react"
 
 export const AddTicketButton = () => {
   const translations = useTranslations()

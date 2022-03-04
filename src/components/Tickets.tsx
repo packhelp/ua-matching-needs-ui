@@ -9,6 +9,7 @@ import { Center, Spinner } from "@chakra-ui/react"
 import { Tooltip } from "@chakra-ui/react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useTranslations } from "../hooks/translations"
 
 export const Tickets = ({
   mineOnly,
@@ -21,6 +22,8 @@ export const Tickets = ({
 }) => {
   const [tagIdFilter, setTagIdFilter] = useState<number | undefined>(undefined)
   const { locale } = useRouter()
+  const translations = useTranslations()
+
   const {
     data: tickets,
     isLoading,
@@ -88,7 +91,7 @@ export const Tickets = ({
                           <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
                             {ticket.organization_id ? (
                               <>
-                                <Tooltip label="Zweryfikowana organizacja">
+                                <Tooltip label={translations['pages']['ticket']['verifiedOrganisation']}>
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="w-5 h-5 text-blue-400"
@@ -169,7 +172,7 @@ export const Tickets = ({
                         <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-8">
                           <div className="sm:col-span-1">
                             <dt className="text-xs font-medium text-gray-400">
-                              Kto zgłosił?
+                              {translations['pages']['ticket']['whoRequested']}
                             </dt>
                             <dd className="flex items-center text-sm text-gray-900 truncate">
                               {ticket.organization_id ? (
@@ -184,7 +187,7 @@ export const Tickets = ({
 
                           <div className="sm:col-span-1">
                             <dt className="text-xs font-medium text-gray-400">
-                              Dodano
+                              {translations['pages']['ticket']['added']}
                             </dt>
                             <dd className="text-sm text-gray-900 ">
                               {dateFormatted}
@@ -214,7 +217,7 @@ export const Tickets = ({
                                   d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
                                 />
                               </svg>
-                              <span className="ml-3">Szczegóły</span>
+                              <span className="ml-3">{translations['pages']['ticket']['details']}</span>
                             </a>
                           </div>
 
