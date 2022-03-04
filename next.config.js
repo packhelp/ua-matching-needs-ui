@@ -7,9 +7,11 @@ verifyEnvs()
 const nextConfig = {
   reactStrictMode: true,
   i18n: {
-    locales: ["pl-PL", "uk-UA"],
-    defaultLocale: "pl-PL",
+    locales: ["default", "pl-PL", "uk-UA"],
+    defaultLocale: "default",
+    localeDetection: false,
   },
+  trailingSlash: true,
   env: {
     SENTRY_DSN: process.env.SENTRY_DSN,
     ENV: process.env.ENV,
