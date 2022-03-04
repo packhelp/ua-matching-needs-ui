@@ -17,7 +17,6 @@ import axios from "axios"
 import { RouteDefinitions } from "../../src/utils/routes"
 import Head from "next/head"
 import React, { useEffect, useMemo } from "react"
-import { metaData } from "../../src/utils/meta-data"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
@@ -150,8 +149,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   }, [id])
 
   const metaTitle = useMemo(() => {
+    const translations = useTranslations()
     if (!ticket) {
-      return metaData.title
+      return translations.metaData.title
     }
 
     const i18n = translations["pages"]["ticket"]["metaTitle"]
@@ -160,7 +160,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     const where = ticket.where || ""
 
     if (!tag && !where) {
-      return metaData.title
+      return translations.metaData.title
     }
 
     const spacer = tag && where ? " - " : ""
@@ -171,11 +171,11 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
 
   const metaDescription = useMemo(() => {
     if (!ticket) {
-      return metaData.description
+      return translations.metaData.description
     }
 
     return truncate(
-      ticket.description || ticket.what || metaData.description,
+      ticket.description || ticket.what || translations.metaData.description,
       100
     )
   }, [ticket])

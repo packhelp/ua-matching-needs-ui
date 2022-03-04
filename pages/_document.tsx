@@ -1,5 +1,4 @@
 import { Html, Head, Main, NextScript } from "next/document"
-import { metaData } from "../src/utils/meta-data"
 
 export default function _document() {
   return (

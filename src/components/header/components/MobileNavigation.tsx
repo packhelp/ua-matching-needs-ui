@@ -30,6 +30,7 @@ type MobileInactiveNavigationElementProps = MobileActiveNavigationElementProps
 
 export const MobileNavigation = () => {
   const { isOpen = false, onOpen, onClose } = useDisclosure()
+  const translations = useTranslations()
 
   useRouteChanged([onClose])
 
@@ -50,7 +51,7 @@ export const MobileNavigation = () => {
           aria-expanded="false"
           onClick={onClick}
         >
-          <span className="sr-only">Open main menu</span>
+          <span className="sr-only">{translations.menu.open}</span>
           {!isOpen && <CloseSVG />}
           {isOpen && <HamburgerSVG />}
         </button>
