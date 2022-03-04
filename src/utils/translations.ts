@@ -84,6 +84,7 @@ const PL = {
         "Twoje imię i nazwisko lub Twoja nazwa organizacji",
       "request-added": "Zgłoszenie przyjęte!",
       "need-added": "Zgłoszono potrzebę!",
+      show_phone_public: "Pokaż mój numer telefonu publicznie",
     },
   },
   "sign-out": "Wyloguj się",
@@ -111,26 +112,26 @@ const PL = {
 
 const UA: Translation = {
   "/tickets/add": "Повідомте про потребу",
-  "/tickets/active": "Potrzeby",
-  "/tickets/active/mine": "Moje potrzeby",
-  "/tickets/inactive/mine": "Moje nieaktywne potrzeby",
-  "/sign-in": "Zaloguj się",
-  "/contact": "Kontakt",
+  "/tickets/active": "Потреби",
+  "/tickets/active/mine": "Мої потреби",
+  "/tickets/inactive/mine": "Мої неактивні потреби",
+  "/sign-in": "Увійти",
+  "/contact": "Сконтактуватись",
   pages: {
     active: {
       title: " Поточний попит",
     },
     "sign-in": {
-      title: "Zaloguj się",
-      label: "Podaj numer telefonu",
-      placeholder: "601601601",
-      next: "Dalej",
+      title: "Увійти",
+      label: "Номер телефону",
+      placeholder: "+38 097 123 123 12",
+      next: "Далі",
       "phone-verification": {
-        title: "Podaj kod weryfikacyjny",
+        title: "Код верефікаціі з СМС",
         label:
-          "Wysłaliśmy kod weryfikacyjny, na twój numer telefonu, w wiadomości SMS. Wpisz go poniżej aby zalogować się.",
+          "Ми вислали вам код верифікаціі у повідомленні СМС. Введіть йогу щоб залогуватись",
         placeholder: "123 456",
-        next: "Dalej",
+        next: "Далі",
       },
     },
     main: {
@@ -162,8 +163,8 @@ const UA: Translation = {
     },
     ticket: {
       metaTitle: {
-        need: "Potrzeba",
-        cta: "Pomóż Ukrainie z potrzeby-ua.org",
+        need: "Потреба",
+        cta: "Допоможи Україні на potrzeby-ua.org",
       },
       description: {
         "read-more": "Czytaj więcej",
@@ -174,28 +175,28 @@ const UA: Translation = {
       },
     },
     "add-ticket": {
-      "add-need": "Dodaj potrzebę",
-      adults: "Dorosłych",
-      "adults-hint": "Liczba osób > 12 lat",
+      "add-need": "Додай потребу",
+      adults: "Дорислих",
+      "adults-hint": "Дорослих більш ніж 12 років",
       children: "Dzieci",
       "has-pets": "Zwierzęta",
-      "children-hint": "Liczba osób < 12 lat",
-      "what-do-you-need": "Opis potrzeby",
+      "children-hint": "Дітей менш ніж 12 років",
+      "what-do-you-need": "Що за потреба?",
       "what-do-you-need-hint":
         "Na przykład: Materac 2-osobowy dla mamy z dzieckiem. Dlaczego i jak pilnie jest potrzebne: miałyśmy przyjąć uchodźców (mamę z dzieckiem) do naszego domu, ale ostatecznnie teraz gościmy już babcię, 3 mamy i 2 dzieci. Nie mamy gdzie ich położyć. Dodatkowe informacje: Nie mamy transportu. Prośba o przywiezienie do nas.",
       "how-much-do-you-need": "Ile potrzebujesz?",
       "in-pieces-if-applicable": "W sztukach, jeśli dotyczy",
-      "where-do-you-need-it-delivered": "Gdzie to potrzebujesz dostarczyć?",
+      "where-do-you-need-it-delivered": "Де ця потеба? Містло, локалізація",
       "address-or-gps":
         'Adres lub lokalizacja GPS (na przykład "Malczewskiego 5, Warszawa", albo "Szpital Dziecięcy w Poznaniu")',
-      "who-needs-it": "Kto to potrzebuje?",
-      "name-surname-or-org-name":
-        "Twoje imię i nazwisko lub Twoja nazwa organizacji",
-      "request-added": "Zgłoszenie przyjęte!",
-      "need-added": "Zgłoszono potrzebę!",
+      "who-needs-it": "Хто потребує?",
+      "name-surname-or-org-name": "Ім'я, прізвище або назва Oрганізаціі",
+      "request-added": "Прийняли зголошення!",
+      "need-added": "Додали потребу!",
+      show_phone_public: "Показувати мій номер на сайті",
     },
   },
-  "sign-out": "Wyloguj się",
+  "sign-out": "Вийти",
   "terms-of-service": {
     title: "Regulamin",
     "title-alternate": "Regulamin serwisu",

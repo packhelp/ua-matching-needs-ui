@@ -77,11 +77,17 @@ const UserPopup = ({ isOpen }: { isOpen: boolean }) => {
     >
       <UserNavigationElement
         route={RouteDefinitions.MyActiveTickets}
-        label={getRouteNameForLocale(RouteDefinitions.MyActiveTickets)}
+        label={getRouteNameForLocale(
+          RouteDefinitions.MyActiveTickets,
+          router.locale as any
+        )}
       />
       <UserNavigationElement
         route={RouteDefinitions.MyInactiveTickets}
-        label={getRouteNameForLocale(RouteDefinitions.MyInactiveTickets)}
+        label={getRouteNameForLocale(
+          RouteDefinitions.MyInactiveTickets,
+          router.locale as any
+        )}
       />
       <UserNavigationElement
         onClick={onSignOut}

@@ -392,7 +392,7 @@ const AddTicket: NextPage = () => {
               defaultChecked={true}
               {...register("phone_public")}
             >
-              Pokaż mój numer telefonu publicznie
+              {translations["pages"]["add-ticket"].show_phone_public}
             </Checkbox>
 
             <button
