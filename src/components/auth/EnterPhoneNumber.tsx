@@ -90,6 +90,7 @@ export const EnterPhoneNumber = ({
             isInvalid={!isPhoneValid}
             type="tel"
             name="phone"
+            autoFocus={true}
           />
           <Button
             type="submit"

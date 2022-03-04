@@ -47,10 +47,7 @@ const getTicketDataFromEndpoint = async (
 }
 
 export const isTicketActive = (ticket: TicketDetails): boolean => {
-  return (
-    dayjs(ticket.expirationTimestampSane) > dayjs(Date.now()) &&
-    ticket.ticket_status === TICKET_STATUS.ACTIVE
-  )
+  return ticket.ticket_status === TICKET_STATUS.ACTIVE
 }
 
 export const Tags = ({ tags }: { tags: TicketDetails["need_tag_id"] }) => {
