@@ -83,21 +83,26 @@ const PL = {
       needNumber: "Numer zgłoszenia",
       details: "Szczegóły",
       ticketRemovedAddNew: "Ogłoszenie usunięte. Mozesz dodać kolejne.",
-      ticketSolvedAddNew: "Ogłoszenie zostało oznaczone jako rozwiąne! Mozesz dodać kolejne.",
-      ticketNotFound: "Zgłoszenia nie znaleziono lub jest juz nieaktualne. Ale pewnie się coś znajdzie ",
+      ticketSolvedAddNew:
+        "Ogłoszenie zostało oznaczone jako rozwiąne! Mozesz dodać kolejne.",
+      ticketNotFound:
+        "Zgłoszenia nie znaleziono lub jest juz nieaktualne. Ale pewnie się coś znajdzie ",
       here: "tutaj",
       errorOnRemove: "Wystąpił błąd z usuwaniem zgłoszenia",
       errorOnResolved: "Wystąpił błąd z oznaczeniem zgłoszenia jako rozwiąane",
       warningTicketExpired: "UWAGA: Zgłoszenie nieaktualne!",
-      ticketExpiresAfterSetTime: "Ogłoszenie wygasa po czasie ustalonym przez osobę zgłaszającą",
-      requesterCanExpireTicketAtAnyTime: "Osoba zgłąszająca w każdym momencie może wygasić ogłoszenie",
-      lookForAnotherTicketThanksForHelp: "Poszukaj innego zgłoszenia - dziękujemy za pomoc!",
+      ticketExpiresAfterSetTime:
+        "Ogłoszenie wygasa po czasie ustalonym przez osobę zgłaszającą",
+      requesterCanExpireTicketAtAnyTime:
+        "Osoba zgłąszająca w każdym momencie może wygasić ogłoszenie",
+      lookForAnotherTicketThanksForHelp:
+        "Poszukaj innego zgłoszenia - dziękujemy za pomoc!",
       helpType: "Rodzaj pomocy",
       call: "Zadzwoń",
       areYouTheAuthorOfThisTicket: "Jesteś autorem tego zgłoszenia?",
       problemSolved: "Problem rozwiązany!",
       remove: "Usuń",
-      needExpired: "Zgłoszenie wygasło"
+      needExpired: "Zgłoszenie wygasło",
     },
     "add-ticket": {
       "add-need": "Dodaj potrzebę",
@@ -252,8 +257,8 @@ const UA: Translation = {
         copySuccess: "Скопійовано в буфер обміну!",
       },
       verifiedOrganisation: "Перевірена організація",
-      whoRequested: "Хто повідомив?",
-      whoRequestedNeed: "<miss_translation>",
+      whoRequested: "Хто додав?",
+      whoRequestedNeed: "Хто додав оголошення?",
       whereToDeliver: "Куди доставити?",
       added: "Додано",
       share: "Поділіться",
@@ -263,38 +268,43 @@ const UA: Translation = {
       views: "Хіти",
       needNumber: "Заявка №",
       details: "Деталі",
-      ticketRemovedAddNew: "<miss_translation>",
-      ticketSolvedAddNew: "<miss_translation>",
-      ticketNotFound: "<miss_translation>",
+      ticketRemovedAddNew: "Оголошення усунено, можете додати наступне",
+      ticketSolvedAddNew:
+        "Оголошення було зазначено яко вирішене. Можете додати наступне",
+      ticketNotFound:
+        "Ми не знайшли цього оголошення або воно вже не актуальне. Але напевно знайдеться щось інше",
+
       here: "тут",
-      errorOnRemove: "<miss_translation>",
-      errorOnResolved: "<miss_translation>",
-      warningTicketExpired: "<miss_translation>",
-      ticketExpiresAfterSetTime: "<miss_translation>",
-      requesterCanExpireTicketAtAnyTime: "<miss_translation>",
-      lookForAnotherTicketThanksForHelp: "<miss_translation>",
+      errorOnRemove: "Під час видалення оголошення сталася помилка",
+      errorOnResolved: "Помилка! Не вдалось зазначити оголошення як вирішеного",
+      warningTicketExpired: "УВАГА! Оголошення не актуальне!",
+      ticketExpiresAfterSetTime:
+        "Термін дії оголошення закінчується після закінчення терміну, визначеного особою, яка створила оголошення",
+      requesterCanExpireTicketAtAnyTime:
+        "Заявник може виключити розміщення оголошення в будь-який час",
+      lookForAnotherTicketThanksForHelp:
+        "Шукайте інше оголошення - дякую за допомогу!",
       helpType: "Своєрідна допомога",
       call: "Зателефонуй мені",
       areYouTheAuthorOfThisTicket: "Ви є автором цього звіту",
       problemSolved: "Проблема вирішена!",
       remove: "Видалити",
-      needExpired: "<miss_translation>"
+      needExpired: "Оголошення не актуальне",
     },
     "add-ticket": {
       "add-need": "Додай потребу",
       adults: "Дорислих",
       "adults-hint": "Дорослих більш ніж 12 років",
       children: "Діти",
-      "has-pets": "<miss_translation>",
+      "has-pets": "Тварини",
       "children-hint": "Дітей менш ніж 12 років",
       "what-do-you-need": "Що за потреба?",
       "what-do-you-need-hint":
-        "<miss_translation>",
-      "how-much-do-you-need": "<miss_translation>",
-      "in-pieces-if-applicable": "<miss_translation>",
+        "Наприклад: 2-місний матрац для матері з дитиною. Навіщо і як терміново це потрібн:  ми хочемо прийняти маму і дитину додому, але вийшло що ми приймаємо бабусю, 3 матерів і 2 дітей. Нам їх нікуди подіти. Додаткова інформація: транспорту у нас немає. Прохання привести до нас",
+      "how-much-do-you-need": "Скільки?",
+      "in-pieces-if-applicable": "В штуках",
       "where-do-you-need-it-delivered": "Де ця потеба? Містло, локалізація",
-      "address-or-gps":
-        '<miss_translation>',
+      "address-or-gps": "Адрес або коордатити GPS",
       "who-needs-it": "Хто потребує?",
       "name-surname-or-org-name": "Ім'я, прізвище або назва Oрганізаціі",
       "request-added": "Прийняли зголошення!",
@@ -304,24 +314,24 @@ const UA: Translation = {
   },
   "sign-out": "Вийти",
   "terms-of-service": {
-    title: "<miss_translation>",
-    "title-alternate": "<miss_translation>",
+    title: "Правила",
+    "title-alternate": "Правила Сервісу",
     agreemenent:
-      "<miss_translation>",
+      "Додання оголошення рівносильно згоді з правилами роботи веб-сайту",
   },
   contact: {
-    "contact-us-via": "<miss_translation>",
+    "contact-us-via": "Зв'яжіться з нами:",
     slack: "Slack",
     discord: "Discord",
     github: "Github",
-    authors: "<miss_translation>",
-    "in-cooperation-with": "<miss_translation>",
+    authors: "Автори сервісу",
+    "in-cooperation-with": "Сервіс був створений у співпраці з:",
   },
   errors: {
-    "error-occured-while-adding": "<miss_translation>",
+    "error-occured-while-adding": "Під час додавання сталася помилка:",
   },
   auth: {
-    "you-have-been-logged-out": "<miss_translation>",
+    "you-have-been-logged-out": "Ви вийшли з системиmi",
   },
   faq: {
     header: "FAQ",
