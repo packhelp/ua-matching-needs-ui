@@ -235,7 +235,7 @@ const AddTicket: NextPage = () => {
               <Textarea
                 rows={6}
                 placeholder={
-                  translations["pages"]["add-ticket"]["what-do-you-need"]
+                  translations["pages"]["add-ticket"]["what-do-you-need-hint"]
                 }
                 variant={"outline"}
                 {...register("what")}
