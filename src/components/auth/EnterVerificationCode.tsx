@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Button, ButtonSpinner, Container, FormLabel, Heading, Input } from "@chakra-ui/react"
+import { Button, ButtonSpinner, Center, Container, FormLabel, Heading, Image, Input } from "@chakra-ui/react"
 import { translations } from "../../utils/translations"
 import { useFinalLocale } from "../../hooks/final-locale"
 
@@ -21,6 +21,10 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
           onSubmit({ verificationCode })
             .finally(() => setVerifying(false))
         }}>
+          <Center>
+            <Image src="/phone-verify.svg" maxW="300px" mb="30px" mt="20px"/>
+          </Center>
+
           <Heading as="h1" size="1xl" mb={4}>
             {translations[finalLocale]["pages"]["sign-in"]["phone-verification"]["title"]}
           </Heading>

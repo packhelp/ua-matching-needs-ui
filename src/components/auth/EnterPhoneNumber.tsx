@@ -2,10 +2,10 @@ import {
   Alert, AlertDescription,
   AlertIcon,
   Button,
-  ButtonSpinner,
+  ButtonSpinner, Center,
   Container,
   FormLabel,
-  Heading,
+  Heading, Image,
   Input,
 } from "@chakra-ui/react"
 import React, { useMemo, useState } from "react"
@@ -58,11 +58,16 @@ export const EnterPhoneNumber = ({ onSubmit, error }: EnterPhoneNumberProps) => 
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Container className="px-4 py-5 sm:p-6">
         <form onSubmit={submitForm}>
+
+          <Center>
+            <Image src="/phone-login.svg" maxW="300px" mb="30px" mt="20px"/>
+          </Center>
+
           <Heading as="h1" size="1xl" mb={4}>
             {translations[finalLocale]["pages"]["sign-in"]["title"]}
           </Heading>
 
-          { error &&
+          {error &&
             <Alert status="error" mb="20px">
               <AlertIcon />
               <AlertDescription>{error}</AlertDescription>

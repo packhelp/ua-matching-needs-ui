@@ -18,11 +18,11 @@ export const translations: Translation = {
       "sign-in": {
         title: "Zaloguj się",
         label: "Podaj numer telefonu",
-        placeholder: "Numer telefonu",
+        placeholder: "601601601",
         next: "Dalej",
         "phone-verification": {
-          title: "Zaloguj się",
-          label: "Podaj kod weryfikacyjny. Został on wysłany na twój numer telefonu w wiadomości SMS.",
+          title: "Podaj kod weryfikacyjny",
+          label: "Wysłaliśmy kod weryfikacyjny, na twój numer telefonu, w wiadomości SMS. Wpisz go poniżej aby zalogować się.",
           placeholder: "123 456",
           next: "Dalej",
         },
