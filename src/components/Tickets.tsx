@@ -10,9 +10,11 @@ import { Center, Spinner } from "@chakra-ui/react"
 export const Tickets = ({
   mineOnly,
   ticketStatus,
+  title,
 }: {
   mineOnly?: boolean
   ticketStatus: TICKET_STATUS
+  title: string
 }) => {
   const [tagIdFilter, setTagIdFilter] = useState<number | undefined>(undefined)
 
@@ -43,7 +45,7 @@ export const Tickets = ({
   return (
     <>
       <h1 className="my-4 text-3xl font-semibold text-center">
-        Aktualne Zapotrzebowanie
+        {title}
         {tickets && <span className="ml-2">({tickets.length})</span>}
       </h1>
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">

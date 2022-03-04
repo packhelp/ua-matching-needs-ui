@@ -12,6 +12,9 @@ export const translations: Translation = {
     "/sign-in": "Zaloguj się",
     "/contact": "Kontakt",
     pages: {
+      "active": {
+        title: "Aktualne Zapotrzebowanie",
+      },
       "sign-in": {
         title: "Zaloguj się",
         label: "Podaj numer telefonu",
