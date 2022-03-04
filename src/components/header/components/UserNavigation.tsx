@@ -5,10 +5,7 @@ import { DesktopNavigationElement } from "./DesktopNavigation"
 import { userIsLoggedIn } from "../../../hooks/is-logged"
 import { useRouteChanged } from "../../../hooks/root-changed"
 import { useTranslations } from "../../../hooks/translations"
-import {
-  getRouteNameForLocale,
-  RouteDefinitions,
-} from "../../../utils/routes"
+import { getRouteNameForLocale, RouteDefinitions } from "../../../utils/routes"
 import { UserSVG } from "../../../assets/styled-svgs/user"
 import { signOut } from "next-auth/react"
 
@@ -80,11 +77,17 @@ const UserPopup = ({ isOpen }: { isOpen: boolean }) => {
     >
       <UserNavigationElement
         route={RouteDefinitions.MyActiveTickets}
-        label={getRouteNameForLocale(RouteDefinitions.MyActiveTickets)}
+        label={getRouteNameForLocale(
+          RouteDefinitions.MyActiveTickets,
+          router.locale as any
+        )}
       />
       <UserNavigationElement
         route={RouteDefinitions.MyInactiveTickets}
-        label={getRouteNameForLocale(RouteDefinitions.MyInactiveTickets)}
+        label={getRouteNameForLocale(
+          RouteDefinitions.MyInactiveTickets,
+          router.locale as any
+        )}
       />
       <UserNavigationElement
         onClick={onSignOut}
