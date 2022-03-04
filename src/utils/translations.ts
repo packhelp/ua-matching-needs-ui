@@ -148,7 +148,6 @@ const PL = {
   auth: {
     "you-have-been-logged-out": "Zostałeś wylogowany",
   },
-  faq: {},
   menu: {
     open: "Open main menu",
   },
@@ -156,6 +155,41 @@ const PL = {
     title: "Pomóżmy Ukrainie!",
     description:
       "Szybkie i proste zarządzanie organizacją pomocy humanitarnej. Pomagasz innym? Pomożemy Ci zorganizować tę pomoc!",
+  faq: {
+    header: "FAQ",
+    sectionOne: {
+      title: "Czym jest",
+      description: "Platforma powstała w celu usprawnienia organizacji pomocy humanitarnej dla ofiar wojny w Ukrainie. W prosty sposób możesz dodać ogłoszenie dotyczące jakiegokolwiek sposobu pomocy - jeśli szukasz mieszkania dla osób z Ukrainy, potrzebujesz transportu z granicy, lub też zapewnienia jedzenia lub leków. Następnie dodajesz lokalizację - czyli np, miejsce odbioru na granicy, lub docelowe iejsce w którym szukasz zakwaaterowania - oraz numer kontaktowy do siebie. Po dodaniu informacji my zajmujemy się szukaniem organizacji lub osób, które mogą pomóc z Twoim zgłoszeniem.",
+    },
+    sectionTwo: {
+      title: "Dlaczego podaję swój numer telefonu?",
+      description: "Zależy nam na sprawnym działaniu oraz szybkim rozwiązywaniu zapytań. Dlatego potrzebujemy numeru kontaktowego jedynie w celach określonych w opisie Twojej potrzeby. Twój numer nie zostaje przetrzymany ani nie będzie wykorzystany w żadnym innym celu.",
+    },
+    sectionThree: {
+      title: "Czy mogę udostępniać trwające zgłoszenia?",
+      description: "Tak, możesz udostępniać wszystkie zgłoszenia na Twitterze, Telegramie oraz Facebooku, a także jako bezpośredni link."
+    },
+    sectionFour: {
+      title: "Czy mogę kontaktować się bezpośrednio z osobami szukającymi pomocy?",
+      description: "Tak, podane numery służą do tego, by osoby mogące udzielić potrzebnej pomocy mogły szybko skontaktować się i zając się problemem."
+    },
+    sectionFive: {
+      title: "Czy ogłoszenia są usuwane automatycznie?",
+      description: "Tak, po 24 godzinach każde ogłoszenie zostaje automatycznie usunięte. Jeśli Twoje zgłoszenie zostało już wcześniej rozwiązane - np. udało Ci się znaleźć transport po kilku godzinach od wystawienia zgłoszenia - możesz je samodzielnie usunąć."
+    },
+    sectionSix: {
+      title: "Gdzie znajdę regulamin serwisu?",
+      description: "Regulamin serwisu znajdziesz",
+      here: "tutaj"
+    },
+    sectionSeven: {
+      title: "Czy korzystanie z platformy jest płatne?",
+      description: "Nie, platforma jest całkowicie bezpłatna. Naszym celem jest sprawne organizowanie pomocy humanitarnej."
+    },
+    sectionEight: {
+      title: "Do czego służą kategorie?",
+      description: "Kategorie pozwalają na precyzyjniejsze określenie rodzaju potrzebnej pomocy, a także sprawniejszemu wyszukiwaniu potencjalnych zgłoszeń dla osób chcących pomóc."
+    }
   },
 }
 
@@ -175,7 +209,7 @@ const UA: Translation = {
 
   pages: {
     active: {
-      title: " Поточний попит",
+      title: "Поточний попит",
     },
     "sign-in": {
       title: "Увійти",
@@ -230,8 +264,8 @@ const UA: Translation = {
         copySuccess: "Скопійовано в буфер обміну!",
       },
       verifiedOrganisation: "Перевірена організація",
-      whoRequested: "Хто повідомив?",
-      whoRequestedNeed: "<miss_translation>",
+      whoRequested: "Хто додав?",
+      whoRequestedNeed: "Хто додав оголошення?",
       whereToDeliver: "Куди доставити?",
       added: "Додано",
       share: "Поділіться",
@@ -241,36 +275,43 @@ const UA: Translation = {
       views: "Хіти",
       needNumber: "Заявка №",
       details: "Деталі",
-      ticketRemovedAddNew: "<miss_translation>",
-      ticketSolvedAddNew: "<miss_translation>",
-      ticketNotFound: "<miss_translation>",
+      ticketRemovedAddNew: "Оголошення усунено, можете додати наступне",
+      ticketSolvedAddNew:
+        "Оголошення було зазначено яко вирішене. Можете додати наступне",
+      ticketNotFound:
+        "Ми не знайшли цього оголошення або воно вже не актуальне. Але напевно знайдеться щось інше",
+
       here: "тут",
-      errorOnRemove: "<miss_translation>",
-      errorOnResolved: "<miss_translation>",
-      warningTicketExpired: "<miss_translation>",
-      ticketExpiresAfterSetTime: "<miss_translation>",
-      requesterCanExpireTicketAtAnyTime: "<miss_translation>",
-      lookForAnotherTicketThanksForHelp: "<miss_translation>",
+      errorOnRemove: "Під час видалення оголошення сталася помилка",
+      errorOnResolved: "Помилка! Не вдалось зазначити оголошення як вирішеного",
+      warningTicketExpired: "УВАГА! Оголошення не актуальне!",
+      ticketExpiresAfterSetTime:
+        "Термін дії оголошення закінчується після закінчення терміну, визначеного особою, яка створила оголошення",
+      requesterCanExpireTicketAtAnyTime:
+        "Заявник може виключити розміщення оголошення в будь-який час",
+      lookForAnotherTicketThanksForHelp:
+        "Шукайте інше оголошення - дякую за допомогу!",
       helpType: "Своєрідна допомога",
       call: "Зателефонуй мені",
       areYouTheAuthorOfThisTicket: "Ви є автором цього звіту",
       problemSolved: "Проблема вирішена!",
       remove: "Видалити",
-      needExpired: "<miss_translation>",
+      needExpired: "Оголошення не актуальне",
     },
     "add-ticket": {
       "add-need": "Додай потребу",
       adults: "Дорислих",
       "adults-hint": "Дорослих більш ніж 12 років",
       children: "Діти",
-      "has-pets": "<miss_translation>",
+      "has-pets": "Тварини",
       "children-hint": "Дітей менш ніж 12 років",
       "what-do-you-need": "Що за потреба?",
-      "what-do-you-need-hint": "<miss_translation>",
-      "how-much-do-you-need": "<miss_translation>",
-      "in-pieces-if-applicable": "<miss_translation>",
+      "what-do-you-need-hint":
+        "Наприклад: 2-місний матрац для матері з дитиною. Навіщо і як терміново це потрібн:  ми хочемо прийняти маму і дитину додому, але вийшло що ми приймаємо бабусю, 3 матерів і 2 дітей. Нам їх нікуди подіти. Додаткова інформація: транспорту у нас немає. Прохання привести до нас",
+      "how-much-do-you-need": "Скільки?",
+      "in-pieces-if-applicable": "В штуках",
       "where-do-you-need-it-delivered": "Де ця потеба? Містло, локалізація",
-      "address-or-gps": "<miss_translation>",
+      "address-or-gps": "Адрес або коордатити GPS",
       "who-needs-it": "Хто потребує?",
       "name-surname-or-org-name": "Ім'я, прізвище або назва Oрганізаціі",
       "request-added": "Прийняли зголошення!",
@@ -280,35 +321,68 @@ const UA: Translation = {
   },
   "sign-out": "Вийти",
   "terms-of-service": {
-    title: "<miss_translation>",
-    "title-alternate": "<miss_translation>",
-    agreemenent: "<miss_translation>",
+    title: "Правила",
+    "title-alternate": "Правила Сервісу",
+    agreemenent:
+      "Додання оголошення рівносильно згоді з правилами роботи веб-сайту",
   },
   contact: {
-    "contact-us-via": "<miss_translation>",
+    "contact-us-via": "Зв'яжіться з нами:",
     slack: "Slack",
     discord: "Discord",
     github: "Github",
-    authors: "<miss_translation>",
-    "in-cooperation-with": "<miss_translation>",
+    authors: "Автори сервісу",
+    "in-cooperation-with": "Сервіс був створений у співпраці з:",
   },
   errors: {
-    "error-occured-while-adding": "<miss_translation>",
+    "error-occured-while-adding": "Під час додавання сталася помилка:",
   },
   auth: {
-    "you-have-been-logged-out": "<miss_translation>",
+    "you-have-been-logged-out": "Ви вийшли з системиmi",
   },
   faq: {
-    title: "",
-  },
-  menu: {
-    open: "Open main menu",
-  },
-  metaData: {
-    title: "Допоможемо Україні!",
-    description:
-      "Швидке та просте управління організацією гуманітарної допомоги. Ви допомагаєте іншим? Ми допоможемо вам організувати цю допомогу!",
-  },
+    header: "FAQ",
+    sectionOne: {
+      title: "<miss_translation>", // Czym jest https://potrzeby-ua.org?
+      description: "<miss_translation>",
+    },
+    sectionTwo: {
+      title: "<miss_translation>",
+      description: "<miss_translation>",
+    },
+    sectionThree: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    },
+    sectionFour: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    },
+    sectionFive: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    },
+    sectionSix: {
+      title: "<miss_translation>",
+      description: "<miss_translation>",
+      here: "<miss_translation>"
+    },
+    sectionSeven: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    },
+    sectionEight: {
+      title: "<miss_translation>",
+      description: "<miss_translation>"
+    },
+      menu: {
+      open: "Open main menu",
+    },
+    metaData: {
+      title: "Допоможемо Україні!",
+      description:
+        "Швидке та просте управління організацією гуманітарної допомоги. Ви допомагаєте іншим? Ми допоможемо вам організувати цю допомогу!",
+    },
 }
 
 const getPL = () => PL
