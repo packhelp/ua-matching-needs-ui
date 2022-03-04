@@ -1,5 +1,6 @@
 import {
   Box,
+  Checkbox,
   Container,
   Heading,
   Stack,
@@ -35,6 +36,7 @@ export type TicketFormData = {
   count?: number
   where?: string
   who?: string
+  phone_public: boolean
 }
 
 export type TicketPostData = TicketFormData & {
@@ -60,7 +62,6 @@ export type Organization = {
 
 export type TicketData = TicketFormData & {
   id: number
-
   expirationTimestampSane: string
   date_created: number
   ticket_status: TICKET_STATUS
@@ -102,7 +103,11 @@ const TagsChooseForm = (props: {
         key={tag.id}
         mr={2}
         mb={2}
-        variant={props.tagsSelected && props.tagsSelected.includes(tag.id) ? "solid" : "outline"}
+        variant={
+          props.tagsSelected && props.tagsSelected.includes(tag.id)
+            ? "solid"
+            : "outline"
+        }
         onClick={() => props.onClickTag(tag.id)}
         className={"cursor-pointer "}
         colorScheme={"blue"}
@@ -151,8 +156,8 @@ const AddTicket: NextPage = () => {
 
   const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
     (newTicket) => {
-      const { phone, what, where, who, count, need_tag_id } = newTicket
-      const now = new Date()
+      const { phone, what, where, who, count, need_tag_id, phone_public } =
+        newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
       const newTicketData = {
@@ -163,7 +168,7 @@ const AddTicket: NextPage = () => {
         who,
         count: count ? count : 0,
         expirationTimestampSane,
-        phone_public: true,
+        phone_public,
         need_tag_id,
       }
 
@@ -291,6 +296,14 @@ const AddTicket: NextPage = () => {
                 {translations["pages"]["add-ticket"]["request-added"]}
               </Text>
             ) : null}
+
+            <Checkbox
+              value={1}
+              defaultChecked={true}
+              {...register("phone_public")}
+            >
+              Pokaż mój numer telefonu publicznie
+            </Checkbox>
 
             <button
               type="submit"
