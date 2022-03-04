@@ -32,9 +32,6 @@ export const Guard: FC = ({ children }) => {
     // }
   }, [authSession, authStatus])
 
-  if (authStatus === "loading") {
-    return <div>loading</div>
-  }
   if (isPathRestricted) {
     if (authStatus === "loading") {
       return <div>loading</div>
