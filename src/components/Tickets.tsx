@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react"
-import { useQuery } from "react-query"
+import { Center, Spinner, Tooltip } from "@chakra-ui/react"
 import axios from "axios"
-import { RouteDefinitions } from "../utils/routes"
-import { TICKET_STATUS } from "../../pages/tickets/add"
-import { Tag } from "./Tag"
-import { Center, Spinner } from "@chakra-ui/react"
-import { Tooltip } from "@chakra-ui/react"
-import { getMainTags } from "../utils/tags"
-import { FiltersDesktop, FiltersMobile } from "./Filters"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import React, { useEffect, useState } from "react"
+import { useQuery } from "react-query"
 import { useTranslations } from "../hooks/translations"
+import { RouteDefinitions } from "../utils/routes"
+import { TICKET_STATUS } from "../services/ticket.type"
+import { Tag } from "./Tag"
+import { getMainTags } from "../utils/tags"
+import { FiltersDesktop, FiltersMobile } from "./Filters"
 
 export const Tickets = ({
   mineOnly,
@@ -21,7 +20,7 @@ export const Tickets = ({
   ticketStatus: TICKET_STATUS
   title: string
 }) => {
-  const [ selectedTag, setSelectedTag ] = useState(0)
+  const [selectedTag, setSelectedTag] = useState(0)
   const { locale } = useRouter()
   const translations = useTranslations()
 
@@ -61,10 +60,7 @@ export const Tickets = ({
         {tickets && <span className="ml-2">({tickets.length})</span>}
       </h1>
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">
-
-        <FiltersMobile
-          data={tags} onSelectFilter={setSelectedTag}
-        />
+        <FiltersMobile data={tags} onSelectFilter={setSelectedTag} />
 
         <FiltersDesktop
           data={tags}
@@ -105,7 +101,12 @@ export const Tickets = ({
                           <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
                             {ticket.organization_id ? (
                               <>
-                                <Tooltip label={translations['pages']['ticket']['verifiedOrganisation']}>
+                                <Tooltip
+                                  label={
+                                    translations.pages.ticket
+                                      .verifiedOrganisation
+                                  }
+                                >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="w-5 h-5 text-blue-400"
@@ -186,7 +187,7 @@ export const Tickets = ({
                         <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-8">
                           <div className="sm:col-span-1">
                             <dt className="text-xs font-medium text-gray-400">
-                              {translations['pages']['ticket']['whoRequested']}
+                              {translations["pages"]["ticket"]["whoRequested"]}
                             </dt>
                             <dd className="flex items-center text-sm text-gray-900 truncate">
                               {ticket.organization_id ? (
@@ -201,7 +202,7 @@ export const Tickets = ({
 
                           <div className="sm:col-span-1">
                             <dt className="text-xs font-medium text-gray-400">
-                              {translations['pages']['ticket']['added']}
+                              {translations["pages"]["ticket"]["added"]}
                             </dt>
                             <dd className="text-sm text-gray-900 ">
                               {dateFormatted}
@@ -231,7 +232,9 @@ export const Tickets = ({
                                   d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
                                 />
                               </svg>
-                              <span className="ml-3">{translations['pages']['ticket']['details']}</span>
+                              <span className="ml-3">
+                                {translations["pages"]["ticket"]["details"]}
+                              </span>
                             </a>
                           </div>
 

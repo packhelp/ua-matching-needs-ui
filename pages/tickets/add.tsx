@@ -241,7 +241,7 @@ const AddTicket: NextPage = () => {
   const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
 
   const submitNeed = async (data: TicketFormData) => {
-    if (!authSession?.user || authStatus === "unauthenticated") {
+    if (authStatus === "unauthenticated" || !authSession?.user) {
       toast.error(translations["pages"]["auth"]["you-have-been-logged-out"])
       return router.push(RouteDefinitions.SignIn)
     }
@@ -273,7 +273,7 @@ const AddTicket: NextPage = () => {
       <Container className="px-4 py-5 sm:p-6">
         <form onSubmit={handleSubmit(submitNeed)}>
           <Stack>
-            <Heading as="h1" size="xl">
+            <Heading as="h3" size="xl">
               {translations["pages"]["add-ticket"]["add-need"]}
             </Heading>
 

@@ -10,65 +10,51 @@ import {
 import { Link } from "@chakra-ui/react"
 import { externalUrls } from "../src/utils/external-urls"
 import { useTranslations } from "../src/hooks/translations"
+import styles from "./contact.module.scss"
 
 const Contact: NextPage = () => {
   const translations = useTranslations()
   return (
     <>
-      <div className="bg-white shadow max-w-2xl mx-auto py-4 mb-4">
-        <Flex flexDirection="column" alignItems="center">
-          <Heading as="h2" size="sm" mt="8px" mb="16px">
-            {translations["contact"]["authors"]}
-          </Heading>
-        </Flex>
-        <Flex
-          justifyContent={"space-around"}
-          alignItems="center"
-          flexDirection="row"
-          cursor="pointer"
-        >
-          <Link href={externalUrls.packhelp}>
-            <Image src="/logo-packhelp.svg" maxW="120px" />
+      <div className={styles.wrapper}>
+        <Heading as="h2" size="sm" mt="8px" mb="16px">
+          {translations["contact"]["authors"]}
+        </Heading>
+        <div className={styles.logos}>
+          <Link href={externalUrls.packhelp} className={styles.link}>
+            <Image src="/logo-packhelp.svg" h="30px" />
           </Link>
-          <Link href={externalUrls.techtotherescue}>
-            <Image src="/logo-tttr.png" maxW="160px" />
+          <Link href={externalUrls.techtotherescue} className={styles.link}>
+            <Image src="/logo-tttr.png" h="40px" />
           </Link>
-        </Flex>
+        </div>
       </div>
 
-      <div className="bg-white shadow max-w-2xl mx-auto py-4 mb-4">
-        <Flex flexDirection="column" alignItems="center">
-          <Heading as="h2" size="sm" mt="8px" mb="16px">
-            {translations["contact"]["contact-us-via"]}
-          </Heading>
-        </Flex>
-        <Flex padding="16px" justifyContent="space-evenly">
-          <Link href={externalUrls.slack}>
-            <Button size="sm" variant={"ghost"}>
-              {translations["contact"]["slack"]}
-            </Button>
+      <div className={styles.wrapper}>
+        <Heading as="h2" size="sm" mt="8px" mb="16px">
+          {translations["contact"]["contact-us-via"]}
+        </Heading>
+        <div className={styles.inner}>
+          <Link href={externalUrls.slack} className={styles.link}>
+            <Image src="/svg/slack.svg" className={styles.image} />
+            <span className={styles.text}>{translations["contact"]["slack"]}</span>
           </Link>
-          <Link href={externalUrls.github}>
-            <Button size="sm" variant={"ghost"}>
-              {translations["contact"]["github"]}
-            </Button>
+          <Link href={externalUrls.github} className={styles.link}>
+            <Image src="/svg/github.svg" className={styles.image} />
+            <span className={styles.text}>{translations["contact"]["github"]}</span>
           </Link>
-        </Flex>
+        </div>
       </div>
 
-      <div className="bg-white shadow max-w-2xl mx-auto py-4 mb-4">
-        <Flex flexDirection="column" alignItems="center">
-          <Heading as="h2" size="sm" mt="8px" mb="16px">
-            {translations["terms-of-service"]["title"]}
-          </Heading>
-        </Flex>
-        <Flex flexDirection="column" alignItems="center" marginTop="16px">
+      <div className={styles.wrapper}>
+        <Heading as="h2" size="sm" mt="8px" mb="16px">
+          {translations["terms-of-service"]["title"]}
+        </Heading>
+        <div className={styles.inner}>
           <Link href={externalUrls.terms} isExternal>
-            <Text fontSize="xs" variant={"ghost"} cursor="pointer">
-              {`[${translations["terms-of-service"]["title-alternate"]}]`}
-            </Text>
+            <span className={styles.text}>{`[${translations["terms-of-service"]["title-alternate"]}]`}</span>
           </Link>
-        </Flex>
+        </div>
       </div>
     </>
   )
