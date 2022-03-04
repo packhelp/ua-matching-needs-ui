@@ -32,9 +32,12 @@ export type Organization = {
   name: string
 }
 
+// export type SingleTagTranslation =
+
 export type NeedTagType = {
   id: number
   name: string
+  translation_uk_UA?: string
 }
 
 export enum TICKET_STATUS {
@@ -96,31 +99,59 @@ const getInitialDataFromLocalStorage = () => {
   }
 }
 
+export const useTagTranslation = () => {
+  const { locale } = useRouter()
+
+  const getTranslation = (tag: NeedTagType) => {
+    if (!locale) {
+      return tag.name
+    }
+
+    const localeForDirectus = locale.replace("-", "_")
+    const translationField = `translation_${localeForDirectus}`
+
+    const translation = tag[translationField]
+    if (translation && translation.length > 0) {
+      return translation
+    }
+
+    return tag.name
+  }
+
+  return { getTranslation }
+}
+
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
   tagsSelected: number[] | undefined
   onClickTag: (tagId: number) => void
-}) => (
-  <Box>
-    {props.tags.map((tag) => (
-      <Tag
-        key={tag.id}
-        mr={2}
-        mb={2}
-        variant={
-          props.tagsSelected && props.tagsSelected.includes(tag.id)
-            ? "solid"
-            : "outline"
-        }
-        onClick={() => props.onClickTag(tag.id)}
-        className={"cursor-pointer "}
-        colorScheme={"blue"}
-      >
-        {tag.name}
-      </Tag>
-    ))}
-  </Box>
-)
+}) => {
+  const { getTranslation } = useTagTranslation()
+
+  return (
+    <Box>
+      {props.tags.map((tag) => {
+        return (
+          <Tag
+            key={tag.id}
+            mr={2}
+            mb={2}
+            variant={
+              props.tagsSelected && props.tagsSelected.includes(tag.id)
+                ? "solid"
+                : "outline"
+            }
+            onClick={() => props.onClickTag(tag.id)}
+            className={"cursor-pointer "}
+            colorScheme={"blue"}
+          >
+            {getTranslation(tag)}
+          </Tag>
+        )
+      })}
+    </Box>
+  )
+}
 
 const getPreviouslySavedTags = () => {
   if (typeof window !== "undefined") {
@@ -361,7 +392,7 @@ const AddTicket: NextPage = () => {
               defaultChecked={true}
               {...register("phone_public")}
             >
-              Pokaż mój numer telefonu publicznie
+              {translations["pages"]["add-ticket"].show_phone_public}
             </Checkbox>
 
             <button

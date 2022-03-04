@@ -19,10 +19,10 @@ import { RouteDefinitions } from "../../src/utils/routes"
 import Head from "next/head"
 import React, { useEffect, useMemo } from "react"
 import { metaData } from "../../src/utils/meta-data"
-import { translations } from "../../src/utils/translations"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
+import { useTranslations } from "../../src/hooks/translations"
 
 const LOCAL_STORAGE_KEY_VISITS_COUNTER = "visits-counter"
 const TICKET_MARKED_AS_VISITED = "visited"
@@ -138,6 +138,7 @@ const countVisitOnce = (ticketId: number) => {
 const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   const { data: authSession } = useSession()
   const router = useRouter()
+  const translations = useTranslations()
   const finalLocale = useFinalLocale()
 
   const { id } = router.query
@@ -153,7 +154,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
       return metaData.title
     }
 
-    const i18n = translations[finalLocale]["pages"]["ticket"]["metaTitle"]
+    const i18n = translations["pages"]["ticket"]["metaTitle"]
     const tagList = ticket.need_tag_id || []
     const tag = tagList[0]?.need_tag_id?.name || ""
     const where = ticket.where || ""
@@ -185,7 +186,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     },
     {
       onSuccess: () => {
-        toast.success("Ogłoszenie usunięte. Mozesz dodać kolejne.")
+        toast.success(translations['pages']['ticket']['ticketRemovedAddNew'])
         return router.push(RouteDefinitions.AddTicket)
       },
     }
@@ -199,9 +200,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     },
     {
       onSuccess: () => {
-        toast.success(
-          "Ogłoszenie zostało oznaczone jako rozwiąne! Mozesz dodać kolejne."
-        )
+        toast.success(translations['pages']['ticket']['ticketSolvedAddNew'])
         return router.push(RouteDefinitions.AddTicket)
       },
     }
@@ -210,8 +209,10 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   if (!ticket) {
     return (
       <NextError statusCode={404}>
-        Zgłoszenia nie znaleziono lub jest juz nieaktualne. Ale pewnie się coś
-        znajdzie <Link href={RouteDefinitions.AllActiveTickets}>tutaj</Link>
+        {translations['pages']['ticket']['ticketNotFound']}
+        <Link href={RouteDefinitions.AllActiveTickets}>
+          {translations['pages']['ticket']['here']}
+        </Link>
       </NextError>
     )
   }
@@ -224,7 +225,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     if (id) {
       removeTicketMutation.mutate(Number(id))
     } else {
-      toast.error("Wystąpił błąd z usuwaniem zgłoszenia")
+      toast.error(translations['pages']['ticket']['errorOnRemove'])
     }
   }
 
@@ -232,13 +233,13 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     if (id) {
       markSolvedTicketMutation.mutate(Number(id))
     } else {
-      toast.error("Wystąpił błąd z oznaczeniem zgłoszenia jako rozwiąane")
+      toast.error(translations['pages']['ticket']['errorOnRemove'])
     }
   }
 
   const showSuccessShareTicketToast = () => {
     toast.success(
-      translations[finalLocale]["pages"]["ticket"]["shareButton"]["copySuccess"]
+      translations["pages"]["ticket"]["shareButton"]["copySuccess"]
     )
   }
 
@@ -258,9 +259,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   const copyToClipboardMessage = `${ticketUrl} ${truncate(
     ticket.description,
     100
-  )} ${
-    translations[finalLocale]["pages"]["ticket"]["shareButton"]["deliverTo"]
-  } ${ticket.where}`
+  )} ${translations["pages"]["ticket"]["shareButton"]["deliverTo"]} ${ticket.where}`
 
   const copyShareLinkButtonClicked = () =>
     navigator.clipboard.writeText(copyToClipboardMessage).then(() => {
@@ -289,7 +288,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
           <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
             <div className="sm:col-span-3">
               <p className="mb-1 max-w-2xl text-sm text-gray-500 flex items-center space-x-3">
-                <span className="font-medium">Nr Zgłoszenia: #{ticket.id}</span>
+                <span className="font-medium">{translations["pages"]["ticket"]["needNumber"]} #{ticket.id}</span>
 
                 {ticket.organization_id && (
                   <span className="flex space-x-1 font-medium text-blue-400">
@@ -305,7 +304,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span>Zweryfikowana organizacja</span>
+                    <span>{translations["pages"]["ticket"]["verifiedOrganisation"]}</span>
                   </span>
                 )}
               </p>
@@ -336,21 +335,19 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                     </div>
                     <div className="ml-3">
                       <h3 className="text-sm font-medium text-red-800 uppercase">
-                        UWAGA: Zgłoszenie nieaktualne!
+                        {translations["pages"]["ticket"]["warningTicketExpired"]}
                       </h3>
 
                       <div className="mt-2 text-sm text-red-700">
                         <ul role="list" className="list-disc pl-5 space-y-1">
                           <li>
-                            Ogłoszenie wygasa po czasie ustalonym przez osobę
-                            zgłaszającą
+                            {translations["pages"]["ticket"]["ticketExpiresAfterSetTime"]}
                           </li>
                           <li>
-                            Osoba zgłąszająca w każdym momencie może
-                            wygasić ogłoszenie
+                            {translations["pages"]["ticket"]["requesterCanExpireTicketAtAnyTime"]}
                           </li>
                           <li>
-                            Poszukaj innego zgłoszenia - dziękujemy za pomoc!
+                            {translations["pages"]["ticket"]["lookForAnotherTicketThanksForHelp"]}
                           </li>
                         </ul>
                       </div>
@@ -367,7 +364,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
             <div className="border-t border-gray-200 bg-slate-50 px-4 py-5 sm:px-6">
               <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-4">
                 <div className="sm:col-span-2">
-                  <dt className="text-sm font-medium text-gray-600">Dodano</dt>
+                  <dt className="text-sm font-medium text-gray-600">
+                    {translations["pages"]["ticket"]["added"]}
+                  </dt>
                   <dd className="mt-1 text-sm text-gray-600">
                     {dateFormatted}
                   </dd>
@@ -375,10 +374,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
 
                 <div className="sm:col-span-2">
                   <dt className="text-sm font-medium text-gray-600">
-                    Udostępnij
+                    {translations["pages"]["ticket"]["share"]}
                   </dt>
                   <div className="mt-1 text-sm text-gray-600 flex space-x-1">
-                    {/* Twitter */}
                     <TwitterShareButton url={ticketUrl}>
                       <span className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <svg
@@ -397,7 +395,6 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                       </span>
                     </TwitterShareButton>
 
-                    {/* Telegram */}
                     <TelegramShareButton url={ticketUrl}>
                       <span className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <svg
@@ -428,7 +425,6 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                       </span>
                     </TelegramShareButton>
 
-                    {/* Facebook */}
                     <FacebookShareButton url={ticketUrl}>
                       <span className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <svg
@@ -450,8 +446,6 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                         </svg>
                       </span>
                     </FacebookShareButton>
-
-                    {/* Copy Link URL */}
 
                     <span
                       className="cursor-pointer inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -491,11 +485,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                   <>
                     <div className="col-span-1">
                       <dt className="text-sm font-medium text-gray-500">
-                        {
-                          translations[finalLocale]["pages"]["add-ticket"][
-                            "adults"
-                          ]
-                        }
+                        {translations["pages"]["add-ticket"]["adults"]}
                       </dt>
                       <dd
                         className="mt-1 text-lg text-gray-900"
@@ -506,11 +496,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                     </div>
                     <div className="col-span-1">
                       <dt className="text-sm font-medium text-gray-500">
-                        {
-                          translations[finalLocale]["pages"]["add-ticket"][
-                            "children"
-                          ]
-                        }
+                        {translations["pages"]["add-ticket"]["children"]}
                       </dt>
                       <dd
                         className="mt-1 text-lg text-gray-900"
@@ -521,17 +507,13 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                     </div>
                     <div className="col-span-1">
                       <dt className="text-sm font-medium text-gray-500">
-                        {
-                          translations[finalLocale]["pages"]["add-ticket"][
-                            "has-pets"
-                          ]
-                        }
+                        {translations["pages"]["add-ticket"]["has-pets"]}
                       </dt>
                       <dd
                         className="mt-1 text-lg text-gray-900"
                         style={{ whiteSpace: "pre-line" }}
                       >
-                        {ticket.has_pets ? "tak" : "nie"}
+                        {ticket.has_pets ? translations["generic"]["yes"] : translations["generic"]["no"]}
                       </dd>
                     </div>
                   </>
@@ -539,7 +521,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
 
                 <div className="col-span-3">
                   <dt className="text-sm font-medium text-gray-500">
-                    Co potrzeba?
+                    {translations["pages"]["ticket"]["whatsNeeded"]}
                   </dt>
                   <dd
                     className="mt-1 text-lg text-gray-900"
@@ -552,7 +534,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 {ticketTags && (
                   <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
-                      Rodzaj pomocy
+                      {translations["pages"]["ticket"]["helpType"]}
                     </dt>
                     <dd className="mt-1 text-lg text-gray-900">
                       {ticketTags.map((tag) => {
@@ -580,7 +562,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 {ticket.where && (
                   <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
-                      Gdzie dostarczyć?
+                      {translations["pages"]["ticket"]["whereToDeliver"]}
                     </dt>
                     <dd className="mt-1 text-lg text-gray-900">
                       {ticket.where}
@@ -591,7 +573,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 {ticket.count && ticket.count > 0 ? (
                   <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
-                      Ile potrzeba?
+                      {translations["pages"]["ticket"]["howMuchIsNeeded"]}
                     </dt>
                     <dd className="mt-1 text-lg text-gray-900">
                       {ticket.count}
@@ -602,12 +584,12 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 {ticket.who && (
                   <div className="col-span-3">
                     <dt className="text-sm font-medium text-gray-500">
-                      Kto zgłosił zapotrzebowanie?
+                      {translations["pages"]["ticket"]["whoRequestedNeed"]}
                     </dt>
                     <dd className="mt-1 text-lg text-gray-900">
                       {ticket.organization_id ? (
                         <span className="flex items-center space-x-1">
-                          <Tooltip label="Zweryfikowana organizacja">
+                          <Tooltip label={translations["pages"]["ticket"]["verifiedOrganisation"]}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="w-5 h-5 text-blue-400"
@@ -646,7 +628,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
                 text-white"
                 >
-                  Zadzwoń {ticket.phone}
+                  {translations["pages"]["ticket"]["call"]} {ticket.phone}
                   <svg
                     className="ml-3 -mr-1 h-6 w-6"
                     xmlns="http://www.w3.org/2000/svg"
@@ -662,7 +644,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
               {isOwner && (
                 <div className="px-2 py-2 text-center">
                   <span className="text-sm mr-2 text-gray-500 font-medium">
-                    Jesteś autorem tego zgłoszenia?
+                    {translations["pages"]["ticket"]["areYouTheAuthorOfThisTicket"]}
                   </span>
                   <div className="flex space-x-1 items-center justify-center">
                     <button
@@ -670,7 +652,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                       type="button"
                       className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                     >
-                      Problem rozwiązany!
+                      {translations["pages"]["ticket"]["problemSolved"]}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-4 w-4 ml-2"
@@ -692,7 +674,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                       type="button"
                       className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     >
-                      Usuń
+                      {translations["pages"]["ticket"]["remove"]}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-4 w-4 ml-2"
@@ -716,16 +698,16 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
 
           {isTicketActive(ticket) ? (
             <p className="my-4 max-w-2xl text-center text-sm text-gray-500">
-              Zgłoszenie aktywne do: {formattedExpiration}
+              {translations["pages"]["ticket"]["needActiveTill"]} {formattedExpiration}
             </p>
           ) : (
             <p className="my-4 max-w-2xl text-center text-sm font-medium text-red-600">
-              Zgłoszenie wygasło: {formattedExpiration}
+              {translations["pages"]["ticket"]["needExpired"]} {formattedExpiration}
             </p>
           )}
 
           <p className="my-4 max-w-2xl text-center text-sm text-gray-500">
-            Odsłon: {ticket.visits + 1}
+            {translations["pages"]["ticket"]["views"]} {ticket.visits + 1}
           </p>
         </div>
       </section>
