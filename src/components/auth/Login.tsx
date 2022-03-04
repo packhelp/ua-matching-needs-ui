@@ -10,7 +10,8 @@ export const Login: FC = () => {
   const [hasStartedVerification, setHasStartedVerification] = useState(false)
   const [credentials, setCredentials] = useState({ phoneNumber: null })
   const [error, setError] = useState<string>()
-  const errorMessage = "Nie udało się autoryzować twojego telefonu. Spróbuj jeszcze raz!"
+  const errorMessage =
+    "Nie udało się autoryzować twojego telefonu. Spróbuj jeszcze raz!"
 
   errorInUrlQuery && !error && setError(errorMessage)
 
@@ -18,11 +19,11 @@ export const Login: FC = () => {
     const response = await fetch("/api/auth/start-verification", {
       method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        phoneNumber: phoneNumber
+        phoneNumber: phoneNumber,
       }),
     })
     console.log(response)

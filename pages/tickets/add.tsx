@@ -168,10 +168,7 @@ const AddTicket: NextPage = () => {
         need_tag_id,
       }
 
-      return axios.post(
-        `/api/add-ticket`,
-        newTicketData
-      )
+      return axios.post(`/api/add-ticket`, newTicketData)
     },
     {
       onSuccess,

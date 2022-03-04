@@ -1,11 +1,14 @@
 import {
-  Alert, AlertDescription,
+  Alert,
+  AlertDescription,
   AlertIcon,
   Button,
-  ButtonSpinner, Center,
+  ButtonSpinner,
+  Center,
   Container,
   FormLabel,
-  Heading, Image,
+  Heading,
+  Image,
   Input,
 } from "@chakra-ui/react"
 import React, { useMemo, useState } from "react"
@@ -18,7 +21,10 @@ interface EnterPhoneNumberProps {
   error: string | undefined
 }
 
-export const EnterPhoneNumber = ({ onSubmit, error }: EnterPhoneNumberProps) => {
+export const EnterPhoneNumber = ({
+  onSubmit,
+  error,
+}: EnterPhoneNumberProps) => {
   const finalLocale = useFinalLocale()
 
   const [processing, setProcessing] = useState(false)
@@ -38,7 +44,7 @@ export const EnterPhoneNumber = ({ onSubmit, error }: EnterPhoneNumberProps) => 
 
   const canSubmit = useMemo(
     () => phone && phone !== "" && isPhoneValid,
-    [phone, isPhoneValid],
+    [phone, isPhoneValid]
   )
 
   const phoneNumber = useMemo(() => {
@@ -50,29 +56,27 @@ export const EnterPhoneNumber = ({ onSubmit, error }: EnterPhoneNumberProps) => 
     if (!canSubmit) return
 
     setProcessing(true)
-    onSubmit({ phoneNumber })
-      .finally(() => setProcessing(false))
+    onSubmit({ phoneNumber }).finally(() => setProcessing(false))
   }
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Container className="px-4 py-5 sm:p-6">
         <form onSubmit={submitForm}>
-
           <Center>
-            <Image src="/phone-login.svg" maxW="300px" mb="30px" mt="20px"/>
+            <Image src="/phone-login.svg" maxW="300px" mb="30px" mt="20px" />
           </Center>
 
           <Heading as="h1" size="1xl" mb={4}>
             {translations[finalLocale]["pages"]["sign-in"]["title"]}
           </Heading>
 
-          {error &&
+          {error && (
             <Alert status="error" mb="20px">
               <AlertIcon />
               <AlertDescription>{error}</AlertDescription>
             </Alert>
-          }
+          )}
 
           <FormLabel>
             {translations[finalLocale]["pages"]["sign-in"]["label"]}
@@ -94,7 +98,11 @@ export const EnterPhoneNumber = ({ onSubmit, error }: EnterPhoneNumberProps) => 
             isFullWidth
             disabled={!canSubmit || processing}
           >
-            {processing ? <ButtonSpinner /> : translations[finalLocale]["pages"]["sign-in"]["next"]}
+            {processing ? (
+              <ButtonSpinner />
+            ) : (
+              translations[finalLocale]["pages"]["sign-in"]["next"]
+            )}
           </Button>
         </form>
       </Container>

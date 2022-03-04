@@ -8,7 +8,11 @@ const SignIn: NextPage = () => {
   const router = useRouter()
   const { data: authSession, status: authStatus } = useSession()
 
-  if (typeof window !== "undefined" && authSession?.user && authStatus === "authenticated") {
+  if (
+    typeof window !== "undefined" &&
+    authSession?.user &&
+    authStatus === "authenticated"
+  ) {
     router.push(RouteDefinitions.AddTicket)
   }
 

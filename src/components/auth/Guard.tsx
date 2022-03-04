@@ -10,16 +10,19 @@ export const GUARDED_PATHS = [
 ]
 
 const isRestricted = (routerPathName) =>
-    typeof window !== "undefined" &&
-    GUARDED_PATHS.includes(routerPathName as unknown as RouteDefinitions)
-
+  typeof window !== "undefined" &&
+  GUARDED_PATHS.includes(routerPathName as unknown as RouteDefinitions)
 
 export const Guard: FC = ({ children }) => {
   const { data: authSession, status: authStatus } = useSession()
   const router = useRouter()
 
   useEffect(() => {
-    if (isRestricted(router.pathname) && !authSession && authStatus === "unauthenticated") {
+    if (
+      isRestricted(router.pathname) &&
+      !authSession &&
+      authStatus === "unauthenticated"
+    ) {
       router.push(RouteDefinitions.SignIn)
     }
 
@@ -35,7 +38,10 @@ export const Guard: FC = ({ children }) => {
     return <div>loading</div>
   }
 
-  if (isRestricted(router.pathname) && (!authSession || authStatus === "unauthenticated")) {
+  if (
+    isRestricted(router.pathname) &&
+    (!authSession || authStatus === "unauthenticated")
+  ) {
     router.push(RouteDefinitions.SignIn)
     return <div>Brak autoryzacji - przenoszę na stronę logowania...</div>
   }

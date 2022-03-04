@@ -26,17 +26,18 @@ export const Tickets = ({
   } = useQuery(`tickets-${ticketStatus}-${mineOnly ? "mine" : "all"}`, () => {
     const url = `/api/get-tickets`
 
-    return axios.get(url, {
-      params: {
-        mineOnly: mineOnly,
-        ticketStatus: ticketStatus,
-        tagId: tagIdFilter,
-      },
-    }).then((response) => {
+    return axios
+      .get(url, {
+        params: {
+          mineOnly: mineOnly,
+          ticketStatus: ticketStatus,
+          tagId: tagIdFilter,
+        },
+      })
+      .then((response) => {
         console.log(response.data)
         return response.data
-      },
-    )
+      })
   })
 
   useEffect(() => {
@@ -52,11 +53,11 @@ export const Tickets = ({
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">
         <TagsFilter currentTagId={tagIdFilter} onChangeTag={setTagIdFilter} />
 
-        {isLoading &&
+        {isLoading && (
           <Center h="100px" color="yellow.400">
             <Spinner size="xl" thickness="6px" />
           </Center>
-        }
+        )}
 
         <ul
           role="list"
@@ -73,7 +74,13 @@ export const Tickets = ({
               )
 
               return (
-                <a key={ticket.id} href={ticketUrl} className={`ticket-item ${ticket.organization_id ? "verified" : ""}`}>
+                <a
+                  key={ticket.id}
+                  href={ticketUrl}
+                  className={`ticket-item ${
+                    ticket.organization_id ? "verified" : ""
+                  }`}
+                >
                   <li className="ticket-item__content bg-white rounded-lg shadow outline-blue-200  col-span-1 divide-y divide-gray-200">
                     <div className="px-4 py-5 border-gray-200 sm:px-6">
                       <div className="mb-2">

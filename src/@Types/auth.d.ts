@@ -1,12 +1,11 @@
-import "next-auth";
+import "next-auth"
 
 declare module "next-auth" {
-  interface User {
-  }
+  interface User {}
 
   interface Session {
-    user: User;
-    directusAuthToken: string;
+    user: User
+    directusAuthToken: string
     phoneNumber: string
   }
 }
