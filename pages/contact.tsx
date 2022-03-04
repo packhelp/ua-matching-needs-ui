@@ -1,14 +1,9 @@
 import React from "react"
 import { NextPage } from "next"
-import {
-  Heading,
-  Flex,
-  Button,
-  Image,
-  Text,
-} from "@chakra-ui/react"
+import { Heading, Image } from "@chakra-ui/react"
 import { Link } from "@chakra-ui/react"
 import { externalUrls } from "../src/utils/external-urls"
+import { logotypes } from "../src/utils/logotypes"
 import { useTranslations } from "../src/hooks/translations"
 import styles from "./contact.module.scss"
 
@@ -25,7 +20,7 @@ const Contact: NextPage = () => {
             <Image src="/logo-packhelp.svg" h="30px" />
           </Link>
           <Link href={externalUrls.techtotherescue} className={styles.link}>
-            <Image src="/logo-tttr.png" h="40px" />
+            <Image src={logotypes.techToTheRescue} h="40px" />
           </Link>
         </div>
       </div>
@@ -36,11 +31,11 @@ const Contact: NextPage = () => {
         </Heading>
         <div className={styles.inner}>
           <Link href={externalUrls.slack} className={styles.link}>
-            <Image src="/svg/slack.svg" className={styles.image} />
+            <Image src={logotypes.slack} className={styles.image} />
             <span className={styles.text}>{translations["contact"]["slack"]}</span>
           </Link>
           <Link href={externalUrls.github} className={styles.link}>
-            <Image src="/svg/github.svg" className={styles.image} />
+            <Image src={logotypes.github} className={styles.image} />
             <span className={styles.text}>{translations["contact"]["github"]}</span>
           </Link>
         </div>

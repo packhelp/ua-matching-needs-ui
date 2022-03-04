@@ -142,6 +142,9 @@ const PL = {
     authors: "Autorzy narzędzia",
     "in-cooperation-with": "Narzędzie zostało stworzone przy współpracy:",
   },
+  partners: {
+    "with-us": "Współpracują z nami"
+  },
   errors: {
     "error-occured-while-adding": "Wystąpił błąd podczas dodawania: ",
   },
@@ -326,6 +329,9 @@ const UA: Translation = {
     github: "Github",
     authors: "Автори сервісу",
     "in-cooperation-with": "Сервіс був створений у співпраці з:",
+  },
+  partners: {
+    "with-us": "Współpracują z nami"
   },
   errors: {
     "error-occured-while-adding": "Під час додавання сталася помилка:",
