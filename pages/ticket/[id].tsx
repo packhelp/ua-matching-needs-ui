@@ -23,7 +23,6 @@ import { translations } from "../../src/utils/translations"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
-import { useTranslations } from "../../src/hooks/translations"
 
 const LOCAL_STORAGE_KEY_VISITS_COUNTER = "visits-counter"
 const TICKET_MARKED_AS_VISITED = "visited"
@@ -237,6 +236,12 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
     }
   }
 
+  const showSuccessShareTicketToast = () => {
+    toast.success(
+      translations[finalLocale]["pages"]["ticket"]["shareButton"]["copySuccess"]
+    )
+  }
+
   const formattedExpiration = dayjs(ticket.expirationTimestampSane)
     .locale("pl")
     .format("DD.MM.YYYY HH:mm")
@@ -249,6 +254,18 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   const ticketTags = TicketDetails["need_tag_id"]
 
   let title = ticket.what ? ticket.what : ticket.description
+
+  const copyToClipboardMessage = `${ticketUrl} ${truncate(
+    ticket.description,
+    100
+  )} ${
+    translations[finalLocale]["pages"]["ticket"]["shareButton"]["deliverTo"]
+  } ${ticket.where}`
+
+  const copyShareLinkButtonClicked = () =>
+    navigator.clipboard.writeText(copyToClipboardMessage).then(() => {
+      showSuccessShareTicketToast()
+    })
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
@@ -434,32 +451,34 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
                       </span>
                     </FacebookShareButton>
 
-                    {/* Link URL */}
-                    <a href={ticketUrl} target="_blank" rel="noreferrer">
-                      <span className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                          role="img"
-                          className="iconify iconify--logos w-7 h-7"
-                          width="32"
-                          height="32"
-                          preserveAspectRatio="xMidYMid meet"
-                          viewBox="0 0 24 24"
+                    {/* Copy Link URL */}
+
+                    <span
+                      className="cursor-pointer inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      onClick={copyShareLinkButtonClicked}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        role="img"
+                        className="iconify iconify--logos w-7 h-7"
+                        width="32"
+                        height="32"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          fill="none"
+                          stroke="#888888"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                         >
-                          <g
-                            fill="none"
-                            stroke="#888888"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                          >
-                            <path d="M10 14a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-.5.5"></path>
-                            <path d="M14 10a3.5 3.5 0 0 0-5 0l-4 4a3.5 3.5 0 0 0 5 5l.5-.5"></path>
-                          </g>
-                        </svg>
-                      </span>
-                    </a>
+                          <path d="M10 14a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-.5.5"></path>
+                          <path d="M14 10a3.5 3.5 0 0 0-5 0l-4 4a3.5 3.5 0 0 0 5 5l.5-.5"></path>
+                        </g>
+                      </svg>
+                    </span>
                   </div>
                 </div>
               </dl>
