@@ -142,6 +142,9 @@ const PL = {
     authors: "Autorzy narzędzia",
     "in-cooperation-with": "Narzędzie zostało stworzone przy współpracy:",
   },
+  partners: {
+    "with-us": "Współpracują z nami"
+  },
   errors: {
     "error-occured-while-adding": "Wystąpił błąd podczas dodawania: ",
   },
@@ -195,6 +198,14 @@ const PL = {
   filters: {
     selectNeeds: "Wybierz rodzaj potrzeby",
     all: "Wszystkie",
+  },
+  menu: {
+    open: "Open main menu",
+  },
+  metaData: {
+    title: "Pomóżmy Ukrainie!",
+    description:
+      "Szybkie i proste zarządzanie organizacją pomocy humanitarnej. Pomagasz innym? Pomożemy Ci zorganizować tę pomoc!",
   },
 }
 
@@ -339,6 +350,9 @@ const UA: Translation = {
     authors: "Автори сервісу",
     "in-cooperation-with": "Сервіс був створений у співпраці з:",
   },
+  partners: {
+    "with-us": "Współpracują z nami"
+  },
   errors: {
     "error-occured-while-adding": "Під час додавання сталася помилка:",
   },
@@ -384,6 +398,14 @@ const UA: Translation = {
   filters: {
     selectNeeds: "Виберіть тип потреби",
     all: "всі",
+  },
+  menu: {
+    open: "Open main menu",
+  },
+  metaData: {
+    title: "Допоможемо Україні!",
+    description:
+      "Швидке та просте управління організацією гуманітарної допомоги. Ви допомагаєте іншим? Ми допоможемо вам організувати цю допомогу!",
   },
 }
 
