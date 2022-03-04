@@ -79,9 +79,8 @@ export const Tags = ({ tags }: { tags: TicketDetails["need_tag_id"] }) => {
 export async function getServerSideProps(context) {
   const { id } = context.query
   const ticket = await getTicketDataFromEndpoint(Number(id))
-  const currentUrl = context.req.url
 
-  return { props: { ticket, currentUrl } }
+  return { props: { ticket } }
 }
 
 const getLocalStorageVisitsCounterKey = (ticketId: number): string => {
@@ -136,10 +135,7 @@ const countVisitOnce = (ticketId: number) => {
   }
 }
 
-const TicketDetailsPage: NextPage<{
-  ticket: TicketDetails
-  currentUrl: string
-}> = ({ ticket, currentUrl }) => {
+const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   const { data: authSession } = useSession()
   const router = useRouter()
   const finalLocale = useFinalLocale()
@@ -289,7 +285,6 @@ const TicketDetailsPage: NextPage<{
       </Head>
 
       <section aria-labelledby="applicant-information-title">
-        {currentUrl} TEST
         <div className="px-4 py-5 sm:px-6">
           <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
             <div className="sm:col-span-3">
@@ -366,6 +361,7 @@ const TicketDetailsPage: NextPage<{
             </div>
           </dl>
         </div>
+
         {isTicketActive(ticket) && (
           <>
             <div className="border-t border-gray-200 bg-slate-50 px-4 py-5 sm:px-6">
@@ -637,6 +633,7 @@ const TicketDetailsPage: NextPage<{
             </div>
           </>
         )}
+
         <div className="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">
           {isTicketActive(ticket) && (
             <>
@@ -736,4 +733,4 @@ const TicketDetailsPage: NextPage<{
   )
 }
 
-export default TicketDetailsPage
+export default TicketDetails
