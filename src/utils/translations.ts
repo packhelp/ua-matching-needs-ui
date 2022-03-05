@@ -32,7 +32,7 @@ const PL = {
       },
     },
     main: {
-      header: "Szybkie i proste zarządzanie organizacją pomocy humanitarnej",
+      header: "REVIEW APP 00001 TEST",
       subheader: "Pomagasz innym? Pomożemy Ci zorganizować pomoc!",
       description:
         "Powiedz czego potrzebujesz, a my przekażemy Twoją prośbę do organizacji i osób, które pomogą Ci to zorganizować.",
