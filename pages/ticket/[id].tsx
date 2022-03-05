@@ -59,7 +59,7 @@ export const Tags = ({ tags }: { tags: TicketDetailsType["need_tag_id"] }) => {
 }
 const root = getRootContainer()
 const ticketService = root.containers.ticketService
-const visitCounter = root.containers.visitCounter
+
 export async function getServerSideProps(context) {
   const { id } = context.query
   const ticket = await ticketService.ticketWithNestedData(Number(id))
@@ -74,12 +74,6 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
   const finalLocale = useFinalLocale()
 
   const { id } = router.query
-
-  useEffect(() => {
-    if (id) {
-      void visitCounter.countVisitOnce(Number(id))
-    }
-  }, [id])
 
   const metaTitle = useMemo(() => {
     if (!ticket) {
@@ -671,10 +665,6 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
               {formattedExpiration}
             </p>
           )}
-
-          <p className="my-4 max-w-2xl text-center text-sm text-gray-500">
-            {translations["pages"]["ticket"]["views"]} {ticket.visits + 1}
-          </p>
         </div>
       </section>
     </div>
