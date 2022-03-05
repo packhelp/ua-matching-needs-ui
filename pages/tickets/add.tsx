@@ -29,7 +29,7 @@ import {
 } from "../../src/services/ticket.type"
 import { useTagTranslation } from "../../src/hooks/useTagTranslation"
 import { getRootContainer } from "../../src/services/_root-container"
-import Select from "react-select"
+import Select, { SingleValue } from "react-select"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_TAGS = "tags"
@@ -355,7 +355,7 @@ const AddTicket: NextPage = () => {
               </Heading>
               <Select
                 options={mappedLocationTags}
-                onChange={(tag: any) => setWhereFromTag(tag.value)}
+                onChange={(newValue: SingleValue<{ value: number; label: string; }>) => setWhereFromTag(newValue!.value)}
                 placeholder={translations["pages"]["add-ticket"]["chooseLocation"]}
               />
             </Stack>
@@ -366,7 +366,7 @@ const AddTicket: NextPage = () => {
               </Heading>
               <Select
                 options={mappedLocationTags}
-                onChange={(tag: any) => setWhereToTag(tag.value)}
+                onChange={(newValue: SingleValue<{ value: number; label: string; }>) => setWhereToTag(newValue!.value)}
                 placeholder={translations["pages"]["add-ticket"]["chooseLocation"]}
               />
             </Stack>
