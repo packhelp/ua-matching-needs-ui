@@ -1,4 +1,4 @@
-export type Locales = "pl-PL" | "uk-UA"
+export type Locales = "pl-PL" | "uk-UA" | "en-US"
 
 const PL = {
   "/tickets/add": "Zgłoś potrzebę",
