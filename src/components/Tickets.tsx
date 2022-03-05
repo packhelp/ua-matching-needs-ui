@@ -123,27 +123,14 @@ export const Tickets = ({
                   >
                     <Link href={ticketUrl} locale={locale}>
                       <div className="px-4 py-5 border-gray-200 sm:px-6 cursor-pointer">
-                          <div className="mb-2">
-                            <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
+                          <div className="">
+                            <p className="flex items-center max-w-2xl text-sm text-gray-400 space-x-1">
                               {ticket.organization_id ? (
                                 <>
-                                  <Tooltip
-                                    label={
-                                      translations.pages.ticket
-                                        .verifiedOrganisation
-                                    }
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      className="w-5 h-5 text-blue-400"
-                                      viewBox="0 0 20 20"
-                                      fill="#4989bb"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                      />
+                                  <Tooltip label={translations.pages.ticket.verifiedOrganisation}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-blue-400"
+                                      viewBox="0 0 20 20" fill="#4989bb">
+                                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                     </svg>
                                   </Tooltip>
                                   <span className="ticket-item__number pr-1 text-blue-400 font-medium">
@@ -151,11 +138,11 @@ export const Tickets = ({
                                   </span>
                                 </>
                               ) : (
-                                <span className="pr-1 font-medium">
+                                <span className="pr-1 my-1 font-medium">
                                   #{ticket.id}
                                 </span>
                               )}
-                              <span className="">
+                              <div className="">
                                 {ticket.need_tag_id.map((tag) => {
                                   if (
                                     !tag ||
@@ -172,40 +159,28 @@ export const Tickets = ({
                                     />
                                   )
                                 })}
-                              </span>
+                              </div>
                             </p>
                           </div>
                           <div className="py-1">
-                            <p className="text-xl font-medium text-gray-900 truncate">
+                            <p className="text-xl h-6 mb-1 font-medium text-gray-900 truncate">
                               {ticket.what || ticket.description}
                             </p>
                             {ticket.where ? (
-                              <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                  />
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                  />
-                                </svg>
-                                <span>{ticket.where}</span>
+                              <div className="flex items-center text-sm font-medium text-gray-400 space-x-1">
+                                <span className="w-5">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                  </svg>
+                                </span>
+                                <span className="truncate">{ticket.where}</span>
                               </div>
                             ) : (
-                              <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
-                                -
+                              <div className="flex items-center text-sm font-medium text-gray-400 space-x-1">
+                                <span className="w-5 h-5">
+                                </span>
                               </div>
                             )}
                           </div>
@@ -259,8 +234,8 @@ export const Tickets = ({
                               />
                             </svg>
                             <span className="ml-3">
-                                {translations["pages"]["ticket"]["details"]}
-                              </span>
+                              {translations["pages"]["ticket"]["details"]}
+                            </span>
                           </a>
                         </Link>
                       </div>
