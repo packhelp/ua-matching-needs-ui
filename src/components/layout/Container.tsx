@@ -1,5 +1,6 @@
 import React, { FC } from "react"
 import Head from "next/head"
+import Script from "next/script"
 import { useTranslations } from "../../hooks/translations"
 
 export const Container: FC = ({ children }) => {
@@ -47,6 +48,13 @@ export const Container: FC = ({ children }) => {
           type="image/svg+xml"
           key="icon"
         ></link>
+        {process.env.ENV === "review" && (
+          <Script
+            data-domain="poptrzeby-ua.org"
+            id="plausible"
+            src="https://plausible.io/js/plausible.js"
+          />
+        )}
       </Head>
 
       <div className="px-4 py-4 mx-auto bg-slate-100">{children}</div>
