@@ -180,7 +180,7 @@ const AddTicket: NextPage = () => {
       need_tag_id: tagsData,
     }
     addTicketMutation.mutate(postData, {
-      onSettled: () => setIsSubmitting(false)
+      onError: () => setIsSubmitting(false)
     })
   }
 
