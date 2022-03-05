@@ -1,6 +1,8 @@
 import React, { FC } from "react"
 import Head from "next/head"
 import { useTranslations } from "../../hooks/translations"
+import Script from "next/script"
+
 
 export const Container: FC = ({ children }) => {
   const translations = useTranslations()
@@ -49,7 +51,17 @@ export const Container: FC = ({ children }) => {
         ></link>
       </Head>
 
-      <div className="px-4 py-4 mx-auto bg-slate-100">{children}</div>
+      <div className="px-4 py-4 mx-auto bg-slate-100">
+        {children}
+
+        {process.env.ENV === "production" && (
+          <Script
+            data-domain="potrzeby-ua.org"
+            id="plausible"
+            src="https://plausible.io/js/plausible.js"
+          />
+        )}
+      </div>
     </>
   )
 }
