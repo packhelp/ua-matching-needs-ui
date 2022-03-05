@@ -6,7 +6,7 @@ export type Organization = {
 export type NeedTagType = {
   id: number
   name: string
-  translation_uk_UA: string
+  translation_uk_UA?: string
 }
 
 export enum TICKET_STATUS {
