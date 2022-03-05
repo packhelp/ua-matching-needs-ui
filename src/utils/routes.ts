@@ -3,19 +3,19 @@ import { translations } from "./translations"
 export enum LocaleDefinitions {
   PL = "pl-PL",
   UA = "uk-UA",
-  EN = "en-GB"
+  EN = "en-US"
 }
 
 export enum LocaleFlags {
   "pl-PL" = "/svg/poland.svg",
   "uk-UA" = "/svg/ukraine.svg",
-  "en-GB" = "/svg/united-kingdom.svg",
+  "en-US" = "/svg/united-kingdom.svg",
 }
 
 export enum LocaleNames {
   "pl-PL" = "Polski",
   "uk-UA" = "український",
-  "en-GB" = "English"
+  "en-US" = "English"
 }
 
 export type Locale = LocaleDefinitions.PL | LocaleDefinitions.UA | LocaleDefinitions.EN

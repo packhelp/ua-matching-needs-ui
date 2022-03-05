@@ -643,5 +643,5 @@ type Translation = ReturnType<typeof getPL>
 export const translations = {
   "pl-PL": PL,
   "uk-UA": UA,
-  "en-GB": EN
+  "en-US": EN
 }
