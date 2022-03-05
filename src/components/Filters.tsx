@@ -30,16 +30,17 @@ export const FiltersDropdown = (props: FiltersDropdownProps) => {
       label: getTranslation(tag),
     }))
 
-    return [{ value: 0, label: translation["filters"]["all"] }, ...newTags]
+    return [
+      { value: undefined, label: translation["filters"]["all"] },
+      ...newTags,
+    ]
   }, [data])
 
   /* hax - without it value is not refreshed 🤷 */
   const currentActiveTag = useMemo(
-    () => mappedTags.find((tag) => tag.value === activeTag) || mappedTags[0],
+    () => mappedTags.find((tag) => tag.value === activeTag) || undefined,
     [mappedTags, activeTag]
   )
-
-  console.log("currentActiveTag :>> ", currentActiveTag)
 
   return (
     <div className="mt-2 md:mt-0">

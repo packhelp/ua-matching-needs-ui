@@ -86,15 +86,23 @@ export const Tickets = ({
 
   const onWhereToClick = useCallback(
     (tag: number) => {
-      router.query.where_to = tag.toString()
+      if (tag) {
+        router.query.where_to = tag.toString()
+      } else {
+        delete router.query.where_to
+      }
       router.push(router)
     },
     [router]
   )
 
   const onWhereFromClick = useCallback(
-    (tag: number) => {
-      router.query.where_from = tag.toString()
+    (tag?: number) => {
+      if (tag) {
+        router.query.where_from = tag.toString()
+      } else {
+        delete router.query.where_from
+      }
       router.push(router)
     },
     [router]
@@ -201,123 +209,119 @@ export const Tickets = ({
                   >
                     <Link href={ticketUrl} locale={locale}>
                       <div className="px-4 py-5 border-gray-200 sm:px-6">
-                          <div className="mb-2">
-                            <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
-                              {ticket.organization_id ? (
-                                <>
-                                  <Tooltip
-                                    label={
-                                      translations.pages.ticket
-                                        .verifiedOrganisation
-                                    }
+                        <div className="mb-2">
+                          <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
+                            {ticket.organization_id ? (
+                              <>
+                                <Tooltip
+                                  label={
+                                    translations.pages.ticket
+                                      .verifiedOrganisation
+                                  }
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-5 h-5 text-blue-400"
+                                    viewBox="0 0 20 20"
+                                    fill="#61bd4f"
                                   >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      className="w-5 h-5 text-blue-400"
-                                      viewBox="0 0 20 20"
-                                      fill="#61bd4f"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                      />
-                                    </svg>
-                                  </Tooltip>
-                                  <span className="ticket-item__number pr-1 text-blue-400 font-medium">
-                                    #{ticket.id}
-                                  </span>
-                                </>
-                              ) : (
-                                <span className="pr-1 font-medium">
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </Tooltip>
+                                <span className="ticket-item__number pr-1 text-blue-400 font-medium">
                                   #{ticket.id}
                                 </span>
-                              )}
-                              <span className="">
-                                {ticket.need_tag_id.map((tag) => {
-                                  if (
-                                    !tag ||
-                                    !tag.need_tag_id ||
-                                    !tag.need_tag_id.id
-                                  ) {
-                                    return null
-                                  }
-
-                                  return (
-                                    <Tag
-                                      key={tag.need_tag_id.id}
-                                      tag={tag.need_tag_id}
-                                    />
-                                  )
-                                })}
-                              </span>
-                            </p>
-                          </div>
-                          <div className="py-1">
-                            <p className="text-xl font-medium text-gray-900 truncate">
-                              {ticket.what || ticket.description}
-                            </p>
-                            {ticket.where ? (
-                              <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="w-5 h-5"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                  />
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                  />
-                                </svg>
-                                <span>{ticket.where}</span>
-                              </div>
+                              </>
                             ) : (
-                              <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
-                                -
-                              </div>
+                              <span className="pr-1 font-medium">
+                                #{ticket.id}
+                              </span>
                             )}
+                            <span className="">
+                              {ticket.need_tag_id.map((tag) => {
+                                if (
+                                  !tag ||
+                                  !tag.need_tag_id ||
+                                  !tag.need_tag_id.id
+                                ) {
+                                  return null
+                                }
+
+                                return (
+                                  <Tag
+                                    key={tag.need_tag_id.id}
+                                    tag={tag.need_tag_id}
+                                  />
+                                )
+                              })}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="py-1">
+                          <p className="text-xl font-medium text-gray-900 truncate">
+                            {ticket.what || ticket.description}
+                          </p>
+                          {ticket.where ? (
+                            <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-5 h-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+                              </svg>
+                              <span>{ticket.where}</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
+                              -
+                            </div>
+                          )}
+                        </div>
+
+                        <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-8">
+                          <div className="sm:col-span-1">
+                            <dt className="text-xs font-medium text-gray-400">
+                              {translations["pages"]["ticket"]["whoRequested"]}
+                            </dt>
+                            <dd className="flex items-center text-sm text-gray-900 truncate">
+                              {ticket.organization_id ? (
+                                <span className="truncate">
+                                  {ticket.organization_id.name}
+                                </span>
+                              ) : (
+                                <span className="truncate">{ticket.who}</span>
+                              )}
+                            </dd>
                           </div>
 
-                          <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-8">
-                            <div className="sm:col-span-1">
-                              <dt className="text-xs font-medium text-gray-400">
-                                {
-                                  translations["pages"]["ticket"][
-                                    "whoRequested"
-                                  ]
-                                }
-                              </dt>
-                              <dd className="flex items-center text-sm text-gray-900 truncate">
-                                {ticket.organization_id ? (
-                                  <span className="truncate">
-                                    {ticket.organization_id.name}
-                                  </span>
-                                ) : (
-                                  <span className="truncate">{ticket.who}</span>
-                                )}
-                              </dd>
-                            </div>
-
-                            <div className="sm:col-span-1">
-                              <dt className="text-xs font-medium text-gray-400">
-                                {translations["pages"]["ticket"]["added"]}
-                              </dt>
-                              <dd className="text-sm text-gray-900 ">
-                                {dateFormatted}
-                              </dd>
-                            </div>
-                          </dl>
-                        </div>
+                          <div className="sm:col-span-1">
+                            <dt className="text-xs font-medium text-gray-400">
+                              {translations["pages"]["ticket"]["added"]}
+                            </dt>
+                            <dd className="text-sm text-gray-900 ">
+                              {dateFormatted}
+                            </dd>
+                          </div>
+                        </dl>
+                      </div>
                     </Link>
                     <div className="flex -mt-px divide-x divide-gray-200">
                       <div className="flex flex-1 w-0">
@@ -338,8 +342,8 @@ export const Tickets = ({
                               />
                             </svg>
                             <span className="ml-3">
-                                {translations["pages"]["ticket"]["details"]}
-                              </span>
+                              {translations["pages"]["ticket"]["details"]}
+                            </span>
                           </a>
                         </Link>
                       </div>
