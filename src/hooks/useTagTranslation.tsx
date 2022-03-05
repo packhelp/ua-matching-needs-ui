@@ -4,7 +4,7 @@ import { NeedTagType } from "../services/ticket.type"
 export const useTagTranslation = () => {
   const { locale } = useRouter()
 
-  const getTranslation = (tag: Pick<NeedTagType, "name">) => {
+  const getTranslation = (tag: Partial<NeedTagType>) => {
     if (!locale) {
       return tag.name
     }
