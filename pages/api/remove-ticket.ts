@@ -6,6 +6,10 @@ import { TICKET_STATUS } from "../../src/services/ticket.type"
 
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
+  if (!session || session.directusAccessToken == null) {
+    res.send(403)
+    return
+  }
 
   console.debug(req.body)
 
@@ -16,7 +20,7 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
     },
     {
       headers: {
-        Authorization: `Bearer ${session?.directusAccessToken}`,
+        Authorization: `Bearer ${session.directusAccessToken}`,
         "Content-Type": "application/json",
       },
     }

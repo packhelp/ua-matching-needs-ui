@@ -25,28 +25,7 @@ import {
   TICKET_STATUS,
   TicketDetailsType,
 } from "../../src/services/ticket.type"
-
-const LOCAL_STORAGE_KEY_VISITS_COUNTER = "visits-counter"
-const TICKET_MARKED_AS_VISITED = "visited"
-
-const getTicketDataFromEndpoint = async (
-  id: number
-): Promise<TicketDetailsType | null> => {
-  const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}?fields=*.*.*`
-
-  try {
-    const response = await axios.get(url)
-    const { data } = response.data
-    return data
-  } catch (e: any) {
-    // it's a Directus' bug
-    // https://github.com/directus/directus/blob/962af79dbcd773e4c00c2c6cd0b89a14155320b5/api/src/services/items.ts#L322
-    if (e.response.status === 403) {
-      return null
-    }
-    throw new Error(e.message)
-  }
-}
+import { getRootContainer } from "../../src/services/_root-container"
 
 export const isTicketActive = (ticket: TicketDetailsType): boolean => {
   return ticket.ticket_status === TICKET_STATUS.ACTIVE
@@ -78,64 +57,14 @@ export const Tags = ({ tags }: { tags: TicketDetailsType["need_tag_id"] }) => {
     </Stack>
   )
 }
-
+const root = getRootContainer()
+const ticketService = root.containers.ticketService
+const visitCounter = root.containers.visitCounter
 export async function getServerSideProps(context) {
   const { id } = context.query
-  const ticket = await getTicketDataFromEndpoint(Number(id))
+  const ticket = await ticketService.ticketWithNestedData(Number(id))
 
   return { props: { ticket } }
-}
-
-const getLocalStorageVisitsCounterKey = (ticketId: number): string => {
-  return `${LOCAL_STORAGE_KEY_VISITS_COUNTER}-${ticketId}`
-}
-
-const shouldCountVisit = (ticketId: number): boolean => {
-  if (typeof window !== "undefined") {
-    return (
-      localStorage.getItem(getLocalStorageVisitsCounterKey(ticketId)) !==
-      TICKET_MARKED_AS_VISITED
-    )
-  }
-
-  return false
-}
-
-const blockVisitsCounterFor = (ticketId: number): void => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem(
-      getLocalStorageVisitsCounterKey(ticketId),
-      TICKET_MARKED_AS_VISITED
-    )
-  }
-}
-
-const countVisitOnce = (ticketId: number) => {
-  if (shouldCountVisit(ticketId)) {
-    try {
-      axios
-        .get(
-          `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${ticketId}`
-        )
-        .then((response) => {
-          const newVisits = response.data.data.visits + 1
-
-          axios
-            .patch(
-              `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${ticketId}`,
-              {
-                visits: newVisits,
-              }
-            )
-            .then(() => {
-              console.debug("Incremented visits counter")
-              blockVisitsCounterFor(ticketId)
-            })
-        })
-    } catch (e: any) {
-      console.debug("The visits counter hasn't been updated ")
-    }
-  }
 }
 
 const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
@@ -148,7 +77,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
 
   useEffect(() => {
     if (id) {
-      void countVisitOnce(Number(id))
+      void visitCounter.countVisitOnce(Number(id))
     }
   }, [id])
 

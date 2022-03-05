@@ -43,8 +43,8 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   console.debug(req.query)
 
   if (mineOnly && (!session || !session.user)) {
-    // @ts-ignore
-    throw new Error("Not authorized!")
+    res.status(403)
+    return
   }
 
   const url = getTicketsUrl({ mineOnly, phoneNumber, tagId, ticketStatus })

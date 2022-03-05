@@ -125,6 +125,8 @@ const PL = {
       "request-added": "Zgłoszenie przyjęte!",
       "need-added": "Zgłoszono potrzebę!",
       show_phone_public: "Pokaż mój numer telefonu publicznie",
+      whereFrom: "Skąd?",
+      whereTo: "Dokąd?",
     },
   },
   "sign-out": "Wyloguj się",
@@ -143,7 +145,7 @@ const PL = {
     "in-cooperation-with": "Narzędzie zostało stworzone przy współpracy:",
   },
   partners: {
-    "with-us": "Współpracują z nami"
+    "with-us": "Współpracują z nami",
   },
   errors: {
     "error-occured-while-adding": "Wystąpił błąd podczas dodawania: ",
@@ -333,6 +335,8 @@ const UA: Translation = {
       "request-added": "Прийняли зголошення!",
       "need-added": "Додали потребу!",
       show_phone_public: "Показувати мій номер на сайті",
+      whereFrom: "Звідки?",
+      whereTo: "Куди?",
     },
   },
   "sign-out": "Вийти",
@@ -351,7 +355,7 @@ const UA: Translation = {
     "in-cooperation-with": "Сервіс був створений у співпраці з:",
   },
   partners: {
-    "with-us": "Współpracują z nami"
+    "with-us": "Współpracują z nami",
   },
   errors: {
     "error-occured-while-adding": "Під час додавання сталася помилка:",

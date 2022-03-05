@@ -19,7 +19,6 @@ import { toast } from "react-toastify"
 import dayjs from "dayjs"
 import { useTranslations } from "../../src/hooks/translations"
 import { useState } from "react"
-import { getMainTags } from "../../src/utils/tags"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
 import { isJsonString } from "../../src/utils/local-storage"
 import { useSession } from "next-auth/react"
@@ -28,11 +27,16 @@ import {
   TicketFormData,
   NeedTagType,
 } from "../../src/services/ticket.type"
+import { useTagTranslation } from "../../src/hooks/useTagTranslation"
+import { getRootContainer } from "../../src/services/_root-container"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_TAGS = "tags"
 
-const saveForFurtherUsage = (data: TicketFormData, tagsSelected: number[]) => {
+const saveNeedInfoToLocalStorage = (
+  data: TicketFormData,
+  tagsSelected: number[]
+) => {
   localStorage.setItem(LOCAL_STORAGE_KEY_TICKET_DATA, JSON.stringify(data))
   localStorage.setItem(LOCAL_STORAGE_KEY_TAGS, JSON.stringify(tagsSelected))
 }
@@ -47,28 +51,6 @@ const getInitialDataFromLocalStorage = () => {
   if (isJsonString(data)) {
     return JSON.parse(data)
   }
-}
-
-export const useTagTranslation = () => {
-  const { locale } = useRouter()
-
-  const getTranslation = (tag: NeedTagType) => {
-    if (!locale) {
-      return tag.name
-    }
-
-    const localeForDirectus = locale.replace("-", "_")
-    const translationField = `translation_${localeForDirectus}`
-
-    const translation = tag[translationField]
-    if (translation && translation.length > 0) {
-      return translation
-    }
-
-    return tag.name
-  }
-
-  return { getTranslation }
 }
 
 const TagsChooseForm = (props: {
@@ -113,7 +95,7 @@ const getPreviouslySavedTags = () => {
 
   return []
 }
-
+const ticketService = getRootContainer().containers.ticketService
 const AddTicket: NextPage = () => {
   const router = useRouter()
   const translations = useTranslations()
@@ -122,8 +104,13 @@ const AddTicket: NextPage = () => {
   const [tagsSelected, setTagsSelected] =
     useState<number[]>(previouslySavedTags)
 
+  const [selectedLocationTags, setSelectedLocationTags] = useState<number[]>([])
+
   const { data: tags } = useQuery(`main-tags`, () => {
-    return getMainTags()
+    return ticketService.mainTags()
+  })
+  const { data: locationTags } = useQuery(`location-tags`, () => {
+    return ticketService.locationTags()
   })
 
   const onSuccess = (rawResponse) => {
@@ -190,13 +177,15 @@ const AddTicket: NextPage = () => {
   }
   const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
 
+  if (!tags || !locationTags) return null
+
   const submitNeed = async (data: TicketFormData) => {
     if (authStatus === "unauthenticated" || !authSession?.user) {
       toast.error(translations["pages"]["auth"]["you-have-been-logged-out"])
       return router.push(RouteDefinitions.SignIn)
     }
 
-    saveForFurtherUsage(data, tagsSelected)
+    saveNeedInfoToLocalStorage(data, tagsSelected)
 
     const tagsData = tagsSelected.map((tag) => {
       return { need_tag_id: { id: tag } }
@@ -215,6 +204,14 @@ const AddTicket: NextPage = () => {
       setTagsSelected(tagsSelected.filter((id) => id !== tagId))
     } else {
       setTagsSelected([...tagsSelected, tagId])
+    }
+  }
+
+  const toggleLocationTag = (tagId: number) => {
+    if (selectedLocationTags.includes(tagId)) {
+      setSelectedLocationTags(selectedLocationTags.filter((id) => id !== tagId))
+    } else {
+      setSelectedLocationTags([...selectedLocationTags, tagId])
     }
   }
 
@@ -249,6 +246,18 @@ const AddTicket: NextPage = () => {
                 placeholder={translations["pages"]["add-ticket"]["adults-hint"]}
                 variant={"outline"}
                 {...register("adults")}
+              />
+            </Stack>
+
+            <Stack>
+              <Heading as={"h2"} size={"l"}>
+                {translations["pages"]["add-ticket"].whereFrom}
+                {translations["pages"]["add-ticket"].whereTo}
+              </Heading>
+              <TagsChooseForm
+                tags={locationTags || []}
+                onClickTag={toggleLocationTag}
+                tagsSelected={selectedLocationTags}
               />
             </Stack>
 

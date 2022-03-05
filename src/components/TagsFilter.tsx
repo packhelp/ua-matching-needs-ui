@@ -1,25 +1,28 @@
 import { useQuery } from "react-query"
-import { getMainTags } from "../utils/tags"
 import { Tag } from "./Tag"
 import { VoidFunctionComponent } from "react"
+import { getRootContainer } from "../services/_root-container"
 
 type TagsFilterProps = {
   currentTagId?: number
   onChangeTag: (tagId: number) => void
 }
 
+const ticketService = getRootContainer().containers.ticketService
+
 export const TagsFilter: VoidFunctionComponent<TagsFilterProps> = ({
   currentTagId,
   onChangeTag,
 }) => {
-  const { data: tags = [] } = useQuery(`main-tags`, () => {
-    return getMainTags()
+  const { data: tags } = useQuery(`main-tags`, () => {
+    return ticketService.mainTags()
   })
-
+  if (!tags) return null
+  console.log(tags)
   return (
     <div className={"text-center"}>
       <Tag
-        tag={{ id: 0, name: "Wszystkie" }}
+        tag={{ id: 0, name: "Wszystkie", background_color: null }}
         onClick={onChangeTag}
         active={!currentTagId}
         className={"cursor-pointer"}

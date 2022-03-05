@@ -2,7 +2,7 @@ import Select from "react-select"
 import { Tag } from "./Tag"
 import { useMemo } from "react"
 import { useTranslations } from "../hooks/translations"
-import { useTagTranslation } from "../../pages/tickets/add"
+import { useTagTranslation } from "../hooks/useTagTranslation"
 
 type FiltersProps = {
   data: any
@@ -44,7 +44,11 @@ export const FiltersDesktop = (props: FiltersProps) => {
   return (
     <div className="text-center hidden md:block">
       <Tag
-        tag={{ id: 0, name: translation["filters"]["all"] }}
+        tag={{
+          id: 0,
+          name: translation["filters"]["all"],
+          background_color: null,
+        }}
         onClick={onSelectFilter}
         active={!activeTag}
         className={"cursor-pointer"}

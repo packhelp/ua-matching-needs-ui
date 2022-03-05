@@ -1,6 +1,7 @@
 import React from "react"
+import { NeedTagType } from "../services/ticket.type"
+import { useTagTranslation } from "../hooks/useTagTranslation"
 const Color = require("color")
-import { useTagTranslation } from "../../pages/tickets/add"
 
 export const Tag = ({
   tag,
@@ -8,11 +9,7 @@ export const Tag = ({
   active = true,
   className,
 }: {
-  tag: {
-    id: number
-    name: string
-    background_color?: string
-  }
+  tag: Pick<NeedTagType, "id" | "name" | "background_color">
   onClick?: (tagId: number) => void
   active?: boolean
   className?: string
@@ -20,7 +17,7 @@ export const Tag = ({
   const { getTranslation } = useTagTranslation()
 
   const backgroundColor = Color(tag.background_color || "#f2c94c")
-  const lightness = backgroundColor.isLight() ? 20 : 80
+  const lightness = backgroundColor.isLight() ? 10 : 90
   const foregroundColor = backgroundColor.lightness(lightness)
 
   const onClickTag = () => {

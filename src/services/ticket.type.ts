@@ -3,10 +3,22 @@ export type Organization = {
   name: string
 }
 
-export type NeedTagType = {
+// export type SingleTagTranslation =
+
+export interface NeedTagType {
   id: number
-  name: string
-  translation_uk_UA?: string
+  name: string // PL
+  main_category: boolean
+  background_color: string | null
+  sort: number
+
+  // Human names
+  translation_uk_UA: string
+  translation_en_US: null
+  // user_created: string
+  // date_created: string
+  // user_updated: string
+  // date_updated: string
 }
 
 export enum TICKET_STATUS {

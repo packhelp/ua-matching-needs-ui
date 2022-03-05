@@ -7,5 +7,5 @@ export const externalUrls = {
     "https://packhelp.notion.site/Regulamin-Potrzeby-UA-org-01df24f58339461a9991b78ed353d941",
   packhelp: "https://packhelp.com/",
   techtotherescue: "https://www.techtotherescue.org/",
-  castlerave: "http://castlerave.org/pl/"
+  castlerave: "http://castlerave.org/pl/",
 }

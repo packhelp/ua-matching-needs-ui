@@ -8,9 +8,9 @@ import { useTranslations } from "../hooks/translations"
 import { RouteDefinitions } from "../utils/routes"
 import { TICKET_STATUS } from "../services/ticket.type"
 import { Tag } from "./Tag"
-import { getMainTags } from "../utils/tags"
 import { FiltersDesktop, FiltersMobile } from "./Filters"
-
+import { getRootContainer } from "../services/_root-container"
+const ts = getRootContainer().containers.ticketService
 export const Tickets = ({
   mineOnly,
   ticketStatus,
@@ -45,7 +45,7 @@ export const Tickets = ({
   })
 
   const { data: tags = [] } = useQuery(`main-tags`, () => {
-    return getMainTags()
+    return ts.mainTags()
   })
 
   useEffect(() => {
