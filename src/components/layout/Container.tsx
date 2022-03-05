@@ -54,9 +54,9 @@ export const Container: FC = ({ children }) => {
       <div className="px-4 py-4 mx-auto bg-slate-100">
         {children}
 
-        {process.env.ENV === "review" && (
+        {process.env.ENV === "production" && (
           <Script
-            data-domain="poptrzeby-ua.org"
+            data-domain="potrzeby-ua.org"
             id="plausible"
             src="https://plausible.io/js/plausible.js"
           />
