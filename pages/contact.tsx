@@ -19,16 +19,23 @@ const Contact: NextPage = () => {
           <Link href={externalUrls.packhelp} className={styles.link} isExternal>
             <Image src="/logo-packhelp.svg" h="30px" alt="logo packhelp" />
           </Link>
-          <Link
-            href={externalUrls.techtotherescue}
-            className={styles.link}
-            isExternal
-          >
+        </div>
+      </div>
+
+      <div className={styles.wrapper}>
+        <Heading as="h2" size="sm" mt="8px" mb="16px">
+          {translations["partners"]["with-us"]}
+        </Heading>
+        <div className={styles.inner}>
+          <Link href={externalUrls.techtotherescue} className={styles.link} isExternal>
             <Image
               src={logotypes.techToTheRescue}
-              h="40px"
-              alt="tech to the rescue icon"
+              alt="tech to the rescue"
+              h="30px"
             />
+          </Link>
+          <Link href={externalUrls.castlerave} className={styles.link} isExternal>
+            <Image src={logotypes.castleRave} alt="castle rave"  h="60px" />
           </Link>
         </div>
       </div>
