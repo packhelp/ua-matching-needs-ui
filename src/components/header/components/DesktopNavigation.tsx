@@ -21,7 +21,7 @@ export const DesktopNavigation = () => {
     <div className="hidden md:ml-6 md:flex md:space-x-8 h-full">
       <DesktopNavigationElement route={RouteDefinitions.AllActiveTickets} />
       <DesktopNavigationElement route={RouteDefinitions.Contact} />
-      {/*<DesktopNavigationElement route={RouteDefinitions.Faq} />*/}
+      <DesktopNavigationElement route={RouteDefinitions.Faq} />
     </div>
   )
 }

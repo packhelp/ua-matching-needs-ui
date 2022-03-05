@@ -437,7 +437,8 @@ const UA: Translation = {
   },
 }
 
-type Translation = typeof PL
+const getPL = () => PL
+type Translation = ReturnType<typeof getPL>
 
 export const translations = {
   "pl-PL": PL,
