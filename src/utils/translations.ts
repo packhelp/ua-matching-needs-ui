@@ -32,23 +32,23 @@ const PL = {
       },
     },
     main: {
-      header: "Szybkie i proste zarządzanie organizacją pomocy humanitarnej",
-      subheader: "Pomagasz innym? Pomożemy Ci zorganizować pomoc!",
+      header: "Szybkie i proste organizowanie pomocy humanitarnej",
+      subheader: "Zgłaszaj potrzeby i pomagaj!",
       description:
         "Powiedz czego potrzebujesz, a my przekażemy Twoją prośbę do organizacji i osób, które pomogą Ci to zorganizować.",
       "show-all-button": "Sprawdź potrzeby",
       "add-new-button": "Zgłoś potrzebę",
       "steps-section": {
         header: "Jak to działa?",
-        "step-1-title": "Zgłaszasz potrzebę",
+        "step-1-title": "Zgłaszaj potrzeby",
         "step-1-description":
-          "Podajesz numer telefonu i wpisujesz to, czego potrzebujesz i gdzie chcesz to dostarczyć.",
+          "Wiesz, że ktoś potrzebuje transportu, noclegu lub żywności? Zgłoś tę potrzebę.",
         "step-2-title": "My publikujemy potrzebę i szukamy rozwiązania",
         "step-2-description":
-          "Twoją potrzebę przekazujemy organizacjom i osobom, które mają to, czego potrzebujesz i  pomogą Ci zorganizować pomoc.",
-        "step-3-title": "Dezaktywujemy stare potrzeby",
+          "My zajmiemy się wyszukaniem organizacji lub osób, które zorganizują pomoc.",
+        "step-3-title": "Pomagaj odpowiadając na potrzeby",
         "step-3-description":
-          "Ogłoszenie wygasa automatycznie po 24 godzinach lub wtedy kiedy je usuniesz - nie będziesz dostawać setek telefonów.",
+          "Możesz samemu pomóc? Sprawdź aktualne potrzeby i... działaj!",
       },
       "for-whom-section": {
         header: "Dla kogo jest ta platforma?",
