@@ -23,7 +23,7 @@ const Contact: NextPage = () => {
             <Image
               src={logotypes.techToTheRescue}
               h="40px"
-              alt="tech to the rescue"
+              alt="tech to the rescue icon"
             />
           </Link>
         </div>
