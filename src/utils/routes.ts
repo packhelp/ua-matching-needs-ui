@@ -14,8 +14,8 @@ export enum LocaleFlags {
 
 export enum LocaleNames {
   "pl-PL" = "Polski",
-  "uk-UA" = "Ukraiński",
-  "en-GB" = "Angielski"
+  "uk-UA" = "український",
+  "en-GB" = "English"
 }
 
 export type Locale = LocaleDefinitions.PL | LocaleDefinitions.UA | LocaleDefinitions.EN
