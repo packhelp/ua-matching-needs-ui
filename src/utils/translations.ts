@@ -10,8 +10,8 @@ const PL = {
   "/faq": "FAQ",
 
   generic: {
-    yes: "yes",
-    no: "no",
+    yes: "tak",
+    no: "nie",
   },
 
   pages: {
@@ -107,8 +107,12 @@ const PL = {
     "add-ticket": {
       "add-need": "Dodaj potrzebę",
       adults: "Dorosłych",
-      "adults-hint": "Liczba osób > 12 lat",
+      adultsHint: "Liczba osób",
+      adultsAge: "> 12 lat <",
       children: "Dzieci",
+      childrenHint: "Liczba dzieci",
+      childrenAge: "< 12 lat",
+      chooseLocation: "Wybierz miejsce",
       "has-pets": "Zwierzęta",
       "children-hint": "Liczba osób < 12 lat",
       "what-do-you-need": "Opis potrzeby",
@@ -319,8 +323,12 @@ const UA: Translation = {
     "add-ticket": {
       "add-need": "Додай потребу",
       adults: "Дорислих",
-      "adults-hint": "Дорослих більш ніж 12 років",
+      adultsHint: "Кількість дорослих",
+      adultsAge: "понад 12 років",
       children: "Діти",
+      childrenHint: "Кількість дітей",
+      childrenAge: "до 12 років",
+      chooseLocation: "Виберіть місце",
       "has-pets": "Тварини",
       "children-hint": "Дітей менш ніж 12 років",
       "what-do-you-need": "Що за потреба?",
