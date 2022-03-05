@@ -141,7 +141,7 @@ export const Tickets = ({
 
   useEffect(() => {
     setSelectedPage(parseInt(router.query.page as string) || 1)
-  }, [router.query.page, setSelectedPage])
+  }, [router.query.page])
 
   useEffect(() => {
     setWhereToTag(parseInt((router.query["where_to"] as string) || "0"))
@@ -439,6 +439,7 @@ export const Tickets = ({
                   />
                 </svg>
               }
+              forcePage={selectedPage - 1}
               onPageChange={(page) => onPageClick(page.selected + 1)}
               pageRangeDisplayed={3}
               marginPagesDisplayed={1}
