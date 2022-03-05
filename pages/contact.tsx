@@ -27,15 +27,23 @@ const Contact: NextPage = () => {
           {translations["partners"]["with-us"]}
         </Heading>
         <div className={styles.inner}>
-          <Link href={externalUrls.techtotherescue} className={styles.link} isExternal>
+          <Link
+            href={externalUrls.techtotherescue}
+            className={styles.link}
+            isExternal
+          >
             <Image
               src={logotypes.techToTheRescue}
               alt="tech to the rescue"
               h="30px"
             />
           </Link>
-          <Link href={externalUrls.castlerave} className={styles.link} isExternal>
-            <Image src={logotypes.castleRave} alt="castle rave"  h="60px" />
+          <Link
+            href={externalUrls.castlerave}
+            className={styles.link}
+            isExternal
+          >
+            <Image src={logotypes.castleRave} alt="castle rave" h="60px" />
           </Link>
         </div>
       </div>

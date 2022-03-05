@@ -118,7 +118,7 @@ const AddTicket: NextPage = () => {
   const { data: tags } = useQuery(`main-tags`, () => {
     return ticketService.mainTags()
   })
-  const { data: locationTags = []} = useQuery(`location-tags`, () => {
+  const { data: locationTags = [] } = useQuery(`location-tags`, () => {
     return ticketService.locationTags()
   })
 
@@ -257,7 +257,7 @@ const AddTicket: NextPage = () => {
               />
             </Stack>
 
-            <div className="h-4 hidden md:block"/>
+            <div className="h-4 hidden md:block" />
 
             <div className="block md:hidden">
               <Stack marginBottom="16px">
@@ -270,7 +270,9 @@ const AddTicket: NextPage = () => {
                 <Input
                   min={0}
                   type={"number"}
-                  placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["adultsHint"]
+                  }
                   variant={"outline"}
                   {...register("adults")}
                 />
@@ -314,7 +316,9 @@ const AddTicket: NextPage = () => {
                 <Input
                   min={0}
                   type={"number"}
-                  placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["adultsHint"]
+                  }
                   variant={"outline"}
                   {...register("adults")}
                 />
@@ -347,7 +351,7 @@ const AddTicket: NextPage = () => {
               </Checkbox>
             </div>
 
-            <div className="h-4 hidden md:block"/>
+            <div className="h-4 hidden md:block" />
 
             <Stack marginBottom="16px">
               <Heading as={"h2"} size={"l"}>
@@ -355,8 +359,12 @@ const AddTicket: NextPage = () => {
               </Heading>
               <Select
                 options={mappedLocationTags}
-                onChange={(newValue: SingleValue<{ value: number; label: string; }>) => setWhereFromTag(newValue!.value)}
-                placeholder={translations["pages"]["add-ticket"]["chooseLocation"]}
+                onChange={(
+                  newValue: SingleValue<{ value: number; label: string }>
+                ) => setWhereFromTag(newValue!.value)}
+                placeholder={
+                  translations["pages"]["add-ticket"]["chooseLocation"]
+                }
               />
             </Stack>
 
@@ -366,12 +374,16 @@ const AddTicket: NextPage = () => {
               </Heading>
               <Select
                 options={mappedLocationTags}
-                onChange={(newValue: SingleValue<{ value: number; label: string; }>) => setWhereToTag(newValue!.value)}
-                placeholder={translations["pages"]["add-ticket"]["chooseLocation"]}
+                onChange={(
+                  newValue: SingleValue<{ value: number; label: string }>
+                ) => setWhereToTag(newValue!.value)}
+                placeholder={
+                  translations["pages"]["add-ticket"]["chooseLocation"]
+                }
               />
             </Stack>
 
-            <div className="h-4 hidden md:block"/>
+            <div className="h-4 hidden md:block" />
 
             <Stack>
               <Heading as={"h2"} size={"l"}>
@@ -435,7 +447,7 @@ const AddTicket: NextPage = () => {
               </Text>
             ) : null}
 
-            <div className="h-4 hidden md:block"/>
+            <div className="h-4 hidden md:block" />
 
             <Checkbox
               value={1}
@@ -448,7 +460,9 @@ const AddTicket: NextPage = () => {
             <button
               type="submit"
               disabled={isDisabled}
-              className={`w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${isDisabled ? "bg-gray-300" : "bg-amber-300 hover:bg-amber-400"} shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+              className={`w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${
+                isDisabled ? "bg-gray-300" : "bg-amber-300 hover:bg-amber-400"
+              } shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
             >
               <PlusSVG />
               <span>{translations["/tickets/add"]}</span>
