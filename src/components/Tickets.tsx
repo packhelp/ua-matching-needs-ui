@@ -30,7 +30,6 @@ export const Tickets = ({
   const {
     data: tickets,
     isLoading,
-    isRefetching,
     refetch,
   } = useQuery(`tickets-${ticketStatus}-${mineOnly ? "mine" : "all"}`, () => {
     const url = `/api/get-tickets`
@@ -83,7 +82,7 @@ export const Tickets = ({
           activeTag={selectedTag}
         />
 
-        {isLoading || isRefetching ? (
+        {isLoading ? (
           <Center h="100px" color="yellow.400">
             <Spinner size="xl" thickness="6px" />
           </Center>
