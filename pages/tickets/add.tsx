@@ -34,26 +34,6 @@ import Select, { SingleValue } from "react-select"
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_TAGS = "tags"
 
-const saveNeedInfoToLocalStorage = (
-  data: TicketFormData,
-  tagsSelected: number[]
-) => {
-  localStorage.setItem(LOCAL_STORAGE_KEY_TICKET_DATA, JSON.stringify(data))
-  localStorage.setItem(LOCAL_STORAGE_KEY_TAGS, JSON.stringify(tagsSelected))
-}
-
-const getInitialDataFromLocalStorage = () => {
-  if (typeof window === "undefined") {
-    return
-  }
-
-  const data = localStorage.getItem(LOCAL_STORAGE_KEY_TICKET_DATA)
-
-  if (isJsonString(data)) {
-    return JSON.parse(data)
-  }
-}
-
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
   tagsSelected: number[] | number | undefined
@@ -195,12 +175,7 @@ const AddTicket: NextPage = () => {
     }
   )
 
-  const savedTicketFormData = getInitialDataFromLocalStorage()
   const useFormOptions: any = {}
-
-  if (savedTicketFormData) {
-    useFormOptions.defaultValues = savedTicketFormData
-  }
   const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
 
   if (!tags || !locationTags) return null
@@ -211,8 +186,6 @@ const AddTicket: NextPage = () => {
       toast.error(translations["pages"]["auth"]["you-have-been-logged-out"])
       return router.push(RouteDefinitions.SignIn)
     }
-
-    saveNeedInfoToLocalStorage(data, tagsSelected)
 
     const tagsData = tagsSelected.map((tag) => {
       return { need_tag_id: { id: tag } }
