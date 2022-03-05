@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useMemo } from "react"
@@ -98,6 +99,8 @@ const UserPopup = ({ isOpen }: { isOpen: boolean }) => {
 }
 
 const UserNavigationElement = (props: UserNavigationElementProps) => {
+  const { locale } = useRouter()
+
   const { route, onClick } = useMemo(() => {
     if ({}.hasOwnProperty.call(props, "route")) {
       return {
@@ -113,13 +116,14 @@ const UserNavigationElement = (props: UserNavigationElementProps) => {
   }, [props])
 
   return (
-    <a
-      href={route}
-      onClick={onClick}
-      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-      role="menuitem"
-    >
-      {props.label}
-    </a>
+    <Link href={route} locale={locale}>
+      <a
+        onClick={onClick}
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+        role="menuitem"
+      >
+        {props.label}
+      </a>
+    </Link>
   )
 }

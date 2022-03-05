@@ -45,6 +45,7 @@
     "react-hook-form": "^7.27.1",
     "react-map-gl": "^7.0.7",
     "react-notion-x": "^4.16.0",
+    "react-paginate": "^8.1.2",
     "react-query": "^3.34.16",
     "react-select": "^5.2.2",
     "react-share": "^4.4.0",

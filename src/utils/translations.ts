@@ -80,7 +80,7 @@ const PL = {
       howMuchIsNeeded: "Ile potrzeba?",
       needActiveTill: "Zgłoszenie aktywne do",
       views: "Odsłon",
-      needNumber: "Numer zgłoszenia",
+      needNumber: "Zgłoszenie",
       details: "Szczegóły",
       ticketRemovedAddNew: "Ogłoszenie usunięte. Mozesz dodać kolejne.",
       ticketSolvedAddNew:
@@ -204,6 +204,8 @@ const PL = {
   filters: {
     selectNeeds: "Wybierz rodzaj potrzeby",
     all: "Wszystkie",
+    whereFrom: "Skąd?",
+    whereTo: "Dokąd?",
   },
   menu: {
     open: "Open main menu",
@@ -410,6 +412,8 @@ const UA: Translation = {
   filters: {
     selectNeeds: "Виберіть тип потреби",
     all: "всі",
+    whereFrom: "Звідки?",
+    whereTo: "Куди?",
   },
   menu: {
     open: "Open main menu",
