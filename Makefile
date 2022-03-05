@@ -10,10 +10,13 @@ MAKEFLAGS += --no-builtin-rules
 
 # ---------------------- COMMANDS ---------------------------
 
-dev: # Kick-off local dev environment & start coding! 💻
+dev: .env # Kick-off local dev environment & start coding! 💻
 	git pull
 	yarn install
 	yarn dev
+
+.env: # Create .env file if doesn't exist
+	cp .env.example .env
 
 # PRODUCTION
 

@@ -1,6 +1,6 @@
 import Select from "react-select"
 import { Tag } from "./Tag"
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useTranslations } from "../hooks/translations"
 import { useTagTranslation } from "../hooks/useTagTranslation"
 
@@ -10,10 +10,19 @@ type FiltersProps = {
   activeTag?: any
 }
 
-export const FiltersMobile = (props: FiltersProps) => {
-  const { data, onSelectFilter } = props
+interface FiltersDropdownProps extends FiltersProps {
+  placeholder?: string
+}
+
+export const FiltersDropdown = (props: FiltersDropdownProps) => {
   const { getTranslation } = useTagTranslation()
   const translation = useTranslations()
+  const {
+    data,
+    onSelectFilter,
+    placeholder = translation["filters"]["selectNeeds"],
+    activeTag,
+  } = props
 
   const mappedTags = useMemo(() => {
     const newTags = data.map((tag) => ({
@@ -21,28 +30,37 @@ export const FiltersMobile = (props: FiltersProps) => {
       label: getTranslation(tag),
     }))
 
-    return [{ value: 0, label: translation["filters"]["all"] }, ...newTags]
+    return [
+      { value: undefined, label: translation["filters"]["all"] },
+      ...newTags,
+    ]
   }, [data])
 
+  /* hax - without it value is not refreshed 🤷 */
+  const currentActiveTag = useMemo(
+    () => mappedTags.find((tag) => tag.value === activeTag) || undefined,
+    [mappedTags, activeTag]
+  )
+
   return (
-    <div className="block md:hidden">
+    <div className="mt-2 md:mt-0">
       <Select
         instanceId="filters"
-        defaultValue={0}
         options={mappedTags}
         onChange={(tag: any) => onSelectFilter(tag.value)}
-        placeholder={translation["filters"]["selectNeeds"]}
+        placeholder={placeholder}
+        value={currentActiveTag}
       />
     </div>
   )
 }
 
-export const FiltersDesktop = (props: FiltersProps) => {
+export const FiltersBadges = (props: FiltersProps) => {
   const { data, onSelectFilter, activeTag } = props
   const translation = useTranslations()
 
   return (
-    <div className="text-center hidden md:block">
+    <>
       <Tag
         tag={{
           id: 0,
@@ -65,6 +83,6 @@ export const FiltersDesktop = (props: FiltersProps) => {
           />
         )
       })}
-    </div>
+    </>
   )
 }

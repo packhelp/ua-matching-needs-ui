@@ -24,14 +24,14 @@ button {
 }
 
 /*todo: move to separate file*/
-.ticket-item.verified > .ticket-item__content {
-  border-left: 4px solid #61bd4f;
+.ticket-item.verified {
+  border-left: 4px solid #4989bb;
 }
 
-.ticket-item:hover > .ticket-item__content {
+.ticket-item:hover {
   box-shadow: 0 0 8px rgba(33, 33, 33, 0.2);
 }
 
 .ticket-item.verified .ticket-item__number {
-  color: #61bd4f;
+  color: #4989bb;
 }
