@@ -21,7 +21,10 @@ export const Guard: FC = ({ children }) => {
 
   useEffect(() => {
     if (isPathRestricted && !authSession && authStatus === "unauthenticated") {
-      router.push(RouteDefinitions.SignIn)
+      router.push({
+        pathname: RouteDefinitions.SignIn,
+        query: { returnPath: router.asPath },
+      })
     }
 
     // TODO(m) Add Sentry
@@ -36,7 +39,10 @@ export const Guard: FC = ({ children }) => {
     if (authStatus === "loading") {
       return <div>loading</div>
     } else if (!authSession || authStatus === "unauthenticated") {
-      router.push(RouteDefinitions.SignIn)
+      router.push({
+        pathname: RouteDefinitions.SignIn,
+        query: { returnPath: router.asPath },
+      })
       return <div>Brak autoryzacji - przenoszę na stronę logowania...</div>
     }
   }

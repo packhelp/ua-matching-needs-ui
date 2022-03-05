@@ -14,13 +14,17 @@ const Partners: NextPage = () => {
         {translations["partners"]["with-us"]}
       </h1>
       <div className={styles.wrapper}>
-        <Link href={externalUrls.techtotherescue} className={styles.link}>
+        <Link
+          href={externalUrls.techtotherescue}
+          className={styles.link}
+          isExternal
+        >
           <Image
             src={logotypes.techToTheRescue}
             alt="tech to the rescue icon"
           />
         </Link>
-        <Link href={externalUrls.castlerave} className={styles.link}>
+        <Link href={externalUrls.castlerave} className={styles.link} isExternal>
           <Image src={logotypes.castleRave} alt="castle rave icon" />
         </Link>
       </div>

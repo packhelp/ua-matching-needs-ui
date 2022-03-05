@@ -3,6 +3,7 @@ import React, { FC, useState } from "react"
 import { EnterPhoneNumber } from "./EnterPhoneNumber"
 import { EnterVerificationCode } from "./EnterVerificationCode"
 import { signIn } from "next-auth/react"
+import { getRoutePathForLocale, Locale } from "../../utils/routes"
 
 export const Login: FC = () => {
   const router = useRouter()
@@ -32,11 +33,15 @@ export const Login: FC = () => {
   }
 
   const checkVerification = async ({ verificationCode }) => {
+    const forcedReturnPath = router.query.returnPath as string
+    const defaultReturnPath = `/tickets/active/mine`
+    const returnPath = forcedReturnPath || defaultReturnPath
+
     try {
       await signIn("credentials", {
         phoneNumber: credentials.phoneNumber,
         verificationCode,
-        callbackUrl: `/tickets/active/mine`,
+        callbackUrl: getRoutePathForLocale(returnPath, router.locale as Locale),
         redirect: true,
       })
     } catch (e) {

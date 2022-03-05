@@ -16,10 +16,14 @@ const Contact: NextPage = () => {
           {translations["contact"]["authors"]}
         </Heading>
         <div className={styles.logos}>
-          <Link href={externalUrls.packhelp} className={styles.link}>
+          <Link href={externalUrls.packhelp} className={styles.link} isExternal>
             <Image src="/logo-packhelp.svg" h="30px" alt="logo packhelp" />
           </Link>
-          <Link href={externalUrls.techtotherescue} className={styles.link}>
+          <Link
+            href={externalUrls.techtotherescue}
+            className={styles.link}
+            isExternal
+          >
             <Image
               src={logotypes.techToTheRescue}
               h="40px"
@@ -34,7 +38,7 @@ const Contact: NextPage = () => {
           {translations["contact"]["contact-us-via"]}
         </Heading>
         <div className={styles.inner}>
-          <Link href={externalUrls.slack} className={styles.link}>
+          <Link href={externalUrls.slack} className={styles.link} isExternal>
             <Image
               src={logotypes.slack}
               className={styles.image}
@@ -44,7 +48,7 @@ const Contact: NextPage = () => {
               {translations["contact"]["slack"]}
             </span>
           </Link>
-          <Link href={externalUrls.github} className={styles.link}>
+          <Link href={externalUrls.github} className={styles.link} isExternal>
             <Image
               src={logotypes.github}
               className={styles.image}

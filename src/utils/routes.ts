@@ -47,3 +47,14 @@ export const getRouteNameForLocale = (
 ) => {
   return translations[locale][route]
 }
+
+export const getRoutePathForLocale = (
+  routePath: string,
+  locale: Locale = LocaleDefinitions.PL
+) => {
+  if (locale === LocaleDefinitions.PL) {
+    return routePath
+  }
+
+  return `/${locale}${routePath}`
+}
