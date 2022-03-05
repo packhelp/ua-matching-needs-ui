@@ -210,7 +210,7 @@ export const Tickets = ({
                     <Link href={ticketUrl} locale={locale}>
                       <div className="px-4 py-5 border-gray-200 sm:px-6 cursor-pointer">
                         <div className="mb-2">
-                          <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
+                          <p className="flex items-center max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
                             {ticket.organization_id ? (
                               <>
                                 <Tooltip
@@ -237,7 +237,7 @@ export const Tickets = ({
                                 </span>
                               </>
                             ) : (
-                              <span className="pr-1 font-medium">
+                              <span className="pr-1 my-1 font-medium">
                                 #{ticket.id}
                               </span>
                             )}
@@ -291,7 +291,7 @@ export const Tickets = ({
                             </div>
                           ) : (
                             <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
-                              -
+                              <span className="w-5 h-5"></span>
                             </div>
                           )}
                         </div>
