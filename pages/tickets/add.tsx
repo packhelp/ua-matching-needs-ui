@@ -20,7 +20,6 @@ import dayjs from "dayjs"
 import { useTranslations } from "../../src/hooks/translations"
 import { useState, useMemo } from "react"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
-import { isJsonString } from "../../src/utils/local-storage"
 import { useSession } from "next-auth/react"
 import {
   TicketPostData,
@@ -152,12 +151,11 @@ const AddTicket: NextPage = () => {
         })
       }
 
-      setIsSubmitting(false)
       return axios.post(`/api/add-ticket`, newTicketData)
     },
     {
       onSuccess,
-    }
+    },
   )
 
   const useFormOptions: any = {}
@@ -181,7 +179,9 @@ const AddTicket: NextPage = () => {
       phone: authSession.phoneNumber,
       need_tag_id: tagsData,
     }
-    addTicketMutation.mutate(postData)
+    addTicketMutation.mutate(postData, {
+      onError: () => setIsSubmitting(false)
+    })
   }
 
   const toggleTag = (tagId: number) => {
@@ -319,10 +319,14 @@ const AddTicket: NextPage = () => {
                 options={mappedLocationTags}
                 onChange={(
                   newValue: SingleValue<{ value: number; label: string }>
-                ) => setWhereFromTag(newValue!.value)}
+                ) => {
+                  setWhereFromTag(newValue ? newValue.value : undefined)
+                }}
                 placeholder={
                   translations["pages"]["add-ticket"]["chooseLocation"]
                 }
+                isClearable
+                isSearchable={false}
               />
             </Stack>
 
@@ -334,10 +338,14 @@ const AddTicket: NextPage = () => {
                 options={mappedLocationTags}
                 onChange={(
                   newValue: SingleValue<{ value: number; label: string }>
-                ) => setWhereToTag(newValue!.value)}
+                ) => {
+                  setWhereToTag(newValue ? newValue.value : undefined)
+                }}
                 placeholder={
                   translations["pages"]["add-ticket"]["chooseLocation"]
                 }
+                isClearable
+                isSearchable={false}
               />
             </Stack>
 

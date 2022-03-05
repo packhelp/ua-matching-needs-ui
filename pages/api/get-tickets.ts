@@ -5,7 +5,7 @@ import { withSentry } from "@sentry/nextjs"
 import _ceil from "lodash/ceil"
 import { TICKET_LIST_FIELDS } from "../../src/utils/directus-fields"
 
-const TICKETS_PER_PAGE = 30
+const TICKETS_PER_PAGE = 60
 
 const getTicketsUrl = ({
   mineOnly,
@@ -28,7 +28,8 @@ const getTicketsUrl = ({
   const baseUrl = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/`
   const fields = TICKET_LIST_FIELDS.join(",")
   const baseSettingsUrlPart = `&fields=${fields}&sort[]=-date_created`
-  const paginationOffset = TICKETS_PER_PAGE * (page - 1)
+  const paginationOffsetMultiplier = page - 1 || 0
+  const paginationOffset = TICKETS_PER_PAGE * paginationOffsetMultiplier
   const paginationUrlPart = `&meta=filter_count&limit=${TICKETS_PER_PAGE}&offset=${paginationOffset}`
 
   if (ticketStatus) {

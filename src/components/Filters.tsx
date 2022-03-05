@@ -30,10 +30,7 @@ export const FiltersDropdown = (props: FiltersDropdownProps) => {
       label: getTranslation(tag),
     }))
 
-    return [
-      { value: undefined, label: translation["filters"]["all"] },
-      ...newTags,
-    ]
+    return [{ value: 0, label: translation["filters"]["all"] }, ...newTags]
   }, [data])
 
   /* hax - without it value is not refreshed 🤷 */
