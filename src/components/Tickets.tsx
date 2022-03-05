@@ -208,7 +208,7 @@ export const Tickets = ({
                     }`}
                   >
                     <Link href={ticketUrl} locale={locale}>
-                      <div className="px-4 py-5 border-gray-200 sm:px-6">
+                      <div className="px-4 py-5 border-gray-200 sm:px-6 cursor-pointer">
                         <div className="mb-2">
                           <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
                             {ticket.organization_id ? (
@@ -241,7 +241,6 @@ export const Tickets = ({
                                 #{ticket.id}
                               </span>
                             )}
-<<<<<<< HEAD
                             <span className="">
                               {ticket.need_tag_id.map((tag) => {
                                 if (
@@ -250,16 +249,6 @@ export const Tickets = ({
                                   !tag.need_tag_id.id
                                 ) {
                                   return null
-=======
-                          </div>
-                          <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-8">
-                            <div className="sm:col-span-1">
-                              <dt className="text-xs font-medium text-gray-400">
-                                {
-                                  translations["pages"]["ticket"][
-                                    "whoRequested"
-                                  ]
->>>>>>> b308b5c792a7cc54d7e5ece88aec569e7bee983a
                                 }
 
                                 return (
@@ -306,7 +295,6 @@ export const Tickets = ({
                             </div>
                           )}
                         </div>
-
                         <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-8">
                           <div className="sm:col-span-1">
                             <dt className="text-xs font-medium text-gray-400">
