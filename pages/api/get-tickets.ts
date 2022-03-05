@@ -7,7 +7,7 @@ import { withSentry } from "@sentry/nextjs"
 const getTicketsUrl = ({ mineOnly, tagId, phoneNumber, ticketStatus }) => {
   const filters: { key: string; value: any }[] = []
   const baseUrl = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/`
-  const baseSettingsUrlPart = `&fields=*.*.*&sort[]=-date_created`
+  const baseSettingsUrlPart = `&fields=*.*.*&sort[]=-date_created&limit=-1`
 
   if (ticketStatus) {
     filters.push({ key: "[ticket_status]", value: ticketStatus })
