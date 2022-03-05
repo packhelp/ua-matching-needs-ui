@@ -32,7 +32,13 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
           }}
         >
           <Center>
-            <Image src="/phone-verify.svg" maxW="300px" mb="30px" mt="20px" />
+            <Image
+              src="/phone-verify.svg"
+              maxW="300px"
+              mb="30px"
+              mt="20px"
+              alt="phone verify"
+            />
           </Center>
 
           <Heading as="h1" size="1xl" mb={4}>

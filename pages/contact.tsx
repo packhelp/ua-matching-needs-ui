@@ -17,10 +17,14 @@ const Contact: NextPage = () => {
         </Heading>
         <div className={styles.logos}>
           <Link href={externalUrls.packhelp} className={styles.link}>
-            <Image src="/logo-packhelp.svg" h="30px" />
+            <Image src="/logo-packhelp.svg" h="30px" alt="logo packhelp" />
           </Link>
           <Link href={externalUrls.techtotherescue} className={styles.link}>
-            <Image src={logotypes.techToTheRescue} h="40px" />
+            <Image
+              src={logotypes.techToTheRescue}
+              h="40px"
+              alt="tech to the rescue"
+            />
           </Link>
         </div>
       </div>
@@ -31,12 +35,24 @@ const Contact: NextPage = () => {
         </Heading>
         <div className={styles.inner}>
           <Link href={externalUrls.slack} className={styles.link}>
-            <Image src={logotypes.slack} className={styles.image} />
-            <span className={styles.text}>{translations["contact"]["slack"]}</span>
+            <Image
+              src={logotypes.slack}
+              className={styles.image}
+              alt="slack icon"
+            />
+            <span className={styles.text}>
+              {translations["contact"]["slack"]}
+            </span>
           </Link>
           <Link href={externalUrls.github} className={styles.link}>
-            <Image src={logotypes.github} className={styles.image} />
-            <span className={styles.text}>{translations["contact"]["github"]}</span>
+            <Image
+              src={logotypes.github}
+              className={styles.image}
+              alt="github icon"
+            />
+            <span className={styles.text}>
+              {translations["contact"]["github"]}
+            </span>
           </Link>
         </div>
       </div>
@@ -47,7 +63,9 @@ const Contact: NextPage = () => {
         </Heading>
         <div className={styles.inner}>
           <Link href={externalUrls.terms} isExternal>
-            <span className={styles.text}>{`[${translations["terms-of-service"]["title-alternate"]}]`}</span>
+            <span
+              className={styles.text}
+            >{`[${translations["terms-of-service"]["title-alternate"]}]`}</span>
           </Link>
         </div>
       </div>
