@@ -21,14 +21,17 @@ import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
 import { useTranslations } from "../../src/hooks/translations"
-import { TICKET_STATUS, TicketDetails } from "../../src/services/ticket.type"
+import {
+  TICKET_STATUS,
+  TicketDetailsType,
+} from "../../src/services/ticket.type"
 
 const LOCAL_STORAGE_KEY_VISITS_COUNTER = "visits-counter"
 const TICKET_MARKED_AS_VISITED = "visited"
 
 const getTicketDataFromEndpoint = async (
   id: number
-): Promise<TicketDetails | null> => {
+): Promise<TicketDetailsType | null> => {
   const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}?fields=*.*.*`
 
   try {
@@ -45,12 +48,12 @@ const getTicketDataFromEndpoint = async (
   }
 }
 
-export const isTicketActive = (ticket: TicketDetails): boolean => {
+export const isTicketActive = (ticket: TicketDetailsType): boolean => {
   return ticket.ticket_status === TICKET_STATUS.ACTIVE
 }
 
 //Q: CAN WE DELETE THIS?
-export const Tags = ({ tags }: { tags: TicketDetails["need_tag_id"] }) => {
+export const Tags = ({ tags }: { tags: TicketDetailsType["need_tag_id"] }) => {
   if (!tags) return <></>
 
   return (
@@ -135,7 +138,7 @@ const countVisitOnce = (ticketId: number) => {
   }
 }
 
-const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
+const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
   const { data: authSession } = useSession()
   const router = useRouter()
   const translations = useTranslations()

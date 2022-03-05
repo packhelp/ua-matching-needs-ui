@@ -78,8 +78,6 @@ export type TicketData = TicketFormData & {
   visits: number
 }
 
-export type TicketDetails = TicketPostData & TicketData
-
 const saveForFurtherUsage = (data: TicketFormData, tagsSelected: number[]) => {
   localStorage.setItem(LOCAL_STORAGE_KEY_TICKET_DATA, JSON.stringify(data))
   localStorage.setItem(LOCAL_STORAGE_KEY_TAGS, JSON.stringify(tagsSelected))
