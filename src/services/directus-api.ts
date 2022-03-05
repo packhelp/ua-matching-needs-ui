@@ -1,5 +1,10 @@
 import { TICKET_STATUS, TicketDetailsType, NeedTagType } from "./ticket.type"
 import axios, { AxiosRequestConfig, AxiosInstance } from "axios"
+import {
+  LOCATION_HUB_FIELDS,
+  TAG_FIELDS,
+  TICKET_DETAILS_FIELDS,
+} from "../utils/directus-fields"
 
 export function directusApiInstance(): AxiosInstance {
   const endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT_URL
@@ -44,7 +49,8 @@ export class TicketService {
   public async ticketWithNestedData(
     id: number
   ): Promise<TicketDetailsType | null> {
-    const url = `/items/need/${id}?fields=*.*.*`
+    const fields = TICKET_DETAILS_FIELDS.join(",")
+    const url = `/items/need/${id}?fields=${fields}`
 
     try {
       const response = await this.api.get(url)
@@ -61,19 +67,22 @@ export class TicketService {
   }
 
   public async mainTags(): Promise<NeedTagType[]> {
+    const fields = TAG_FIELDS.join(",")
     const response = await this.api.get(
-      `/items/need_tag?filter[main_category][_eq]=1&fields=*.*.*`
+      `/items/need_tag?filter[main_category][_eq]=1&fields=${fields}`
     )
     return response.data.data
   }
 
   public async allTags(): Promise<NeedTagType[]> {
-    const response = await this.api.get(`/items/need_tag?fields=*.*.*`)
+    const fields = TAG_FIELDS.join(",")
+    const response = await this.api.get(`/items/need_tag?fields=${fields}`)
     return response.data.data
   }
 
   public async locationTags(): Promise<NeedTagType[]> {
-    const response = await this.api.get(`/items/location_hub`)
+    const fields = LOCATION_HUB_FIELDS.join(",")
+    const response = await this.api.get(`/items/location_hub?fields=${fields}`)
     return response.data.data
   }
 }
