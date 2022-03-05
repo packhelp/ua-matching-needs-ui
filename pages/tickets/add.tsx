@@ -155,7 +155,7 @@ const AddTicket: NextPage = () => {
     },
     {
       onSuccess,
-    },
+    }
   )
 
   const useFormOptions: any = {}
@@ -180,7 +180,7 @@ const AddTicket: NextPage = () => {
       need_tag_id: tagsData,
     }
     addTicketMutation.mutate(postData, {
-      onError: () => setIsSubmitting(false)
+      onError: () => setIsSubmitting(false),
     })
   }
 
@@ -419,6 +419,19 @@ const AddTicket: NextPage = () => {
               value={1}
               defaultChecked={true}
               {...register("phone_public")}
+              onChange={(e) => {
+                const checked = e.target.checked
+                if (!checked) {
+                  toast.warning(
+                    translations["pages"]["add-ticket"][
+                      "hide-phone-disclaimer"
+                    ],
+                    {
+                      pauseOnHover: true,
+                    }
+                  )
+                }
+              }}
             >
               {translations["pages"]["add-ticket"].show_phone_public}
             </Checkbox>
