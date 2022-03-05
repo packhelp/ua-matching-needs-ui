@@ -18,7 +18,7 @@ import { RouteDefinitions } from "../../src/utils/routes"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
 import { useTranslations } from "../../src/hooks/translations"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
 import { isJsonString } from "../../src/utils/local-storage"
 import { useSession } from "next-auth/react"
@@ -29,6 +29,7 @@ import {
 } from "../../src/services/ticket.type"
 import { useTagTranslation } from "../../src/hooks/useTagTranslation"
 import { getRootContainer } from "../../src/services/_root-container"
+import Select, { SingleValue } from "react-select"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_TAGS = "tags"
@@ -102,6 +103,7 @@ const getPreviouslySavedTags = () => {
 const ticketService = getRootContainer().containers.ticketService
 const AddTicket: NextPage = () => {
   const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const translations = useTranslations()
   const previouslySavedTags = getPreviouslySavedTags()
   const { data: authSession, status: authStatus } = useSession()
@@ -116,9 +118,16 @@ const AddTicket: NextPage = () => {
   const { data: tags } = useQuery(`main-tags`, () => {
     return ticketService.mainTags()
   })
-  const { data: locationTags } = useQuery(`location-tags`, () => {
+  const { data: locationTags = [] } = useQuery(`location-tags`, () => {
     return ticketService.locationTags()
   })
+
+  const mappedLocationTags = useMemo(() => {
+    return locationTags.map((tag) => ({
+      value: tag.id,
+      label: tag.name,
+    }))
+  }, [locationTags])
 
   const onSuccess = (rawResponse) => {
     const { data } = rawResponse.data
@@ -167,7 +176,7 @@ const AddTicket: NextPage = () => {
         // so make sure it works correctly.
         adults: adults ? adults : 0,
         children: children ? children : 0,
-        has_pets,
+        has_pets: has_pets.toString(),
       }
       // if trip
       if (whereFromTag || whereToTag) {
@@ -178,6 +187,7 @@ const AddTicket: NextPage = () => {
         })
       }
 
+      setIsSubmitting(false)
       return axios.post(`/api/add-ticket`, newTicketData)
     },
     {
@@ -196,6 +206,7 @@ const AddTicket: NextPage = () => {
   if (!tags || !locationTags) return null
 
   const submitNeed = async (data: TicketFormData) => {
+    setIsSubmitting(true)
     if (authStatus === "unauthenticated" || !authSession?.user) {
       toast.error(translations["pages"]["auth"]["you-have-been-logged-out"])
       return router.push(RouteDefinitions.SignIn)
@@ -223,6 +234,8 @@ const AddTicket: NextPage = () => {
     }
   }
 
+  const isDisabled = addTicketMutation.isLoading || isSubmitting
+
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Container className="px-4 py-5 sm:p-6">
@@ -244,63 +257,133 @@ const AddTicket: NextPage = () => {
               />
             </Stack>
 
-            <Stack>
-              <Heading as={"h2"} size={"l"}>
-                {translations["pages"]["add-ticket"]["adults"]}
-              </Heading>
-              <Input
-                min={0}
-                type={"number"}
-                placeholder={translations["pages"]["add-ticket"]["adults-hint"]}
-                variant={"outline"}
-                {...register("adults")}
-              />
-            </Stack>
+            <div className="h-4 hidden md:block" />
 
-            <Stack>
+            <div className="block md:hidden">
+              <Stack marginBottom="16px">
+                <div className="flex justify-between">
+                  <Heading as={"h2"} size={"l"}>
+                    {translations["pages"]["add-ticket"]["adults"]}
+                  </Heading>
+                  {translations["pages"]["add-ticket"]["adultsAge"]}
+                </div>
+                <Input
+                  min={0}
+                  type={"number"}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["adultsHint"]
+                  }
+                  variant={"outline"}
+                  {...register("adults")}
+                />
+              </Stack>
+
+              <Stack marginBottom="16px">
+                <div className="flex justify-between">
+                  <Heading as={"h2"} size={"l"}>
+                    {translations["pages"]["add-ticket"]["children"]}
+                  </Heading>
+                  {translations["pages"]["add-ticket"]["childrenAge"]}
+                </div>
+                <Input
+                  min={0}
+                  type={"number"}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["childrenHint"]
+                  }
+                  variant={"outline"}
+                  {...register("children")}
+                />
+              </Stack>
+
+              <Checkbox
+                value={1}
+                defaultChecked={false}
+                {...register("has_pets")}
+              >
+                {translations["pages"]["add-ticket"]["has-pets"]}
+              </Checkbox>
+            </div>
+
+            <div className="hidden md:flex justify-between items-start mb-16">
+              <Stack>
+                <div className="flex justify-between">
+                  <Heading as={"h2"} size={"l"}>
+                    {translations["pages"]["add-ticket"]["adults"]}
+                  </Heading>
+                  {translations["pages"]["add-ticket"]["adultsAge"]}
+                </div>
+                <Input
+                  min={0}
+                  type={"number"}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["adultsHint"]
+                  }
+                  variant={"outline"}
+                  {...register("adults")}
+                />
+              </Stack>
+
+              <Stack>
+                <div className="flex justify-between">
+                  <Heading as={"h2"} size={"l"}>
+                    {translations["pages"]["add-ticket"]["children"]}
+                  </Heading>
+                  {translations["pages"]["add-ticket"]["childrenAge"]}
+                </div>
+                <Input
+                  min={0}
+                  type={"number"}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["childrenHint"]
+                  }
+                  variant={"outline"}
+                  {...register("children")}
+                />
+              </Stack>
+
+              <Checkbox
+                value={1}
+                defaultChecked={false}
+                {...register("has_pets")}
+              >
+                {translations["pages"]["add-ticket"]["has-pets"]}
+              </Checkbox>
+            </div>
+
+            <div className="h-4 hidden md:block" />
+
+            <Stack marginBottom="16px">
               <Heading as={"h2"} size={"l"}>
                 {translations["pages"]["add-ticket"].whereFrom}
               </Heading>
-              <TagsChooseForm
-                tags={locationTags || []}
-                onClickTag={(id) => setWhereFromTag(id)}
-                tagsSelected={whereFromTag}
+              <Select
+                options={mappedLocationTags}
+                onChange={(
+                  newValue: SingleValue<{ value: number; label: string }>
+                ) => setWhereFromTag(newValue!.value)}
+                placeholder={
+                  translations["pages"]["add-ticket"]["chooseLocation"]
+                }
               />
             </Stack>
 
-            <Stack>
+            <Stack marginBottom="16px">
               <Heading as={"h2"} size={"l"}>
                 {translations["pages"]["add-ticket"].whereTo}
               </Heading>
-              <TagsChooseForm
-                tags={locationTags || []}
-                onClickTag={(id) => setWhereToTag(id)}
-                tagsSelected={whereToTag}
-              />
-            </Stack>
-
-            <Stack>
-              <Heading as={"h2"} size={"l"}>
-                {translations["pages"]["add-ticket"]["children"]}
-              </Heading>
-              <Input
-                min={0}
-                type={"number"}
+              <Select
+                options={mappedLocationTags}
+                onChange={(
+                  newValue: SingleValue<{ value: number; label: string }>
+                ) => setWhereToTag(newValue!.value)}
                 placeholder={
-                  translations["pages"]["add-ticket"]["children-hint"]
+                  translations["pages"]["add-ticket"]["chooseLocation"]
                 }
-                variant={"outline"}
-                {...register("children")}
               />
             </Stack>
 
-            <Checkbox
-              value={1}
-              defaultChecked={false}
-              {...register("has_pets")}
-            >
-              {translations["pages"]["add-ticket"]["has-pets"]}
-            </Checkbox>
+            <div className="h-4 hidden md:block" />
 
             <Stack>
               <Heading as={"h2"} size={"l"}>
@@ -364,6 +447,8 @@ const AddTicket: NextPage = () => {
               </Text>
             ) : null}
 
+            <div className="h-4 hidden md:block" />
+
             <Checkbox
               value={1}
               defaultChecked={true}
@@ -374,8 +459,10 @@ const AddTicket: NextPage = () => {
 
             <button
               type="submit"
-              disabled={addTicketMutation.isLoading}
-              className="w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black bg-amber-300 shadow-sm hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              disabled={isDisabled}
+              className={`w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${
+                isDisabled ? "bg-gray-300" : "bg-amber-300 hover:bg-amber-400"
+              } shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
             >
               <PlusSVG />
               <span>{translations["/tickets/add"]}</span>
