@@ -27,7 +27,7 @@ export enum RouteDefinitions {
   SignIn = "/sign-in",
   TicketDetails = "/ticket/:id",
   Contact = "/contact",
-  Faq = "/faq"
+  Faq = "/faq",
 }
 
 export type Routes =
