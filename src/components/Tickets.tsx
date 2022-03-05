@@ -3,7 +3,7 @@ import axios from "axios"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React, { useCallback, useEffect, useState } from "react"
-import { useQuery } from "react-query"
+import { useQuery, useQueryClient } from "react-query"
 import { useTranslations } from "../hooks/translations"
 import { RouteDefinitions } from "../utils/routes"
 import { TICKET_STATUS } from "../services/ticket.type"
@@ -26,26 +26,37 @@ export const Tickets = ({
   const [selectedTag, setSelectedTag] = useState(
     parseInt((router.query.tag as string) || "0")
   )
+  const [queryKey] = useState("tickets")
 
   const {
     data: tickets,
     isLoading,
+    isRefetching,
     refetch,
-  } = useQuery(`tickets-${ticketStatus}-${mineOnly ? "mine" : "all"}`, () => {
-    const url = `/api/get-tickets`
+  } = useQuery(
+    queryKey,
+    () => {
+      const url = `/api/get-tickets`
 
-    return axios
-      .get(url, {
-        params: {
-          mineOnly: mineOnly,
-          ticketStatus: ticketStatus,
-          tagId: selectedTag,
-        },
-      })
-      .then((response) => {
-        return response.data
-      })
-  })
+      return axios
+        .get(url, {
+          params: {
+            mineOnly: mineOnly,
+            ticketStatus: ticketStatus,
+            tagId: selectedTag,
+          },
+        })
+        .then((response) => {
+          return response.data
+        })
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
+    }
+  )
+  const queryClient = useQueryClient()
 
   const { data: tags = [] } = useQuery(`main-tags`, () => {
     return ts.mainTags()
@@ -64,8 +75,10 @@ export const Tickets = ({
   }, [router.query.tag, setSelectedTag])
 
   useEffect(() => {
+    console.log("selectedTag :>> ", selectedTag)
+    queryClient.cancelQueries(queryKey)
     void refetch()
-  }, [selectedTag])
+  }, [selectedTag, queryKey, refetch, queryClient])
 
   return (
     <>
@@ -82,7 +95,7 @@ export const Tickets = ({
           activeTag={selectedTag}
         />
 
-        {isLoading ? (
+        {isLoading || isRefetching ? (
           <Center h="100px" color="yellow.400">
             <Spinner size="xl" thickness="6px" />
           </Center>
