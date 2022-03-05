@@ -10,6 +10,7 @@ import {
   TICKET_STATUS,
   TicketDetailsType,
 } from "../../src/services/ticket.type"
+import { getRootContainer } from "../../src/services/_root-container"
 import { SingleTicketMetaData } from "../../src/components/single-ticket/SingleTicketMetaData"
 import { SingleTicketHeader } from "../../src/components/single-ticket/SingleTicketHeader"
 import { SingleTicketDetails } from "../../src/components/single-ticket/SingleTicketDetails"
@@ -17,6 +18,16 @@ import { SingleTicketFooter } from "../../src/components/single-ticket/SingleTic
 
 export const isTicketActive = (ticket: TicketDetailsType): boolean => {
   return ticket.ticket_status === TICKET_STATUS.ACTIVE
+}
+
+const root = getRootContainer()
+const ticketService = root.containers.ticketService
+
+export async function getServerSideProps(context) {
+  const { id } = context.query
+  const ticket = await ticketService.ticketWithNestedData(Number(id))
+
+  return { props: { ticket } }
 }
 
 const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
