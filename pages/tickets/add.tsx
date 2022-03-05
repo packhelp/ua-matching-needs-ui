@@ -23,6 +23,11 @@ import { getMainTags } from "../../src/utils/tags"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
 import { isJsonString } from "../../src/utils/local-storage"
 import { useSession } from "next-auth/react"
+import {
+  TicketPostData,
+  TicketFormData,
+  NeedTagType,
+} from "../../src/services/ticket.type"
 
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_TAGS = "tags"
