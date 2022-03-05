@@ -55,10 +55,18 @@ const getInitialDataFromLocalStorage = () => {
 
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
-  tagsSelected: number[] | undefined
+  tagsSelected: number[] | number | undefined
   onClickTag: (tagId: number) => void
 }) => {
   const { getTranslation } = useTagTranslation()
+
+  function isTagIdSelected(tagId: number): boolean {
+    if (props.tagsSelected === tagId) return true
+    if (props.tagsSelected && typeof props.tagsSelected !== "number") {
+      return props.tagsSelected && props.tagsSelected.includes(tagId)
+    }
+    return false
+  }
 
   return (
     <Box>
@@ -68,11 +76,7 @@ const TagsChooseForm = (props: {
             key={tag.id}
             mr={2}
             mb={2}
-            variant={
-              props.tagsSelected && props.tagsSelected.includes(tag.id)
-                ? "solid"
-                : "outline"
-            }
+            variant={isTagIdSelected(tag.id) ? "solid" : "outline"}
             onClick={() => props.onClickTag(tag.id)}
             className={"cursor-pointer "}
             colorScheme={"blue"}
@@ -104,7 +108,10 @@ const AddTicket: NextPage = () => {
   const [tagsSelected, setTagsSelected] =
     useState<number[]>(previouslySavedTags)
 
-  const [selectedLocationTags, setSelectedLocationTags] = useState<number[]>([])
+  const [whereFromTag, setWhereFromTag] = useState<number | undefined>(
+    undefined
+  )
+  const [whereToTag, setWhereToTag] = useState<number | undefined>(undefined)
 
   const { data: tags } = useQuery(`main-tags`, () => {
     return ticketService.mainTags()
@@ -142,7 +149,7 @@ const AddTicket: NextPage = () => {
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
-      const newTicketData = {
+      let newTicketData = {
         phone,
         description: what,
         what,
@@ -154,12 +161,21 @@ const AddTicket: NextPage = () => {
         expirationTimestampSane,
         phone_public,
         need_tag_id,
+
         // The problem that might arise is that we store data in localStorage,
         // so if we hide it somehow on the form, it might be pulled from localStorage anyway
         // so make sure it works correctly.
         adults: adults ? adults : 0,
         children: children ? children : 0,
         has_pets,
+      }
+      // if trip
+      if (whereFromTag || whereToTag) {
+        newTicketData = Object.assign(newTicketData, {
+          need_type: "trip",
+          where_from_tag: whereFromTag,
+          where_to_tag: whereToTag,
+        })
       }
 
       return axios.post(`/api/add-ticket`, newTicketData)
@@ -208,11 +224,12 @@ const AddTicket: NextPage = () => {
   }
 
   const toggleLocationTag = (tagId: number) => {
-    if (selectedLocationTags.includes(tagId)) {
-      setSelectedLocationTags(selectedLocationTags.filter((id) => id !== tagId))
-    } else {
-      setSelectedLocationTags([...selectedLocationTags, tagId])
-    }
+    setWhereFromTag(tagId)
+    // if (selectedLocationTags.includes(tagId)) {
+    //   setSelectedLocationTags(selectedLocationTags.filter((id) => id !== tagId))
+    // } else {
+    //   setSelectedLocationTags([...selectedLocationTags, tagId])
+    // }
   }
 
   return (
@@ -252,12 +269,12 @@ const AddTicket: NextPage = () => {
             <Stack>
               <Heading as={"h2"} size={"l"}>
                 {translations["pages"]["add-ticket"].whereFrom}
-                {translations["pages"]["add-ticket"].whereTo}
+                {/* {translations["pages"]["add-ticket"].whereTo} */}
               </Heading>
               <TagsChooseForm
                 tags={locationTags || []}
                 onClickTag={toggleLocationTag}
-                tagsSelected={selectedLocationTags}
+                tagsSelected={whereFromTag}
               />
             </Stack>
 
