@@ -155,7 +155,7 @@ const AddTicket: NextPage = () => {
     },
     {
       onSuccess,
-    },
+    }
   )
 
   const useFormOptions: any = {}
@@ -180,7 +180,7 @@ const AddTicket: NextPage = () => {
       need_tag_id: tagsData,
     }
     addTicketMutation.mutate(postData, {
-      onError: () => setIsSubmitting(false)
+      onError: () => setIsSubmitting(false),
     })
   }
 
