@@ -19,6 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    margin-bottom: 0.5rem;
+
     @media (max-width: 768px) {
         flex-direction: column;
         justify-content: flex-start;
@@ -31,12 +33,12 @@
     align-items: center;
     justify-content: flex-start;
     margin-left: 20px;
-    color: #61bd4f;
+    color: #4989bb;
     svg {
         height: 20px;
         margin-right: 5px;
-        fill: #61bd4f;
-        color: #61bd4f;
+        fill: #4989bb;
+        color: #4989bb;
     }
 
     @media (max-width: 768px) {

@@ -223,7 +223,7 @@ export const Tickets = ({
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="w-5 h-5 text-blue-400"
                                     viewBox="0 0 20 20"
-                                    fill="#61bd4f"
+                                    fill="#4989bb"
                                   >
                                     <path
                                       fillRule="evenodd"
@@ -241,6 +241,7 @@ export const Tickets = ({
                                 #{ticket.id}
                               </span>
                             )}
+<<<<<<< HEAD
                             <span className="">
                               {ticket.need_tag_id.map((tag) => {
                                 if (
@@ -249,6 +250,16 @@ export const Tickets = ({
                                   !tag.need_tag_id.id
                                 ) {
                                   return null
+=======
+                          </div>
+                          <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-8">
+                            <div className="sm:col-span-1">
+                              <dt className="text-xs font-medium text-gray-400">
+                                {
+                                  translations["pages"]["ticket"][
+                                    "whoRequested"
+                                  ]
+>>>>>>> b308b5c792a7cc54d7e5ece88aec569e7bee983a
                                 }
 
                                 return (

@@ -25,7 +25,7 @@ button {
 
 /*todo: move to separate file*/
 .ticket-item.verified {
-  border-left: 4px solid #61bd4f;
+  border-left: 4px solid #4989bb;
 }
 
 .ticket-item:hover {
@@ -33,5 +33,5 @@ button {
 }
 
 .ticket-item.verified .ticket-item__number {
-  color: #61bd4f;
+  color: #4989bb;
 }
