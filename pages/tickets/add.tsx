@@ -269,12 +269,22 @@ const AddTicket: NextPage = () => {
             <Stack>
               <Heading as={"h2"} size={"l"}>
                 {translations["pages"]["add-ticket"].whereFrom}
-                {/* {translations["pages"]["add-ticket"].whereTo} */}
               </Heading>
               <TagsChooseForm
                 tags={locationTags || []}
-                onClickTag={toggleLocationTag}
+                onClickTag={(id) => setWhereFromTag(id)}
                 tagsSelected={whereFromTag}
+              />
+            </Stack>
+
+            <Stack>
+              <Heading as={"h2"} size={"l"}>
+                {translations["pages"]["add-ticket"].whereTo}
+              </Heading>
+              <TagsChooseForm
+                tags={locationTags || []}
+                onClickTag={(id) => setWhereToTag(id)}
+                tagsSelected={whereToTag}
               />
             </Stack>
 
