@@ -326,6 +326,7 @@ const AddTicket: NextPage = () => {
                   translations["pages"]["add-ticket"]["chooseLocation"]
                 }
                 isClearable
+                isSearchable={false}
               />
             </Stack>
 
@@ -344,6 +345,7 @@ const AddTicket: NextPage = () => {
                   translations["pages"]["add-ticket"]["chooseLocation"]
                 }
                 isClearable
+                isSearchable={false}
               />
             </Stack>
 
