@@ -475,8 +475,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                     <dd className="mt-1 text-lg text-gray-900 flex">
                       {ticketTags.map((tag) => {
                         return (
-                          tag.need_tag_id &&
-                          tag.need_tag_id.name && (
+                          tag.need_tag_id && (
                             <div key={tag.need_tag_id.id} className="mr-2">
                               <Tag
                                 colorScheme="yellow"
