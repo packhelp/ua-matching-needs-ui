@@ -48,9 +48,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <SingleTicketMetaData ticket={ticket} />
 
-      <section
-        aria-labelledby="applicant-information-title"
-      >
+      <section aria-labelledby="applicant-information-title">
         <SingleTicketHeader ticket={ticket} />
         <SingleTicketDetails ticket={ticket} />
         <SingleTicketFooter ticket={ticket} />
