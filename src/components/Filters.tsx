@@ -1,6 +1,6 @@
 import Select from "react-select"
 import { Tag } from "./Tag"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useTranslations } from "../hooks/translations"
 import { useTagTranslation } from "../hooks/useTagTranslation"
 
@@ -25,12 +25,10 @@ export const FiltersDropdown = (props: FiltersDropdownProps) => {
   } = props
 
   const mappedTags = useMemo(() => {
-    const newTags = data.map((tag) => ({
+    return data.map((tag) => ({
       value: tag.id,
       label: getTranslation(tag),
     }))
-
-    return [{ value: 0, label: translation["filters"]["all"] }, ...newTags]
   }, [data])
 
   /* hax - without it value is not refreshed 🤷 */
@@ -44,9 +42,11 @@ export const FiltersDropdown = (props: FiltersDropdownProps) => {
       <Select
         instanceId="filters"
         options={mappedTags}
-        onChange={(tag: any) => onSelectFilter(tag.value)}
+        onChange={(tag: { value: number } | null) => onSelectFilter(tag?.value)}
         placeholder={placeholder}
         value={currentActiveTag}
+        isClearable
+        isSearchable={false}
       />
     </div>
   )

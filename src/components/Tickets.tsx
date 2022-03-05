@@ -84,8 +84,13 @@ export const Tickets = ({
   })
 
   const onTagClick = useCallback(
-    (tag: number) => {
-      router.query.tag = tag.toString()
+    (tag?: number) => {
+      if (tag) {
+        router.query.tag = tag.toString()
+      } else {
+        delete router.query.tag
+      }
+
       router.query.page = "1"
       router.push(router)
     },
@@ -101,7 +106,7 @@ export const Tickets = ({
   )
 
   const onWhereToClick = useCallback(
-    (tag: number) => {
+    (tag?: number) => {
       if (tag) {
         router.query.where_to = tag.toString()
       } else {
