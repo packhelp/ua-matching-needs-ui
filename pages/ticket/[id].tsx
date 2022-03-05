@@ -54,11 +54,13 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
   const { id } = router.query
 
   const metaTitle = useMemo(() => {
-    if (!ticket) { // default
+    if (!ticket) {
+      // default
       return translations.metaData.title
     }
 
-    const title = ticket.what || ticket.description || translations.metaData.title
+    const title =
+      ticket.what || ticket.description || translations.metaData.title
     const hasTags = ticket.need_tag_id && ticket.need_tag_id.length > 0
 
     if (hasTags) {
@@ -185,12 +187,15 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
         />
       </Head>
 
-      <section className={styles.wrapper} aria-labelledby="applicant-information-title">
+      <section
+        className={styles.wrapper}
+        aria-labelledby="applicant-information-title"
+      >
         <div className={styles.header}>
           <div className={styles.info}>
-             <span className="text-xs font-medium text-gray-500">
-               {translations["pages"]["ticket"]["needNumber"]} #{ticket.id}
-             </span>
+            <span className="text-xs font-medium text-gray-500">
+              {translations["pages"]["ticket"]["needNumber"]} #{ticket.id}
+            </span>
             {ticket.organization_id && (
               <div className={styles.verified}>
                 <svg
@@ -204,7 +209,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-xs font-medium">{translations["pages"]["ticket"]["verifiedOrganisation"]}</span>
+                <span className="text-xs font-medium">
+                  {translations["pages"]["ticket"]["verifiedOrganisation"]}
+                </span>
               </div>
             )}
           </div>
@@ -231,11 +238,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                   />
                 </svg>
                 <h3 className="text-sm font-medium text-red-800 uppercase">
-                  {
-                    translations["pages"]["ticket"][
-                      "warningTicketExpired"
-                      ]
-                  }
+                  {translations["pages"]["ticket"]["warningTicketExpired"]}
                 </h3>
               </div>
               <div className="ml-3">
@@ -245,21 +248,21 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                       {
                         translations["pages"]["ticket"][
                           "ticketExpiresAfterSetTime"
-                          ]
+                        ]
                       }
                     </li>
                     <li>
                       {
                         translations["pages"]["ticket"][
                           "requesterCanExpireTicketAtAnyTime"
-                          ]
+                        ]
                       }
                     </li>
                     <li>
                       {
                         translations["pages"]["ticket"][
                           "lookForAnotherTicketThanksForHelp"
-                          ]
+                        ]
                       }
                     </li>
                   </ul>
@@ -450,7 +453,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                     </dt>
                     <dd className="mt-1 text-lg text-gray-900 flex">
                       {ticketTags.map((tag) => {
-                        return <Tag tag={tag.need_tag_id} key={tag.need_tag_id.id}/>
+                        return (
+                          <Tag tag={tag.need_tag_id} key={tag.need_tag_id.id} />
+                        )
                       })}
                     </dd>
                   </div>

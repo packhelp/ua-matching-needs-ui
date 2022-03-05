@@ -3,7 +3,7 @@ import { translations } from "./translations"
 export enum LocaleDefinitions {
   PL = "pl-PL",
   UA = "uk-UA",
-  EN = "en-US"
+  EN = "en-US",
 }
 
 export enum LocaleFlags {
@@ -15,11 +15,18 @@ export enum LocaleFlags {
 export enum LocaleNames {
   "pl-PL" = "Polski",
   "uk-UA" = "український",
-  "en-US" = "English"
+  "en-US" = "English",
 }
 
-export type Locale = LocaleDefinitions.PL | LocaleDefinitions.UA | LocaleDefinitions.EN
-export const locales = [LocaleDefinitions.PL, LocaleDefinitions.UA, LocaleDefinitions.EN]
+export type Locale =
+  | LocaleDefinitions.PL
+  | LocaleDefinitions.UA
+  | LocaleDefinitions.EN
+export const locales = [
+  LocaleDefinitions.PL,
+  LocaleDefinitions.UA,
+  LocaleDefinitions.EN,
+]
 
 export enum RouteDefinitions {
   Main = "/",

@@ -377,23 +377,29 @@ const UA: Translation = {
     header: "FAQ",
     sectionOne: {
       title: "Що таке", // Czym jest https://potrzeby-ua.org?
-      description: "Платформа створена для покращення організації гуманітарної допомоги жертвам війни в Україні. Ви можете легко додати свій запит про будь-яку допомогу: якщо ви шукаєте квартиру для людей з України, вам потрібен транспорт з кордону, продукти чи ліки. Потім ви маєте додати своє місце розташування - тобто локацію на кордоні, звідки вас треба забрати, або пункт призначення, де ви шукаєте житло - і також свій контактний номер, за яким з Вами можуть зв'язатися. Після додавання інформації ми шукаємо організацію або людей, які можуть допомогти з вашим запитом.",
+      description:
+        "Платформа створена для покращення організації гуманітарної допомоги жертвам війни в Україні. Ви можете легко додати свій запит про будь-яку допомогу: якщо ви шукаєте квартиру для людей з України, вам потрібен транспорт з кордону, продукти чи ліки. Потім ви маєте додати своє місце розташування - тобто локацію на кордоні, звідки вас треба забрати, або пункт призначення, де ви шукаєте житло - і також свій контактний номер, за яким з Вами можуть зв'язатися. Після додавання інформації ми шукаємо організацію або людей, які можуть допомогти з вашим запитом.",
     },
     sectionTwo: {
       title: "Навіщо Вам надавати свій номер телефону? ",
-      description: "Ми дбаємо про оперативність нашої роботи та швидке вирішення питань. Тому нам потрібен Ваш контактний номер для того, щоб з‘єднатися з вами з метою допомоги згідно Вашого запиту. Ваш номер не буде зберігатися або використовуватися для будь-яких інших цілей",
+      description:
+        "Ми дбаємо про оперативність нашої роботи та швидке вирішення питань. Тому нам потрібен Ваш контактний номер для того, щоб з‘єднатися з вами з метою допомоги згідно Вашого запиту. Ваш номер не буде зберігатися або використовуватися для будь-яких інших цілей",
     },
     sectionThree: {
       title: "Чи можу я поділитися оголошенням? ",
-      description: "Так, ви можете поділитися усіма оголошеннями у Twitter, Telegram, Instagram, Facebook, а також прямим посиланням.",
+      description:
+        "Так, ви можете поділитися усіма оголошеннями у Twitter, Telegram, Instagram, Facebook, а також прямим посиланням.",
     },
     sectionFour: {
-      title: "Чи можу я безпосередньо зв'язатися з людьми, які потребують допомоги?",
-      description: "Так, зазначені номери призначені для того, щоб люди, які можуть надати необхідну допомогу, могли швидко зв'язатися з тими, хто її потребує.",
+      title:
+        "Чи можу я безпосередньо зв'язатися з людьми, які потребують допомоги?",
+      description:
+        "Так, зазначені номери призначені для того, щоб люди, які можуть надати необхідну допомогу, могли швидко зв'язатися з тими, хто її потребує.",
     },
     sectionFive: {
       title: "Чи видаляються оголошення автоматично? ",
-      description: "Так, через 24 години кожне оголошення автоматично видаляється. Також, якщо Ваша проблема вже вирішена, наприклад, вам вдалося знайти транспорт через кілька годин після публікації оголошення, ви можете видалити його самостійно.",
+      description:
+        "Так, через 24 години кожне оголошення автоматично видаляється. Також, якщо Ваша проблема вже вирішена, наприклад, вам вдалося знайти транспорт через кілька годин після публікації оголошення, ви можете видалити його самостійно.",
     },
     sectionSix: {
       title: "Де я можу знайти правила та умови веб-сайту? ",
@@ -402,11 +408,13 @@ const UA: Translation = {
     },
     sectionSeven: {
       title: "Чи стягується плата за використання платформи? ",
-      description: "Ні, платформа абсолютно безкоштовна. Наша мета – ефективно організувати гуманітарну допомогу.",
+      description:
+        "Ні, платформа абсолютно безкоштовна. Наша мета – ефективно організувати гуманітарну допомогу.",
     },
     sectionEight: {
       title: "Навіщо потрібні категорії? ",
-      description: "Категорії дозволяють більш точно визначити тип необхідної допомоги, а також ефективніше шукати потенційні повідомлення для людей, які хочуть допомогти.",
+      description:
+        "Категорії дозволяють більш точно визначити тип необхідної допомоги, а також ефективніше шукати потенційні повідомлення для людей, які хочуть допомогти.",
     },
   },
   filters: {
@@ -514,7 +522,8 @@ const EN: Translation = {
         "Your request has not been found or it's no longer active.",
       here: "here",
       errorOnRemove: "(Some) error occurred while deleting request.",
-      errorOnResolved: "(Some) error occurred while marking the request as handled.",
+      errorOnResolved:
+        "(Some) error occurred while marking the request as handled.",
       warningTicketExpired: "Caution: Request is no longer active!",
       ticketExpiresAfterSetTime:
         "Requests expire after the time determined by the person posting it",
@@ -549,8 +558,7 @@ const EN: Translation = {
       "address-or-gps":
         'Address or a link to Google Maps (for example: "Malczewskiego 5, Warsaw", "https://goo.gl/maps/7PstSRCaTDXsQkoW6")',
       "who-needs-it": "Who needs it?",
-      "name-surname-or-org-name":
-        "Your full name or name of the organisation",
+      "name-surname-or-org-name": "Your full name or name of the organisation",
       "request-added": "Request received!",
       "need-added": "Requed posted!",
       show_phone_public: "Show my phone number publicly",
@@ -571,13 +579,15 @@ const EN: Translation = {
     discord: "Discord",
     github: "Github",
     authors: "Authors of the platform:",
-    "in-cooperation-with": "The platform has been creared in collaboration with:",
+    "in-cooperation-with":
+      "The platform has been creared in collaboration with:",
   },
   partners: {
     "with-us": "Co-created with:",
   },
   errors: {
-    "error-occured-while-adding": "Error occurred while posting the request dodawania: ",
+    "error-occured-while-adding":
+      "Error occurred while posting the request dodawania: ",
   },
   auth: {
     "you-have-been-logged-out": "You have signed out",
@@ -600,8 +610,7 @@ const EN: Translation = {
         "Yes, you can share all reequests on Twitter, Telegram and Facebook as well as by sending a direct link.",
     },
     sectionFour: {
-      title:
-        "Can I contact people looking for help directly?",
+      title: "Can I contact people looking for help directly?",
       description:
         "Yes, the numbers provided are intended so that people who can provide the necessary help can contact you quickly and deal with their request.",
     },
@@ -624,13 +633,13 @@ const EN: Translation = {
       title: "What are the categories for?",
       description:
         "Categories allow for a more precise definition of the type of assistance needed, as well as a more efficient search for potential requests for people need help.",
-    }
+    },
   },
   filters: {
     selectNeeds: "Choose the type of your need",
     all: "All",
     whereFrom: "From where?",
-    whereTo: "To where?"
+    whereTo: "To where?",
   },
   menu: {
     open: "Open main menu",
@@ -642,12 +651,11 @@ const EN: Translation = {
   },
 }
 
-
 const getPL = () => PL
 type Translation = ReturnType<typeof getPL>
 
 export const translations = {
   "pl-PL": PL,
   "uk-UA": UA,
-  "en-US": EN
+  "en-US": EN,
 }
