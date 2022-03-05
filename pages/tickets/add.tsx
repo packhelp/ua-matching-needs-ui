@@ -31,9 +31,6 @@ import { useTagTranslation } from "../../src/hooks/useTagTranslation"
 import { getRootContainer } from "../../src/services/_root-container"
 import Select, { SingleValue } from "react-select"
 
-export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
-export const LOCAL_STORAGE_KEY_TAGS = "tags"
-
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
   tagsSelected: number[] | number | undefined
@@ -70,25 +67,13 @@ const TagsChooseForm = (props: {
   )
 }
 
-const getPreviouslySavedTags = () => {
-  if (typeof window !== "undefined") {
-    const json = localStorage.getItem(LOCAL_STORAGE_KEY_TAGS)
-    if (isJsonString(json)) {
-      return JSON.parse(json)
-    }
-  }
-
-  return []
-}
 const ticketService = getRootContainer().containers.ticketService
 const AddTicket: NextPage = () => {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const translations = useTranslations()
-  const previouslySavedTags = getPreviouslySavedTags()
   const { data: authSession, status: authStatus } = useSession()
-  const [tagsSelected, setTagsSelected] =
-    useState<number[]>(previouslySavedTags)
+  const [tagsSelected, setTagsSelected] = useState<number[]>([])
 
   const [whereFromTag, setWhereFromTag] = useState<number | undefined>(
     undefined
