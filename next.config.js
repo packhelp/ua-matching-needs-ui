@@ -7,7 +7,7 @@ verifyEnvs()
 const nextConfig = {
   reactStrictMode: true,
   i18n: {
-    locales: ["pl-PL", "uk-UA"],
+    locales: ["pl-PL", "uk-UA", "en-US"],
     defaultLocale: "pl-PL",
     localeDetection: false,
   },
