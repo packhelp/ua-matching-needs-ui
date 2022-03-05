@@ -2,15 +2,17 @@ import { Center, Spinner, Tooltip } from "@chakra-ui/react"
 import axios from "axios"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { useQuery, useQueryClient } from "react-query"
 import { useTranslations } from "../hooks/translations"
 import { RouteDefinitions } from "../utils/routes"
 import { TICKET_STATUS } from "../services/ticket.type"
 import { Tag } from "./Tag"
-import { FiltersDesktop, FiltersMobile } from "./Filters"
+import { FiltersBadges, FiltersDropdown } from "./Filters"
 import { getRootContainer } from "../services/_root-container"
 const ts = getRootContainer().containers.ticketService
+
+const TRANSPORT_TAG = 5
 export const Tickets = ({
   mineOnly,
   ticketStatus,
@@ -25,6 +27,12 @@ export const Tickets = ({
   const { locale } = router
   const [selectedTag, setSelectedTag] = useState(
     parseInt((router.query.tag as string) || "0")
+  )
+  const [whereToTag, setWhereToTag] = useState(
+    parseInt((router.query["where_to"] as string) || "0")
+  )
+  const [whereFromTag, setWhereFromTag] = useState(
+    parseInt((router.query["where_from"] as string) || "0")
   )
   const [queryKey] = useState("tickets")
 
@@ -44,6 +52,8 @@ export const Tickets = ({
             mineOnly: mineOnly,
             ticketStatus: ticketStatus,
             tagId: selectedTag,
+            whereFromTag: whereFromTag,
+            whereToTag: whereToTag,
           },
         })
         .then((response) => {
@@ -62,6 +72,10 @@ export const Tickets = ({
     return ts.mainTags()
   })
 
+  const { data: localisationTags = [] } = useQuery(`localisation-tags`, () => {
+    return ts.locationTags()
+  })
+
   const onTagClick = useCallback(
     (tag: number) => {
       router.query.tag = tag.toString()
@@ -70,15 +84,52 @@ export const Tickets = ({
     [router]
   )
 
-  useEffect(() => {
-    setSelectedTag(parseInt((router.query.tag as string) || "0"))
-  }, [router.query.tag, setSelectedTag])
+  const onWhereToClick = useCallback(
+    (tag: number) => {
+      router.query.where_to = tag.toString()
+      router.push(router)
+    },
+    [router]
+  )
+
+  const onWhereFromClick = useCallback(
+    (tag: number) => {
+      router.query.where_from = tag.toString()
+      router.push(router)
+    },
+    [router]
+  )
 
   useEffect(() => {
-    console.log("selectedTag :>> ", selectedTag)
+    const tag = parseInt((router.query.tag as string) || "0")
+    if (
+      tag !== TRANSPORT_TAG &&
+      (router.query.where_to || router.query.where_from)
+    ) {
+      delete router.query.where_to
+      delete router.query.where_from
+      router.push(router)
+    }
+    setSelectedTag(parseInt((router.query.tag as string) || "0"))
+  }, [router.query.tag])
+
+  useEffect(() => {
+    setWhereToTag(parseInt((router.query["where_to"] as string) || "0"))
+  }, [router.query["where_to"]])
+
+  useEffect(() => {
+    setWhereFromTag(parseInt((router.query["where_from"] as string) || "0"))
+  }, [router.query["where_from"]])
+
+  useEffect(() => {
     queryClient.cancelQueries(queryKey)
     void refetch()
-  }, [selectedTag, queryKey, refetch, queryClient])
+  }, [selectedTag, whereFromTag, whereFromTag, queryKey, refetch, queryClient])
+
+  const isTransport = useMemo(
+    () => selectedTag === TRANSPORT_TAG,
+    [selectedTag]
+  )
 
   return (
     <>
@@ -87,13 +138,40 @@ export const Tickets = ({
         {tickets && <span className="ml-2">({tickets.length})</span>}
       </h1>
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">
-        <FiltersMobile data={tags} onSelectFilter={onTagClick} />
+        <div className="block md:hidden">
+          <FiltersDropdown
+            data={tags}
+            onSelectFilter={onTagClick}
+            activeTag={selectedTag}
+          />
+        </div>
 
-        <FiltersDesktop
-          data={tags}
-          onSelectFilter={onTagClick}
-          activeTag={selectedTag}
-        />
+        <div className="text-center hidden md:block">
+          <FiltersBadges
+            data={tags}
+            onSelectFilter={onTagClick}
+            activeTag={selectedTag}
+          />
+        </div>
+
+        {isTransport && (
+          <div className="mx-auto md:max-w-xl md:mt-4">
+            <div className="md:grid grid-cols-2 gap-4">
+              <FiltersDropdown
+                data={localisationTags}
+                onSelectFilter={onWhereFromClick}
+                activeTag={whereFromTag}
+                placeholder={translations["filters"]["whereFrom"]}
+              />
+              <FiltersDropdown
+                data={localisationTags}
+                onSelectFilter={onWhereToClick}
+                activeTag={whereToTag}
+                placeholder={translations["filters"]["whereTo"]}
+              />
+            </div>
+          </div>
+        )}
 
         {isLoading || isRefetching ? (
           <Center h="100px" color="yellow.400">
