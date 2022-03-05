@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
 import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
+import { TICKET_LIST_FIELDS } from "../../src/utils/directus-fields"
 
 const getTicketsUrl = ({
   mineOnly,
@@ -14,7 +15,8 @@ const getTicketsUrl = ({
 }) => {
   const filters: { key: string; value: any }[] = []
   const baseUrl = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/`
-  const baseSettingsUrlPart = `&fields=*.*.*&sort[]=-date_created&limit=-1`
+  const fields = TICKET_LIST_FIELDS.join(",")
+  const baseSettingsUrlPart = `&fields=${fields}&sort[]=-date_created&limit=-1`
 
   if (ticketStatus) {
     filters.push({ key: "[ticket_status]", value: ticketStatus })
@@ -25,7 +27,7 @@ const getTicketsUrl = ({
   if (tagId && tagId !== "0") {
     filters.push({ key: "[need_tag_id][need_tag_id][id]", value: tagId })
   }
-  console.log("whereFromTag :>> ", whereFromTag)
+
   if (whereFromTag && whereFromTag !== "0") {
     filters.push({
       key: "[where_from_tag][id]",

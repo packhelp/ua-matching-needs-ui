@@ -9,6 +9,7 @@ import axios from "axios"
 import { isTicketActive } from "../ticket/[id]"
 import { RouteDefinitions } from "../../src/utils/routes"
 import { TICKET_STATUS } from "../../src/services/ticket.type"
+import { TICKET_LIST_FIELDS } from "../../src/utils/directus-fields"
 
 const isActiveWithSingleLocation = (ticket: any): boolean => {
   return (
@@ -19,7 +20,8 @@ const isActiveWithSingleLocation = (ticket: any): boolean => {
 }
 
 const getAllActiveTicketsWithLocation = async () => {
-  const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status][_eq]=${TICKET_STATUS.ACTIVE}&fields=*.*.*&sort[]=-date_created`
+  const fields = TICKET_LIST_FIELDS.join(",")
+  const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status][_eq]=${TICKET_STATUS.ACTIVE}&fields=${fields}&sort[]=-date_created`
 
   return axios
     .get(url)
