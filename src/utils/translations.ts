@@ -200,6 +200,8 @@ const PL = {
   filters: {
     selectNeeds: "Wybierz rodzaj potrzeby",
     all: "Wszystkie",
+    whereFrom: "Skąd?",
+    whereTo: "Dokąd?",
   },
   menu: {
     open: "Open main menu",
@@ -402,6 +404,8 @@ const UA: Translation = {
   filters: {
     selectNeeds: "Виберіть тип потреби",
     all: "всі",
+    whereFrom: "Звідки?",
+    whereTo: "Куди?",
   },
   menu: {
     open: "Open main menu",
