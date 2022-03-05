@@ -223,15 +223,6 @@ const AddTicket: NextPage = () => {
     }
   }
 
-  const toggleLocationTag = (tagId: number) => {
-    setWhereFromTag(tagId)
-    // if (selectedLocationTags.includes(tagId)) {
-    //   setSelectedLocationTags(selectedLocationTags.filter((id) => id !== tagId))
-    // } else {
-    //   setSelectedLocationTags([...selectedLocationTags, tagId])
-    // }
-  }
-
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Container className="px-4 py-5 sm:p-6">
