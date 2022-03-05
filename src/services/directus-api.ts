@@ -1,4 +1,4 @@
-import { TICKET_STATUS, TicketDetails } from "./ticket.type"
+import { TicketDetailsType, TICKET_STATUS } from "./ticket.type"
 import axios, { AxiosRequestConfig, AxiosInstance } from "axios"
 
 export function directusApiInstance(): AxiosInstance {
@@ -17,7 +17,7 @@ export function directusApiInstance(): AxiosInstance {
 export class TicketService {
   constructor(private api: AxiosInstance) {}
 
-  public async ticket(id: number): Promise<TicketDetails | null> {
+  public async ticket(id: number): Promise<TicketDetailsType | null> {
     try {
       const response = await this.api.get(`/items/need/${id}`)
       const { data } = response.data
@@ -34,8 +34,8 @@ export class TicketService {
 
   public async update(
     id: number,
-    patch: Partial<TicketDetails>
-  ): Promise<TicketDetails | null> {
+    patch: Partial<TicketDetailsType>
+  ): Promise<TicketDetailsType | null> {
     const response = await this.api.patch(`/items/need/${id}`, patch)
     const { data } = response.data
     return data
@@ -43,7 +43,7 @@ export class TicketService {
 
   public async getTicketDataFromEndpoint(
     id: number
-  ): Promise<TicketDetails | null> {
+  ): Promise<TicketDetailsType | null> {
     const url = `/items/need/${id}?fields=*.*.*`
 
     try {

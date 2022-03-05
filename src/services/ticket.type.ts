@@ -49,4 +49,4 @@ export type TicketData = TicketFormData & {
   visits: number
 }
 
-export type TicketDetails = TicketPostData & TicketData
+export type TicketDetailsType = TicketPostData & TicketData

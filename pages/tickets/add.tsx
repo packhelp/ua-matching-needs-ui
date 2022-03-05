@@ -32,6 +32,33 @@ import {
 export const LOCAL_STORAGE_KEY_TICKET_DATA = "ticket_data"
 export const LOCAL_STORAGE_KEY_TAGS = "tags"
 
+export type Organization = {
+  id: number
+  name: string
+}
+
+export enum TICKET_STATUS {
+  ACTIVE = "ACTIVE",
+  SOLVED = "SOLVED",
+  EXPIRED = "EXPIRED",
+  DELETED = "DELETED",
+  CANCELED = "CANCELED",
+  HIDDEN = "HIDDEN",
+}
+
+export type TicketData = TicketFormData & {
+  id: number
+  expirationTimestampSane: string
+  date_created: number
+  ticket_status: TICKET_STATUS
+  organization_id?: Organization
+  description: string
+  need_tag_id: {
+    need_tag_id: NeedTagType
+  }[]
+  visits: number
+}
+
 const saveForFurtherUsage = (data: TicketFormData, tagsSelected: number[]) => {
   localStorage.setItem(LOCAL_STORAGE_KEY_TICKET_DATA, JSON.stringify(data))
   localStorage.setItem(LOCAL_STORAGE_KEY_TAGS, JSON.stringify(tagsSelected))
