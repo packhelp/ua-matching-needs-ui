@@ -132,7 +132,7 @@ export const Tickets = ({
   useEffect(() => {
     queryClient.cancelQueries(queryKey)
     void refetch()
-  }, [selectedTag, whereFromTag, whereFromTag, queryKey, refetch, queryClient])
+  }, [selectedTag, whereToTag, whereFromTag, queryKey, refetch, queryClient])
 
   const isTransport = useMemo(
     () => selectedTag === TRANSPORT_TAG,
