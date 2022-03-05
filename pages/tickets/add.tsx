@@ -121,7 +121,7 @@ const AddTicket: NextPage = () => {
         has_pets,
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
-
+      
       let newTicketData = {
         phone,
         description: what,
@@ -140,7 +140,7 @@ const AddTicket: NextPage = () => {
         // so make sure it works correctly.
         adults: adults ? adults : 0,
         children: children ? children : 0,
-        has_pets: has_pets.toString(),
+        has_pets: !has_pets ? "0" : "1",
       }
       // if trip
       if (whereFromTag || whereToTag) {
