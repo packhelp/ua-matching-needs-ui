@@ -15,10 +15,13 @@ const Partners: NextPage = () => {
       </h1>
       <div className={styles.wrapper}>
         <Link href={externalUrls.techtotherescue} className={styles.link}>
-          <Image src={logotypes.techToTheRescue} />
+          <Image
+            src={logotypes.techToTheRescue}
+            alt="tech to the rescue icon"
+          />
         </Link>
         <Link href={externalUrls.castlerave} className={styles.link}>
-          <Image src={logotypes.castleRave} />
+          <Image src={logotypes.castleRave} alt="castle rave icon" />
         </Link>
       </div>
     </>

@@ -8,7 +8,8 @@ import { useTranslations } from "../hooks/translations"
 import { RouteDefinitions } from "../utils/routes"
 import { TICKET_STATUS } from "../services/ticket.type"
 import { Tag } from "./Tag"
-import { TagsFilter } from "./TagsFilter"
+import { getMainTags } from "../utils/tags"
+import { FiltersDesktop, FiltersMobile } from "./Filters"
 
 export const Tickets = ({
   mineOnly,
@@ -19,7 +20,7 @@ export const Tickets = ({
   ticketStatus: TICKET_STATUS
   title: string
 }) => {
-  const [tagIdFilter, setTagIdFilter] = useState<number | undefined>(undefined)
+  const [selectedTag, setSelectedTag] = useState(0)
   const { locale } = useRouter()
   const translations = useTranslations()
 
@@ -35,18 +36,21 @@ export const Tickets = ({
         params: {
           mineOnly: mineOnly,
           ticketStatus: ticketStatus,
-          tagId: tagIdFilter,
+          tagId: selectedTag,
         },
       })
       .then((response) => {
-        console.log(response.data)
         return response.data
       })
   })
 
+  const { data: tags = [] } = useQuery(`main-tags`, () => {
+    return getMainTags()
+  })
+
   useEffect(() => {
     void refetch()
-  }, [tagIdFilter])
+  }, [selectedTag])
 
   return (
     <>
@@ -55,7 +59,13 @@ export const Tickets = ({
         {tickets && <span className="ml-2">({tickets.length})</span>}
       </h1>
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">
-        <TagsFilter currentTagId={tagIdFilter} onChangeTag={setTagIdFilter} />
+        <FiltersMobile data={tags} onSelectFilter={setSelectedTag} />
+
+        <FiltersDesktop
+          data={tags}
+          onSelectFilter={setSelectedTag}
+          activeTag={selectedTag}
+        />
 
         {isLoading && (
           <Center h="100px" color="yellow.400">
@@ -78,13 +88,16 @@ export const Tickets = ({
               )
 
               return (
-                <Link key={ticket.id} href={ticketUrl} locale={locale}>
-                  <a
-                    className={`ticket-item ${
-                      ticket.organization_id ? "verified" : ""
-                    }`}
-                  >
-                    <li className="ticket-item__content bg-white rounded-lg shadow outline-blue-200  col-span-1 divide-y divide-gray-200">
+                <li
+                  key={ticket.id}
+                  className="ticket-item__content bg-white rounded-lg shadow outline-blue-200  col-span-1 divide-y divide-gray-200"
+                >
+                  <Link href={ticketUrl} locale={locale}>
+                    <a
+                      className={`ticket-item ${
+                        ticket.organization_id ? "verified" : ""
+                      }`}
+                    >
                       <div className="px-4 py-5 border-gray-200 sm:px-6">
                         <div className="mb-2">
                           <p className="flex max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
@@ -199,58 +212,57 @@ export const Tickets = ({
                           </div>
                         </dl>
                       </div>
+                    </a>
+                  </Link>
 
-                      <div>
-                        <div className="flex -mt-px divide-x divide-gray-200">
-                          <div className="flex flex-1 w-0">
-                            <a
-                              href={ticketUrl}
-                              className="relative inline-flex items-center justify-center flex-1 w-0 py-3 -mr-px text-sm font-medium text-gray-700 border border-transparent rounded-bl-lg hover:text-gray-500"
+                  <div>
+                    <div className="flex -mt-px divide-x divide-gray-200">
+                      <div className="flex flex-1 w-0">
+                        <Link href={ticketUrl} locale={locale}>
+                          <a className="relative inline-flex items-center justify-center flex-1 w-0 py-3 -mr-px text-sm font-medium text-gray-700 border border-transparent rounded-bl-lg hover:text-gray-500">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-5 h-5 text-gray-400"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
                             >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-5 h-5 text-gray-400"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
-                              <span className="ml-3">
-                                {translations["pages"]["ticket"]["details"]}
-                              </span>
-                            </a>
-                          </div>
-
-                          {ticket.phone_public && (
-                            <div className="flex flex-1 w-0 -ml-px">
-                              <a
-                                href={`tel:${ticket.phone}`}
-                                className="relative inline-flex items-center justify-center flex-1 w-0 py-3 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500"
-                              >
-                                <svg
-                                  className="w-5 h-5 text-gray-400"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                  aria-hidden="true"
-                                >
-                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                </svg>
-                                <span className="ml-3">{ticket.phone}</span>
-                              </a>
-                            </div>
-                          )}
-                        </div>
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                            <span className="ml-3">
+                              {translations["pages"]["ticket"]["details"]}
+                            </span>
+                          </a>
+                        </Link>
                       </div>
-                    </li>
-                  </a>
-                </Link>
+
+                      {ticket.phone_public && (
+                        <div className="flex flex-1 w-0 -ml-px">
+                          <a
+                            href={`tel:${ticket.phone}`}
+                            className="relative inline-flex items-center justify-center flex-1 w-0 py-3 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500"
+                          >
+                            <svg
+                              className="w-5 h-5 text-gray-400"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                            </svg>
+                            <span className="ml-3">{ticket.phone}</span>
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
               )
             })}
         </ul>

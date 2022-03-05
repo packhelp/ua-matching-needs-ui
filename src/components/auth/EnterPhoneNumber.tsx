@@ -64,7 +64,13 @@ export const EnterPhoneNumber = ({
       <Container className="px-4 py-5 sm:p-6">
         <form onSubmit={submitForm}>
           <Center>
-            <Image src="/phone-login.svg" maxW="300px" mb="30px" mt="20px" />
+            <Image
+              src="/phone-login.svg"
+              maxW="300px"
+              mb="30px"
+              mt="20px"
+              alt="phone login"
+            />
           </Center>
 
           <Heading as="h1" size="1xl" mb={4}>

@@ -195,6 +195,10 @@ const PL = {
         "Kategorie pozwalają na precyzyjniejsze określenie rodzaju potrzebnej pomocy, a także sprawniejszemu wyszukiwaniu potencjalnych zgłoszeń dla osób chcących pomóc.",
     },
   },
+  filters: {
+    selectNeeds: "Wybierz rodzaj potrzeby",
+    all: "Wszystkie",
+  },
   menu: {
     open: "Open main menu",
   },
@@ -390,6 +394,10 @@ const UA: Translation = {
       title: "<miss_translation>",
       description: "<miss_translation>",
     },
+  },
+  filters: {
+    selectNeeds: "Виберіть тип потреби",
+    all: "всі",
   },
   menu: {
     open: "Open main menu",

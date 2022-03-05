@@ -1,5 +1,6 @@
 import React from "react"
 const Color = require("color")
+import { useTagTranslation } from "../../pages/tickets/add"
 
 export const Tag = ({
   tag,
@@ -16,6 +17,8 @@ export const Tag = ({
   active?: boolean
   className?: string
 }) => {
+  const { getTranslation } = useTagTranslation()
+
   const backgroundColor = Color(tag.background_color || "#f2c94c")
   const lightness = backgroundColor.isLight() ? 20 : 80
   const foregroundColor = backgroundColor.lightness(lightness)
@@ -45,7 +48,7 @@ export const Tag = ({
       style={active ? activeStyles : inactiveStyles}
       onClick={onClickTag}
     >
-      {tag.name}
+      {getTranslation(tag)}
     </span>
   )
 }

@@ -49,6 +49,7 @@ export const isTicketActive = (ticket: TicketDetails): boolean => {
   return ticket.ticket_status === TICKET_STATUS.ACTIVE
 }
 
+//Q: CAN WE DELETE THIS?
 export const Tags = ({ tags }: { tags: TicketDetails["need_tag_id"] }) => {
   if (!tags) return <></>
 
@@ -149,7 +150,6 @@ const TicketDetails: NextPage<{ ticket: TicketDetails }> = ({ ticket }) => {
   }, [id])
 
   const metaTitle = useMemo(() => {
-    const translations = useTranslations()
     if (!ticket) {
       return translations.metaData.title
     }
