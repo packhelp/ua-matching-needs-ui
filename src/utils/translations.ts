@@ -169,7 +169,7 @@ const PL = {
     sectionTwo: {
       title: "Dlaczego podaję swój numer telefonu?",
       description:
-        "Zależy nam na sprawnym działaniu oraz szybkim rozwiązywaniu zapytań. Dlatego potrzebujemy numeru kontaktowego jedynie w celach określonych w opisie Twojej potrzeby. Twój numer nie zostaje przetrzymany ani nie będzie wykorzystany w żadnym innym celu.",
+        "Zależy nam na sprawnym działaniu oraz szybkim rozwiązywaniu zapytań. Dlatego potrzebujemy numeru kontaktowego jedynie w celach określonych w opisie Twojej potrzeby. Używamy również numeru do potwierdzenia (poprzez wysłanie kodu SMS), że jesteś prawdziwą osobą, a nie np. botem, aby bronić się przed spamem i podobnymi aktywnościami. Twój numer nie zostaje przetrzymany ani nie będzie wykorzystany w żadnym innym celu.",
     },
     sectionThree: {
       title: "Czy mogę udostępniać trwające zgłoszenia?",
@@ -428,7 +428,7 @@ const UA: Translation = {
     whereTo: "Куди?",
   },
   menu: {
-    open: "Open main menu",
+    open: "Відкрити головне меню",
   },
   metaData: {
     title: "Допоможемо Україні!",
