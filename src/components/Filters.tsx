@@ -1,6 +1,6 @@
 import Select from "react-select"
 import { Tag } from "./Tag"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useTranslations } from "../hooks/translations"
 import { useTagTranslation } from "../hooks/useTagTranslation"
 

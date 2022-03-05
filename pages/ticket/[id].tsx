@@ -16,7 +16,7 @@ import { useMutation } from "react-query"
 import axios from "axios"
 import { RouteDefinitions } from "../../src/utils/routes"
 import Head from "next/head"
-import React, { useEffect, useMemo } from "react"
+import React, { useMemo } from "react"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
@@ -27,13 +27,13 @@ import {
 } from "../../src/services/ticket.type"
 import { getRootContainer } from "../../src/services/_root-container"
 import styles from "./ticket.module.scss"
+import { useTagTranslation } from "../../src/hooks/useTagTranslation"
 
 export const isTicketActive = (ticket: TicketDetailsType): boolean => {
   return ticket.ticket_status === TICKET_STATUS.ACTIVE
 }
 
-//Q: CAN WE DELETE THIS?
-export const Tags = ({ tags }: { tags: TicketDetailsType["need_tag_id"] }) => {
+const Tags = ({ tags }: { tags: TicketDetailsType["need_tag_id"] }) => {
   if (!tags) return <></>
 
   return (
@@ -73,6 +73,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
   const router = useRouter()
   const translations = useTranslations()
   const finalLocale = useFinalLocale()
+  const { getTranslation } = useTagTranslation()
 
   const { id } = router.query
 
@@ -175,7 +176,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
   if (typeof window !== "undefined") {
     ticketUrl = window.location.href
   }
-  const ticketTags = TicketDetails["need_tag_id"]
+  const ticketTags = ticket.need_tag_id
 
   let title = ticket.what ? ticket.what : ticket.description
 
@@ -471,19 +472,21 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                     <dt className="text-sm font-medium text-gray-500">
                       {translations["pages"]["ticket"]["helpType"]}
                     </dt>
-                    <dd className="mt-1 text-lg text-gray-900">
+                    <dd className="mt-1 text-lg text-gray-900 flex">
                       {ticketTags.map((tag) => {
                         return (
                           tag.need_tag_id &&
                           tag.need_tag_id.name && (
-                            <div>
+                            <div key={tag.need_tag_id.id} className="mr-2">
                               <Tag
                                 colorScheme="yellow"
                                 variant="solid"
                                 borderRadius="full"
                               >
                                 <Text fontWeight="600" size="lg">
-                                  {tag.need_tag_id.name}
+                                  {
+                                    getTranslation(tag.need_tag_id)
+                                  }
                                 </Text>
                               </Tag>
                             </div>

@@ -121,7 +121,7 @@ const AddTicket: NextPage = () => {
         has_pets,
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
-      
+
       let newTicketData = {
         phone,
         description: what,
