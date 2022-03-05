@@ -77,23 +77,20 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
   const { id } = router.query
 
   const metaTitle = useMemo(() => {
-    if (!ticket) {
+    if (!ticket) { // default
       return translations.metaData.title
+    }
+
+    const title = ticket.what || ticket.description || translations.metaData.title
+    const hasTags = ticket.need_tag_id && ticket.need_tag_id.length > 0
+
+    if (hasTags) {
+      const firstTag = ticket.need_tag_id[0].need_tag_id.name
+      return truncate(`${firstTag}: ${title}`, 60)
     }
 
     const i18n = translations["pages"]["ticket"]["metaTitle"]
-    const tagList = ticket.need_tag_id || []
-    const tag = tagList[0]?.need_tag_id?.name || ""
-    const where = ticket.where || ""
-
-    if (!tag && !where) {
-      return translations.metaData.title
-    }
-
-    const spacer = tag && where ? " - " : ""
-    const title = `${i18n["need"]}: ${tag}${spacer}${where} | ${i18n["cta"]}`
-
-    return title
+    return truncate(`${i18n["need"]}: ${title}`, 60)
   }, [ticket, finalLocale])
 
   const metaDescription = useMemo(() => {
@@ -101,10 +98,11 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
       return translations.metaData.description
     }
 
-    return truncate(
-      ticket.description || ticket.what || translations.metaData.description,
-      100
-    )
+    const description = ticket.where
+      ? `📍 ${ticket.where}`
+      : translations.metaData.description
+
+    return truncate(description, 100)
   }, [ticket])
 
   const removeTicketMutation = useMutation<number, NextError, number>(
