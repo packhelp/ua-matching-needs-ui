@@ -19,6 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    margin-bottom: 0.5rem;
+
     @media (max-width: 768px) {
         flex-direction: column;
         justify-content: flex-start;

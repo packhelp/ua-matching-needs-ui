@@ -213,7 +213,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
       <section className={styles.wrapper} aria-labelledby="applicant-information-title">
         <div className={styles.header}>
           <div className={styles.info}>
-             <span className="text-sm font-medium text-gray-500">
+             <span className="text-xs font-medium text-gray-500">
                {translations["pages"]["ticket"]["needNumber"]} #{ticket.id}
              </span>
             {ticket.organization_id && (
@@ -229,7 +229,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-sm font-medium">{translations["pages"]["ticket"]["verifiedOrganisation"]}</span>
+                <span className="text-xs font-medium">{translations["pages"]["ticket"]["verifiedOrganisation"]}</span>
               </div>
             )}
           </div>
