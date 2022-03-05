@@ -80,7 +80,7 @@ const PL = {
       howMuchIsNeeded: "Ile potrzeba?",
       needActiveTill: "Zgłoszenie aktywne do",
       views: "Odsłon",
-      needNumber: "Numer zgłoszenia",
+      needNumber: "Zgłoszenie",
       details: "Szczegóły",
       ticketRemovedAddNew: "Ogłoszenie usunięte. Mozesz dodać kolejne.",
       ticketSolvedAddNew:
