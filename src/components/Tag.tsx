@@ -39,7 +39,7 @@ export const Tag = ({
   return (
     <span
       key={tag.id}
-      className={`flex-shrink-0 inline-block px-2 py-0.5 text-xs font-medium rounded-full mb-1 mr-1 ${
+      className={`flex-shrink-0 inline-block px-2 py-0.5 text-xs font-medium rounded-full mr-1 my-1 ${
         className ? className : ""
       }`}
       style={active ? activeStyles : inactiveStyles}
