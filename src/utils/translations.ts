@@ -355,7 +355,7 @@ const UA: Translation = {
     "in-cooperation-with": "Сервіс був створений у співпраці з:",
   },
   partners: {
-    "with-us": "Współpracują z nami",
+    "with-us": "Вони працюють з нами",
   },
   errors: {
     "error-occured-while-adding": "Під час додавання сталася помилка:",
