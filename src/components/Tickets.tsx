@@ -10,6 +10,7 @@ import { TICKET_STATUS } from "../services/ticket.type"
 import { Tag } from "./Tag"
 import { FiltersDesktop, FiltersMobile } from "./Filters"
 import { getRootContainer } from "../services/_root-container"
+import ReactPaginate from "react-paginate"
 const ts = getRootContainer().containers.ticketService
 export const Tickets = ({
   mineOnly,
@@ -26,10 +27,13 @@ export const Tickets = ({
   const [selectedTag, setSelectedTag] = useState(
     parseInt((router.query.tag as string) || "0")
   )
+  const [selectedPage, setSelectedPage] = useState(
+    Number(router.query.page) || 1
+  )
   const [queryKey] = useState("tickets")
 
   const {
-    data: tickets,
+    data: ticketsData,
     isLoading,
     isRefetching,
     refetch,
@@ -44,9 +48,11 @@ export const Tickets = ({
             mineOnly: mineOnly,
             ticketStatus: ticketStatus,
             tagId: selectedTag,
+            page: selectedPage,
           },
         })
         .then((response) => {
+          console.log(response.data)
           return response.data
         })
     },
@@ -56,6 +62,7 @@ export const Tickets = ({
       refetchOnMount: false,
     }
   )
+
   const queryClient = useQueryClient()
 
   const { data: tags = [] } = useQuery(`main-tags`, () => {
@@ -65,6 +72,15 @@ export const Tickets = ({
   const onTagClick = useCallback(
     (tag: number) => {
       router.query.tag = tag.toString()
+      router.query.page = "1"
+      router.push(router)
+    },
+    [router]
+  )
+
+  const onPageClick = useCallback(
+    (page: number) => {
+      router.query.page = page.toString()
       router.push(router)
     },
     [router]
@@ -75,16 +91,22 @@ export const Tickets = ({
   }, [router.query.tag, setSelectedTag])
 
   useEffect(() => {
+    setSelectedPage(parseInt(router.query.page as string) || 1)
+  }, [router.query.page, setSelectedPage])
+
+  useEffect(() => {
     console.log("selectedTag :>> ", selectedTag)
     queryClient.cancelQueries(queryKey)
     void refetch()
-  }, [selectedTag, queryKey, refetch, queryClient])
+  }, [selectedTag, selectedPage, queryKey, refetch, queryClient])
 
   return (
     <>
       <h1 className="my-4 text-3xl font-semibold text-center">
         {title}
-        {tickets && <span className="ml-2">({tickets.length})</span>}
+        {ticketsData?.meta && (
+          <span className="ml-2">({ticketsData.meta.filter_count})</span>
+        )}
       </h1>
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">
         <FiltersMobile data={tags} onSelectFilter={onTagClick} />
@@ -104,8 +126,8 @@ export const Tickets = ({
             role="list"
             className="my-4 grid align-center grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
           >
-            {tickets &&
-              tickets.map((ticket) => {
+            {ticketsData?.tickets &&
+              ticketsData.tickets.map((ticket) => {
                 const dateFormatted = new Date(
                   ticket.date_created
                 ).toLocaleString("pl-PL")
@@ -297,6 +319,54 @@ export const Tickets = ({
                 )
               })}
           </ul>
+        )}
+
+        {ticketsData?.meta && (
+          <div className="flex justify-center mt-5">
+            <ReactPaginate
+              breakLabel="..."
+              previousLabel={
+                <svg
+                  className="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              }
+              nextLabel={
+                <svg
+                  className="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              }
+              onPageChange={(page) => onPageClick(page.selected + 1)}
+              pageRangeDisplayed={3}
+              marginPagesDisplayed={1}
+              pageCount={ticketsData.meta.page_count}
+              containerClassName="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+              breakLinkClassName="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+              pageLinkClassName="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+              activeLinkClassName="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+              previousLinkClassName="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              nextLinkClassName="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            />
+          </div>
         )}
       </div>
     </>
