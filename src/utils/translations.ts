@@ -662,4 +662,5 @@ type Translation = typeof PL
 export const translations = {
   "pl-PL": PL,
   "uk-UA": UA,
+  "en-US": EN,
 }
