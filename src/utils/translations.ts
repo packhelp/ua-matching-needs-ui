@@ -108,7 +108,7 @@ const PL = {
       "add-need": "Dodaj potrzebę",
       adults: "Dorosłych",
       adultsHint: "Liczba osób",
-      adultsAge: "> 12 lat <",
+      adultsAge: "> 12 lat",
       children: "Dzieci",
       childrenHint: "Liczba dzieci",
       childrenAge: "< 12 lat",

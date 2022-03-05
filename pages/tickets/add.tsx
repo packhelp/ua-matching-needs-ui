@@ -371,7 +371,7 @@ const AddTicket: NextPage = () => {
               />
             </Stack>
 
-            <div className="h-4 hidden mb:block"/>
+            <div className="h-4 hidden md:block"/>
 
             <Stack>
               <Heading as={"h2"} size={"l"}>
