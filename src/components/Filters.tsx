@@ -27,6 +27,7 @@ export const FiltersMobile = (props: FiltersProps) => {
   return (
     <div className="block md:hidden">
       <Select
+        instanceId="filters"
         defaultValue={0}
         options={mappedTags}
         onChange={(tag: any) => onSelectFilter(tag.value)}
