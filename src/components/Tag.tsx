@@ -9,8 +9,8 @@ export const Tag = ({
   active = true,
   className,
 }: {
-  tag: Pick<NeedTagType, "id" | "name" | "background_color">
-  onClick?: (tagId: number) => void
+  tag: Partial<NeedTagType>
+  onClick?: (tagId: number | undefined) => void
   active?: boolean
   className?: string
 }) => {

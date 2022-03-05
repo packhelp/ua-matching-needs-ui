@@ -1,4 +1,4 @@
-import { Text, Stack, Tag, Link, Tooltip } from "@chakra-ui/react"
+import { Link, Tooltip } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
 import truncate from "truncate"
@@ -28,36 +28,12 @@ import {
 import { getRootContainer } from "../../src/services/_root-container"
 import styles from "./ticket.module.scss"
 import { useTagTranslation } from "../../src/hooks/useTagTranslation"
+import { Tag } from "../../src/components/Tag"
 
 export const isTicketActive = (ticket: TicketDetailsType): boolean => {
   return ticket.ticket_status === TICKET_STATUS.ACTIVE
 }
 
-const Tags = ({ tags }: { tags: TicketDetailsType["need_tag_id"] }) => {
-  if (!tags) return <></>
-
-  return (
-    <Stack mb={2}>
-      <Text color={"grey.200"} fontSize={"sm"}>
-        Rodzaj pomocy?
-      </Text>
-      {tags.map((tag) => {
-        return (
-          tag.need_tag_id &&
-          tag.need_tag_id.name && (
-            <div>
-              <Tag colorScheme="yellow" variant="solid" borderRadius="full">
-                <Text fontWeight="600" size="lg">
-                  {tag.need_tag_id.name}
-                </Text>
-              </Tag>
-            </div>
-          )
-        )
-      })}
-    </Stack>
-  )
-}
 const root = getRootContainer()
 const ticketService = root.containers.ticketService
 
@@ -474,23 +450,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                     </dt>
                     <dd className="mt-1 text-lg text-gray-900 flex">
                       {ticketTags.map((tag) => {
-                        return (
-                          tag.need_tag_id && (
-                            <div key={tag.need_tag_id.id} className="mr-2">
-                              <Tag
-                                colorScheme="yellow"
-                                variant="solid"
-                                borderRadius="full"
-                              >
-                                <Text fontWeight="600" size="lg">
-                                  {
-                                    getTranslation(tag.need_tag_id)
-                                  }
-                                </Text>
-                              </Tag>
-                            </div>
-                          )
-                        )
+                        return <Tag tag={tag.need_tag_id} key={tag.need_tag_id.id}/>
                       })}
                     </dd>
                   </div>
