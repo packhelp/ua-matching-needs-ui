@@ -425,7 +425,7 @@ const UA: Translation = {
   },
 }
 
-const EN = {
+const EN: Translation = {
   "/tickets/add": "Post your request",
   "/tickets/active": "Requests",
   "/tickets/active/mine": "My requests",
@@ -532,8 +532,12 @@ const EN = {
     "add-ticket": {
       "add-need": "Post a request",
       adults: "Adults",
-      "adults-hint": "Number of people older than 12",
+      adultsHint: "Number of people",
+      adultsAge: "> 12 years",
       children: "Children",
+      childrenHint: "Number of children",
+      childrenAge: "< 12 years",
+      chooseLocation: "Choose location",
       "has-pets": "Animals",
       "children-hint": "Number of people younger than 12",
       "what-do-you-need": "What is it that you need?",
@@ -555,8 +559,8 @@ const EN = {
     },
   },
   "sign-out": "Sign out",
-  title: "Terms and Conditions",
   "terms-of-service": {
+    title: "Terms of Service",
     "title-alternate": "Terms and Conditions",
     agreemenent:
       "Posting a request means that you accept the Terms and Conditions of the platform.",
@@ -625,6 +629,8 @@ const EN = {
   filters: {
     selectNeeds: "Choose the type of your need",
     all: "All",
+    whereFrom: "From where?",
+    whereTo: "To where?"
   },
   menu: {
     open: "Open main menu",
