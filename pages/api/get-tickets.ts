@@ -5,7 +5,7 @@ import { withSentry } from "@sentry/nextjs"
 import _ceil from "lodash/ceil"
 import { TICKET_LIST_FIELDS } from "../../src/utils/directus-fields"
 
-const TICKETS_PER_PAGE = 30
+const TICKETS_PER_PAGE = 60
 
 const getTicketsUrl = ({
   mineOnly,
