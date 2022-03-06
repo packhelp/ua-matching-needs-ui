@@ -34,12 +34,12 @@ export interface LocationTag {
 }
 
 export enum TICKET_STATUS {
-  ACTIVE = "ACTIVE",
-  SOLVED = "SOLVED",
-  EXPIRED = "EXPIRED",
-  DELETED = "DELETED",
-  CANCELED = "CANCELED",
-  HIDDEN = "HIDDEN",
+  ACTIVE = "active",
+  SOLVED = "solved",
+  EXPIRED = "expired",
+  DELETED = "deleted",
+  CANCELED = "canceled",
+  HIDDEN = "hidden",
 }
 
 export type TicketFormData = {
