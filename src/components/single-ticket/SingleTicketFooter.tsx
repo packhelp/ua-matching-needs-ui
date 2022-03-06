@@ -87,7 +87,7 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
                 text-white"
             >
-              {translations["pages"]["ticket"]["call"]} {ticket.phone}
+              {translations["pages"]["ticket"]["call"]} {ticket.phone}{" "}
               <svg
                 className="ml-3 -mr-1 h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
