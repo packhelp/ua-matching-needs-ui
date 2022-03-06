@@ -13,7 +13,7 @@ import { getRootContainer } from "../services/_root-container"
 import ReactPaginate from "react-paginate"
 const ts = getRootContainer().containers.ticketService
 
-const TRANSPORT_TAG = 5
+export const TRANSPORT_TAG = 5
 
 export const Tickets = ({
   mineOnly,
