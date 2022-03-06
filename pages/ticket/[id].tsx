@@ -138,7 +138,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
     (id: number) => {
       return axios.post(`/api/set-ticket-to-claimed`, {
         id: id,
-        date_claimed: Date.now(),
+        // date_claimed: Date.now(),
       })
     },
     {

@@ -14,11 +14,11 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   }
 
   try {
-    const response = await axios.post(
+    const response = await axios.patch(
       `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
       {
         ticket_status: TICKET_STATUS.CLAIMED,
-        date_claimed: date_claimed,
+        // date_claimed: date_claimed,
         //   user_claiming: ""
       },
       {
@@ -32,7 +32,7 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json(response.data)
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log(error.response?.data)
+      console.log(error)
     }
 
     return res.status(403).send("Something went wrong")
