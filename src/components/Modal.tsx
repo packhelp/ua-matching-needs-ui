@@ -45,7 +45,7 @@ export const Modal = (props: ModalProps) => {
               </button>
             </div>
             <div className="p-6 space-y-6">{content}</div>
-            <div className="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+            <div className="flex items-center justify-end p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
               {actions}
               <button
                 onClick={onClose}
