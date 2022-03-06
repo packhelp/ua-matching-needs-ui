@@ -136,9 +136,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
 
   const markClaimedTicketMutation = useMutation<number, NextError, number>(
     (id: number) => {
-      return axios.post(`/api/set-ticket-to-claimed`, {
+      return axios.patch(`/api/add-claim`, {
         id: id,
-        // date_claimed: Date.now(),
+        date_claimed: Date.now(),
       })
     },
     {
