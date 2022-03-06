@@ -52,10 +52,6 @@ export const ReportTicket: VoidFunctionComponent<{
 
   const isDisabled = reason === ""
 
-  if (addTicketMutation.isSuccess) {
-    return <></>
-  }
-
   return (
     <>
       <ReportTicketButton onClick={() => setReportTicketModalOpened(true)} />
