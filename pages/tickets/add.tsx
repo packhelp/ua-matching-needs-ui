@@ -188,6 +188,7 @@ const AddTicket: NextPage = () => {
       ...data,
       phone: authSession.phoneNumber,
       need_tag_id: tagsData,
+      // add user_created field
     }
     addTicketMutation.mutate(postData, {
       onError: () => setIsSubmitting(false),

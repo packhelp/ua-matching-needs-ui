@@ -228,8 +228,11 @@ const PL = {
       itsAnOffer: "To oferta, a nie potrzeba",
       itsAnAdvertisementOrSpam: "To reklama albo spam",
       wrongCategory: "Nieprawidłowa kategoria",
-      inne: "Inny powód",
+      other: "Inny powód, podaj:",
     },
+    reasonDetails: "Więcej informacji",
+    thankYouForReport:
+      "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
   },
 }
 
@@ -460,8 +463,10 @@ const UA: Translation = {
       itsAnOffer: "<miss>",
       itsAnAdvertisementOrSpam: "<miss>",
       wrongCategory: "<miss>",
-      inne: "<miss>",
+      other: "<miss>",
     },
+    reasonDetails: "<miss>",
+    thankYouForReport: "<miss>",
   },
 }
 
@@ -694,13 +699,14 @@ const EN: Translation = {
       itsAnOffer: "It’s not a request, it’s an offer",
       itsAnAdvertisementOrSpam: "It’s an ad or spam",
       wrongCategory: "Request has an incorrect category assigned",
-      inne: "Other reason",
+      other: "Other reason",
     },
+    reasonDetails: "<miss>",
+    thankYouForReport: "<miss>",
   },
 }
 
-const getPL = () => PL
-type Translation = ReturnType<typeof getPL>
+type Translation = typeof PL
 
 export const translations = {
   "pl-PL": PL,
