@@ -259,8 +259,6 @@ const ReportTicketModal: VoidFunctionComponent<ReportTicketModalProps> = ({
     }
   )
 
-  console.log("addTicketMutation.isSuccess :>>", addTicketMutation.isSuccess)
-
   const { handleSubmit, register } = useForm()
 
   const submitReport = (data) => {
