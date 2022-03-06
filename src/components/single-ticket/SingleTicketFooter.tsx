@@ -1,27 +1,16 @@
-import React, { useState, VoidFunctionComponent } from "react"
+import React from "react"
 import { isTicketActive } from "../../../pages/ticket/[id]"
 import dayjs from "dayjs"
 import { useTranslations } from "../../hooks/translations"
 import { useSession } from "next-auth/react"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
-import { useMutation, useQuery } from "react-query"
+import { useMutation } from "react-query"
 import NextError from "next/error"
 import axios from "axios"
 import { RouteDefinitions } from "../../utils/routes"
-import { TicketDetailsType, TicketPostData } from "../../services/ticket.type"
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from "@chakra-ui/modal"
-import { Button, Stack, Textarea } from "@chakra-ui/react"
-import { useForm } from "react-hook-form"
-import Select, { SingleValue } from "react-select"
+import { TicketDetailsType } from "../../services/ticket.type"
+import { ReportTicket } from "./ReportTicket"
 
 type SingleTicketFooterProps = {
   ticket: TicketDetailsType
@@ -176,155 +165,7 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
           {translations["pages"]["ticket"]["needExpired"]} {formattedExpiration}
         </p>
       )}
-
-      <ReportTicket ticket={props.ticket} />
+      <ReportTicket ticket={ticket} />
     </div>
-  )
-}
-
-const ReportTicket: VoidFunctionComponent<{ ticket: TicketDetailsType }> = ({
-  ticket,
-}) => {
-  const [isOpen, setOpened] = useState<boolean>(false)
-
-  return (
-    <>
-      <ReportTicketButton onClick={() => setOpened(!isOpen)} />
-      <ReportTicketModal
-        isOpen={isOpen}
-        onClose={() => setOpened(false)}
-        ticketId={ticket.id}
-      />
-    </>
-  )
-}
-
-type ReportTicketButton = {
-  onClick: () => void
-}
-
-const ReportTicketButton: VoidFunctionComponent<ReportTicketButton> = ({
-  onClick,
-}) => {
-  return (
-    <div
-      onClick={onClick}
-      className={"inline-flex gap-1 cursor-pointer align-middle items-center"}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        role="img"
-        width="1em"
-        height="1em"
-        preserveAspectRatio="xMidYMid meet"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill="currentColor"
-          fillRule="evenodd"
-          d="M1.75 1.5a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.75.75 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75zM0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.457 1.457 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25v-9.5zM9 9a1 1 0 1 1-2 0a1 1 0 0 1 2 0zm-.25-5.25a.75.75 0 0 0-1.5 0v2.5a.75.75 0 0 0 1.5 0v-2.5z"
-        />
-      </svg>{" "}
-      Zgłoś nieprawidłowości
-    </div>
-  )
-}
-
-type ReportPostData = {
-  reason: string
-  description: string
-}
-
-type ReportTicketModalProps = {
-  isOpen: boolean
-  onClose: () => void
-  ticketId: number
-}
-
-const ReportTicketModal: VoidFunctionComponent<ReportTicketModalProps> = ({
-  isOpen,
-  onClose,
-  ticketId,
-}) => {
-  const translations = useTranslations()
-  const [reason, setReason] = useState<string>("other")
-
-  const addTicketMutation = useMutation<ReportPostData, Error, ReportPostData>(
-    (reportData) => {
-      return axios.post(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need_report`,
-        reportData
-      )
-    }
-  )
-
-  const { handleSubmit, register } = useForm()
-
-  const submitReport = (data) => {
-    addTicketMutation.mutate({
-      ...data,
-      reason,
-      status: "published",
-      need: ticketId,
-    })
-  }
-
-  const reportReasonsKeys = Object.keys(translations["report"]["reason"])
-  const reportReasons = reportReasonsKeys.map((reasonKey) => ({
-    value: reasonKey,
-    label: translations["report"]["reason"][reasonKey],
-  }))
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Zgłoś nieprawidłowości</ModalHeader>
-        <ModalCloseButton />
-
-        <ModalBody>
-          {addTicketMutation.isSuccess && (
-            <p>{translations["report"]["thankYouForReport"]}</p>
-          )}
-
-          <form onSubmit={handleSubmit(submitReport)}>
-            <Stack>
-              <Select
-                options={reportReasons}
-                placeholder={translations["report"]["chooseReason"]}
-                isClearable
-                isSearchable={false}
-                onChange={(
-                  newValue: SingleValue<{ value: string; label: string }>
-                ) => {
-                  setReason(newValue ? newValue.value : "")
-                }}
-              />
-            </Stack>
-            <Stack className={"mb-2"}>
-              <p>{translations["report"]["reasonDetails"]}</p>
-              <Textarea {...register("description")} />
-            </Stack>
-
-            <div className={"flex justify-between"}>
-              <button onClick={onClose}>
-                {translations["generic"]["close"]}
-              </button>
-              <Button
-                colorScheme="blue"
-                mr={3}
-                type={"submit"}
-                disabled={addTicketMutation.isLoading}
-              >
-                {translations["report"]["actionReport"]}
-              </Button>
-            </div>
-          </form>
-        </ModalBody>
-
-        <ModalFooter></ModalFooter>
-      </ModalContent>
-    </Modal>
   )
 }

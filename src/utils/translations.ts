@@ -218,19 +218,23 @@ const PL = {
   },
   report: {
     title: "To zgłoszenie zawiera błędy?",
+    reportErrors: "Zgłoś nieprawidłowości",
     actionReport: "Zgłoś",
     actionSend: "Wyślij",
     reason: {
       chooseReason: "Wybierz powód",
-      stale: "Potrzeba nieaktualna",
-      lacksContact: "Brakuje danych kontaktowych",
-      lacksDescription: "Brakuje informacji",
-      itsAnOffer: "To oferta, a nie potrzeba",
-      itsAnAdvertisementOrSpam: "To reklama albo spam",
-      wrongCategory: "Nieprawidłowa kategoria",
-      other: "Inny powód, podaj:",
+      options: {
+        stale: "Potrzeba nieaktualna",
+        lacksContact: "Brakuje danych kontaktowych",
+        lacksDescription: "Brakuje informacji",
+        itsAnOffer: "To oferta, a nie potrzeba",
+        itsAnAdvertisementOrSpam: "To reklama albo spam",
+        wrongCategory: "Nieprawidłowa kategoria",
+        other: "Inny powód",
+      },
     },
-    reasonDetails: "Więcej informacji",
+    reasonDetails: "Podaj więcej informacji",
+    thankYou: "Dziękujemy!",
     thankYouForReport:
       "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
   },
@@ -248,7 +252,7 @@ const UA: Translation = {
   generic: {
     yes: "Так",
     no: "ні",
-    close: "<miss>",
+    close: "закрий",
   },
 
   pages: {
@@ -396,7 +400,7 @@ const UA: Translation = {
   faq: {
     header: "FAQ",
     sectionOne: {
-      title: "Що таке", // Czym jest https://potrzeby-ua.org?
+      title: "Що таке",
       description:
         "Платформа створена для покращення організації гуманітарної допомоги жертвам війни в Україні. Ви можете легко додати свій запит про будь-яку допомогу: якщо ви шукаєте квартиру для людей з України, вам потрібен транспорт з кордону, продукти чи ліки. Потім ви маєте додати своє місце розташування - тобто локацію на кордоні, звідки вас треба забрати, або пункт призначення, де ви шукаєте житло - і також свій контактний номер, за яким з Вами можуть зв'язатися. Після додавання інформації ми шукаємо організацію або людей, які можуть допомогти з вашим запитом.",
     },
@@ -452,21 +456,26 @@ const UA: Translation = {
       "Швидке та просте управління організацією гуманітарної допомоги. Ви допомагаєте іншим? Ми допоможемо вам організувати цю допомогу!",
   },
   report: {
-    title: "<miss>",
-    actionReport: "<miss>",
-    actionSend: "<miss>",
+    title: "Чи містить цей запит помилки?",
+    reportErrors: "повідомляти про порушення",
+    actionReport: "Звіт",
+    actionSend: "Надіслати",
     reason: {
-      chooseReason: "<miss>",
-      stale: "<miss>",
-      lacksContact: "<miss>",
-      lacksDescription: "<miss>",
-      itsAnOffer: "<miss>",
-      itsAnAdvertisementOrSpam: "<miss>",
-      wrongCategory: "<miss>",
-      other: "<miss>",
+      chooseReason: "Виберіть причину",
+      options: {
+        stale: "Запит",
+        lacksContact: "У запиті відсутня контактна інформація",
+        lacksDescription: "У запиті відсутній опис",
+        itsAnOffer: "Це не прохання, це пропозиція",
+        itsAnAdvertisementOrSpam: "Це реклама чи спам",
+        wrongCategory: "Запиту призначено неправильну категорію",
+        other: "Інша причина",
+      },
     },
-    reasonDetails: "<miss>",
-    thankYouForReport: "<miss>",
+    reasonDetails: "більше інформації",
+    thankYou: "Дякую!",
+    thankYouForReport:
+      "Дякую! Ваша заявка дозволить нам покращити надання допомоги. Наші модератори розглянуть це найближчим часом",
   },
 }
 
@@ -689,20 +698,25 @@ const EN: Translation = {
   },
   report: {
     title: "Does this request contain errors?",
+    reportErrors: "Report issues",
     actionReport: "Report",
     actionSend: "Submit",
     reason: {
       chooseReason: "Choose reason",
-      stale: "Request ",
-      lacksContact: "Request is missing contact information",
-      lacksDescription: "Request is missing description",
-      itsAnOffer: "It’s not a request, it’s an offer",
-      itsAnAdvertisementOrSpam: "It’s an ad or spam",
-      wrongCategory: "Request has an incorrect category assigned",
-      other: "Other reason",
+      options: {
+        stale: "Request is stale",
+        lacksContact: "Request is missing contact information",
+        lacksDescription: "Request is missing description",
+        itsAnOffer: "It’s not a request, it’s an offer",
+        itsAnAdvertisementOrSpam: "It’s an ad or spam",
+        wrongCategory: "Request has an incorrect category assigned",
+        other: "Other reason",
+      },
     },
-    reasonDetails: "<miss>",
-    thankYouForReport: "<miss>",
+    reasonDetails: "More information",
+    thankYou: "Thank you!",
+    thankYouForReport:
+      "Thank you! Your application will allow us to improve the provision of assistance. Our moderators will take a look at your report in a moment.",
   },
 }
 
