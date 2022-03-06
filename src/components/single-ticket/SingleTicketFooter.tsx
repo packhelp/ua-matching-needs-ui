@@ -10,6 +10,7 @@ import NextError from "next/error"
 import axios from "axios"
 import { RouteDefinitions } from "../../utils/routes"
 import { TicketDetailsType } from "../../services/ticket.type"
+import { ReportTicket } from "./ReportTicket"
 
 type SingleTicketFooterProps = {
   ticket: TicketDetailsType
@@ -164,6 +165,7 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
           {translations["pages"]["ticket"]["needExpired"]} {formattedExpiration}
         </p>
       )}
+      <ReportTicket ticket={ticket} />
     </div>
   )
 }
