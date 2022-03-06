@@ -12,7 +12,7 @@ const PL = {
   generic: {
     yes: "Tak",
     no: "Nie",
-    close: "Zamknij"
+    close: "Zamknij",
   },
 
   pages: {
@@ -230,7 +230,7 @@ const PL = {
       wrongCategory: "Nieprawidłowa kategoria",
       inne: "Inny powód, podaj:",
     },
-  }
+  },
 }
 
 const UA: Translation = {
@@ -245,7 +245,7 @@ const UA: Translation = {
   generic: {
     yes: "Так",
     no: "ні",
-    close: "<miss>"
+    close: "<miss>",
   },
 
   pages: {
@@ -462,7 +462,7 @@ const UA: Translation = {
       wrongCategory: "<miss>",
       inne: "<miss>",
     },
-  }
+  },
 }
 
 const EN: Translation = {
@@ -696,7 +696,7 @@ const EN: Translation = {
       wrongCategory: "<miss>",
       inne: "<miss>",
     },
-  }
+  },
 }
 
 const getPL = () => PL
