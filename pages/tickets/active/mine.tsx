@@ -23,7 +23,7 @@ const MineActiveTickets: NextPage<TicketsListPageProps> = ({
     <Tickets
       ticketStatus={TICKET_STATUS.ACTIVE}
       mineOnly={true}
-      title={translations["/tickets/inactive/mine"]}
+      title={translations["/tickets/active/mine"]}
       tags={tags}
       locationTags={locationTags}
       currentTag={currentTag}
