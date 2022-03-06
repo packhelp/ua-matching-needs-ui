@@ -685,16 +685,16 @@ const EN: Translation = {
   report: {
     title: "Does this request contain errors?",
     actionReport: "Report",
-    actionSend: "Send",
+    actionSend: "Submit",
     reason: {
       chooseReason: "Choose reason",
       stale: "Request ",
       lacksContact: "Request is missing contact information",
       lacksDescription: "Request is missing description",
-      itsAnOffer: "It's an offer, not a request",
-      itsAnAdvertisementOrSpam: "It's an advertisement or spam",
-      wrongCategory: "Request has wrong category",
-      inne: "Another reason",
+      itsAnOffer: "It’s not a request, it’s an offer",
+      itsAnAdvertisementOrSpam: "It’s an ad or spam",
+      wrongCategory: "Request has an incorrect category assigned",
+      inne: "Other reason",
     },
   },
 }
