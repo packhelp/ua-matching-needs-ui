@@ -215,6 +215,21 @@ const PL = {
     description:
       "Szybkie i proste zarządzanie organizacją pomocy humanitarnej. Pomagasz innym? Pomożemy Ci zorganizować tę pomoc!",
   },
+  report: {
+    title: "To zgłoszenie zawiera błędy?",
+    actionReport: "Zgłoś",
+    actionSend: "Wyślij",
+    reason: {
+      chooseReason: "Wybierz powód",
+      stale: "Potrzeba nieaktualna",
+      lacksContact: "Brakuje danych kontaktowych",
+      lacksDescription: "Brakuje informacji",
+      itsAnOffer: "To oferta, a nie potrzeba",
+      itsAnAdvertisementOrSpam: "To reklama albo spam",
+      wrongCategory: "Nieprawidłowa kategoria",
+      inne: "Inny powód, podaj:",
+    },
+  }
 }
 
 const UA: Translation = {
@@ -431,6 +446,21 @@ const UA: Translation = {
     description:
       "Швидке та просте управління організацією гуманітарної допомоги. Ви допомагаєте іншим? Ми допоможемо вам організувати цю допомогу!",
   },
+  report: {
+    title: "<miss>",
+    actionReport: "<miss>",
+    actionSend: "<miss>",
+    reason: {
+      chooseReason: "<miss>",
+      stale: "<miss>",
+      lacksContact: "<miss>",
+      lacksDescription: "<miss>",
+      itsAnOffer: "<miss>",
+      itsAnAdvertisementOrSpam: "<miss>",
+      wrongCategory: "<miss>",
+      inne: "<miss>",
+    },
+  }
 }
 
 const EN: Translation = {
@@ -649,6 +679,21 @@ const EN: Translation = {
     description:
       "Humanitarian aid management in an easy & efficient way. Helping others? Connect with people who need help.",
   },
+  report: {
+    title: "<miss>",
+    actionReport: "<miss>",
+    actionSend: "<miss>",
+    reason: {
+      chooseReason: "<miss>",
+      stale: "<miss>",
+      lacksContact: "<miss>",
+      lacksDescription: "<miss>",
+      itsAnOffer: "<miss>",
+      itsAnAdvertisementOrSpam: "<miss>",
+      wrongCategory: "<miss>",
+      inne: "<miss>",
+    },
+  }
 }
 
 const getPL = () => PL
