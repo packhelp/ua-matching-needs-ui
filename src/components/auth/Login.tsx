@@ -4,20 +4,23 @@ import { EnterPhoneNumber } from "./EnterPhoneNumber"
 import { EnterVerificationCode } from "./EnterVerificationCode"
 import { signIn } from "next-auth/react"
 import { getRoutePathForLocale, Locale } from "../../utils/routes"
+import { useTranslations } from "../../hooks/translations"
 
 export const Login: FC = () => {
   const router = useRouter()
-  const { error: errorInUrlQuery } = router.query
+  const { error: errorInUrlQuery, returnPath } = router.query
   const [hasStartedVerification, setHasStartedVerification] = useState(false)
   const [credentials, setCredentials] = useState({ phoneNumber: null })
   const [error, setError] = useState<string>()
+  const translations = useTranslations()
+
   const errorMessage =
-    "Nie udało się autoryzować twojego telefonu. Spróbuj jeszcze raz!"
+    translations["pages"]["sign-in"]["phone-verification"]["error"]
 
   errorInUrlQuery && !error && setError(errorMessage)
 
   const startVerification = async ({ phoneNumber }) => {
-    const response = await fetch("/api/auth/start-verification", {
+    await fetch("/api/auth/start-verification", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -27,7 +30,6 @@ export const Login: FC = () => {
         phoneNumber: phoneNumber,
       }),
     })
-    console.log(response)
     setCredentials({ phoneNumber })
     setHasStartedVerification(true)
   }

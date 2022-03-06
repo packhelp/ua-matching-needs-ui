@@ -3,7 +3,7 @@ import { translations } from "./translations"
 export enum LocaleDefinitions {
   PL = "pl-PL",
   UA = "uk-UA",
-  EN = "en-US"
+  EN = "en-US",
 }
 
 export enum LocaleFlags {
@@ -15,11 +15,18 @@ export enum LocaleFlags {
 export enum LocaleNames {
   "pl-PL" = "Polski",
   "uk-UA" = "український",
-  "en-US" = "English"
+  "en-US" = "English",
 }
 
-export type Locale = LocaleDefinitions.PL | LocaleDefinitions.UA | LocaleDefinitions.EN
-export const locales = [LocaleDefinitions.PL, LocaleDefinitions.UA, LocaleDefinitions.EN]
+export type Locale =
+  | LocaleDefinitions.PL
+  | LocaleDefinitions.UA
+  | LocaleDefinitions.EN
+export const locales = [
+  LocaleDefinitions.PL,
+  LocaleDefinitions.UA,
+  LocaleDefinitions.EN,
+]
 
 export enum RouteDefinitions {
   Main = "/",
@@ -27,6 +34,7 @@ export enum RouteDefinitions {
   AllActiveTickets = "/tickets/active",
   MyActiveTickets = "/tickets/active/mine",
   MyInactiveTickets = "/tickets/inactive/mine",
+  MyClaimedTickets = "/tickets/claimed",
   SignIn = "/sign-in",
   TicketDetails = "/ticket/:id",
   Contact = "/contact",
@@ -39,6 +47,7 @@ export type Routes =
   | RouteDefinitions.AllActiveTickets
   | RouteDefinitions.MyActiveTickets
   | RouteDefinitions.MyInactiveTickets
+  | RouteDefinitions.MyClaimedTickets
   | RouteDefinitions.SignIn
   | RouteDefinitions.TicketDetails
   | RouteDefinitions.Contact

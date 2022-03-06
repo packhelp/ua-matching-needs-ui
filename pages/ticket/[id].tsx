@@ -1,4 +1,4 @@
-import { Text, Stack, Tag, Link, Tooltip } from "@chakra-ui/react"
+import { Text, Stack, Tag, Link, Tooltip, Button } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
 import truncate from "truncate"
@@ -16,11 +16,12 @@ import { useMutation } from "react-query"
 import axios from "axios"
 import { RouteDefinitions } from "../../src/utils/routes"
 import Head from "next/head"
-import React, { useEffect, useMemo } from "react"
+import React, { useMemo, useState } from "react"
 import { useFinalLocale } from "../../src/hooks/final-locale"
 import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
 import { useTranslations } from "../../src/hooks/translations"
+import { userIsLoggedIn } from "../../src/hooks/is-logged"
 import {
   TICKET_STATUS,
   TicketDetailsType,
@@ -73,15 +74,17 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
   const router = useRouter()
   const translations = useTranslations()
   const finalLocale = useFinalLocale()
-
+  const isLogged = userIsLoggedIn()
   const { id } = router.query
 
   const metaTitle = useMemo(() => {
-    if (!ticket) { // default
+    if (!ticket) {
+      // default
       return translations.metaData.title
     }
 
-    const title = ticket.what || ticket.description || translations.metaData.title
+    const title =
+      ticket.what || ticket.description || translations.metaData.title
     const hasTags = ticket.need_tag_id && ticket.need_tag_id.length > 0
 
     if (hasTags) {
@@ -131,6 +134,26 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
     }
   )
 
+  const markClaimedTicketMutation = useMutation<number, NextError, number>(
+    (id: number) => {
+      return axios.post(`/api/set-ticket-to-claimed`, {
+        id: id,
+        date_claimed: Date.now(),
+      })
+    },
+    {
+      onSuccess: () => {
+        toast.success(translations["pages"]["ticket"]["ticketClaimed"])
+        return router.push(
+          RouteDefinitions.TicketDetails.replace(":id", String(id))
+        )
+      },
+      onError: () => {
+        toast.error(translations["pages"]["ticket"]["errorOnClaim"])
+      },
+    }
+  )
+
   if (!ticket) {
     return (
       <NextError statusCode={404}>
@@ -143,7 +166,6 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
   }
 
   const isOwner = authSession?.phoneNumber === ticket.phone
-
   const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
 
   const removeTicket = () => {
@@ -159,6 +181,14 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
       markSolvedTicketMutation.mutate(Number(id))
     } else {
       toast.error(translations["pages"]["ticket"]["errorOnRemove"])
+    }
+  }
+
+  const markAsCalimedTicket = () => {
+    if (id) {
+      markClaimedTicketMutation.mutate(Number(id))
+    } else {
+      toast.error(translations["pages"]["ticket"]["errorOnClaim"])
     }
   }
 
@@ -191,6 +221,19 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
       showSuccessShareTicketToast()
     })
 
+  const claimTicket = () => {
+    if (isLogged) {
+      markAsCalimedTicket()
+    } else {
+      router.push({
+        pathname: RouteDefinitions.SignIn,
+        query: {
+          returnPath: RouteDefinitions.TicketDetails.replace(":id", String(id)),
+        },
+      })
+    }
+  }
+
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Head>
@@ -208,12 +251,15 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
         />
       </Head>
 
-      <section className={styles.wrapper} aria-labelledby="applicant-information-title">
+      <section
+        className={styles.wrapper}
+        aria-labelledby="applicant-information-title"
+      >
         <div className={styles.header}>
           <div className={styles.info}>
-             <span className="text-xs font-medium text-gray-500">
-               {translations["pages"]["ticket"]["needNumber"]} #{ticket.id}
-             </span>
+            <span className="text-xs font-medium text-gray-500">
+              {translations["pages"]["ticket"]["needNumber"]} #{ticket.id}
+            </span>
             {ticket.organization_id && (
               <div className={styles.verified}>
                 <svg
@@ -227,7 +273,9 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-xs font-medium">{translations["pages"]["ticket"]["verifiedOrganisation"]}</span>
+                <span className="text-xs font-medium">
+                  {translations["pages"]["ticket"]["verifiedOrganisation"]}
+                </span>
               </div>
             )}
           </div>
@@ -254,11 +302,7 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                   />
                 </svg>
                 <h3 className="text-sm font-medium text-red-800 uppercase">
-                  {
-                    translations["pages"]["ticket"][
-                      "warningTicketExpired"
-                      ]
-                  }
+                  {translations["pages"]["ticket"]["warningTicketExpired"]}
                 </h3>
               </div>
               <div className="ml-3">
@@ -268,21 +312,21 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                       {
                         translations["pages"]["ticket"][
                           "ticketExpiresAfterSetTime"
-                          ]
+                        ]
                       }
                     </li>
                     <li>
                       {
                         translations["pages"]["ticket"][
                           "requesterCanExpireTicketAtAnyTime"
-                          ]
+                        ]
                       }
                     </li>
                     <li>
                       {
                         translations["pages"]["ticket"][
                           "lookForAnotherTicketThanksForHelp"
-                          ]
+                        ]
                       }
                     </li>
                   </ul>
@@ -580,6 +624,18 @@ const TicketDetails: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
                 </a>
+              )}
+
+              {!isOwner && (
+                <Button
+                  type="button"
+                  mt={2}
+                  colorScheme="blue"
+                  isFullWidth
+                  onClick={claimTicket}
+                >
+                  {translations["pages"]["ticket"]["claim"]}
+                </Button>
               )}
 
               {isOwner && (

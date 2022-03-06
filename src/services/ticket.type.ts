@@ -28,6 +28,7 @@ export enum TICKET_STATUS {
   DELETED = "DELETED",
   CANCELED = "CANCELED",
   HIDDEN = "HIDDEN",
+  CLAIMED = "CLAIMED",
 }
 
 export type TicketFormData = {

@@ -18,7 +18,7 @@ export const TagsFilter: VoidFunctionComponent<TagsFilterProps> = ({
     return ticketService.mainTags()
   })
   if (!tags) return null
-  console.log(tags)
+
   return (
     <div className={"text-center"}>
       <Tag
