@@ -87,10 +87,18 @@ const AddTicket: NextPage = () => {
   })
 
   const mappedLocationTags = useMemo(() => {
-    return locationTags.map((tag) => ({
-      value: tag.id,
-      label: tag.name,
-    }))
+    return locationTags.map((tag) => {
+      let name = tag.name
+
+      if (tag.location_type === "help_center" && tag.short_name != null) {
+        name = tag.short_name
+      }
+
+      return {
+        value: tag.id,
+        label: name,
+      }
+    })
   }, [locationTags])
 
   const onSuccess = (rawResponse) => {
@@ -142,8 +150,9 @@ const AddTicket: NextPage = () => {
         children: children ? children : 0,
         has_pets: !has_pets ? "0" : "1",
       }
+
       // if trip
-      if (whereFromTag || whereToTag) {
+      if (whereFromTag || whereToTag || whereFromTag != whereToTag) {
         newTicketData = Object.assign(newTicketData, {
           need_type: "trip",
           where_from_tag: whereFromTag,

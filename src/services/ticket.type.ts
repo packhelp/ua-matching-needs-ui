@@ -21,6 +21,18 @@ export interface NeedTagType {
   // date_updated: string
 }
 
+export interface LocationTag {
+  id: number
+  name: string
+  location_type: "city" | "border_crossing" | "generic" | "help_center"
+  translation_uk_UA: string | null
+  translation_en_US: string | null
+  short_name: string | null
+
+  need_to: number[]
+  need_from: number[]
+}
+
 export enum TICKET_STATUS {
   ACTIVE = "ACTIVE",
   SOLVED = "SOLVED",
