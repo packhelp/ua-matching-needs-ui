@@ -10,8 +10,9 @@ const PL = {
   "/faq": "FAQ",
 
   generic: {
-    yes: "tak",
-    no: "nie",
+    yes: "Tak",
+    no: "Nie",
+    close: "Zamknij"
   },
 
   pages: {
@@ -242,8 +243,9 @@ const UA: Translation = {
   "/faq": "FAQ",
 
   generic: {
-    yes: "yes",
-    no: "no",
+    yes: "Так",
+    no: "ні",
+    close: "<miss>"
   },
 
   pages: {
@@ -475,6 +477,7 @@ const EN: Translation = {
   generic: {
     yes: "Yes",
     no: "No",
+    close: "Close",
   },
 
   pages: {
