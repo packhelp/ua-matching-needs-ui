@@ -169,6 +169,29 @@ export const Tickets = ({
     queryClient,
   ])
 
+  useEffect(() => {
+    // restore scroll position from sessionStorage (if available)
+    const scrollPosition = sessionStorage.getItem('scrollPosition');
+    if (scrollPosition) {
+      window.scrollTo(0, parseInt(scrollPosition, 10));
+    }
+
+    // helper function for storing position in sessionStorage
+    const storeScrollPosition = (e) => {
+      if(window.pageYOffset > 0) {
+        sessionStorage.setItem("scrollPosition", window.pageYOffset);
+      }
+    }
+
+    // setup listener for storing the scroll position
+    window.addEventListener('scroll', storeScrollPosition);
+
+    return () => {
+      //remove event listener on unmount
+      window.removeEventListener('scroll', storeScrollPosition);
+    };
+  })
+
   const isTransport = useMemo(
     () => selectedTag === TRANSPORT_TAG,
     [selectedTag]
