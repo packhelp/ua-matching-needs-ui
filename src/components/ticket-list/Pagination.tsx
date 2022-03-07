@@ -1,11 +1,11 @@
 import ReactPaginate from "react-paginate"
 import React, { useCallback } from "react"
 import { useRouter } from "next/router"
-import { Ticket } from "../../utils/types"
+import { TicketData } from "../../services/ticket.type"
 
 type PaginationProps = {
   ticketsData?: {
-    tickets: Ticket[]
+    tickets: TicketData[]
     meta: {
       filter_count: number
       page_count: number

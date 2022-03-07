@@ -3,11 +3,15 @@ import React, { useCallback, useMemo } from "react"
 import { useRouter } from "next/router"
 import { TRANSPORT_TAG } from "./Tickets"
 import { useTranslations } from "../../hooks/translations"
-import { LocationTag, NeedTag } from "../../utils/types"
+import { NeedTagType } from "../../services/ticket.type"
 
 type TicketsListFiltersProps = {
-  tags: NeedTag[]
-  locationTags: LocationTag[]
+  tags: NeedTagType[]
+  locationTags: {
+    id: number
+    location_type: string
+    name: string
+  }[]
   selectedTag: number
   whereFromTag: number
   whereToTag: number

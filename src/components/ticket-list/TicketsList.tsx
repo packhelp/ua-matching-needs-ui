@@ -1,4 +1,3 @@
-import { Ticket } from "../../utils/types"
 import { RouteDefinitions } from "../../utils/routes"
 import Link from "next/link"
 import { Tooltip } from "@chakra-ui/react"
@@ -6,6 +5,9 @@ import { Tag } from "../Tag"
 import React from "react"
 import { useTranslations } from "../../hooks/translations"
 import { useRouter } from "next/router"
+import { TicketData } from "../../services/ticket.type"
+
+type Ticket = TicketData & { phone: string }
 
 type TicketsListProps = {
   tickets: Ticket[]
