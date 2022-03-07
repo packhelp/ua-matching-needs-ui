@@ -1,4 +1,4 @@
-import React, { FC, useState, VoidFunctionComponent } from "react"
+import React, { useState, VFC } from "react"
 import { TicketDetailsType } from "../../services/ticket.type"
 import { Modal } from "../Modal"
 import { useTranslations } from "../../hooks/translations"
@@ -13,7 +13,7 @@ type ReportPostData = {
   description: string
 }
 
-export const ReportTicket: VoidFunctionComponent<{
+export const ReportTicket: VFC<{
   ticket: TicketDetailsType
 }> = ({ ticket }) => {
   const [reportTicketModalOpened, setReportTicketModalOpened] =
@@ -142,7 +142,7 @@ type ReportTicketButton = {
   onStaleClick: () => void
 }
 
-const ReportTicketButtons: VoidFunctionComponent<ReportTicketButton> = ({
+const ReportTicketButtons: VFC<ReportTicketButton> = ({
   onClick,
   onStaleClick,
 }) => {
