@@ -1,7 +1,5 @@
 import { useState, useMemo } from "react"
-import {
-  Container,
-} from "@chakra-ui/react"
+import { Button, Container } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
 import { TicketFormData } from "../../services/ticket.type"
 import { TicketTypeSwitcher, TicketType } from "./TicketTypeSwitcher"
@@ -21,15 +19,23 @@ export const AddTicketForm = () => {
   const { getTranslation } = useTagTranslation()
   const { locale } = useRouter()
 
-  const [ticketType, setTicketType] = useState<TicketType.Offer | TicketType.Need | undefined>(undefined)
-  const [selectedMainCategory, setSelectedMainCategory] = useState(undefined)
+  const [ticketType, setTicketType] = useState<
+    TicketType.Offer | TicketType.Need | undefined
+  >(undefined)
 
-  const { data: tags = []} = useQuery(`main-tags`, () => {
+  const [selectedMainCategory, setSelectedMainCategory] = useState<
+    SingleValue<{
+      value: number
+      label: string
+    }>
+  >()
+
+  const { data: tags = [] } = useQuery(`main-tags`, () => {
     return ticketService.mainTags()
   })
 
   const useFormOptions: any = {}
-  const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
+  // const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
 
   const submit = async () => {
     console.log("poszło")
@@ -42,35 +48,28 @@ export const AddTicketForm = () => {
     }))
   }, [tags, locale])
 
-  console.log(selectedMainCategory)
-
-  const showTransportLocationSection = selectedMainCategory.value === 5 /// transport
+  const showTransportLocationSection = selectedMainCategory?.value === 5 /// transport
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Container className="px-4 py-5 sm:p-6">
-        <TicketTypeSwitcher
-          setType={setTicketType}
-          selectedType={ticketType}
-        />
+        <TicketTypeSwitcher setType={setTicketType} selectedType={ticketType} />
         {ticketType === TicketType.Need && (
-          <form onSubmit={handleSubmit(submit)}>
-            <div className="my-8">
-              <Select
-                options={mappedCategoryTags}
-                onChange={(tag) => setSelectedMainCategory(tag)}
-                placeholder={translation["filters"]["selectNeeds"]}
-                value={selectedMainCategory}
-                isClearable
-                isSearchable={false}
-              />
-            </div>
-            {showTransportLocationSection && <TransportLocationSection />}
-          </form>
+          // <form onSubmit={handleSubmit(submit)}>
+          <div className="my-8">
+            <Select
+              options={mappedCategoryTags}
+              onChange={(tag) => setSelectedMainCategory(tag)}
+              placeholder={translation["filters"]["selectNeeds"]}
+              value={selectedMainCategory}
+              isClearable
+              isSearchable={false}
+            />
+          </div>
+          // </form>
         )}
-        {ticketType === TicketType.Offer && (
-          <TicketTypeOffer />
-        )}
+        {ticketType === TicketType.Offer && <TicketTypeOffer />}
+        {showTransportLocationSection && <TransportLocationSection />}
       </Container>
     </div>
   )

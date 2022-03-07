@@ -245,13 +245,15 @@ export const PL = {
     iNeed: "Potrzebuję pomocy",
     iOffer: "Mogę pomóc!",
     need: {
-
+      whereFromNeeded: "Skąd potrzebujesz transportu?",
+      whereToNeeded: "Dokąd potrzebujesz transportu?",
     },
     offer: {
       title: "Jeśli chcesz pomóc, przejrzyj bazę ofert",
       howToFilter: "Zobacz jak skutecznie filtrować",
       chooseCategory: "Wybierz kategorię:",
-      youCanAlsoApply: "Możesz się też zgłosić do pomocy do jednego z naszych partnerów:"
-    }
-  }
+      youCanAlsoApply:
+        "Możesz się też zgłosić do pomocy do jednego z naszych partnerów:",
+    },
+  },
 }
