@@ -14,6 +14,7 @@ import { Pagination } from "./Pagination"
 import { TicketsListHeader } from "./TicketsListHeader"
 import { TicketsListFilters } from "./TicketsListFilters"
 import { TicketsList } from "./TicketsList"
+import { NextApiClient } from "../../services/directus-signed-user-api"
 const ts = getRootContainer().containers.ticketService
 
 export const TRANSPORT_TAG = 5
@@ -49,6 +50,8 @@ export const Tickets = ({
   )
   const [queryKey] = useState("tickets")
 
+  const nextClient = new NextApiClient()
+
   const {
     data: ticketsData,
     isLoading,
@@ -57,22 +60,30 @@ export const Tickets = ({
   } = useQuery(
     queryKey,
     () => {
-      const url = `/api/get-tickets`
+      return nextClient.getTicket({
+        mineOnly: mineOnly,
+        ticketStatus: ticketStatus,
+        tagId: selectedTag,
+        page: selectedPage,
+        whereFromTagId: whereFromTag,
+        whereToTagId: whereToTag,
+      })
+      // const url = `/api/get-tickets`
 
-      return axios
-        .get(url, {
-          params: {
-            mineOnly: mineOnly,
-            ticketStatus: ticketStatus,
-            tagId: selectedTag,
-            page: selectedPage,
-            whereFromTag: whereFromTag,
-            whereToTag: whereToTag,
-          },
-        })
-        .then((response) => {
-          return response.data
-        })
+      // return axios
+      //   .get(url, {
+      //     params: {
+      //       mineOnly: mineOnly,
+      //       ticketStatus: ticketStatus,
+      //       tagId: selectedTag,
+      //       page: selectedPage,
+      //       whereFromTag: whereFromTag,
+      //       whereToTag: whereToTag,
+      //     },
+      //   })
+      //   .then((response) => {
+      //     return response.data
+      //   })
     },
     {
       refetchOnWindowFocus: false,
@@ -120,6 +131,8 @@ export const Tickets = ({
     refetch,
     queryClient,
   ])
+
+  console.log("~~~ticket data", ticketsData)
 
   return (
     <>

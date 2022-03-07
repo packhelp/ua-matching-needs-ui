@@ -11,6 +11,7 @@ import { isTicketActive } from "../../../pages/ticket/[id]"
 import truncate from "truncate"
 import { toast } from "react-toastify"
 import { TicketDetailsType } from "../../services/ticket.type"
+import { Ticket } from "../../services/ticket.class"
 
 type SingleTicketDetailsProps = {
   ticket: TicketDetailsType
@@ -19,7 +20,9 @@ type SingleTicketDetailsProps = {
 export const SingleTicketDetails = (props: SingleTicketDetailsProps) => {
   const { ticket } = props
   const translations = useTranslations()
-  const isActive = isTicketActive(ticket)
+
+  const need = new Ticket(ticket)
+
   const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
 
   let ticketUrl
@@ -43,9 +46,9 @@ export const SingleTicketDetails = (props: SingleTicketDetailsProps) => {
       showSuccessShareTicketToast()
     })
 
-  const ticketTags = ticket.need_tag_id
+  const ticketTags = need.tags
 
-  if (!isActive) return <></>
+  if (need.notActive) return <></>
 
   return (
     <>
