@@ -3,7 +3,8 @@ import React, { FC, useState } from "react"
 import { EnterPhoneNumber } from "./EnterPhoneNumber"
 import { EnterVerificationCode } from "./EnterVerificationCode"
 import { signIn } from "next-auth/react"
-import { getRoutePathForLocale, Locale } from "../../utils/routes"
+import { getRoutePathForLocale } from "../../utils/routes"
+import { Locale } from "../../translations/definitions"
 
 export const Login: FC = () => {
   const router = useRouter()

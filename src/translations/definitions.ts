@@ -23,9 +23,9 @@ export enum LocaleNames {
 }
 
 export type Locale =
-  | LocaleDefinitions.PL
-  | LocaleDefinitions.UA
-  | LocaleDefinitions.EN
+  | "pl-PL"
+  | "uk-UA"
+  | "en-US"
 
 export const locales = [
   LocaleDefinitions.PL,
