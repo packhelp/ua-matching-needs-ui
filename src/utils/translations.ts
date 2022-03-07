@@ -1,4 +1,4 @@
-export type Locales = "pl-PL" | "uk-UA"
+export type Locales = "pl-PL" | "uk-UA" | "en-US"
 
 const PL = {
   "/tickets/add": "Zgłoś potrzebę",
@@ -10,8 +10,9 @@ const PL = {
   "/faq": "FAQ",
 
   generic: {
-    yes: "tak",
-    no: "nie",
+    yes: "Tak",
+    no: "Nie",
+    close: "Zamknij",
   },
 
   pages: {
@@ -32,23 +33,23 @@ const PL = {
       },
     },
     main: {
-      header: "Szybkie i proste zarządzanie organizacją pomocy humanitarnej",
-      subheader: "Pomagasz innym? Pomożemy Ci zorganizować pomoc!",
+      header: "Szybkie i proste organizowanie pomocy humanitarnej",
+      subheader: "Zgłaszaj potrzeby i pomagaj!",
       description:
         "Powiedz czego potrzebujesz, a my przekażemy Twoją prośbę do organizacji i osób, które pomogą Ci to zorganizować.",
       "show-all-button": "Sprawdź potrzeby",
       "add-new-button": "Zgłoś potrzebę",
       "steps-section": {
         header: "Jak to działa?",
-        "step-1-title": "Zgłaszasz potrzebę",
+        "step-1-title": "Zgłaszaj potrzeby",
         "step-1-description":
-          "Podajesz numer telefonu i wpisujesz to, czego potrzebujesz i gdzie chcesz to dostarczyć.",
+          "Wiesz, że ktoś potrzebuje transportu, noclegu lub żywności? Zgłoś tę potrzebę.",
         "step-2-title": "My publikujemy potrzebę i szukamy rozwiązania",
         "step-2-description":
-          "Twoją potrzebę przekazujemy organizacjom i osobom, które mają to, czego potrzebujesz i  pomogą Ci zorganizować pomoc.",
-        "step-3-title": "Dezaktywujemy stare potrzeby",
+          "My zajmiemy się wyszukaniem organizacji lub osób, które zorganizują pomoc.",
+        "step-3-title": "Pomagaj odpowiadając na potrzeby",
         "step-3-description":
-          "Ogłoszenie wygasa automatycznie po 24 godzinach lub wtedy kiedy je usuniesz - nie będziesz dostawać setek telefonów.",
+          "Możesz samemu pomóc? Sprawdź aktualne potrzeby i... działaj!",
       },
       "for-whom-section": {
         header: "Dla kogo jest ta platforma?",
@@ -217,6 +218,28 @@ const PL = {
     description:
       "Szybkie i proste zarządzanie organizacją pomocy humanitarnej. Pomagasz innym? Pomożemy Ci zorganizować tę pomoc!",
   },
+  report: {
+    title: "To zgłoszenie zawiera błędy?",
+    reportErrors: "Zgłoś nieprawidłowości",
+    actionReport: "Zgłoś",
+    actionSend: "Wyślij",
+    reason: {
+      chooseReason: "Wybierz powód",
+      options: {
+        stale: "Potrzeba nieaktualna",
+        lacksContact: "Brakuje danych kontaktowych",
+        lacksDescription: "Brakuje informacji",
+        itsAnOffer: "To oferta, a nie potrzeba",
+        itsAnAdvertisementOrSpam: "To reklama albo spam",
+        wrongCategory: "Nieprawidłowa kategoria",
+        other: "Inny powód",
+      },
+    },
+    reasonDetails: "Podaj więcej informacji",
+    thankYou: "Dziękujemy!",
+    thankYouForReport:
+      "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
+  },
 }
 
 const UA: Translation = {
@@ -229,8 +252,9 @@ const UA: Translation = {
   "/faq": "FAQ",
 
   generic: {
-    yes: "yes",
-    no: "no",
+    yes: "Так",
+    no: "ні",
+    close: "закрий",
   },
 
   pages: {
@@ -350,7 +374,7 @@ const UA: Translation = {
       whereFrom: "Звідки?",
       whereTo: "Куди?",
       "hide-phone-disclaimer":
-        "Pamiętaj ze osoba oferująca pomoc musi mieć jak się z Tobą kontaktować. Jeśli nie chcesz udostępniać telefonu podaj w opisie inną formę kontaktu.",
+        "Пам’ятайте, що особа, яка пропонує допомогу, повинна мати спосіб зв’язатися з вами. Якщо ви не хочете ділитися телефоном, вкажіть іншу форму контакту в описі.",
     },
   },
   "sign-out": "Вийти",
@@ -380,7 +404,7 @@ const UA: Translation = {
   faq: {
     header: "FAQ",
     sectionOne: {
-      title: "Що таке", // Czym jest https://potrzeby-ua.org?
+      title: "Що таке",
       description:
         "Платформа створена для покращення організації гуманітарної допомоги жертвам війни в Україні. Ви можете легко додати свій запит про будь-яку допомогу: якщо ви шукаєте квартиру для людей з України, вам потрібен транспорт з кордону, продукти чи ліки. Потім ви маєте додати своє місце розташування - тобто локацію на кордоні, звідки вас треба забрати, або пункт призначення, де ви шукаєте житло - і також свій контактний номер, за яким з Вами можуть зв'язатися. Після додавання інформації ми шукаємо організацію або людей, які можуть допомогти з вашим запитом.",
     },
@@ -435,6 +459,28 @@ const UA: Translation = {
     description:
       "Швидке та просте управління організацією гуманітарної допомоги. Ви допомагаєте іншим? Ми допоможемо вам організувати цю допомогу!",
   },
+  report: {
+    title: "Чи містить цей запит помилки?",
+    reportErrors: "повідомляти про порушення",
+    actionReport: "Звіт",
+    actionSend: "Надіслати",
+    reason: {
+      chooseReason: "Виберіть причину",
+      options: {
+        stale: "Запит",
+        lacksContact: "У запиті відсутня контактна інформація",
+        lacksDescription: "У запиті відсутній опис",
+        itsAnOffer: "Це не прохання, це пропозиція",
+        itsAnAdvertisementOrSpam: "Це реклама чи спам",
+        wrongCategory: "Запиту призначено неправильну категорію",
+        other: "Інша причина",
+      },
+    },
+    reasonDetails: "більше інформації",
+    thankYou: "Дякую!",
+    thankYouForReport:
+      "Дякую! Ваша заявка дозволить нам покращити надання допомоги. Наші модератори розглянуть це найближчим часом",
+  },
 }
 
 const EN: Translation = {
@@ -449,6 +495,7 @@ const EN: Translation = {
   generic: {
     yes: "Yes",
     no: "No",
+    close: "Close",
   },
 
   pages: {
@@ -569,7 +616,7 @@ const EN: Translation = {
       whereFrom: "From where?",
       whereTo: "To where?",
       "hide-phone-disclaimer":
-        "Pamiętaj ze osoba oferująca pomoc musi mieć jak się z Tobą kontaktować. Jeśli nie chcesz udostępniać telefonu podaj w opisie inną formę kontaktu.",
+        "Remember that the person offering help must have a way of contacting you. If you do not want to share the phone, please provide a different form of contact in the description.",
     },
   },
   "sign-out": "Sign out",
@@ -654,6 +701,28 @@ const EN: Translation = {
     title: "Let's help Ukraine!",
     description:
       "Humanitarian aid management in an easy & efficient way. Helping others? Connect with people who need help.",
+  },
+  report: {
+    title: "Does this request contain errors?",
+    reportErrors: "Report issues",
+    actionReport: "Report",
+    actionSend: "Submit",
+    reason: {
+      chooseReason: "Choose reason",
+      options: {
+        stale: "Request is stale",
+        lacksContact: "Request is missing contact information",
+        lacksDescription: "Request is missing description",
+        itsAnOffer: "It’s not a request, it’s an offer",
+        itsAnAdvertisementOrSpam: "It’s an ad or spam",
+        wrongCategory: "Request has an incorrect category assigned",
+        other: "Other reason",
+      },
+    },
+    reasonDetails: "More information",
+    thankYou: "Thank you!",
+    thankYouForReport:
+      "Thank you! Your application will allow us to improve the provision of assistance. Our moderators will take a look at your report in a moment.",
   },
 }
 

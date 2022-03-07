@@ -10,11 +10,13 @@ export const TICKET_LIST_FIELDS = [
   "where_to_tag.location_type",
 ]
 
-export const TICKET_DETAILS_FIELDS = [
-  "*",
-  "need_tag_id.need_tag_id.*",
-]
+export const TICKET_DETAILS_FIELDS = ["*", "need_tag_id.need_tag_id.*"]
 
 export const TAG_FIELDS = ["*"]
 
-export const LOCATION_HUB_FIELDS = ["id, name, location_type"]
+export const LOCATION_HUB_FIELDS = [
+  "id, name, short_name, location_type",
+  "translation_uk_UA",
+  "translation_en_US",
+  "address",
+]

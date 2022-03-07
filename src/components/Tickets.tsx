@@ -6,23 +6,34 @@ import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { useQuery, useQueryClient } from "react-query"
 import { useTranslations } from "../hooks/translations"
 import { RouteDefinitions } from "../utils/routes"
-import { TICKET_STATUS } from "../services/ticket.type"
+import {
+  LocationTag,
+  NeedTagType,
+  TICKET_STATUS,
+} from "../services/ticket.type"
 import { Tag } from "./Tag"
 import { FiltersBadges, FiltersDropdown } from "./Filters"
 import { getRootContainer } from "../services/_root-container"
 import ReactPaginate from "react-paginate"
+import { TicketsListMetaData } from "./single-ticket/TicketsListMetaData"
 const ts = getRootContainer().containers.ticketService
 
-const TRANSPORT_TAG = 5
+export const TRANSPORT_TAG = 5
 
 export const Tickets = ({
   mineOnly,
   ticketStatus,
   title,
+  tags,
+  locationTags,
+  currentTag,
 }: {
   mineOnly?: boolean
   ticketStatus: TICKET_STATUS
   title: string
+  tags: NeedTagType[]
+  locationTags: LocationTag[]
+  currentTag?: NeedTagType
 }) => {
   const router = useRouter()
   const translations = useTranslations()
@@ -75,17 +86,14 @@ export const Tickets = ({
 
   const queryClient = useQueryClient()
 
-  const { data: tags = [] } = useQuery(`main-tags`, () => {
-    return ts.mainTags()
-  })
-
-  const { data: localisationTags = [] } = useQuery(`localisation-tags`, () => {
-    return ts.locationTags()
-  })
-
   const onTagClick = useCallback(
-    (tag: number) => {
-      router.query.tag = tag.toString()
+    (tag?: number) => {
+      if (tag) {
+        router.query.tag = tag.toString()
+      } else {
+        delete router.query.tag
+      }
+
       router.query.page = "1"
       router.push(router)
     },
@@ -101,7 +109,7 @@ export const Tickets = ({
   )
 
   const onWhereToClick = useCallback(
-    (tag: number) => {
+    (tag?: number) => {
       if (tag) {
         router.query.where_to = tag.toString()
       } else {
@@ -171,6 +179,7 @@ export const Tickets = ({
 
   return (
     <>
+      <TicketsListMetaData tag={currentTag} ticketsListTitle={title} />
       <h1 className="my-4 text-3xl font-semibold text-center">
         {title}
         {ticketsData?.meta && (
@@ -198,13 +207,13 @@ export const Tickets = ({
           <div className="mx-auto md:max-w-xl md:mt-4">
             <div className="md:grid grid-cols-2 gap-4">
               <FiltersDropdown
-                data={localisationTags}
+                data={locationTags}
                 onSelectFilter={onWhereFromClick}
                 activeTag={whereFromTag}
                 placeholder={translations["filters"]["whereFrom"]}
               />
               <FiltersDropdown
-                data={localisationTags}
+                data={locationTags}
                 onSelectFilter={onWhereToClick}
                 activeTag={whereToTag}
                 placeholder={translations["filters"]["whereTo"]}
