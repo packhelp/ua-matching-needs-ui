@@ -5,7 +5,7 @@ import {
   LocaleFlags,
   LocaleNames,
   locales,
-} from "../../../utils/routes"
+} from "../../../translations/definitions"
 import Link from "next/link"
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu"
 import { Flex, Image } from "@chakra-ui/react"

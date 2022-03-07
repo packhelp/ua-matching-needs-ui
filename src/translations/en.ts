@@ -1,4 +1,4 @@
-import { Translation } from "../hooks/translations"
+import { Translation } from "./definitions"
 
 export const EN: Translation = {
   "/tickets/add": "Post your request",

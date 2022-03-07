@@ -8,12 +8,14 @@ import { useTranslations } from "../../../hooks/translations"
 import Link from "next/link"
 import {
   getRouteNameForLocale,
+  RouteDefinitions,
+} from "../../../utils/routes"
+import {
   Locale,
   LocaleFlags,
   LocaleNames,
   locales,
-  RouteDefinitions,
-} from "../../../utils/routes"
+} from "../../../translations/definitions"
 import { CloseSVG } from "../../../assets/styled-svgs/close"
 import { HamburgerSVG } from "../../../assets/styled-svgs/hamburger"
 import { signOut } from "next-auth/react"
