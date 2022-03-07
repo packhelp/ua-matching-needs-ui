@@ -21,7 +21,7 @@ const ActiveTickets: NextPage<TicketsListPageProps> = ({
   return (
     <Tickets
       ticketStatus={TICKET_STATUS.ACTIVE}
-      title={translations["pages"]["active"]["title"]}
+      title={translations.pages.active.title}
       tags={tags}
       locationTags={locationTags}
       currentTag={currentTag}

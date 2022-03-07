@@ -12,6 +12,8 @@ import { RouteDefinitions } from "../../utils/routes"
 import { TicketDetailsType } from "../../services/ticket.type"
 import { ReportTicket } from "./ReportTicket"
 import { userIsLoggedIn } from "../../hooks/is-logged"
+import { Ticket } from "../../services/ticket.class"
+import { Hand } from "../hero-icons/Hand"
 
 type SingleTicketFooterProps = {
   ticket: TicketDetailsType
@@ -115,7 +117,8 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
     .toString()
 
   const isOwner = authSession?.phoneNumber === ticket.phone
-  const isActive = isTicketActive(ticket)
+  const need = new Ticket(ticket)
+  const isActive = need.isActive
   return (
     <div className="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">
       {isActive && (
@@ -143,8 +146,16 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
           )}
 
           {!isOwner && (
-            <div className="flex space-x-1 items-center justify-center">
-              <button onClick={claimTicket}>
+            <div className="flex space-x-1 m-5 items-center justify-center">
+              <button
+                type="button"
+                className="inline-flex items-center w-full place-content-center
+                rounded-md py-4 border border-transparent shadow-sm text-xl
+                font-medium text-white bg-blue-400 hover:bg-blue-500
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                text-white"
+                onClick={claimTicket}
+              >
                 {translations["pages"]["ticket"]["claim"]}
               </button>
             </div>
@@ -202,6 +213,20 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
               </div>
             </div>
           )}
+
+          <div
+            className={
+              "inline-flex gap-1 cursor-pointer align-middle items-center"
+            }
+          >
+            <Hand em="1.3em" /> {need.responsesLength} claimed to help
+          </div>
+
+          <div
+            className={"flex gap-1 cursor-pointer align-middle items-center"}
+          >
+            {need.hasResponses && <div>There are responses! Great</div>}
+          </div>
         </>
       )}
 

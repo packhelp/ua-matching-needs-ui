@@ -16,6 +16,10 @@ import { SingleTicketHeader } from "../../src/components/single-ticket/SingleTic
 import { SingleTicketDetails } from "../../src/components/single-ticket/SingleTicketDetails"
 import { SingleTicketFooter } from "../../src/components/single-ticket/SingleTicketFooter"
 
+/**
+ * use src/services/ticket.class.ts insted
+ * @deprecated
+ */
 export const isTicketActive = (ticket: TicketDetailsType): boolean => {
   return ticket.ticket_status === TICKET_STATUS.ACTIVE
 }
