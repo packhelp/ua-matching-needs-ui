@@ -160,10 +160,13 @@ const ReportTicketButtons: VoidFunctionComponent<ReportTicketButton> = ({
   )
 }
 
-const BasicReportButton: FC<{ onClick: () => void }> = ({
+const BasicReportButton = ({
   onClick,
   children,
-}) => {
+}: {
+  onClick: () => void
+  children: JSX.Element | string
+}): JSX.Element => {
   return (
     <div
       onClick={onClick}
@@ -189,9 +192,12 @@ const BasicReportButton: FC<{ onClick: () => void }> = ({
   )
 }
 
-const StaleTicketReportButton: FC<{ onClick: () => void }> = ({
+const StaleTicketReportButton = ({
   onClick,
   children,
+}: {
+  onClick: () => void
+  children: JSX.Element | string
 }) => {
   return (
     <div
