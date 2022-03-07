@@ -9,8 +9,8 @@ import {
   Image,
   Input,
 } from "@chakra-ui/react"
-import { translations } from "../../utils/translations"
 import { useFinalLocale } from "../../hooks/final-locale"
+import { useTranslations } from "../../hooks/translations"
 
 interface EnterPhoneNumberProps {
   onSubmit: ({ verificationCode: number }) => Promise<void>
@@ -19,7 +19,7 @@ interface EnterPhoneNumberProps {
 export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
   const [verifying, setVerifying] = useState(false)
   const [verificationCode, setVerificationCode] = useState("")
-  const finalLocale = useFinalLocale()
+  const translations = useTranslations()
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
@@ -43,7 +43,7 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
 
           <Heading as="h1" size="1xl" mb={4}>
             {
-              translations[finalLocale]["pages"]["sign-in"][
+              translations["pages"]["sign-in"][
                 "phone-verification"
               ]["title"]
             }
@@ -51,19 +51,20 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
 
           <FormLabel>
             {
-              translations[finalLocale]["pages"]["sign-in"][
+              translations["pages"]["sign-in"][
                 "phone-verification"
               ]["label"]
             }
           </FormLabel>
           <Input
             placeholder={
-              translations[finalLocale]["pages"]["sign-in"][
+              translations["pages"]["sign-in"][
                 "phone-verification"
               ]["placeholder"]
             }
             onChange={(event) => setVerificationCode(event.target.value)}
             type="number"
+            inputMode="decimal"
             autoFocus={true}
           />
           <Button
@@ -76,7 +77,7 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
             {verifying ? (
               <ButtonSpinner />
             ) : (
-              translations[finalLocale]["pages"]["sign-in"]["next"]
+              translations["pages"]["sign-in"]["next"]
             )}
           </Button>
         </form>

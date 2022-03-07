@@ -3,10 +3,10 @@ import Link from "next/link"
 import { Button, useBreakpointValue } from "@chakra-ui/react"
 import {
   getRouteNameForLocale,
-  Locale,
   RouteDefinitions,
   Routes,
 } from "../../../utils/routes"
+import { Locale } from "../../../translations/definitions"
 import { useRouter } from "next/router"
 import { AddIcon, SearchIcon } from "@chakra-ui/icons"
 

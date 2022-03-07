@@ -3,9 +3,9 @@ import { useRouter } from "next/router"
 import { useMemo } from "react"
 import {
   getRouteNameForLocale,
-  Locale,
   RouteDefinitions,
 } from "../../../utils/routes"
+import { Locale } from "../../../translations/definitions"
 
 interface DesktopNavigationElementProps {
   route: RouteDefinitions

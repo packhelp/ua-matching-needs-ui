@@ -53,7 +53,8 @@
     "sass": "^1.49.9",
     "tailwindcss": "^3.0.23",
     "toastify": "^2.0.1",
-    "truncate": "^3.0.0"
+    "truncate": "^3.0.0",
+    "tsdef": "^0.0.14"
   },
   "devDependencies": {
     "@types/node": "17.0.21",
