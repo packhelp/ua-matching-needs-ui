@@ -725,7 +725,7 @@ const EN: Translation = {
 
 type Translation = typeof PL
 
-export const translations = {
+export const translations: { [key in Locales]: Translation } = {
   "pl-PL": PL,
   "uk-UA": UA,
   "en-US": EN,

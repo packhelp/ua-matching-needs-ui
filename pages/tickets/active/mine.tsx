@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import { Tickets } from "../../../src/components/Tickets"
+import { Tickets } from "../../../src/components/ticket-list/Tickets"
 import { useTranslations } from "../../../src/hooks/translations"
 import { TICKET_STATUS } from "../../../src/services/ticket.type"
 import {
