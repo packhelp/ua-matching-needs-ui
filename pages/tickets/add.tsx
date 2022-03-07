@@ -31,6 +31,9 @@ import { getRootContainer } from "../../src/services/_root-container"
 import Select, { SingleValue } from "react-select"
 import { TRANSPORT_TAG } from "../../src/components/ticket-list/Tickets"
 
+import { TicketTypeSwitcher } from "../../src/components/add-ticket/TicketTypeSwitcher"
+import { AddTicketForm } from "../../src/components/add-ticket/AddTicketForm"
+
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
   tagsSelected: number[] | number | undefined
@@ -205,6 +208,10 @@ const AddTicket: NextPage = () => {
   }
 
   const isDisabled = addTicketMutation.isLoading || isSubmitting
+
+  // new magic here //
+  return <AddTicketForm />
+  // new magic here
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">

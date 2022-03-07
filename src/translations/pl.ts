@@ -241,4 +241,17 @@ export const PL = {
     thankYouForReport:
       "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
   },
+  addTicket: {
+    iNeed: "Potrzebuję pomocy",
+    iOffer: "Mogę pomóc!",
+    need: {
+
+    },
+    offer: {
+      title: "Jeśli chcesz pomóc, przejrzyj bazę ofert",
+      howToFilter: "Zobacz jak skutecznie filtrować",
+      chooseCategory: "Wybierz kategorię:",
+      youCanAlsoApply: "Możesz się też zgłosić do pomocy do jednego z naszych partnerów:"
+    }
+  }
 }

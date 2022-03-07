@@ -242,4 +242,8 @@ export const UA: Translation = {
     thankYouForReport:
       "Дякую! Ваша заявка дозволить нам покращити надання допомоги. Наші модератори розглянуть це найближчим часом",
   },
+  addTicket: {
+    iNeed: "<miss>",
+    iOffer: "<miss>"
+  }
 }
