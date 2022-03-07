@@ -9,10 +9,10 @@ import { TicketData } from "../../services/ticket.type"
 import { Ticket } from "../../services/ticket.class"
 import { Hand } from "../hero-icons/Hand"
 
-type Ticket = TicketData & { phone: string }
+type TicketWithPhone = TicketData & { phone: string }
 
 type TicketsListProps = {
-  tickets: Ticket[]
+  tickets: TicketWithPhone[]
 }
 
 export const TicketsList = (props: TicketsListProps) => {
