@@ -117,6 +117,8 @@ export const EN: Translation = {
       chooseLocation: "Choose location",
       "has-pets": "Animals",
       "children-hint": "Number of people younger than 12",
+      title: "Title (short)",
+      "title-hint": "Housing in Poznan for 2 adults",
       "what-do-you-need": "What is it that you need?",
       "what-do-you-need-hint":
         "For example: A 2-person mattress for mother and child. Context and urgency: We were to take refugees (mother and child) to our home, but now we are finally hosting a grandmother, 3 mothers and 2 children. We don't have enough beds for them. Extra information: We don't have access to a car. We kindly ask anyone to bring it to us.",
