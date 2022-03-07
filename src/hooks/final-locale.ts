@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { Locales } from "../utils/translations"
+import { Locales } from "./translations"
 
 export const useFinalLocale = () => {
   let finalLocale: Locales = "pl-PL"

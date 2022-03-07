@@ -1,4 +1,4 @@
-import { translations } from "./translations"
+import { translations } from "../hooks/translations"
 
 export enum LocaleDefinitions {
   PL = "pl-PL",
@@ -22,6 +22,7 @@ export type Locale =
   | LocaleDefinitions.PL
   | LocaleDefinitions.UA
   | LocaleDefinitions.EN
+
 export const locales = [
   LocaleDefinitions.PL,
   LocaleDefinitions.UA,
