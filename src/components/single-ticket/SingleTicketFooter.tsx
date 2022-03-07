@@ -54,7 +54,7 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
 
   const markClaimedTicketMutation = useMutation<number, NextError, number>(
     (id: number) => {
-      return axios.patch(`/api/add-claim`, {
+      return axios.post(`/api/add-need-response`, {
         id: id,
         date_claimed: Date.now(),
       })
@@ -116,9 +116,6 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
 
   const isOwner = authSession?.phoneNumber === ticket.phone
   const isActive = isTicketActive(ticket)
-  console.log({
-    isOwner,
-  })
   return (
     <div className="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">
       {isActive && (

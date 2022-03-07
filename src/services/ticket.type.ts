@@ -42,7 +42,7 @@ export enum TICKET_STATUS {
   DELETED = "deleted",
   CANCELED = "canceled",
   HIDDEN = "hidden",
-  CLAIMED = "claimed",
+  // CLAIMED = "claimed", <-- WE DON"T HAVE CLAIMED STATUS. Check responses field insted!!!
 }
 
 export type TicketFormData = {
