@@ -5,20 +5,18 @@ import {
   Stack,
   Text,
   Flex,
-  useBreakpointValue,
   HStack,
 } from "@chakra-ui/react"
 import * as React from "react"
 import { NextPage } from "next"
 import { Step } from "../src/components/main/Step"
-import { translations } from "../src/utils/translations"
-import { useFinalLocale } from "../src/hooks/final-locale"
 import { AddTicketButton } from "../src/components/AddTicketButton"
 import { SearchTicketsButton } from "../src/components/SearchTicketsButton"
+import { useTranslations } from "../src/hooks/translations"
 
 const MainPage: NextPage = () => {
-  const finalLocale = useFinalLocale()
-  const pageTranslations = translations[finalLocale]["pages"]["main"]
+  const translations = useTranslations()
+  const pageTranslations = translations["pages"]["main"]
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">

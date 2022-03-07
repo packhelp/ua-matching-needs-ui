@@ -12,9 +12,8 @@ import {
   Input,
 } from "@chakra-ui/react"
 import React, { useMemo, useState } from "react"
-import { useFinalLocale } from "../../hooks/final-locale"
-import { translations } from "../../utils/translations"
 import { parsePhoneNumberFromString } from "libphonenumber-js/max"
+import { useTranslations } from "../../hooks/translations"
 
 interface EnterPhoneNumberProps {
   onSubmit: ({ phoneNumber: string }) => Promise<void>
@@ -25,7 +24,7 @@ export const EnterPhoneNumber = ({
   onSubmit,
   error,
 }: EnterPhoneNumberProps) => {
-  const finalLocale = useFinalLocale()
+  const translations = useTranslations()
 
   const [processing, setProcessing] = useState(false)
   const [phone, setPhone] = useState<string | undefined>()
@@ -74,7 +73,7 @@ export const EnterPhoneNumber = ({
           </Center>
 
           <Heading as="h1" size="1xl" mb={4}>
-            {translations[finalLocale]["pages"]["sign-in"]["title"]}
+            {translations["pages"]["sign-in"]["title"]}
           </Heading>
 
           {error && (
@@ -85,11 +84,11 @@ export const EnterPhoneNumber = ({
           )}
 
           <FormLabel>
-            {translations[finalLocale]["pages"]["sign-in"]["label"]}
+            {translations["pages"]["sign-in"]["label"]}
           </FormLabel>
           <Input
             placeholder={
-              translations[finalLocale]["pages"]["sign-in"]["placeholder"]
+              translations["pages"]["sign-in"]["placeholder"]
             }
             onChange={(e) => setPhone(e.target.value)}
             onBlur={() => setShouldValidate(true)}
@@ -108,7 +107,7 @@ export const EnterPhoneNumber = ({
             {processing ? (
               <ButtonSpinner />
             ) : (
-              translations[finalLocale]["pages"]["sign-in"]["next"]
+              translations["pages"]["sign-in"]["next"]
             )}
           </Button>
         </form>

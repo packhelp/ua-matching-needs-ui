@@ -1,3 +1,5 @@
+import { Nullable } from "tsdef"
+
 export type Organization = {
   id: number
   name: string
@@ -13,8 +15,8 @@ export interface NeedTagType {
   sort: number
 
   // Human names
-  translation_uk_UA: string
-  translation_en_US: null
+  translation_uk_UA: Nullable<string>
+  translation_en_US: Nullable<string>
   // user_created: string
   // date_created: string
   // user_updated: string
