@@ -3,7 +3,6 @@ import Head from "next/head"
 import { useTranslations } from "../../hooks/translations"
 import Script from "next/script"
 
-
 export const Container: FC = ({ children }) => {
   const translations = useTranslations()
 

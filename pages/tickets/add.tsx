@@ -29,6 +29,7 @@ import {
 import { useTagTranslation } from "../../src/hooks/useTagTranslation"
 import { getRootContainer } from "../../src/services/_root-container"
 import Select, { SingleValue } from "react-select"
+import { TRANSPORT_TAG } from "../../src/components/ticket-list/Tickets"
 
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
@@ -87,10 +88,18 @@ const AddTicket: NextPage = () => {
   })
 
   const mappedLocationTags = useMemo(() => {
-    return locationTags.map((tag) => ({
-      value: tag.id,
-      label: tag.name,
-    }))
+    return locationTags.map((tag) => {
+      let name = tag.name
+
+      if (tag.location_type === "help_center" && tag.short_name != null) {
+        name = tag.short_name
+      }
+
+      return {
+        value: tag.id,
+        label: name,
+      }
+    })
   }, [locationTags])
 
   const onSuccess = (rawResponse) => {
@@ -105,12 +114,13 @@ const AddTicket: NextPage = () => {
       )
     }, 1000)
   }
-
+  const isTransportTagSelected = tagsSelected.includes(TRANSPORT_TAG)
   const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
     (newTicket) => {
       const {
         phone,
         what,
+        description,
         where,
         who,
         count,
@@ -121,11 +131,11 @@ const AddTicket: NextPage = () => {
         has_pets,
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
-      
+
       let newTicketData = {
         phone,
-        description: what,
         what,
+        description,
         where,
         who,
         // @deprecated - I've set to 0, because it was fetched from my localStorage from the days when it was used.
@@ -142,8 +152,9 @@ const AddTicket: NextPage = () => {
         children: children ? children : 0,
         has_pets: !has_pets ? "0" : "1",
       }
+
       // if trip
-      if (whereFromTag || whereToTag) {
+      if (isTransportTagSelected) {
         newTicketData = Object.assign(newTicketData, {
           need_type: "trip",
           where_from_tag: whereFromTag,
@@ -155,7 +166,7 @@ const AddTicket: NextPage = () => {
     },
     {
       onSuccess,
-    },
+    }
   )
 
   const useFormOptions: any = {}
@@ -178,9 +189,10 @@ const AddTicket: NextPage = () => {
       ...data,
       phone: authSession.phoneNumber,
       need_tag_id: tagsData,
+      // add user_created field
     }
     addTicketMutation.mutate(postData, {
-      onError: () => setIsSubmitting(false)
+      onError: () => setIsSubmitting(false),
     })
   }
 
@@ -204,7 +216,7 @@ const AddTicket: NextPage = () => {
             </Heading>
 
             <Stack>
-              <Heading as={"h2"} size={"l"}>
+              <Heading as="h2" size="l">
                 {translations["pages"]["add-ticket"]["tags"]}
               </Heading>
 
@@ -220,7 +232,7 @@ const AddTicket: NextPage = () => {
             <div className="block md:hidden">
               <Stack marginBottom="16px">
                 <div className="flex justify-between">
-                  <Heading as={"h2"} size={"l"}>
+                  <Heading as="h2" size="l">
                     {translations["pages"]["add-ticket"]["adults"]}
                   </Heading>
                   {translations["pages"]["add-ticket"]["adultsAge"]}
@@ -231,14 +243,15 @@ const AddTicket: NextPage = () => {
                   placeholder={
                     translations["pages"]["add-ticket"]["adultsHint"]
                   }
-                  variant={"outline"}
+                  variant="outline"
+                  inputMode="numeric"
                   {...register("adults")}
                 />
               </Stack>
 
               <Stack marginBottom="16px">
                 <div className="flex justify-between">
-                  <Heading as={"h2"} size={"l"}>
+                  <Heading as="h2" size="l">
                     {translations["pages"]["add-ticket"]["children"]}
                   </Heading>
                   {translations["pages"]["add-ticket"]["childrenAge"]}
@@ -249,7 +262,8 @@ const AddTicket: NextPage = () => {
                   placeholder={
                     translations["pages"]["add-ticket"]["childrenHint"]
                   }
-                  variant={"outline"}
+                  variant="outline"
+                  inputMode="numeric"
                   {...register("children")}
                 />
               </Stack>
@@ -266,36 +280,37 @@ const AddTicket: NextPage = () => {
             <div className="hidden md:flex justify-between items-start mb-16">
               <Stack>
                 <div className="flex justify-between">
-                  <Heading as={"h2"} size={"l"}>
+                  <Heading as="h2" size="l">
                     {translations["pages"]["add-ticket"]["adults"]}
                   </Heading>
                   {translations["pages"]["add-ticket"]["adultsAge"]}
                 </div>
                 <Input
                   min={0}
-                  type={"number"}
+                  type="number"
                   placeholder={
                     translations["pages"]["add-ticket"]["adultsHint"]
                   }
-                  variant={"outline"}
+                  variant="outline"
+                  inputMode="tel"
                   {...register("adults")}
                 />
               </Stack>
 
               <Stack>
                 <div className="flex justify-between">
-                  <Heading as={"h2"} size={"l"}>
+                  <Heading as="h2" size="l">
                     {translations["pages"]["add-ticket"]["children"]}
                   </Heading>
                   {translations["pages"]["add-ticket"]["childrenAge"]}
                 </div>
                 <Input
                   min={0}
-                  type={"number"}
+                  type="number"
                   placeholder={
                     translations["pages"]["add-ticket"]["childrenHint"]
                   }
-                  variant={"outline"}
+                  variant="outline"
                   {...register("children")}
                 />
               </Stack>
@@ -311,48 +326,63 @@ const AddTicket: NextPage = () => {
 
             <div className="h-4 hidden md:block" />
 
-            <Stack marginBottom="16px">
-              <Heading as={"h2"} size={"l"}>
-                {translations["pages"]["add-ticket"].whereFrom}
-              </Heading>
-              <Select
-                options={mappedLocationTags}
-                onChange={(
-                  newValue: SingleValue<{ value: number; label: string }>
-                ) => {
-                  setWhereFromTag(newValue ? newValue.value : undefined)
-                }}
-                placeholder={
-                  translations["pages"]["add-ticket"]["chooseLocation"]
-                }
-                isClearable
-                isSearchable={false}
-              />
-            </Stack>
+            {isTransportTagSelected && (
+              <Stack marginBottom="16px">
+                <Heading as="h2" size="l">
+                  {translations["pages"]["add-ticket"].whereFrom}
+                </Heading>
+                <Select
+                  options={mappedLocationTags}
+                  onChange={(
+                    newValue: SingleValue<{ value: number; label: string }>
+                  ) => {
+                    setWhereFromTag(newValue ? newValue.value : undefined)
+                  }}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["chooseLocation"]
+                  }
+                  isClearable
+                  isSearchable={false}
+                />
+              </Stack>
+            )}
 
-            <Stack marginBottom="16px">
-              <Heading as={"h2"} size={"l"}>
-                {translations["pages"]["add-ticket"].whereTo}
-              </Heading>
-              <Select
-                options={mappedLocationTags}
-                onChange={(
-                  newValue: SingleValue<{ value: number; label: string }>
-                ) => {
-                  setWhereToTag(newValue ? newValue.value : undefined)
-                }}
-                placeholder={
-                  translations["pages"]["add-ticket"]["chooseLocation"]
-                }
-                isClearable
-                isSearchable={false}
-              />
-            </Stack>
+            {isTransportTagSelected && (
+              <Stack marginBottom="16px">
+                <Heading as="h2" size="l">
+                  {translations["pages"]["add-ticket"].whereTo}
+                </Heading>
+                <Select
+                  options={mappedLocationTags}
+                  onChange={(
+                    newValue: SingleValue<{ value: number; label: string }>
+                  ) => {
+                    setWhereToTag(newValue ? newValue.value : undefined)
+                  }}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["chooseLocation"]
+                  }
+                  isClearable
+                  isSearchable={false}
+                />
+              </Stack>
+            )}
 
             <div className="h-4 hidden md:block" />
-
+            {/* TITLE  */}
             <Stack>
-              <Heading as={"h2"} size={"l"}>
+              <Heading as="h2" size="l">
+                {translations["pages"]["add-ticket"].title}
+              </Heading>
+              <Input
+                placeholder={translations["pages"]["add-ticket"].title}
+                variant="outline"
+                {...register("what")}
+              />
+            </Stack>
+            {/* DEscription  */}
+            <Stack>
+              <Heading as="h2" size="l">
                 {translations["pages"]["add-ticket"]["what-do-you-need"]}
               </Heading>
               <Textarea
@@ -360,12 +390,13 @@ const AddTicket: NextPage = () => {
                 placeholder={
                   translations["pages"]["add-ticket"]["what-do-you-need-hint"]
                 }
-                variant={"outline"}
-                {...register("what")}
+                variant="outline"
+                {...register("description")}
               />
             </Stack>
+
             <Stack>
-              <Heading as={"h2"} size={"l"}>
+              <Heading as="h2" size="l">
                 {
                   translations["pages"]["add-ticket"][
                     "where-do-you-need-it-delivered"
@@ -376,12 +407,13 @@ const AddTicket: NextPage = () => {
                 placeholder={
                   translations["pages"]["add-ticket"]["address-or-gps"]
                 }
-                variant={"outline"}
+                variant="outline"
                 {...register("where")}
               />
             </Stack>
+
             <Stack>
-              <Heading as={"h2"} size={"l"}>
+              <Heading as="h2" size="l">
                 {translations["pages"]["add-ticket"]["who-needs-it"]}
               </Heading>
               <Text fontSize={"sm"}>
@@ -395,7 +427,7 @@ const AddTicket: NextPage = () => {
                 placeholder={
                   translations["pages"]["add-ticket"]["who-needs-it"]
                 }
-                variant={"outline"}
+                variant="outline"
                 {...register("who")}
               />
             </Stack>
@@ -419,6 +451,19 @@ const AddTicket: NextPage = () => {
               value={1}
               defaultChecked={true}
               {...register("phone_public")}
+              onChange={(e) => {
+                const checked = e.target.checked
+                if (!checked) {
+                  toast.warning(
+                    translations["pages"]["add-ticket"][
+                      "hide-phone-disclaimer"
+                    ],
+                    {
+                      pauseOnHover: true,
+                    }
+                  )
+                }
+              }}
             >
               {translations["pages"]["add-ticket"].show_phone_public}
             </Checkbox>

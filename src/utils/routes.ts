@@ -1,32 +1,5 @@
-import { translations } from "./translations"
-
-export enum LocaleDefinitions {
-  PL = "pl-PL",
-  UA = "uk-UA",
-  EN = "en-US",
-}
-
-export enum LocaleFlags {
-  "pl-PL" = "/svg/poland.svg",
-  "uk-UA" = "/svg/ukraine.svg",
-  "en-US" = "/svg/united-kingdom.svg",
-}
-
-export enum LocaleNames {
-  "pl-PL" = "Polski",
-  "uk-UA" = "український",
-  "en-US" = "English",
-}
-
-export type Locale =
-  | LocaleDefinitions.PL
-  | LocaleDefinitions.UA
-  | LocaleDefinitions.EN
-export const locales = [
-  LocaleDefinitions.PL,
-  LocaleDefinitions.UA,
-  LocaleDefinitions.EN,
-]
+import { translations } from "../translations/definitions"
+import { Locale, LocaleDefinitions } from "../translations/definitions"
 
 export enum RouteDefinitions {
   Main = "/",

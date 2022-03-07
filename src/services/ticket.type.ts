@@ -1,3 +1,5 @@
+import { Nullable } from "tsdef"
+
 export type Organization = {
   id: number
   name: string
@@ -13,26 +15,39 @@ export interface NeedTagType {
   sort: number
 
   // Human names
-  translation_uk_UA: string
-  translation_en_US: null
+  translation_uk_UA: Nullable<string>
+  translation_en_US: Nullable<string>
   // user_created: string
   // date_created: string
   // user_updated: string
   // date_updated: string
 }
 
+export interface LocationTag {
+  id: number
+  name: string
+  location_type: "city" | "border_crossing" | "generic" | "help_center"
+  translation_uk_UA: string | null
+  translation_en_US: string | null
+  short_name: string | null
+
+  need_to: number[]
+  need_from: number[]
+}
+
 export enum TICKET_STATUS {
-  ACTIVE = "ACTIVE",
-  SOLVED = "SOLVED",
-  EXPIRED = "EXPIRED",
-  DELETED = "DELETED",
-  CANCELED = "CANCELED",
-  HIDDEN = "HIDDEN",
-  CLAIMED = "CLAIMED",
+  ACTIVE = "active",
+  SOLVED = "solved",
+  EXPIRED = "expired",
+  DELETED = "deleted",
+  CANCELED = "canceled",
+  HIDDEN = "hidden",
+  CLAIMED = "claimed",
 }
 
 export type TicketFormData = {
   what?: string
+  description?: string
   count?: number
   where?: string
   who?: string
