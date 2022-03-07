@@ -83,13 +83,9 @@ export const EnterPhoneNumber = ({
             </Alert>
           )}
 
-          <FormLabel>
-            {translations["pages"]["sign-in"]["label"]}
-          </FormLabel>
+          <FormLabel>{translations["pages"]["sign-in"]["label"]}</FormLabel>
           <Input
-            placeholder={
-              translations["pages"]["sign-in"]["placeholder"]
-            }
+            placeholder={translations["pages"]["sign-in"]["placeholder"]}
             onChange={(e) => setPhone(e.target.value)}
             onBlur={() => setShouldValidate(true)}
             isInvalid={!isPhoneValid}

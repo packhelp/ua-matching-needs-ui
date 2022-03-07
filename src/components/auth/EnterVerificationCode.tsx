@@ -42,25 +42,17 @@ export function EnterVerificationCode({ onSubmit }: EnterPhoneNumberProps) {
           </Center>
 
           <Heading as="h1" size="1xl" mb={4}>
-            {
-              translations["pages"]["sign-in"][
-                "phone-verification"
-              ]["title"]
-            }
+            {translations["pages"]["sign-in"]["phone-verification"]["title"]}
           </Heading>
 
           <FormLabel>
-            {
-              translations["pages"]["sign-in"][
-                "phone-verification"
-              ]["label"]
-            }
+            {translations["pages"]["sign-in"]["phone-verification"]["label"]}
           </FormLabel>
           <Input
             placeholder={
-              translations["pages"]["sign-in"][
-                "phone-verification"
-              ]["placeholder"]
+              translations["pages"]["sign-in"]["phone-verification"][
+                "placeholder"
+              ]
             }
             onChange={(event) => setVerificationCode(event.target.value)}
             type="number"

@@ -148,8 +148,6 @@ const ReportTicketButtons: VFC<ReportTicketButton> = ({
 }) => {
   const translations = useTranslations()
 
-  console.log('translations["report"] :>>', translations["report"])
-
   return (
     <div
       className={
@@ -205,7 +203,6 @@ const StaleTicketReportButton = ({
   onClick: () => void
   children: JSX.Element | string
 }) => {
-  console.log("children :>>", children)
   return (
     <div
       onClick={onClick}

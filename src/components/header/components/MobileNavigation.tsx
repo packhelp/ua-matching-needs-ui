@@ -6,10 +6,7 @@ import { userIsLoggedIn } from "../../../hooks/is-logged"
 import { useRouteChanged } from "../../../hooks/root-changed"
 import { useTranslations } from "../../../hooks/translations"
 import Link from "next/link"
-import {
-  getRouteNameForLocale,
-  RouteDefinitions,
-} from "../../../utils/routes"
+import { getRouteNameForLocale, RouteDefinitions } from "../../../utils/routes"
 import {
   Locale,
   LocaleFlags,
