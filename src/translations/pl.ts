@@ -50,7 +50,7 @@ export const PL = {
           "My zajmiemy się wyszukaniem organizacji lub osób, które zorganizują pomoc.",
         "step-3-title": "Pomagaj odpowiadając na potrzeby",
         "step-3-description":
-          "Możesz samemu pomóc? Sprawdź aktualne potrzeby i... działaj!",
+          "Możesz pomóc!? Sprawdź aktualne potrzeby i... działaj! ♥️",
       },
       "for-whom-section": {
         header: "Dla kogo jest ta platforma?",
