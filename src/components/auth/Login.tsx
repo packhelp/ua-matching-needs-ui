@@ -3,8 +3,9 @@ import React, { FC, useState } from "react"
 import { EnterPhoneNumber } from "./EnterPhoneNumber"
 import { EnterVerificationCode } from "./EnterVerificationCode"
 import { signIn } from "next-auth/react"
-import { getRoutePathForLocale, Locale } from "../../utils/routes"
+import { getRoutePathForLocale } from "../../utils/routes"
 import { useTranslations } from "../../hooks/translations"
+import { LocaleDefinitions } from "../../translations/definitions"
 
 export const Login: FC = () => {
   const router = useRouter()
@@ -43,7 +44,10 @@ export const Login: FC = () => {
       await signIn("credentials", {
         phoneNumber: credentials.phoneNumber,
         verificationCode,
-        callbackUrl: getRoutePathForLocale(returnPath, router.locale as Locale),
+        callbackUrl: getRoutePathForLocale(
+          returnPath,
+          router.locale as LocaleDefinitions
+        ),
         redirect: true,
       })
     } catch (e) {
