@@ -17,10 +17,10 @@ export interface NeedTagType {
   // Human names
   translation_uk_UA: Nullable<string>
   translation_en_US: Nullable<string>
-  user_created: string
-  date_created: string
-  user_updated: string
-  date_updated: string
+  // user_created: string
+  // date_created: string
+  // user_updated: string
+  // date_updated: string
 }
 
 export interface LocationTag {
