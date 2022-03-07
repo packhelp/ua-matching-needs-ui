@@ -224,6 +224,7 @@ export const EN: Translation = {
   report: {
     title: "Does this request contain errors?",
     reportErrors: "Report issues",
+    reportStale: "Out of date? Let us know.",
     actionReport: "Report",
     actionSend: "Submit",
     reason: {

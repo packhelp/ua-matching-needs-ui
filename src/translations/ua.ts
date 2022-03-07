@@ -222,6 +222,7 @@ export const UA: Translation = {
   report: {
     title: "Чи містить цей запит помилки?",
     reportErrors: "повідомляти про порушення",
+    reportStale: "Застарілий? Звіт.",
     actionReport: "Звіт",
     actionSend: "Надіслати",
     reason: {

@@ -148,8 +148,14 @@ const ReportTicketButtons: VFC<ReportTicketButton> = ({
 }) => {
   const translations = useTranslations()
 
+  console.log('translations["report"] :>>', translations["report"])
+
   return (
-    <div className={"flex justify-around text-lg py-4"}>
+    <div
+      className={
+        "flex justify-around text-lg py-4 w-100 flex-col sm:flex-row flex-col-reverse gap-2 sm:gap-0"
+      }
+    >
       <BasicReportButton onClick={onClick}>
         {translations["report"]["reportErrors"]}
       </BasicReportButton>
@@ -199,6 +205,7 @@ const StaleTicketReportButton = ({
   onClick: () => void
   children: JSX.Element | string
 }) => {
+  console.log("children :>>", children)
   return (
     <div
       onClick={onClick}

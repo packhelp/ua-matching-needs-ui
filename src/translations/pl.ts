@@ -221,6 +221,7 @@ export const PL = {
   report: {
     title: "To zgłoszenie zawiera błędy?",
     reportErrors: "Zgłoś nieprawidłowości",
+    reportStale: "Nieaktualne? Zgłoś.",
     actionReport: "Zgłoś",
     actionSend: "Wyślij",
     reason: {
