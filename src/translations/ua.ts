@@ -5,6 +5,7 @@ export const UA: Translation = {
   "/tickets/active": "Потреби",
   "/tickets/active/mine": "Мої потреби",
   "/tickets/inactive/mine": "Мої неактивні потреби",
+  "/tickets/claimed": "Moje przejęte potrzeby",
   "/sign-in": "Увійти",
   "/contact": "Сконтактуватись",
   "/faq": "FAQ",
@@ -30,6 +31,7 @@ export const UA: Translation = {
           "Ми вислали вам код верифікаціі у повідомленні СМС. Введіть йогу щоб залогуватись",
         placeholder: "123 456",
         next: "Далі",
+        error: "<need translation>",
       },
     },
     main: {
@@ -105,6 +107,9 @@ export const UA: Translation = {
       problemSolved: "Проблема вирішена!",
       remove: "Видалити",
       needExpired: "Оголошення не актуальне",
+      ticketClaimed: "<need translation>",
+      errorOnClaim: "<need translation>",
+      claim: "<need translation>",
     },
     "add-ticket": {
       "add-need": "Додай потребу",
@@ -135,6 +140,9 @@ export const UA: Translation = {
       whereTo: "Куди?",
       "hide-phone-disclaimer":
         "Пам’ятайте, що особа, яка пропонує допомогу, повинна мати спосіб зв’язатися з вами. Якщо ви не хочете ділитися телефоном, вкажіть іншу форму контакту в описі.",
+    },
+    claimed: {
+      title: "Moje przejęte potrzeby",
     },
   },
   "sign-out": "Вийти",

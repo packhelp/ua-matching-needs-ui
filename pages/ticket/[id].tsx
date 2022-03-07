@@ -1,10 +1,10 @@
+import React from "react"
 import { Link } from "@chakra-ui/react"
-import type { NextPage } from "next"
 import NextError from "next/error"
+import type { NextPage } from "next"
 import "dayjs/locale/pl"
 import "dayjs/plugin/relativeTime"
 import { RouteDefinitions } from "../../src/utils/routes"
-import React from "react"
 import { useTranslations } from "../../src/hooks/translations"
 import {
   TICKET_STATUS,

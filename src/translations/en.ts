@@ -5,6 +5,7 @@ export const EN: Translation = {
   "/tickets/active": "Requests",
   "/tickets/active/mine": "My requests",
   "/tickets/inactive/mine": "My inactive requests",
+  "/tickets/claimed": "Moje przejęte potrzeby",
   "/sign-in": "Sign in",
   "/contact": "Contact",
   "/faq": "FAQ",
@@ -30,6 +31,7 @@ export const EN: Translation = {
           "We've sent a verification code to the number provided. Enter the code below to sign in.",
         placeholder: "123 456",
         next: "Next",
+        error: "Your phone could not be authorized. Try again!",
       },
     },
     main: {
@@ -105,6 +107,10 @@ export const EN: Translation = {
       problemSolved: "Mark the request as handled!",
       remove: "Delete",
       needExpired: "The request expired",
+      ticketClaimed:
+        "Ticket was taken over by you. It is now in the your claimed requests tab",
+      errorOnClaim: "(Some) error occurred while claiming request.",
+      claim: "Claim",
     },
     "add-ticket": {
       "add-need": "Post a request",
@@ -136,6 +142,9 @@ export const EN: Translation = {
       whereTo: "To where?",
       "hide-phone-disclaimer":
         "Remember that the person offering help must have a way of contacting you. If you do not want to share the phone, please provide a different form of contact in the description.",
+    },
+    claimed: {
+      title: "Moje przejęte potrzeby",
     },
   },
   "sign-out": "Sign out",

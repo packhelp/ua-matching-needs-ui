@@ -11,6 +11,7 @@ import axios from "axios"
 import { RouteDefinitions } from "../../utils/routes"
 import { TicketDetailsType } from "../../services/ticket.type"
 import { ReportTicket } from "./ReportTicket"
+import { userIsLoggedIn } from "../../hooks/is-logged"
 
 type SingleTicketFooterProps = {
   ticket: TicketDetailsType
@@ -21,6 +22,7 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
   const { data: authSession } = useSession()
   const router = useRouter()
   const translations = useTranslations()
+  const isLogged = userIsLoggedIn()
 
   const { id } = router.query
 
@@ -50,6 +52,26 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
     }
   )
 
+  const markClaimedTicketMutation = useMutation<number, NextError, number>(
+    (id: number) => {
+      return axios.post(`/api/add-need-response`, {
+        id: id,
+        date_claimed: Date.now(),
+      })
+    },
+    {
+      onSuccess: () => {
+        toast.success(translations["pages"]["ticket"]["ticketClaimed"])
+        return router.push(
+          RouteDefinitions.TicketDetails.replace(":id", String(id))
+        )
+      },
+      onError: () => {
+        toast.error(translations["pages"]["ticket"]["errorOnClaim"])
+      },
+    }
+  )
+
   const markAsSolvedTicket = () => {
     if (id) {
       markSolvedTicketMutation.mutate(Number(id))
@@ -66,6 +88,27 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
     }
   }
 
+  const markAsCalimedTicket = () => {
+    if (id) {
+      markClaimedTicketMutation.mutate(Number(id))
+    } else {
+      toast.error(translations["pages"]["ticket"]["errorOnClaim"])
+    }
+  }
+
+  const claimTicket = () => {
+    if (isLogged) {
+      markAsCalimedTicket()
+    } else {
+      router.push({
+        pathname: RouteDefinitions.SignIn,
+        query: {
+          returnPath: RouteDefinitions.TicketDetails.replace(":id", String(id)),
+        },
+      })
+    }
+  }
+
   const formattedExpiration = dayjs(ticket.expirationTimestampSane)
     .locale("pl")
     .format("DD.MM.YYYY HH:mm")
@@ -73,7 +116,6 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
 
   const isOwner = authSession?.phoneNumber === ticket.phone
   const isActive = isTicketActive(ticket)
-
   return (
     <div className="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">
       {isActive && (
@@ -98,6 +140,14 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
             </a>
+          )}
+
+          {!isOwner && (
+            <div className="flex space-x-1 items-center justify-center">
+              <button onClick={claimTicket}>
+                {translations["pages"]["ticket"]["claim"]}
+              </button>
+            </div>
           )}
 
           {isOwner && (
