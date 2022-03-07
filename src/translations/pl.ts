@@ -132,6 +132,8 @@ export const PL = {
       show_phone_public: "Pokaż mój numer telefonu publicznie",
       whereFrom: "Skąd?",
       whereTo: "Dokąd?",
+      "hide-phone-disclaimer":
+        "Pamiętaj ze osoba oferująca pomoc musi mieć jak się z Tobą kontaktować. Jeśli nie chcesz udostępniać telefonu podaj w opisie inną formę kontaktu.",
     },
   },
   "sign-out": "Wyloguj się",
