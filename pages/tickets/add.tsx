@@ -451,6 +451,19 @@ const AddTicket: NextPage = () => {
               value={1}
               defaultChecked={true}
               {...register("phone_public")}
+              onChange={(e) => {
+                const checked = e.target.checked
+                if (!checked) {
+                  toast.warning(
+                    translations["pages"]["add-ticket"][
+                      "hide-phone-disclaimer"
+                    ],
+                    {
+                      pauseOnHover: true,
+                    }
+                  )
+                }
+              }}
             >
               {translations["pages"]["add-ticket"].show_phone_public}
             </Checkbox>
