@@ -6,6 +6,8 @@ import React from "react"
 import { useTranslations } from "../../hooks/translations"
 import { useRouter } from "next/router"
 import { TicketData } from "../../services/ticket.type"
+import { Ticket } from "../../services/ticket.class"
+import { Hand } from "../hero-icons/Hand"
 
 type Ticket = TicketData & { phone: string }
 
@@ -32,6 +34,8 @@ export const TicketsList = (props: TicketsListProps) => {
           String(ticket.id)
         )
 
+        const need = new Ticket(ticket)
+
         return (
           <li
             key={ticket.id}
@@ -41,8 +45,8 @@ export const TicketsList = (props: TicketsListProps) => {
           >
             <Link href={ticketUrl} locale={locale}>
               <div className="px-4 py-5 border-gray-200 sm:px-6 cursor-pointer">
-                <div className="mb-2">
-                  <p className="flex items-center max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
+                <div className="mb-2 flex justify-between">
+                  <div className="flex items-center max-w-2xl mb-1 text-sm text-gray-400 space-x-1">
                     {ticket.organization_id ? (
                       <>
                         <Tooltip
@@ -71,7 +75,8 @@ export const TicketsList = (props: TicketsListProps) => {
                       </span>
                     )}
                     <span className="">
-                      {ticket.need_tag_id.map((tag) => {
+                      {need.tags.map((tag) => {
+                        // TODO: move to ticket class
                         if (!tag || !tag.need_tag_id || !tag.need_tag_id.id) {
                           return null
                         }
@@ -81,11 +86,17 @@ export const TicketsList = (props: TicketsListProps) => {
                         )
                       })}
                     </span>
-                  </p>
+                  </div>
+                  <div>
+                    {/* RESPONSES */}
+                    <span className="inline-flex">
+                      <Hand em="1.2em" /> {need.responsesLength}
+                    </span>
+                  </div>
                 </div>
                 <div className="py-1">
                   <p className="text-xl font-medium text-gray-900 truncate">
-                    {ticket.what || ticket.description}
+                    {need.title}
                   </p>
                   {ticket.where ? (
                     <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">

@@ -68,22 +68,6 @@ export const Tickets = ({
         whereFromTagId: whereFromTag,
         whereToTagId: whereToTag,
       })
-      // const url = `/api/get-tickets`
-
-      // return axios
-      //   .get(url, {
-      //     params: {
-      //       mineOnly: mineOnly,
-      //       ticketStatus: ticketStatus,
-      //       tagId: selectedTag,
-      //       page: selectedPage,
-      //       whereFromTag: whereFromTag,
-      //       whereToTag: whereToTag,
-      //     },
-      //   })
-      //   .then((response) => {
-      //     return response.data
-      //   })
     },
     {
       refetchOnWindowFocus: false,
@@ -131,8 +115,6 @@ export const Tickets = ({
     refetch,
     queryClient,
   ])
-
-  console.log("~~~ticket data", ticketsData)
 
   return (
     <>

@@ -19,6 +19,10 @@ export class Ticket {
     return !this.isActive
   }
 
+  get title() {
+    return this.dto.what || this.dto.description
+  }
+
   /**
    * generic tags like "transport", "hurt" etc.
    */
