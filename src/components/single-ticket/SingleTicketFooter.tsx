@@ -155,16 +155,6 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
         </>
       )}
 
-      {isActive ? (
-        <p className="my-4 max-w-2xl text-center text-sm text-gray-500">
-          {translations["pages"]["ticket"]["needActiveTill"]}{" "}
-          {formattedExpiration}
-        </p>
-      ) : (
-        <p className="my-4 max-w-2xl text-center text-sm font-medium text-red-600">
-          {translations["pages"]["ticket"]["needExpired"]} {formattedExpiration}
-        </p>
-      )}
       <ReportTicket ticket={ticket} />
     </div>
   )

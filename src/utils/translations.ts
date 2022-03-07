@@ -219,6 +219,7 @@ const PL = {
   report: {
     title: "To zgłoszenie zawiera błędy?",
     reportErrors: "Zgłoś nieprawidłowości",
+    reportStale: "Nieaktualne? Zgłoś.",
     actionReport: "Zgłoś",
     actionSend: "Wyślij",
     reason: {
@@ -458,6 +459,7 @@ const UA: Translation = {
   report: {
     title: "Чи містить цей запит помилки?",
     reportErrors: "повідомляти про порушення",
+    reportStale: "Застарілий? Звіт.",
     actionReport: "Звіт",
     actionSend: "Надіслати",
     reason: {
@@ -699,6 +701,7 @@ const EN: Translation = {
   report: {
     title: "Does this request contain errors?",
     reportErrors: "Report issues",
+    reportStale: "Out of date? Report.",
     actionReport: "Report",
     actionSend: "Submit",
     reason: {

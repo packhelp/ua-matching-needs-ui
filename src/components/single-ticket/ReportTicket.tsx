@@ -1,4 +1,4 @@
-import React, { useState, VoidFunctionComponent } from "react"
+import React, { FC, useState, VoidFunctionComponent } from "react"
 import { TicketDetailsType } from "../../services/ticket.type"
 import { Modal } from "../Modal"
 import { useTranslations } from "../../hooks/translations"
@@ -35,8 +35,8 @@ export const ReportTicket: VoidFunctionComponent<{
 
   const submitReport = (data) => {
     addTicketMutation.mutate({
-      ...data,
       reason,
+      ...data,
       status: "published",
       need: ticket.id,
     })
@@ -52,9 +52,23 @@ export const ReportTicket: VoidFunctionComponent<{
 
   const isDisabled = reason === ""
 
+  const sendStaleReport = () => {
+    submitReport({ reason: "stale" })
+    setReportTicketModalOpened(true)
+  }
+
+  const cleanupAfterClosingModal = () => {
+    setReportTicketModalOpened(false)
+    setReason("")
+    addTicketMutation.reset()
+  }
+
   return (
     <>
-      <ReportTicketButton onClick={() => setReportTicketModalOpened(true)} />
+      <ReportTicketButtons
+        onClick={() => setReportTicketModalOpened(true)}
+        onStaleClick={sendStaleReport}
+      />
 
       {reportTicketModalOpened && (
         <Modal
@@ -116,7 +130,7 @@ export const ReportTicket: VoidFunctionComponent<{
               </button>
             )
           }
-          onClose={() => setReportTicketModalOpened(false)}
+          onClose={cleanupAfterClosingModal}
         />
       )}
     </>
@@ -125,12 +139,31 @@ export const ReportTicket: VoidFunctionComponent<{
 
 type ReportTicketButton = {
   onClick: () => void
+  onStaleClick: () => void
 }
 
-const ReportTicketButton: VoidFunctionComponent<ReportTicketButton> = ({
+const ReportTicketButtons: VoidFunctionComponent<ReportTicketButton> = ({
   onClick,
+  onStaleClick,
 }) => {
   const translations = useTranslations()
+
+  return (
+    <div className={"flex justify-around text-lg py-4"}>
+      <BasicReportButton onClick={onClick}>
+        {translations["report"]["reportErrors"]}
+      </BasicReportButton>
+      <StaleTicketReportButton onClick={onStaleClick}>
+        {translations["report"]["reportStale"]}
+      </StaleTicketReportButton>
+    </div>
+  )
+}
+
+const BasicReportButton: FC<{ onClick: () => void }> = ({
+  onClick,
+  children,
+}) => {
   return (
     <div
       onClick={onClick}
@@ -151,7 +184,41 @@ const ReportTicketButton: VoidFunctionComponent<ReportTicketButton> = ({
           d="M1.75 1.5a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.75.75 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75zM0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.457 1.457 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25v-9.5zM9 9a1 1 0 1 1-2 0a1 1 0 0 1 2 0zm-.25-5.25a.75.75 0 0 0-1.5 0v2.5a.75.75 0 0 0 1.5 0v-2.5z"
         />
       </svg>{" "}
-      {translations["report"]["reportErrors"]}
+      {children}
+    </div>
+  )
+}
+
+const StaleTicketReportButton: FC<{ onClick: () => void }> = ({
+  onClick,
+  children,
+}) => {
+  return (
+    <div
+      onClick={onClick}
+      className={"inline-flex gap-1 cursor-pointer align-middle items-center"}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        role="img"
+        width="1em"
+        height="1em"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 24 24"
+      >
+        <g
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="m15 16l-2.414-2.414A2 2 0 0 1 12 12.172V6" />
+        </g>
+      </svg>
+      {children}
     </div>
   )
 }
