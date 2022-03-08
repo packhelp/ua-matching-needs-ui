@@ -39,7 +39,7 @@ export const TicketsList = (props: TicketsListProps) => {
         return (
           <li
             key={ticket.id}
-            className={`bg-white rounded-lg shadow outline-blue-200  col-span-1 divide-y divide-gray-200 ticket-item ${
+            className={`flex flex-col justify-between bg-white rounded-lg shadow outline-blue-200  col-span-1 divide-y divide-gray-200 ticket-item ${
               ticket.organization_id ? "verified" : ""
             }`}
           >
