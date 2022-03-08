@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import { Tickets } from "../../../src/components/ticket-list/Tickets"
+import { TicketsList } from "../../../src/components/ticket-list/TicketsList"
 import { useTranslations } from "../../../src/hooks/translations"
 import { TICKET_STATUS } from "../../../src/services/ticket.type"
 import {
@@ -20,7 +20,7 @@ const MineActiveTickets: NextPage<TicketsListPageProps> = ({
 }) => {
   const translations = useTranslations()
   return (
-    <Tickets
+    <TicketsList
       ticketStatus={TICKET_STATUS.ACTIVE}
       mineOnly={true}
       title={translations["/tickets/active/mine"]}

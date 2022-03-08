@@ -1,7 +1,7 @@
 import { FiltersBadges, FiltersDropdown } from "../Filters"
 import React, { useCallback, useMemo } from "react"
 import { useRouter } from "next/router"
-import { TRANSPORT_TAG } from "./Tickets"
+import { TRANSPORT_TAG } from "./TicketsList"
 import { useTranslations } from "../../hooks/translations"
 import { NeedTagType } from "../../services/ticket.type"
 
