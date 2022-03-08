@@ -108,7 +108,9 @@ export const PL = {
       ticketClaimed:
         "Ogłoszenie zostało przez Ciebię przejęte. Znajduje się ono teraz w zakładce Twoje przyjęte ogłoszenia",
       errorOnClaim: "Wystąpił błąd z przejęciem tej potrzeby",
-      claim: "Zgłaszam się do pomocy!",
+      claim: "Zgłaszam się do pomocy!",
+      claimedToHelp: "zgłosiło się do pomocy!",
+      hasResponses: "Są zgłoszenia! Świetnie!"
     },
     "add-ticket": {
       "add-need": "Dodaj potrzebę",

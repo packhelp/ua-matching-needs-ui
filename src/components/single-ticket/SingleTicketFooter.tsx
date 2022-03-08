@@ -166,11 +166,11 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
               <span className="text-sm mr-2 text-gray-500 font-medium">
                 {translations["pages"]["ticket"]["areYouTheAuthorOfThisTicket"]}
               </span>
-              <div className="flex space-x-1 items-center justify-center">
+              <div className="flex space-x-1 items-center flex-col">
                 <button
                   onClick={markAsSolvedTicket}
                   type="button"
-                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  className="mb-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   {translations["pages"]["ticket"]["problemSolved"]}
                   <svg
@@ -214,18 +214,20 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
             </div>
           )}
 
-          <div
-            className={
-              "inline-flex gap-1 cursor-pointer align-middle items-center"
-            }
-          >
-            <Hand em="1.3em" /> {need.responsesLength} claimed to help
-          </div>
+          {need.responsesLength > 0 && (
+            <div
+              className={
+                "inline-flex gap-1 cursor-pointer align-middle items-center"
+              }
+            >
+              <Hand em="1.3em" /> {need.responsesLength} {translations["pages"]["ticket"]["claimedToHelp"]}
+            </div>
+          )}
 
           <div
             className={"flex gap-1 cursor-pointer align-middle items-center"}
           >
-            {need.hasResponses && <div>There are responses! Great</div>}
+            {need.hasResponses && <div>{translations["pages"]["ticket"]["hasResponses"]}</div>}
           </div>
         </>
       )}

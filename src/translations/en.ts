@@ -111,6 +111,8 @@ export const EN: Translation = {
         "Ticket was taken over by you. It is now in the your claimed requests tab",
       errorOnClaim: "(Some) error occurred while claiming request.",
       claim: "Claim",
+      claimedToHelp: "want to help!",
+      hasResponses: "There are responses! Great!",
     },
     "add-ticket": {
       "add-need": "Post a request",

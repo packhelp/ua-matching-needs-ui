@@ -110,6 +110,8 @@ export const UA: Translation = {
       ticketClaimed: "<need translation>",
       errorOnClaim: "<need translation>",
       claim: "<need translation>",
+      claimedToHelp: "<need translation>",
+      hasResponses: "<need translation>",
     },
     "add-ticket": {
       "add-need": "Додай потребу",
