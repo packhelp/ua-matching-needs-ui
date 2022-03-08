@@ -29,7 +29,7 @@ import {
 import { useTagTranslation } from "../../src/hooks/useTagTranslation"
 import { getRootContainer } from "../../src/services/_root-container"
 import Select, { SingleValue } from "react-select"
-import { TRANSPORT_TAG } from "../../src/components/ticket-list/Tickets"
+import { TRANSPORT_TAG } from "../../src/components/ticket-list/TicketsList"
 
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
