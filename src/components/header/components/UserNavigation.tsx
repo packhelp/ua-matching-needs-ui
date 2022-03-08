@@ -91,6 +91,13 @@ const UserPopup = ({ isOpen }: { isOpen: boolean }) => {
         )}
       />
       <UserNavigationElement
+        route={RouteDefinitions.MyClaimedTickets}
+        label={getRouteNameForLocale(
+          RouteDefinitions.MyClaimedTickets,
+          router.locale as any
+        )}
+      />
+      <UserNavigationElement
         onClick={onSignOut}
         label={translations["sign-out"]}
       />

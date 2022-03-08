@@ -12,7 +12,7 @@ export async function getServerSideProps(context) {
 
   return { props: data }
 }
-const ActiveTickets: NextPage<TicketsListPageProps> = ({
+const ClaimedTickets: NextPage<TicketsListPageProps> = ({
   tags,
   locationTags,
   currentTag,
@@ -20,8 +20,8 @@ const ActiveTickets: NextPage<TicketsListPageProps> = ({
   const translations = useTranslations()
   return (
     <Tickets
-      ticketStatus={TICKET_STATUS.ACTIVE}
-      title={translations.pages.active.title}
+      ticketStatus={TICKET_STATUS.CLAIMED}
+      title={translations["pages"]["claimed"]["title"]}
       tags={tags}
       locationTags={locationTags}
       currentTag={currentTag}
@@ -29,4 +29,4 @@ const ActiveTickets: NextPage<TicketsListPageProps> = ({
   )
 }
 
-export default ActiveTickets
+export default ClaimedTickets

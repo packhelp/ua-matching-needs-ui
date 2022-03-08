@@ -42,6 +42,7 @@ export enum TICKET_STATUS {
   DELETED = "deleted",
   CANCELED = "canceled",
   HIDDEN = "hidden",
+  // CLAIMED = "claimed", <-- WE DON"T HAVE CLAIMED STATUS. Check responses field insted!!!
 }
 
 export type TicketFormData = {
@@ -76,6 +77,15 @@ export type TicketData = TicketFormData & {
     need_tag_id: NeedTagType
   }[]
   visits: number
+  need_responses: NeedResponse[]
+}
+
+export interface NeedResponse {
+  id: number
+  user_created: string
+  date_created: Date
+  comment: string
+  // need_id: number
 }
 
 export type TicketDetailsType = TicketPostData & TicketData

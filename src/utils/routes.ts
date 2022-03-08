@@ -7,6 +7,7 @@ export enum RouteDefinitions {
   AllActiveTickets = "/tickets/active",
   MyActiveTickets = "/tickets/active/mine",
   MyInactiveTickets = "/tickets/inactive/mine",
+  MyClaimedTickets = "/tickets/claimed",
   SignIn = "/sign-in",
   TicketDetails = "/ticket/:id",
   Contact = "/contact",
@@ -19,6 +20,7 @@ export type Routes =
   | RouteDefinitions.AllActiveTickets
   | RouteDefinitions.MyActiveTickets
   | RouteDefinitions.MyInactiveTickets
+  | RouteDefinitions.MyClaimedTickets
   | RouteDefinitions.SignIn
   | RouteDefinitions.TicketDetails
   | RouteDefinitions.Contact

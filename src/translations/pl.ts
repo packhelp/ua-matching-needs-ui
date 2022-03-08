@@ -3,6 +3,7 @@ export const PL = {
   "/tickets/active": "Potrzeby",
   "/tickets/active/mine": "Moje potrzeby",
   "/tickets/inactive/mine": "Moje nieaktywne potrzeby",
+  "/tickets/claimed": "Moje przejęte potrzeby",
   "/sign-in": "Zaloguj się",
   "/contact": "Kontakt",
   "/faq": "FAQ",
@@ -28,6 +29,8 @@ export const PL = {
           "Wysłaliśmy kod weryfikacyjny, na twój numer telefonu, w wiadomości SMS. Wpisz go poniżej aby zalogować się.",
         placeholder: "123 456",
         next: "Dalej",
+        error:
+          "Nie udało się autoryzować twojego telefonu. Spróbuj jeszcze raz!",
       },
     },
     main: {
@@ -47,7 +50,7 @@ export const PL = {
           "My zajmiemy się wyszukaniem organizacji lub osób, które zorganizują pomoc.",
         "step-3-title": "Pomagaj odpowiadając na potrzeby",
         "step-3-description":
-          "Możesz samemu pomóc? Sprawdź aktualne potrzeby i... działaj!",
+          "Możesz pomóc!? Sprawdź aktualne potrzeby i... działaj! ♥️",
       },
       "for-whom-section": {
         header: "Dla kogo jest ta platforma?",
@@ -102,6 +105,10 @@ export const PL = {
       problemSolved: "Problem rozwiązany!",
       remove: "Usuń",
       needExpired: "Zgłoszenie wygasło",
+      ticketClaimed:
+        "Ogłoszenie zostało przez Ciebię przejęte. Znajduje się ono teraz w zakładce Twoje przyjęte ogłoszenia",
+      errorOnClaim: "Wystąpił błąd z przejęciem tej potrzeby",
+      claim: "Zgłaszam się do pomocy!",
     },
     "add-ticket": {
       "add-need": "Dodaj potrzebę",
@@ -134,6 +141,9 @@ export const PL = {
       whereTo: "Dokąd?",
       "hide-phone-disclaimer":
         "Pamiętaj ze osoba oferująca pomoc musi mieć jak się z Tobą kontaktować. Jeśli nie chcesz udostępniać telefonu podaj w opisie inną formę kontaktu.",
+    },
+    claimed: {
+      title: "Moje przejęte potrzeby",
     },
   },
   "sign-out": "Wyloguj się",

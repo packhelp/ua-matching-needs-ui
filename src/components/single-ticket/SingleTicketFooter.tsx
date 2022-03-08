@@ -11,6 +11,9 @@ import axios from "axios"
 import { RouteDefinitions } from "../../utils/routes"
 import { TicketDetailsType } from "../../services/ticket.type"
 import { ReportTicket } from "./ReportTicket"
+import { userIsLoggedIn } from "../../hooks/is-logged"
+import { Ticket } from "../../services/ticket.class"
+import { Hand } from "../hero-icons/Hand"
 
 type SingleTicketFooterProps = {
   ticket: TicketDetailsType
@@ -21,6 +24,7 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
   const { data: authSession } = useSession()
   const router = useRouter()
   const translations = useTranslations()
+  const isLogged = userIsLoggedIn()
 
   const { id } = router.query
 
@@ -50,6 +54,26 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
     }
   )
 
+  const markClaimedTicketMutation = useMutation<number, NextError, number>(
+    (id: number) => {
+      return axios.post(`/api/add-need-response`, {
+        id: id,
+        date_claimed: Date.now(),
+      })
+    },
+    {
+      onSuccess: () => {
+        toast.success(translations["pages"]["ticket"]["ticketClaimed"])
+        return router.push(
+          RouteDefinitions.TicketDetails.replace(":id", String(id))
+        )
+      },
+      onError: () => {
+        toast.error(translations["pages"]["ticket"]["errorOnClaim"])
+      },
+    }
+  )
+
   const markAsSolvedTicket = () => {
     if (id) {
       markSolvedTicketMutation.mutate(Number(id))
@@ -66,14 +90,35 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
     }
   }
 
+  const markAsCalimedTicket = () => {
+    if (id) {
+      markClaimedTicketMutation.mutate(Number(id))
+    } else {
+      toast.error(translations["pages"]["ticket"]["errorOnClaim"])
+    }
+  }
+
+  const claimTicket = () => {
+    if (isLogged) {
+      markAsCalimedTicket()
+    } else {
+      router.push({
+        pathname: RouteDefinitions.SignIn,
+        query: {
+          returnPath: RouteDefinitions.TicketDetails.replace(":id", String(id)),
+        },
+      })
+    }
+  }
+
   const formattedExpiration = dayjs(ticket.expirationTimestampSane)
     .locale("pl")
     .format("DD.MM.YYYY HH:mm")
     .toString()
 
   const isOwner = authSession?.phoneNumber === ticket.phone
-  const isActive = isTicketActive(ticket)
-
+  const need = new Ticket(ticket)
+  const isActive = need.isActive
   return (
     <div className="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">
       {isActive && (
@@ -98,6 +143,22 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
             </a>
+          )}
+
+          {!isOwner && (
+            <div className="flex space-x-1 m-5 items-center justify-center">
+              <button
+                type="button"
+                className="inline-flex items-center w-full place-content-center
+                rounded-md py-4 border border-transparent shadow-sm text-xl
+                font-medium text-white bg-blue-400 hover:bg-blue-500
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                text-white"
+                onClick={claimTicket}
+              >
+                {translations["pages"]["ticket"]["claim"]}
+              </button>
+            </div>
           )}
 
           {isOwner && (
@@ -152,6 +213,20 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
               </div>
             </div>
           )}
+
+          <div
+            className={
+              "inline-flex gap-1 cursor-pointer align-middle items-center"
+            }
+          >
+            <Hand em="1.3em" /> {need.responsesLength} claimed to help
+          </div>
+
+          <div
+            className={"flex gap-1 cursor-pointer align-middle items-center"}
+          >
+            {need.hasResponses && <div>There are responses! Great</div>}
+          </div>
         </>
       )}
 
