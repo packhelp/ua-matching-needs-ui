@@ -77,32 +77,12 @@ const AddTicketOld: NextPage = () => {
   const { data: authSession, status: authStatus } = useSession()
   const [tagsSelected, setTagsSelected] = useState<number[]>([])
 
-  const [whereFromTag, setWhereFromTag] = useState<number | undefined>(
-    undefined
-  )
-  const [whereToTag, setWhereToTag] = useState<number | undefined>(undefined)
-
   const { data: tags } = useQuery(`main-tags`, () => {
     return ticketService.mainTags()
   })
   const { data: locationTags = [] } = useQuery(`location-tags`, () => {
     return ticketService.locationTags()
   })
-
-  const mappedLocationTags = useMemo(() => {
-    return locationTags.map((tag) => {
-      let name = tag.name
-
-      if (tag.location_type === "help_center" && tag.short_name != null) {
-        name = tag.short_name
-      }
-
-      return {
-        value: tag.id,
-        label: name,
-      }
-    })
-  }, [locationTags])
 
   const onSuccess = (rawResponse) => {
     const { data } = rawResponse.data
@@ -116,7 +96,6 @@ const AddTicketOld: NextPage = () => {
       )
     }, 1000)
   }
-  const isTransportTagSelected = tagsSelected.includes(TagConstIds.transport)
   const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
     (newTicket) => {
       const {
@@ -153,15 +132,6 @@ const AddTicketOld: NextPage = () => {
         adults: adults ? adults : 0,
         children: children ? children : 0,
         has_pets: !has_pets ? "0" : "1",
-      }
-
-      // if trip
-      if (isTransportTagSelected) {
-        newTicketData = Object.assign(newTicketData, {
-          need_type: "trip",
-          where_from_tag: whereFromTag,
-          where_to_tag: whereToTag,
-        })
       }
 
       return axios.post(`/api/add-ticket`, newTicketData)
@@ -327,48 +297,6 @@ const AddTicketOld: NextPage = () => {
             </div>
 
             <div className="h-4 hidden md:block" />
-
-            {isTransportTagSelected && (
-              <Stack marginBottom="16px">
-                <Heading as="h2" size="l">
-                  {translations["pages"]["add-ticket"].whereFrom}
-                </Heading>
-                <Select
-                  options={mappedLocationTags}
-                  onChange={(
-                    newValue: SingleValue<{ value: number; label: string }>
-                  ) => {
-                    setWhereFromTag(newValue ? newValue.value : undefined)
-                  }}
-                  placeholder={
-                    translations["pages"]["add-ticket"]["chooseLocation"]
-                  }
-                  isClearable
-                  isSearchable={false}
-                />
-              </Stack>
-            )}
-
-            {isTransportTagSelected && (
-              <Stack marginBottom="16px">
-                <Heading as="h2" size="l">
-                  {translations["pages"]["add-ticket"].whereTo}
-                </Heading>
-                <Select
-                  options={mappedLocationTags}
-                  onChange={(
-                    newValue: SingleValue<{ value: number; label: string }>
-                  ) => {
-                    setWhereToTag(newValue ? newValue.value : undefined)
-                  }}
-                  placeholder={
-                    translations["pages"]["add-ticket"]["chooseLocation"]
-                  }
-                  isClearable
-                  isSearchable={false}
-                />
-              </Stack>
-            )}
 
             <div className="h-4 hidden md:block" />
             {/* TITLE  */}
