@@ -5,7 +5,6 @@ import { TransportNeededModal } from "./TransportNeededModal"
 import { LocationPicker } from "./partials/LocationPicker"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
-
 export type InputValuesType = {
   [key in TransportNeededVariant]: {
     value: number | undefined

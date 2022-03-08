@@ -77,7 +77,7 @@ export const TransportNeededModal = (props: TransportNeededModalType) => {
     })
   }
 
-  const isDisabled = !Boolean(selected[variant])
+  const isDisabled = !Boolean(selected[variant].value)
 
   return (
     <Modal
@@ -95,13 +95,13 @@ export const TransportNeededModal = (props: TransportNeededModalType) => {
               }
               onChange={(location) => handleChangeLocation(location)}
             />
-            {variant === "whereFrom" && (
+            {/* {variant === "whereFrom" && (
               <LocationFromNavigator
                 setCoords={setCoords}
                 closeModal={closeModal}
                 setSelected={setSelected}
               />
-            )}
+            )} */}
           </div>
         </>
       }
