@@ -1,5 +1,12 @@
-import { Checkbox, Heading, Input, Stack, Text } from "@chakra-ui/react"
-import { useTranslations } from "../../../src/hooks/translations"
+import {
+  Checkbox,
+  Heading,
+  Input,
+  Stack,
+  Text,
+  Textarea,
+} from "@chakra-ui/react"
+import { useTranslations } from "../../hooks/translations"
 import { useForm } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
 import axios from "axios"
@@ -7,9 +14,9 @@ import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
 import { useState, useMemo } from "react"
-import { PlusSVG } from "../../../src/assets/styled-svgs/plus"
+import { PlusSVG } from "../../assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
-import { getRootContainer } from "../../../src/services/_root-container"
+import { getRootContainer } from "../../services/_root-container"
 import Select, { SingleValue } from "react-select"
 
 import { RouteDefinitions } from "../../utils/routes"
@@ -25,7 +32,7 @@ export type InputValuesType = {
 
 const ticketService = getRootContainer().containers.ticketService
 
-export const TransportLocationSection = () => {
+export const FormNeedTransport = () => {
   const router = useRouter()
   const translations = useTranslations()
 
@@ -232,11 +239,25 @@ export const TransportLocationSection = () => {
               />
             </Stack>
 
+            {/* TITLE  */}
+            <Stack>
+              <Heading as="h2" size="l">
+                {translations["pages"]["add-ticket"].title}
+              </Heading>
+              <Input
+                placeholder={translations["pages"]["add-ticket"].title}
+                variant="outline"
+                {...register("what")}
+              />
+            </Stack>
+            {/* DEscription  */}
             <Stack>
               <Heading as="h2" size="l">
                 {translations["pages"]["add-ticket"]["what-do-you-need"]}
               </Heading>
-              <Input
+
+              <Textarea
+                rows={4}
                 placeholder={
                   translations["pages"]["add-ticket"]["what-do-you-need"]
                 }

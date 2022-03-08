@@ -10,13 +10,15 @@ import Select, { SingleValue } from "react-select"
 import { useTranslations } from "../../hooks/translations"
 import { useTagTranslation } from "../../hooks/useTagTranslation"
 import { useRouter } from "next/router"
-import { TransportLocationSection } from "./TransportLocationSection"
+import { FormNeedTransport } from "./FormNeedTransport"
 import { NeedCategorySwitcher } from "./NeedCategorySwitcher"
 import { TagConstIds } from "../../services/types.tag"
+import { RouteDefinitions } from "../../utils/routes"
 
 const ticketService = getRootContainer().containers.ticketService
 
 export const AddTicketForm = () => {
+  const router = useRouter()
   const translation = useTranslations()
   const { getTranslation } = useTagTranslation()
   const { locale } = useRouter()
@@ -46,7 +48,9 @@ export const AddTicketForm = () => {
     other: {
       name: "other",
       active: tag === null,
-      onClick: () => setTag(null),
+      onClick: () => {
+        router.push(RouteDefinitions.AddTicketOld)
+      },
     },
   }
 
@@ -67,14 +71,14 @@ export const AddTicketForm = () => {
 
         {/* NEED TRANSPORT FORM */}
         {ticketType === TicketType.Need && tag === TagConstIds.transport && (
-          <TransportLocationSection />
+          <FormNeedTransport />
         )}
 
         {/* NEED OTHER FORM */}
         {ticketType === TicketType.Need && tag === null && (
           <>
             TEST
-            <TransportLocationSection />
+            <FormNeedTransport />
           </>
         )}
       </Container>

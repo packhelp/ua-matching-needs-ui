@@ -4,6 +4,7 @@ import { Locale, LocaleDefinitions } from "../translations/definitions"
 export enum RouteDefinitions {
   Main = "/",
   AddTicket = "/tickets/add",
+  AddTicketOld = "/tickets/add-old",
   AllActiveTickets = "/tickets/active",
   MyActiveTickets = "/tickets/active/mine",
   MyInactiveTickets = "/tickets/inactive/mine",
@@ -17,6 +18,7 @@ export enum RouteDefinitions {
 export type Routes =
   | RouteDefinitions.Main
   | RouteDefinitions.AddTicket
+  | RouteDefinitions.AddTicketOld
   | RouteDefinitions.AllActiveTickets
   | RouteDefinitions.MyActiveTickets
   | RouteDefinitions.MyInactiveTickets

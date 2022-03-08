@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/react"
 import React, { Dispatch, SetStateAction } from "react"
 import { usePosition } from "../add-ticket.hooks"
-import { InputValuesType } from "../TransportLocationSection"
+import { InputValuesType } from "../FormNeedTransport"
 
 export const LocationFromNavigator = ({
   setCoords,
