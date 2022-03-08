@@ -29,10 +29,9 @@ import {
 import { useTagTranslation } from "../../src/hooks/useTagTranslation"
 import { getRootContainer } from "../../src/services/_root-container"
 import Select, { SingleValue } from "react-select"
-import { TRANSPORT_TAG } from "../../src/components/ticket-list/Tickets"
 
-import { TicketTypeSwitcher } from "../../src/components/add-ticket/TicketTypeSwitcher"
 import { AddTicketForm } from "../../src/components/add-ticket/AddTicketForm"
+import { TagConstIds } from "../../src/services/types.tag"
 
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
@@ -117,7 +116,7 @@ const AddTicket: NextPage = () => {
       )
     }, 1000)
   }
-  const isTransportTagSelected = tagsSelected.includes(TRANSPORT_TAG)
+  const isTransportTagSelected = tagsSelected.includes(TagConstIds.transport)
   const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
     (newTicket) => {
       const {

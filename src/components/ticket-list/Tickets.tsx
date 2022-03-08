@@ -15,9 +15,8 @@ import { TicketsListHeader } from "./TicketsListHeader"
 import { TicketsListFilters } from "./TicketsListFilters"
 import { TicketsList } from "./TicketsList"
 import { NextApiClient } from "../../services/directus-signed-user-api"
+import { TagConstIds } from "../../services/types.tag"
 const ts = getRootContainer().containers.ticketService
-
-export const TRANSPORT_TAG = 5
 
 export const Tickets = ({
   mineOnly,
@@ -81,7 +80,7 @@ export const Tickets = ({
   useEffect(() => {
     const tag = parseInt((router.query.tag as string) || "0")
     if (
-      tag !== TRANSPORT_TAG &&
+      tag !== TagConstIds.transport &&
       (router.query.where_to || router.query.where_from)
     ) {
       delete router.query.where_to

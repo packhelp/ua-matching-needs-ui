@@ -1,9 +1,9 @@
 import { FiltersBadges, FiltersDropdown } from "../Filters"
 import React, { useCallback, useMemo } from "react"
 import { useRouter } from "next/router"
-import { TRANSPORT_TAG } from "./Tickets"
 import { useTranslations } from "../../hooks/translations"
 import { NeedTagType } from "../../services/ticket.type"
+import { TagConstIds } from "../../services/types.tag"
 
 type TicketsListFiltersProps = {
   tags: NeedTagType[]
@@ -63,7 +63,7 @@ export const TicketsListFilters = (props: TicketsListFiltersProps) => {
   )
 
   const isTransport = useMemo(
-    () => selectedTag === TRANSPORT_TAG,
+    () => selectedTag === TagConstIds.transport,
     [selectedTag]
   )
 
