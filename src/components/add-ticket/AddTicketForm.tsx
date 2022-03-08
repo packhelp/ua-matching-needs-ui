@@ -15,13 +15,11 @@ import { NeedCategorySwitcher } from "./NeedCategorySwitcher"
 import { TagConstIds } from "../../services/types.tag"
 import { RouteDefinitions } from "../../utils/routes"
 
-const ticketService = getRootContainer().containers.ticketService
+// const ticketService = getRootContainer().containers.ticketService
 
 export const AddTicketForm = () => {
   const router = useRouter()
   const i18n = useTranslations().addTicket
-  const { getTranslation } = useTagTranslation()
-  const { locale } = useRouter()
 
   const [ticketType, setTicketType] = useState<
     TicketType.Offer | TicketType.Need | undefined
@@ -62,14 +60,6 @@ export const AddTicketForm = () => {
         {/* NEED TRANSPORT FORM */}
         {ticketType === TicketType.Need && tag === TagConstIds.transport && (
           <FormNeedTransport />
-        )}
-
-        {/* NEED OTHER FORM */}
-        {ticketType === TicketType.Need && tag === null && (
-          <>
-            TEST
-            <FormNeedTransport />
-          </>
         )}
       </Container>
     </div>
