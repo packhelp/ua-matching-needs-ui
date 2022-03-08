@@ -251,8 +251,12 @@ export const UA: Translation = {
       "Дякую! Ваша заявка дозволить нам покращити надання допомоги. Наші модератори розглянуть це найближчим часом",
   },
   addTicket: {
-    iNeed: "<miss> Potrzebuję pomocy",
-    iOffer: "<miss> Mogę pomóc!",
+    wizard: {
+      iNeedHelp: "Потрібна допомога",
+      iCanHelp: "Я можу допомогти!",
+      formNameTransport: "Транспорт",
+      formNameOther: "Інше",
+    },
     need: {
       whereFromNeeded: "<miss> Skąd potrzebujesz transportu?",
       whereToNeeded: "<miss> Dokąd potrzebujesz transportu?",

@@ -254,8 +254,12 @@ export const EN: Translation = {
       "Thank you! Your application will allow us to improve the provision of assistance. Our moderators will take a look at your report in a moment.",
   },
   addTicket: {
-    iNeed: "<miss> Potrzebuję pomocy",
-    iOffer: "<miss> Mogę pomóc!",
+    wizard: {
+      iNeedHelp: "<miss> Potrzebuję pomocy",
+      iCanHelp: "<miss> Mogę pomóc!",
+      formNameTransport: "Transport",
+      formNameOther: "Other",
+    },
     need: {
       whereFromNeeded: "<miss> Skąd potrzebujesz transportu?",
       whereToNeeded: "<miss> Dokąd potrzebujesz transportu?",

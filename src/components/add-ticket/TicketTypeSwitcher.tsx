@@ -12,7 +12,7 @@ type TicketTypeSwitcherProps = {
 
 export const TicketTypeSwitcher = (props: TicketTypeSwitcherProps) => {
   const { setType, selectedType } = props
-  const translations = useTranslations()
+  const i18n = useTranslations().addTicket.wizard
 
   const isOffer = selectedType === TicketType.Offer
   const isNeed = selectedType === TicketType.Need
@@ -27,7 +27,7 @@ export const TicketTypeSwitcher = (props: TicketTypeSwitcherProps) => {
             : "border border-blue-500 text-black"
         } w-full relative inline-flex justify-center items-center ml-auto px-2 py-2 text-xs font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
       >
-        <span>{translations["addTicket"]["iNeed"]}</span>
+        <span>{i18n.iNeedHelp}</span>
       </div>
       <div className="w-16" />
       <div
@@ -38,7 +38,7 @@ export const TicketTypeSwitcher = (props: TicketTypeSwitcherProps) => {
             : "border border-amber-300 text-black"
         } w-full relative inline-flex justify-center items-center ml-auto px-2 py-2 text-xs font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
       >
-        <span>{translations["addTicket"]["iOffer"]}</span>
+        <span>{i18n.iCanHelp}</span>
       </div>
     </div>
   )

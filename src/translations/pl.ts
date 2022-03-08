@@ -252,8 +252,12 @@ export const PL = {
       "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
   },
   addTicket: {
-    iNeed: "Potrzebuję pomocy",
-    iOffer: "Mogę pomóc!",
+    wizard: {
+      iNeedHelp: "Potrzebuję pomocy",
+      iCanHelp: "Mogę pomóc!",
+      formNameTransport: "Transport",
+      formNameOther: "Inne",
+    },
     need: {
       whereFromNeeded: "Skąd potrzebujesz transportu?",
       whereToNeeded: "Dokąd potrzebujesz transportu?",

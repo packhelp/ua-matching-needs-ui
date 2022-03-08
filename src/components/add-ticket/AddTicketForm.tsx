@@ -19,7 +19,7 @@ const ticketService = getRootContainer().containers.ticketService
 
 export const AddTicketForm = () => {
   const router = useRouter()
-  const translation = useTranslations()
+  const i18n = useTranslations().addTicket
   const { getTranslation } = useTagTranslation()
   const { locale } = useRouter()
 
@@ -28,25 +28,15 @@ export const AddTicketForm = () => {
   >(undefined)
 
   const [tag, setTag] = useState<TagConstIds | undefined | null>(undefined)
-  // const { data: tags = [] } = useQuery(`main-tags`, () => {
-  //   return ticketService.mainTags()
-  // })
-
-  // const mappedCategoryTags = useMemo(() => {
-  //   return tags.map((tag) => ({
-  //     value: tag.id,
-  //     label: getTranslation(tag),
-  //   }))
-  // }, [tags, locale])
 
   const opts = {
     transport: {
-      name: "TRANSPORT",
+      name: i18n.wizard.formNameTransport,
       active: tag === TagConstIds.transport,
       onClick: () => setTag(TagConstIds.transport),
     },
     other: {
-      name: "other",
+      name: i18n.wizard.formNameOther,
       active: tag === null,
       onClick: () => {
         router.push(RouteDefinitions.AddTicketOld)
