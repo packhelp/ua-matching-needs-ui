@@ -67,6 +67,16 @@ export type NeedTripTypeDTO = {
   trip_extra_luggage: boolean
 }
 
+export type NeedTripTypeDTONested = {
+  need_type: "trip"
+
+  where_to_tag: LocationTag // LocationTag
+  where_from_tag: LocationTag // LocationTag
+  trip_when_text?: string
+  trip_when_date?: string // Date
+  trip_extra_luggage: boolean
+}
+
 export type PostDataDefaults = {
   phone: string
   need_tag_id: {
@@ -83,7 +93,7 @@ export type GenericTicketPostData = TicketFormData & PostDataDefaults
 export type TicketData = TicketFormData & {
   id: number
   expirationTimestampSane: string
-  date_created: number
+  need_type: "trip" | "housing" | "generic" | null
   ticket_status: TICKET_STATUS
   organization_id?: Organization
   description: string
@@ -92,6 +102,7 @@ export type TicketData = TicketFormData & {
   }[]
   visits: number
   need_responses: NeedResponse[]
+  date_created: number
 }
 
 export interface NeedResponse {
@@ -103,3 +114,6 @@ export interface NeedResponse {
 }
 
 export type TicketDetailsType = GenericTicketPostData & TicketData
+export type TicketTripDetailsType = GenericTicketPostData &
+  TicketData &
+  NeedTripTypeDTONested

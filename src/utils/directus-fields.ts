@@ -2,11 +2,18 @@ export const TICKET_LIST_FIELDS = [
   "*",
   "organization_id.*",
   "need_tag_id.need_tag_id.*",
+
   "where_from_tag.id",
   "where_from_tag.name",
   "where_from_tag.location_type",
+  "where_from_tag.translation_uk_UA",
+  "where_from_tag.translation_en_US",
+
   "where_to_tag.id",
   "where_to_tag.name",
+  "where_to_tag.location_type",
+  "where_to_tag.translation_uk_UA",
+  "where_to_tag.translation_en_US",
 
   // need responses
   "need_responses.id",

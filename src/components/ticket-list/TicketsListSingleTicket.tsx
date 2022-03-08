@@ -8,6 +8,8 @@ import { Ticket } from "../../services/ticket.class"
 import { useTranslations } from "../../hooks/translations"
 import { useRouter } from "next/router"
 import { TicketDetailsType } from "../../services/ticket.type"
+import { LocationTagHtml } from "../LocationTag"
+import { LocationSection } from "./list-parts/LocationSection"
 
 type TicketsListSingleTicketProps = {
   ticket: TicketDetailsType
@@ -21,13 +23,13 @@ export const TicketsListSingleTicket = (
   const translations = useTranslations()
   const { locale } = router
 
-  const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
+  const need = new Ticket(ticket)
+  const dateFormatted = need.createdDateFormattedString
+
   const ticketUrl = RouteDefinitions.TicketDetails.replace(
     ":id",
     String(ticket.id)
   )
-
-  const need = new Ticket(ticket)
 
   return (
     <li
@@ -83,6 +85,9 @@ export const TicketsListSingleTicket = (
               </span>
             </div>
           </div>
+
+          {need.isTrip && <LocationSection trip={need.trip}></LocationSection>}
+
           <div className="py-1">
             <p className="text-xl font-medium text-gray-900 truncate">
               {need.title}
