@@ -11,6 +11,8 @@ import { useTranslations } from "../../hooks/translations"
 import { useTagTranslation } from "../../hooks/useTagTranslation"
 import { useRouter } from "next/router"
 import { TransportLocationSection } from "./TransportLocationSection"
+import { NeedCategorySwitcher } from "./NeedCategorySwitcher"
+import { TagConstIds } from "../../services/types.tag"
 
 const ticketService = getRootContainer().containers.ticketService
 
@@ -23,38 +25,67 @@ export const AddTicketForm = () => {
     TicketType.Offer | TicketType.Need | undefined
   >(undefined)
 
-  const [selectedMainCategory, setSelectedMainCategory] = useState<
-    SingleValue<{
-      value: number
-      label: string
-    }>
-  >()
+  const [tag, setTag] = useState<TagConstIds | undefined | null>(undefined)
+  // const { data: tags = [] } = useQuery(`main-tags`, () => {
+  //   return ticketService.mainTags()
+  // })
 
-  const { data: tags = [] } = useQuery(`main-tags`, () => {
-    return ticketService.mainTags()
-  })
+  // const mappedCategoryTags = useMemo(() => {
+  //   return tags.map((tag) => ({
+  //     value: tag.id,
+  //     label: getTranslation(tag),
+  //   }))
+  // }, [tags, locale])
 
-  const useFormOptions: any = {}
-  // const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
-
-  const submit = async () => {
-    console.log("poszło")
+  const opts = {
+    transport: {
+      name: "TRANSPORT",
+      active: tag === TagConstIds.transport,
+      onClick: () => setTag(TagConstIds.transport),
+    },
+    other: {
+      name: "other",
+      active: tag === null,
+      onClick: () => setTag(null),
+    },
   }
 
-  const mappedCategoryTags = useMemo(() => {
-    return tags.map((tag) => ({
-      value: tag.id,
-      label: getTranslation(tag),
-    }))
-  }, [tags, locale])
-
-  const showTransportLocationSection = selectedMainCategory?.value === 5 /// transport
+  // const showTransportLocationSection = tag === TagConstIds.transport
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
-      <Container className="px-4 py-5 sm:p-6">
+      <Container className="gap-4 px-4 py-5 sm:p-6">
         <TicketTypeSwitcher setType={setTicketType} selectedType={ticketType} />
+        <br />
+
         {ticketType === TicketType.Need && (
+          <div className="my-8">
+            <NeedCategorySwitcher {...opts} />
+          </div>
+        )}
+        {ticketType === TicketType.Offer && <TicketTypeOffer />}
+
+        {/* NEED TRANSPORT FORM */}
+        {ticketType === TicketType.Need && tag === TagConstIds.transport && (
+          <TransportLocationSection />
+        )}
+
+        {/* NEED OTHER FORM */}
+        {ticketType === TicketType.Need && tag === null && (
+          <>
+            TEST
+            <TransportLocationSection />
+          </>
+        )}
+      </Container>
+    </div>
+  )
+}
+
+/**
+
+
+   {ticketType === TicketType.Need && (
           // <form onSubmit={handleSubmit(submit)}>
           <div className="my-8">
             <Select
@@ -68,9 +99,6 @@ export const AddTicketForm = () => {
           </div>
           // </form>
         )}
-        {ticketType === TicketType.Offer && <TicketTypeOffer />}
-        {showTransportLocationSection && <TransportLocationSection />}
-      </Container>
-    </div>
-  )
-}
+
+
+ */
