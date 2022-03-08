@@ -38,6 +38,7 @@ export const FormNeedTransport = () => {
   const translations = useTranslations()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [exactDate, setExactDate] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
   const [whereFromTag, setWhereFromTag] = useState<number | undefined>(
     undefined
@@ -93,6 +94,12 @@ export const FormNeedTransport = () => {
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
+      let when_date: string | undefined = undefined
+      if (trip_when_date != null) {
+        const date = new Date(trip_when_date)
+        when_date = date.toISOString()
+      }
+
       const newTicketData = {
         description,
         expirationTimestampSane,
@@ -109,8 +116,8 @@ export const FormNeedTransport = () => {
         need_type: "trip",
         where_to_tag: whereToTag,
         where_from_tag: whereFromTag,
-        trip_when_date, // TODO:
         trip_when_text,
+        trip_when_date: when_date,
         trip_extra_luggage,
       }
 
@@ -252,20 +259,28 @@ export const FormNeedTransport = () => {
             </Stack>
 
             {/* EXPERIMNET */}
-            {/* <Stack marginBottom="16px">
-              <div className="flex justify-between">
-                <Heading as="h2" size="l">
-                  {translations["addTicket"]["need"]["when"]}
-                </Heading>
-              </div>
-              <Input
-                type="date"
-                placeholder={translations["addTicket"]["need"]["when"]}
-                variant="outline"
-                inputMode="text"
-                {...register("trip_when_date")}
-              />
-            </Stack> */}
+            <Checkbox
+              checked={exactDate}
+              onChange={() => setExactDate(!exactDate)}
+            >
+              {translations.addTicket.transport.iKnowExactDate}
+            </Checkbox>
+
+            {exactDate && (
+              <Stack marginBottom="16px">
+                <div className="flex justify-between">
+                  <Heading as="h2" size="l">
+                    {translations["addTicket"]["need"]["when"]}
+                  </Heading>
+                </div>
+                <Input
+                  type="datetime-local"
+                  placeholder={translations["addTicket"]["need"]["when"]}
+                  variant="outline"
+                  {...register("trip_when_date")}
+                />
+              </Stack>
+            )}
 
             {/* TITLE  */}
             <Stack>

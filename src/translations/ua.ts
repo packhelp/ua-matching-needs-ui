@@ -251,6 +251,9 @@ export const UA: Translation = {
       "Дякую! Ваша заявка дозволить нам покращити надання допомоги. Наші модератори розглянуть це найближчим часом",
   },
   addTicket: {
+    transport: {
+      iKnowExactDate: "Точна дата",
+    },
     wizard: {
       iNeedHelp: "Потрібна допомога",
       iCanHelp: "Я можу допомогти!",

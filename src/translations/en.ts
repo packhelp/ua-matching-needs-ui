@@ -254,9 +254,12 @@ export const EN: Translation = {
       "Thank you! Your application will allow us to improve the provision of assistance. Our moderators will take a look at your report in a moment.",
   },
   addTicket: {
+    transport: {
+      iKnowExactDate: "Exact date",
+    },
     wizard: {
-      iNeedHelp: "<miss> Potrzebuję pomocy",
-      iCanHelp: "<miss> Mogę pomóc!",
+      iNeedHelp: "I need help",
+      iCanHelp: "I can help!",
       formNameTransport: "Transport",
       formNameOther: "Other",
     },

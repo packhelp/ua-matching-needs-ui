@@ -252,6 +252,9 @@ export const PL = {
       "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
   },
   addTicket: {
+    transport: {
+      iKnowExactDate: "Dokładna data",
+    },
     wizard: {
       iNeedHelp: "Potrzebuję pomocy",
       iCanHelp: "Mogę pomóc!",
