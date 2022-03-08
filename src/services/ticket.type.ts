@@ -55,16 +55,30 @@ export type TicketFormData = {
   adults: number
   children: number
   has_pets: boolean
-  extra_luggage?: boolean
-  when?: string
 }
 
-export type TicketPostData = TicketFormData & {
+export type NeedTripTypeDTO = {
+  need_type: "trip"
+
+  where_to_tag: number // LocationTag
+  where_from_tag: number // LocationTag
+  trip_when_text?: string
+  trip_when_date?: string // Date
+  trip_extra_luggage: boolean
+}
+
+export type PostDataDefaults = {
   phone: string
   need_tag_id: {
     need_tag_id: Partial<NeedTagType>
   }[]
 }
+
+export type NeedTripPostData = TicketFormData &
+  PostDataDefaults &
+  NeedTripTypeDTO
+
+export type GenericTicketPostData = TicketFormData & PostDataDefaults
 
 export type TicketData = TicketFormData & {
   id: number
@@ -88,4 +102,4 @@ export interface NeedResponse {
   // need_id: number
 }
 
-export type TicketDetailsType = TicketPostData & TicketData
+export type TicketDetailsType = GenericTicketPostData & TicketData

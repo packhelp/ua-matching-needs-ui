@@ -22,7 +22,7 @@ import { useState, useMemo } from "react"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
 import {
-  TicketPostData,
+  GenericTicketPostData,
   TicketFormData,
   NeedTagType,
 } from "../../src/services/ticket.type"
@@ -96,7 +96,11 @@ const AddTicketOld: NextPage = () => {
       )
     }, 1000)
   }
-  const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
+  const addTicketMutation = useMutation<
+    GenericTicketPostData,
+    Error,
+    GenericTicketPostData
+  >(
     (newTicket) => {
       const {
         phone,
@@ -157,7 +161,7 @@ const AddTicketOld: NextPage = () => {
       return { need_tag_id: { id: tag } }
     })
 
-    const postData: TicketPostData = {
+    const postData: GenericTicketPostData = {
       ...data,
       phone: authSession.phoneNumber,
       need_tag_id: tagsData,

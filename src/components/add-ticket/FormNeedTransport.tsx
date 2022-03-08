@@ -20,7 +20,8 @@ import { getRootContainer } from "../../services/_root-container"
 import Select, { SingleValue } from "react-select"
 
 import { RouteDefinitions } from "../../utils/routes"
-import { TicketFormData, TicketPostData } from "../../services/ticket.type"
+import { NeedTripPostData } from "../../services/ticket.type"
+import { TagConstIds } from "../../services/types.tag"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {
@@ -74,16 +75,21 @@ export const FormNeedTransport = () => {
     }, 1000)
   }
 
-  const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
+  const addTicketMutation = useMutation<
+    NeedTripPostData,
+    Error,
+    NeedTripPostData
+  >(
     (newTicket) => {
       const {
         phone,
         description,
-        when,
         adults,
         children,
         has_pets,
-        extra_luggage,
+        trip_when_text,
+        trip_when_date, // TODO:
+        trip_extra_luggage,
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
@@ -91,15 +97,21 @@ export const FormNeedTransport = () => {
         description,
         expirationTimestampSane,
         phone,
-        when,
         count: 0,
         adults: adults ? adults : 0,
         children: children ? children : 0,
         has_pets: !has_pets ? "0" : "1",
+
+        // This is trip, so hardcore a trip tag
+        need_tag_id: [{ need_tag_id: { id: TagConstIds.transport } }],
+
+        // tripe specific
         need_type: "trip",
-        extra_luggage,
         where_to_tag: whereToTag,
         where_from_tag: whereFromTag,
+        trip_when_date, // TODO:
+        trip_when_text,
+        trip_extra_luggage,
       }
 
       return axios.post(`/api/add-ticket`, newTicketData)
@@ -111,9 +123,9 @@ export const FormNeedTransport = () => {
 
   const useFormOptions = {}
 
-  const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
+  const { register, handleSubmit } = useForm<NeedTripPostData>(useFormOptions)
 
-  const submitNeed = async (data: TicketFormData) => {
+  const submitNeed = async (data: NeedTripPostData) => {
     setIsSubmitting(true)
 
     if (authStatus === "unauthenticated" || !authSession?.user) {
@@ -121,7 +133,7 @@ export const FormNeedTransport = () => {
       return router.push(RouteDefinitions.SignIn)
     }
 
-    const postData: TicketPostData = {
+    const postData: NeedTripPostData = {
       ...data,
       phone: authSession.phoneNumber,
       need_tag_id: [],
@@ -219,7 +231,7 @@ export const FormNeedTransport = () => {
             <Checkbox
               value={1}
               defaultChecked={false}
-              {...register("extra_luggage")}
+              {...register("trip_extra_luggage")}
             >
               {translations["addTicket"]["need"]["extraLuggage"]}
             </Checkbox>
@@ -235,9 +247,25 @@ export const FormNeedTransport = () => {
                 placeholder={translations["addTicket"]["need"]["when"]}
                 variant="outline"
                 inputMode="text"
-                {...register("when")}
+                {...register("trip_when_text")}
               />
             </Stack>
+
+            {/* EXPERIMNET */}
+            {/* <Stack marginBottom="16px">
+              <div className="flex justify-between">
+                <Heading as="h2" size="l">
+                  {translations["addTicket"]["need"]["when"]}
+                </Heading>
+              </div>
+              <Input
+                type="date"
+                placeholder={translations["addTicket"]["need"]["when"]}
+                variant="outline"
+                inputMode="text"
+                {...register("trip_when_date")}
+              />
+            </Stack> */}
 
             {/* TITLE  */}
             <Stack>
