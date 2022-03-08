@@ -69,20 +69,20 @@ export const AddTicketForm = () => {
 /**
 
 
-   {ticketType === TicketType.Need && (
-          // <form onSubmit={handleSubmit(submit)}>
-          <div className="my-8">
-            <Select
-              options={mappedCategoryTags}
-              onChange={(tag) => setSelectedMainCategory(tag)}
-              placeholder={translation["filters"]["selectNeeds"]}
-              value={selectedMainCategory}
-              isClearable
-              isSearchable={false}
-            />
-          </div>
-          // </form>
-        )}
+{ticketType === TicketType.Need && (
+  // <form onSubmit={handleSubmit(submit)}>
+  <div className="my-8">
+    <Select
+      options={mappedCategoryTags}
+      onChange={(tag) => setSelectedMainCategory(tag)}
+      placeholder={translation["filters"]["selectNeeds"]}
+      value={selectedMainCategory}
+      isClearable
+      isSearchable={false}
+    />
+  </div>
+  // </form>
+)}
 
 
  */

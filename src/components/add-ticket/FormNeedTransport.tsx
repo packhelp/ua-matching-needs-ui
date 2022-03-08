@@ -157,7 +157,7 @@ export const FormNeedTransport = () => {
     <>
       <div className="mb-8">
         <form onSubmit={handleSubmit(submitNeed)}>
-          <div className="mb-4">
+          <Stack>
             <Heading as="h2" size="l">
               {translations["pages"]["add-ticket"]["whereFrom"]}
             </Heading>
@@ -174,8 +174,9 @@ export const FormNeedTransport = () => {
               isClearable
               isSearchable={false}
             />
-          </div>
-          <div className="mb-4">
+          </Stack>
+
+          <Stack>
             <Heading as="h2" size="l" mt="4">
               {translations["pages"]["add-ticket"]["whereTo"]}
             </Heading>
@@ -192,14 +193,14 @@ export const FormNeedTransport = () => {
               isClearable
               isSearchable={false}
             />
-          </div>
-          <div className="mb-4">
-            <div className="flex justify-between">
-              <Heading as="h2" size="l">
-                {translations["pages"]["add-ticket"]["adults"]}
-              </Heading>
-              {translations["pages"]["add-ticket"]["adultsAge"]}
-            </div>
+          </Stack>
+
+          <Stack>
+            <Heading as="h2" size="l" mt="4">
+              {translations["pages"]["add-ticket"]["adults"]}
+            </Heading>
+            {translations["pages"]["add-ticket"]["adultsAge"]}
+
             <Input
               min={0}
               type={"number"}
@@ -208,28 +209,26 @@ export const FormNeedTransport = () => {
               inputMode="numeric"
               {...register("adults")}
             />
-          </div>
-          <div className="mb-4">
-            <div className="flex justify-between">
-              <Heading as="h2" size="l">
-                {translations["pages"]["add-ticket"]["children"]}
-              </Heading>
-              {translations["pages"]["add-ticket"]["childrenAge"]}
-            </div>
+          </Stack>
+          <Stack>
+            <Heading as="h2" size="l" mt="4">
+              {translations["pages"]["add-ticket"]["children"]}
+            </Heading>
+            {translations["pages"]["add-ticket"]["childrenAge"]}
+
             <Input
               min={0}
               type={"number"}
-              placeholder={
-                translations["pages"]["add-ticket"]["childrenHint"]
-              }
+              placeholder={translations["pages"]["add-ticket"]["childrenHint"]}
               variant="outline"
               inputMode="numeric"
               {...register("children")}
             />
-          </div>
-          <div className="mb-4 flex">
+          </Stack>
+          <Stack>
             <div className="mr-4">
               <Checkbox
+                mt={1}
                 value={1}
                 defaultChecked={false}
                 {...register("has_pets")}
@@ -245,13 +244,12 @@ export const FormNeedTransport = () => {
             >
               {translations["addTicket"]["need"]["extraLuggage"]}
             </Checkbox>
-          </div>
-          <div className="mb-4">
-            <div className="flex justify-between">
-              <Heading as="h2" size="l">
-                {translations["addTicket"]["need"]["when"]}
-              </Heading>
-            </div>
+          </Stack>
+          <Stack>
+            <Heading as="h2" size="l" mt="4">
+              {translations["addTicket"]["need"]["when"]}
+            </Heading>
+
             <Input
               type={"text"}
               placeholder={translations["addTicket"]["need"]["when"]}
@@ -259,17 +257,18 @@ export const FormNeedTransport = () => {
               inputMode="text"
               {...register("trip_when_text")}
             />
-          </div>
-          <div className="mb-4">
+          </Stack>
+          <Stack>
             {/* EXPERIMNET */}
-            <div className="mb-4">
-              <Checkbox
-                checked={exactDate}
-                onChange={() => setExactDate(!exactDate)}
-              >
-                {translations.addTicket.transport.iKnowExactDate}
-              </Checkbox>
-            </div>
+
+            <Checkbox
+              mt={2}
+              checked={exactDate}
+              onChange={() => setExactDate(!exactDate)}
+            >
+              {translations.addTicket.transport.iKnowExactDate}
+            </Checkbox>
+
             {exactDate && (
               <Input
                 type="datetime-local"
@@ -278,10 +277,10 @@ export const FormNeedTransport = () => {
                 {...register("trip_when_date")}
               />
             )}
-          </div>
-          <div className="mb-4">
+          </Stack>
+          <Stack>
             {/* TITLE  */}
-            <Heading as="h2" size="l">
+            <Heading as="h2" size="l" mt="4">
               {translations["pages"]["add-ticket"].title}
             </Heading>
             <Input
@@ -289,9 +288,9 @@ export const FormNeedTransport = () => {
               variant="outline"
               {...register("what")}
             />
-          </div>
-          <div className="mb-4">
-            <Heading as="h2" size="l">
+          </Stack>
+          <Stack>
+            <Heading as="h2" size="l" mt="4">
               {translations["pages"]["add-ticket"]["what-do-you-need"]}
             </Heading>
 
@@ -303,8 +302,8 @@ export const FormNeedTransport = () => {
               variant="outline"
               {...register("description")}
             />
-          </div>
-          <div className="mb-4">
+          </Stack>
+          <Stack>
             {addTicketMutation.isError ? (
               <Text color={"red"}>
                 {translations["errors"]["error-occured-while-adding"]}
@@ -319,7 +318,7 @@ export const FormNeedTransport = () => {
             ) : null}
 
             <div className="h-4 hidden md:block" />
-          </div>
+          </Stack>
           <button
             type="submit"
             disabled={isDisabled}
