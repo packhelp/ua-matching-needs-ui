@@ -146,12 +146,12 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
           )}
 
           {!isOwner && (
-            <div className="flex space-x-1 m-5 items-center justify-center">
+            <div className="flex space-x-1 my-2 items-center justify-center">
               <button
                 type="button"
                 className="inline-flex items-center w-full place-content-center
                 rounded-md py-4 border border-transparent shadow-sm text-xl
-                font-medium text-white bg-blue-400 hover:bg-blue-500
+                font-medium text-white bg-green-600 hover:bg-green-700
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
                 text-white"
                 onClick={claimTicket}
@@ -162,33 +162,11 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
           )}
 
           {isOwner && (
-            <div className="px-2 py-2 text-center">
+            <div className="px-2 py-4 text-center">
               <span className="text-sm mr-2 text-gray-500 font-medium">
                 {translations["pages"]["ticket"]["areYouTheAuthorOfThisTicket"]}
               </span>
-              <div className="flex space-x-1 items-center flex-col">
-                <button
-                  onClick={markAsSolvedTicket}
-                  type="button"
-                  className="mb-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                >
-                  {translations["pages"]["ticket"]["problemSolved"]}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 ml-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                    />
-                  </svg>
-                </button>
-
+              <div className="flex space-x-1 justify-center mt-2">
                 <button
                   onClick={removeTicket}
                   type="button"
@@ -207,6 +185,27 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
                       strokeLinejoin="round"
                       strokeWidth={2}
                       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={markAsSolvedTicket}
+                  type="button"
+                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                >
+                  {translations["pages"]["ticket"]["problemSolved"]}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                     />
                   </svg>
                 </button>
