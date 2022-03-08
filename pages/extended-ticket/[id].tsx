@@ -51,7 +51,7 @@ const ExtendedTicket: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => 
                 {translations["pages"]["extended"]["description"]}
               </Text>
 
-              <Link href={ticketUrl} locale={locale}>
+              <Link href={ticketUrl}>
                 {translations["pages"]["extended"]["showTicket"]}
               </Link>
 
