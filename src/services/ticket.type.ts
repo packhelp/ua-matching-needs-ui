@@ -54,6 +54,8 @@ export type TicketFormData = {
   adults: number
   children: number
   has_pets: boolean
+  extra_luggage?: boolean
+  when?: string
 }
 
 export type TicketPostData = TicketFormData & {

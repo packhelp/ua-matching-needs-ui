@@ -1,8 +1,19 @@
-import { Button, Stack } from "@chakra-ui/react"
-import { useState } from "react"
-import { useTranslations } from "../../hooks/translations"
-import { TransportNeededModal } from "./TransportNeededModal"
-import { LocationPicker } from "./partials/LocationPicker"
+import { Checkbox, Heading, Input, Stack, Text } from "@chakra-ui/react"
+import { useTranslations } from "../../../src/hooks/translations"
+import { useForm } from "react-hook-form"
+import { useMutation, useQuery } from "react-query"
+import axios from "axios"
+import { useRouter } from "next/router"
+import { toast } from "react-toastify"
+import dayjs from "dayjs"
+import { useState, useMemo } from "react"
+import { PlusSVG } from "../../../src/assets/styled-svgs/plus"
+import { useSession } from "next-auth/react"
+import { getRootContainer } from "../../../src/services/_root-container"
+import Select, { SingleValue } from "react-select"
+
+import { RouteDefinitions } from "../../utils/routes"
+import { TicketFormData, TicketPostData } from "../../services/ticket.type"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {
@@ -12,101 +23,256 @@ export type InputValuesType = {
   }
 }
 
-const defaultState = {
-  value: undefined,
-  label: undefined,
-}
-
-const defaultInputValuesState = {
-  whereFrom: defaultState,
-  whereTo: defaultState,
-}
+const ticketService = getRootContainer().containers.ticketService
 
 export const TransportLocationSection = () => {
+  const router = useRouter()
   const translations = useTranslations()
-  const [variant, setVariant] = useState<TransportNeededVariant>()
 
-  const showWhereFromModal = () => setVariant("whereFrom")
-  const showWhereToModal = () => setVariant("whereTo")
-  const hideModal = () => setVariant(undefined)
-
-  const [inputValues, setInputValues] = useState<InputValuesType>(
-    defaultInputValuesState
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { data: authSession, status: authStatus } = useSession()
+  const [whereFromTag, setWhereFromTag] = useState<number | undefined>(
+    undefined
   )
-
-  const [coords, setCoords] = useState<{
-    latitude: number | undefined
-    longitude: number | undefined
-  }>({
-    latitude: undefined,
-    longitude: undefined,
+  const [whereToTag, setWhereToTag] = useState<number | undefined>(undefined)
+  const { data: locationTags = [] } = useQuery(`location-tags`, () => {
+    return ticketService.locationTags()
   })
 
-  const handleSubmitForm = () => {
-    console.log({ inputValues, coords })
-  }
+  const mappedLocationTags = useMemo(() => {
+    return locationTags.map((tag) => {
+      let name = tag.name
 
-  const resetModal = () => {
-    if (!variant) return
+      if (tag.location_type === "help_center" && tag.short_name != null) {
+        name = tag.short_name
+      }
 
-    setInputValues((prev) => ({
-      ...prev,
-      [variant]: defaultState,
-    }))
-    setCoords({
-      latitude: undefined,
-      longitude: undefined,
+      return {
+        value: tag.id,
+        label: name,
+      }
     })
-    hideModal()
+  }, [locationTags])
+
+  const onSuccess = (rawResponse) => {
+    const { data } = rawResponse.data
+    const id = data.id
+
+    toast.success(translations["pages"]["add-ticket"]["need-added"])
+
+    setTimeout(() => {
+      return router.push(
+        RouteDefinitions.TicketDetails.replace(":id", String(id))
+      )
+    }, 1000)
   }
+
+  const addTicketMutation = useMutation<TicketPostData, Error, TicketPostData>(
+    (newTicket) => {
+      const {
+        phone,
+        description,
+        when,
+        adults,
+        children,
+        has_pets,
+        extra_luggage,
+      } = newTicket
+      const expirationTimestampSane = dayjs().add(24, "hour").format()
+
+      const newTicketData = {
+        description,
+        expirationTimestampSane,
+        phone,
+        when,
+        count: 0,
+        adults: adults ? adults : 0,
+        children: children ? children : 0,
+        has_pets: !has_pets ? "0" : "1",
+        need_type: "trip",
+        extra_luggage,
+        where_to_tag: whereToTag,
+        where_from_tag: whereFromTag,
+      }
+
+      return axios.post(`/api/add-ticket`, newTicketData)
+    },
+    {
+      onSuccess,
+    }
+  )
+
+  const useFormOptions = {}
+
+  const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
+
+  const submitNeed = async (data: TicketFormData) => {
+    setIsSubmitting(true)
+
+    if (authStatus === "unauthenticated" || !authSession?.user) {
+      toast.error(translations["pages"]["auth"]["you-have-been-logged-out"])
+      return router.push(RouteDefinitions.SignIn)
+    }
+
+    const postData: TicketPostData = {
+      ...data,
+      phone: authSession.phoneNumber,
+      need_tag_id: [],
+    }
+
+    addTicketMutation.mutate(postData, {
+      onError: () => setIsSubmitting(false),
+    })
+  }
+
+  const isDisabled = addTicketMutation.isLoading || isSubmitting
 
   return (
     <>
       <Stack marginBottom="16px">
-        <form
-          onSubmit={(event) => {
-            event.preventDefault()
-            handleSubmitForm()
-          }}
-        >
-          {/* SKĄD */}
-          <LocationPicker
-            header={translations["pages"]["add-ticket"].whereFrom}
-            value={
-              coords.latitude
-                ? "Udostępniono lokalizację"
-                : inputValues.whereFrom.label || "Wybierz miasto"
-            }
-            showModal={showWhereFromModal}
-          />
-          {/* SKĄD */}
+        <form onSubmit={handleSubmit(submitNeed)}>
+          <Stack>
+            <Heading as="h2" size="l">
+              {translations["pages"]["add-ticket"]["whereFrom"]}
+            </Heading>
+            <Select
+              options={mappedLocationTags}
+              onChange={(
+                newValue: SingleValue<{ value: number; label: string }>
+              ) => {
+                setWhereFromTag(newValue ? newValue.value : undefined)
+              }}
+              placeholder={
+                translations["pages"]["add-ticket"]["chooseLocation"]
+              }
+              isClearable
+              isSearchable={false}
+            />
 
-          {/* DOKĄD */}
-          <LocationPicker
-            header={translations["pages"]["add-ticket"].whereTo}
-            value={inputValues.whereTo.label || "Wybierz miasto"}
-            showModal={showWhereToModal}
-          />
-          {/* DOKĄD */}
+            <Heading as="h2" size="l" mt="4">
+              {translations["pages"]["add-ticket"]["whereTo"]}
+            </Heading>
+            <Select
+              options={mappedLocationTags}
+              onChange={(
+                newValue: SingleValue<{ value: number; label: string }>
+              ) => {
+                setWhereToTag(newValue ? newValue.value : undefined)
+              }}
+              placeholder={
+                translations["pages"]["add-ticket"]["chooseLocation"]
+              }
+              isClearable
+              isSearchable={false}
+            />
+            <Stack marginBottom="16px">
+              <div className="flex justify-between">
+                <Heading as="h2" size="l">
+                  {translations["pages"]["add-ticket"]["adults"]}
+                </Heading>
+                {translations["pages"]["add-ticket"]["adultsAge"]}
+              </div>
+              <Input
+                min={0}
+                type={"number"}
+                placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
+                variant="outline"
+                inputMode="numeric"
+                {...register("adults")}
+              />
+            </Stack>
 
-          {/* SUBMIT */}
-          <Button type="submit" mt={4} colorScheme="blue" isFullWidth>
-            {translations.pages["add-ticket"]["add-need"]}
-          </Button>
-          {/* SUBMIT */}
+            <Stack marginBottom="16px">
+              <div className="flex justify-between">
+                <Heading as="h2" size="l">
+                  {translations["pages"]["add-ticket"]["children"]}
+                </Heading>
+                {translations["pages"]["add-ticket"]["childrenAge"]}
+              </div>
+              <Input
+                min={0}
+                type={"number"}
+                placeholder={
+                  translations["pages"]["add-ticket"]["childrenHint"]
+                }
+                variant="outline"
+                inputMode="numeric"
+                {...register("children")}
+              />
+            </Stack>
+
+            <Checkbox
+              value={1}
+              defaultChecked={false}
+              {...register("has_pets")}
+            >
+              {translations["pages"]["add-ticket"]["has-pets"]}
+            </Checkbox>
+
+            <Checkbox
+              value={1}
+              defaultChecked={false}
+              {...register("extra_luggage")}
+            >
+              {translations["addTicket"]["need"]["extraLuggage"]}
+            </Checkbox>
+
+            <Stack marginBottom="16px">
+              <div className="flex justify-between">
+                <Heading as="h2" size="l">
+                  {translations["addTicket"]["need"]["when"]}
+                </Heading>
+              </div>
+              <Input
+                type={"text"}
+                placeholder={translations["addTicket"]["need"]["when"]}
+                variant="outline"
+                inputMode="text"
+                {...register("when")}
+              />
+            </Stack>
+
+            <Stack>
+              <Heading as="h2" size="l">
+                {translations["pages"]["add-ticket"]["what-do-you-need"]}
+              </Heading>
+              <Input
+                placeholder={
+                  translations["pages"]["add-ticket"]["what-do-you-need"]
+                }
+                variant="outline"
+                {...register("description")}
+              />
+            </Stack>
+
+            {addTicketMutation.isError ? (
+              <Text color={"red"}>
+                {translations["errors"]["error-occured-while-adding"]}
+                {addTicketMutation.error.message}
+              </Text>
+            ) : null}
+
+            {addTicketMutation.isSuccess ? (
+              <Text>
+                {translations["pages"]["add-ticket"]["request-added"]}
+              </Text>
+            ) : null}
+
+            <div className="h-4 hidden md:block" />
+
+            <button
+              type="submit"
+              disabled={isDisabled}
+              className={`w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${
+                isDisabled ? "bg-gray-300" : "bg-amber-300 hover:bg-amber-400"
+              } shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+            >
+              <PlusSVG />
+              <span>{translations["/tickets/add"]}</span>
+            </button>
+          </Stack>
         </form>
       </Stack>
-
-      {variant !== undefined && (
-        <TransportNeededModal
-          variant={variant}
-          selected={inputValues}
-          closeModal={hideModal}
-          resetModal={resetModal}
-          setSelected={setInputValues}
-          setCoords={setCoords}
-        />
-      )}
     </>
   )
 }

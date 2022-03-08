@@ -247,6 +247,8 @@ export const PL = {
     need: {
       whereFromNeeded: "Skąd potrzebujesz transportu?",
       whereToNeeded: "Dokąd potrzebujesz transportu?",
+      when: "Kiedy",
+      extraLuggage: "Dodatkowy Bagaż?",
     },
     offer: {
       title: "Jeśli chcesz pomóc, przejrzyj bazę ofert",

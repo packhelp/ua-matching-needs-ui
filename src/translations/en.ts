@@ -245,7 +245,20 @@ export const EN: Translation = {
       "Thank you! Your application will allow us to improve the provision of assistance. Our moderators will take a look at your report in a moment.",
   },
   addTicket: {
-    iNeed: "<miss>",
-    iOffer: "<miss>"
-  }
+    iNeed: "<miss> Potrzebuję pomocy",
+    iOffer: "<miss> Mogę pomóc!",
+    need: {
+      whereFromNeeded: "<miss> Skąd potrzebujesz transportu?",
+      whereToNeeded: "<miss> Dokąd potrzebujesz transportu?",
+      when: "<miss> Kiedy",
+      extraLuggage: "<miss> Dodatkowy Bagaż?",
+    },
+    offer: {
+      title: "<miss> Jeśli chcesz pomóc, przejrzyj bazę ofert",
+      howToFilter: "<miss> Zobacz jak skutecznie filtrować",
+      chooseCategory: "<miss> Wybierz kategorię:",
+      youCanAlsoApply:
+        "<miss> Możesz się też zgłosić do pomocy do jednego z naszych partnerów:",
+    },
+  },
 }
