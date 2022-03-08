@@ -55,6 +55,9 @@ const getTicketsUrl = ({
     })
   }
 
+  //only active
+  filters.push({ key: "[expirationTimestampSane][_gte]", value: 'now' })
+
   const filterUrlPart = filters
     .map((filter, index) => {
       const prefix = index > 0 ? "&" : ""

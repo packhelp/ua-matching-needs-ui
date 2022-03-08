@@ -69,7 +69,8 @@ export type TicketData = TicketFormData & {
   date_created: number
   ticket_status: TICKET_STATUS
   organization_id?: Organization
-  description: string
+  description: string,
+  expiry_notified: boolean,
   need_tag_id: {
     need_tag_id: NeedTagType
   }[]
