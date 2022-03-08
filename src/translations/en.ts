@@ -266,11 +266,11 @@ export const EN: Translation = {
     need: {
       whereFromNeeded: "<miss> Skąd potrzebujesz transportu?",
       whereToNeeded: "<miss> Dokąd potrzebujesz transportu?",
-      when: "<miss> Kiedy",
-      extraLuggage: "<miss> Dodatkowy Bagaż?",
+      when: "When",
+      extraLuggage: "Additional luggage",
     },
     offer: {
-      title: "<miss> Jeśli chcesz pomóc, przejrzyj bazę ofert",
+      title: "If you want to help, check our list of needs",
       howToFilter: "<miss> Zobacz jak skutecznie filtrować",
       chooseCategory: "<miss> Wybierz kategorię:",
       youCanAlsoApply:

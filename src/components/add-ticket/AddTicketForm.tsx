@@ -51,7 +51,7 @@ export const AddTicketForm = () => {
         <br />
 
         {ticketType === TicketType.Need && (
-          <div className="my-8">
+          <div className="mb-4">
             <NeedCategorySwitcher {...opts} />
           </div>
         )}

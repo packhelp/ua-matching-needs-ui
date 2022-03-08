@@ -268,7 +268,7 @@ export const PL = {
       extraLuggage: "Dodatkowy Bagaż?",
     },
     offer: {
-      title: "Jeśli chcesz pomóc, przejrzyj bazę ofert",
+      title: "Jeśli chcesz pomóc, przejrzyj bazę potrzeb",
       howToFilter: "Zobacz jak skutecznie filtrować",
       chooseCategory: "Wybierz kategorię:",
       youCanAlsoApply:
