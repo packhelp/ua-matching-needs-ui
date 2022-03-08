@@ -84,6 +84,7 @@ export const FormNeedTransport = () => {
     (newTicket) => {
       const {
         phone,
+        who,
         description,
         adults,
         children,
@@ -104,6 +105,7 @@ export const FormNeedTransport = () => {
         description,
         expirationTimestampSane,
         phone,
+        who,
         count: 0,
         adults: adults ? adults : 0,
         children: children ? children : 0,
@@ -259,8 +261,6 @@ export const FormNeedTransport = () => {
             />
           </Stack>
           <Stack>
-            {/* EXPERIMNET */}
-
             <Checkbox
               mt={2}
               checked={exactDate}
@@ -277,6 +277,20 @@ export const FormNeedTransport = () => {
                 {...register("trip_when_date")}
               />
             )}
+          </Stack>
+
+          <Stack className="mt-6">
+            <Heading as="h2" size="l">
+              {translations["pages"]["add-ticket"]["who-needs-it"]}
+            </Heading>
+            <Text fontSize={"sm"}>
+              {translations["pages"]["add-ticket"]["name-surname-or-org-name"]}
+            </Text>
+            <Textarea
+              placeholder={translations["pages"]["add-ticket"]["who-needs-it"]}
+              variant="outline"
+              {...register("who")}
+            />
           </Stack>
           <Stack>
             {/* TITLE  */}
