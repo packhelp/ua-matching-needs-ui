@@ -19,6 +19,7 @@ export const TicketTypeSwitcher = (props: TicketTypeSwitcherProps) => {
       {opts.map((option) => {
         return (
           <div
+            key={option.name}
             onClick={option.onClick}
             className={`${
               option.active && "bg-blue-500 text-white"

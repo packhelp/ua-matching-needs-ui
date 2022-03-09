@@ -3,7 +3,7 @@ import { TicketTypeSwitcher } from "./TicketTypeSwitcher"
 import { TicketTypeOffer } from "./TicketTypeOffer"
 import { useTranslations } from "../../hooks/translations"
 import { useRouter } from "next/router"
-import { FormNeedTransport } from "./FormNeedTransport"
+import { FormNeedTransport } from "./forms/FormNeedTransport"
 import { TagConstIds } from "../../services/types.tag"
 import { RouteDefinitions } from "../../utils/routes"
 import { FaHandsHelping, FaHandHoldingHeart } from "react-icons/fa"
@@ -65,21 +65,21 @@ export const AddTicketForm = () => {
     },
   ]
 
-  // const showTransportLocationSection = tag === TagConstIds.transport
+  const isTicketTypeNeed = ticketType === TicketType.Need
+  const isTicketTypeOffer = ticketType === TicketType.Offer
+
+  const showTransportForm = ticketType === TicketType.Need && tag === TagConstIds.transport
 
   return (
     <div className="bg-white shadow max-w-2xl mx-auto">
       <div className="p-4">
         <TicketTypeSwitcher opts={typeSwitcherOpts} />
 
-        {ticketType === TicketType.Need && (
-          <TicketTypeSwitcher opts={needSwitcherOpts} />
-        )}
-        {ticketType === TicketType.Offer && <TicketTypeOffer />}
+        {isTicketTypeNeed && <TicketTypeSwitcher opts={needSwitcherOpts} />}
 
-        {ticketType === TicketType.Need && tag === TagConstIds.transport && (
-          <FormNeedTransport />
-        )}
+        {isTicketTypeOffer && <TicketTypeOffer />}
+
+        {showTransportForm && <FormNeedTransport />}
       </div>
     </div>
   )

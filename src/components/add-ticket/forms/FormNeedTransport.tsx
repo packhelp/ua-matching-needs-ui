@@ -6,7 +6,7 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react"
-import { useTranslations } from "../../hooks/translations"
+import { useTranslations } from "../../../hooks/translations"
 import { useForm } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
 import axios from "axios"
@@ -14,14 +14,14 @@ import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
 import { useState, useMemo } from "react"
-import { PlusSVG } from "../../assets/styled-svgs/plus"
+import { PlusSVG } from "../../../assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
-import { getRootContainer } from "../../services/_root-container"
+import { getRootContainer } from "../../../services/_root-container"
 import Select, { SingleValue } from "react-select"
 
-import { RouteDefinitions } from "../../utils/routes"
-import { NeedTripPostData } from "../../services/ticket.type"
-import { TagConstIds } from "../../services/types.tag"
+import { RouteDefinitions } from "../../../utils/routes"
+import { NeedTripPostData } from "../../../services/ticket.type"
+import { TagConstIds } from "../../../services/types.tag"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {

@@ -6,7 +6,7 @@ import { useQuery } from "react-query"
 import { useRouter } from "next/router"
 import { LocationFromNavigator } from "./partials/LocationFromNavigator"
 import Select, { SingleValue } from "react-select"
-import { InputValuesType, TransportNeededVariant } from "./FormNeedTransport"
+import { InputValuesType, TransportNeededVariant } from "./forms/FormNeedTransport"
 
 type TransportNeededModalType = {
   variant: TransportNeededVariant
