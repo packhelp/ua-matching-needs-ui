@@ -85,6 +85,7 @@ export const FormNeedTransport = () => {
       const {
         phone,
         who,
+        what,
         description,
         adults,
         children,
@@ -102,6 +103,7 @@ export const FormNeedTransport = () => {
       }
 
       const newTicketData = {
+        what,
         description,
         expirationTimestampSane,
         phone,
