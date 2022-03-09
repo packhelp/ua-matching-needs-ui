@@ -10,6 +10,7 @@
     "test": "NODE_OPTIONS=\"--unhandled-rejections=strict\" react-scripts test",
     "-----------LINTERS------------": "",
     "lint": "next lint && yarn lint:prettier",
+    "lint:windows": "next lint && yarn lint:prettier:windows",
     "lint:prettier": "prettier --check './{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "lint:prettier:windows": "prettier --check ./{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
     "pretty": "prettier --write './{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
