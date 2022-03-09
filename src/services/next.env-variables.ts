@@ -23,7 +23,7 @@ export function getTwilioSMS_envVariables() {
 export type TwilioEnvVars = ReturnType<typeof getTwilioSMS_envVariables>
 
 export function getNextEnvVariables() {
-  const adminTokenDanger = process.env.DIRECTUS_ADMIN_TOKEN
+  const adminTokenDanger = process.env.DIRECTUS_API_AUTH
 
   if (!adminTokenDanger) throw "DIRECTUS_ADMIN_TOKEN not defined"
 

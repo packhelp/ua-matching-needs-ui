@@ -79,8 +79,11 @@ const setExtendToken = async function (authToken, need, extendToken) {
 const generateToken = function () {
   return require("crypto").randomBytes(16).toString("hex")
 }
+
+const admin = getAdminContainer().containers
+
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
-  const authToken = getAdminAuthToken()
+  const authToken = admin.nextEnv.directusAdminAuthToken
   const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status]=active&filter[expirationTimestampSane][_lt]=now&filter[expiry_notified]=false`
   const requestOptions = {}
 
