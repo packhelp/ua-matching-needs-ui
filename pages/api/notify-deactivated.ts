@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next"
 import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
 import { TICKET_STATUS, TicketDetailsType } from "../../src/services/ticket.type"
-import { getAdminAuthToken } from "../../src/services/admin-auth-token"
 import { getAdminContainer } from "../../src/services/_container.admin"
 
 const authHeaders = function (authToken) {
@@ -93,8 +92,11 @@ const setExtendToken = async function (authToken, need, extendToken) {
 const generateToken = function () {
   return require("crypto").randomBytes(16).toString("hex")
 }
+
+const admin = getAdminContainer().containers
+
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
-  const authToken = getAdminAuthToken()
+  const authToken = admin.nextEnv.directusAdminAuthToken
   let limit = 1
   if (req.query.limit) {
     limit = Number(req.query.limit)

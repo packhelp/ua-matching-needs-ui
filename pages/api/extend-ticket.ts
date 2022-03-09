@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next"
 import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
 import { TICKET_STATUS, TicketDetailsType } from "../../src/services/ticket.type"
-import { getAdminAuthToken } from "../../src/services/admin-auth-token"
 import dayjs from "dayjs"
+import { getAdminContainer } from "../../src/services/_container.admin"
 
 const authHeaders = function (authToken) {
   return {
@@ -33,7 +33,8 @@ const extendTicket = async function (authToken, need) {
 
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const extend_token = req.query.t
-  const authToken = getAdminAuthToken()
+  const admin = getAdminContainer().containers
+  const authToken = admin.nextEnv.directusAdminAuthToken
 
   const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[extend_token]=${extend_token}`
   const requestOptions = {}
