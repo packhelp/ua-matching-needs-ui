@@ -3,6 +3,7 @@ import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
 import { TicketDetailsType } from "../../src/services/ticket.type"
 import { getAdminAuthToken } from "../../src/services/admin-auth-token"
+import { getAdminContainer } from "../../src/services/_container.admin"
 
 const authHeaders = function (authToken) {
   return {
@@ -13,20 +14,29 @@ const authHeaders = function (authToken) {
   }
 }
 
-const isProduction: boolean = process.env.ENV?.toUpperCase() === "PRODUCTION"
+const adminContainer = getAdminContainer().containers
+const isProduction = adminContainer.nextEnv.isProduction
+const twilioEnv = adminContainer.twilioEnv
 
 const notifyBySMS = async function (need, token) {
   const id = need.id
-  let phone = need.phone
 
+  // Find phone
+  let phone = need.phone
   if (!isProduction) {
-    phone = process.env.SMS_DEV_NUMBER
+    phone = twilioEnv.SMS_DEV_NUMBER
+  }
+  if (!phone) {
+    console.log(
+      "Process env is not production, SMS_DEV_NUMBER is empty, skipping sending sms"
+    )
+    return
   }
 
-  const accountSid = process.env.TWILIO_ACCOUNT_SID
-  const authToken = process.env.TWILIO_AUTH_TOKEN
-  const senderNumber = process.env.TWILIO_SENDER_NUMBER
-  const client = require("twilio")(accountSid, authToken)
+  // Prepare and send SMS
+  const senderNumber = twilioEnv.TWILIO_SENDER_NUMBER
+  const client = adminContainer.twilioInstance
+
   const url = `${process.env.SERVER_URL}/api/extend-ticket?t=${token}`
 
   // 94 symbold text + 36 symbols for URL
@@ -35,13 +45,6 @@ const notifyBySMS = async function (need, token) {
   console.log(
     `Sending sms for need[${id}]: ${need.what}, phone: ${phone} with body: ${body}`
   )
-
-  if (!phone) {
-    console.log(
-      "Process env is not production, SMS_DEV_NUMBER is empty, skipping sending sms"
-    )
-    return
-  }
 
   client.messages
     .create({ body: body, from: senderNumber, to: phone })

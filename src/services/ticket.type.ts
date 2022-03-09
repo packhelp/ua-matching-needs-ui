@@ -70,11 +70,14 @@ export type TicketData = TicketFormData & {
   ticket_status: TICKET_STATUS
   organization_id?: Organization
   description: string
-  expiry_notified: boolean
   need_tag_id: {
     need_tag_id: NeedTagType
   }[]
   visits: number
+
+  // SMS data section
+  expiry_notified: boolean
+  extend_token: string
 }
 
 export type TicketDetailsType = TicketPostData & TicketData
