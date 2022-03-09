@@ -13,7 +13,8 @@
     "lint:windows": "next lint && yarn lint:prettier:windows",
     "lint:prettier": "prettier --check './{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "lint:prettier:windows": "prettier --check ./{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
-    "pretty": "prettier --write './{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
+    "pretty": "prettier --write './{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "pretty:windows": "prettier --write ./{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.7",

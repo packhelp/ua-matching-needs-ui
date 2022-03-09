@@ -68,7 +68,8 @@ export const AddTicketForm = () => {
   const isTicketTypeNeed = ticketType === TicketType.Need
   const isTicketTypeOffer = ticketType === TicketType.Offer
 
-  const showTransportForm = ticketType === TicketType.Need && tag === TagConstIds.transport
+  const showTransportForm =
+    ticketType === TicketType.Need && tag === TagConstIds.transport
 
   return (
     <div className="bg-white shadow max-w-2xl mx-auto">
