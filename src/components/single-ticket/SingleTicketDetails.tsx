@@ -22,7 +22,7 @@ export const SingleTicketDetails = (props: SingleTicketDetailsProps) => {
 
   const need = new Ticket(ticket)
 
-  const dateFormatted = new Date(ticket.date_created).toLocaleString("pl-PL")
+  const dateFormatted = need.createdDateFormattedString
 
   let ticketUrl
   if (typeof window !== "undefined") {

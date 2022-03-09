@@ -1,4 +1,9 @@
-import { TicketDetailsType, TICKET_STATUS } from "./ticket.type"
+import {
+  LocationTag,
+  TicketDetailsType,
+  TicketTripDetailsType,
+  TICKET_STATUS,
+} from "./ticket.type"
 
 export class Ticket {
   constructor(private dto: TicketDetailsType) {}
@@ -23,10 +28,38 @@ export class Ticket {
     return this.dto.what || this.dto.description
   }
 
+  get createdDateFormattedString() {
+    return new Date(this.dto.date_created).toLocaleString("pl-PL")
+  }
+
+  get isTrip() {
+    return this.dto.need_type === "trip"
+  }
+
+  get trip() {
+    if (this.isTrip) {
+      return new NeedTransport(this.dto as any)
+    }
+    // safety fallback
+    return this
+  }
+
   /**
    * generic tags like "transport", "hurt" etc.
    */
   get tags() {
     return this.dto.need_tag_id
+  }
+}
+
+export class NeedTransport {
+  constructor(public dto: TicketTripDetailsType) {}
+
+  get fromTag(): LocationTag {
+    return this.dto.where_from_tag
+  }
+
+  get toTag(): LocationTag {
+    return this.dto.where_to_tag
   }
 }
