@@ -32,6 +32,7 @@ import Select, { SingleValue } from "react-select"
 
 import { AddTicketForm } from "../../src/components/add-ticket/AddTicketForm"
 import { TagConstIds } from "../../src/services/types.tag"
+import { FormField } from "../../src/components/add-ticket/FormField"
 
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
@@ -183,142 +184,71 @@ const AddTicketOld: NextPage = () => {
   const isDisabled = addTicketMutation.isLoading || isSubmitting
 
   return (
-    <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
-      <Container className="px-4 py-5 sm:p-6">
-        <form onSubmit={handleSubmit(submitNeed)}>
-          <Stack>
+    <div className="bg-white shadow max-w-2xl mx-auto">
+      <div className="p-4">
+        <div className="mb-8 bg-white">
+          <form onSubmit={handleSubmit(submitNeed)}>
             <Heading as="h3" size="xl">
               {translations["pages"]["add-ticket"]["add-need"]}
             </Heading>
 
-            <Stack>
-              <Heading as="h2" size="l">
-                {translations["pages"]["add-ticket"]["tags"]}
-              </Heading>
-
+            <FormField title={translations["pages"]["add-ticket"]["tags"]}>
               <TagsChooseForm
                 tags={tags || []}
                 onClickTag={toggleTag}
                 tagsSelected={tagsSelected}
               />
-            </Stack>
+            </FormField>
 
-            <div className="h-4 hidden md:block" />
+            <FormField
+              title={translations["pages"]["add-ticket"]["adults"]}
+              disclaimer={translations["pages"]["add-ticket"]["adultsAge"]}
+            >
+              <Input
+                min={0}
+                type={"number"}
+                placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
+                variant="outline"
+                inputMode="numeric"
+                {...register("adults")}
+              />
+            </FormField>
 
-            <div className="block md:hidden">
-              <Stack marginBottom="16px">
-                <div className="flex justify-between">
-                  <Heading as="h2" size="l">
-                    {translations["pages"]["add-ticket"]["adults"]}
-                  </Heading>
-                  {translations["pages"]["add-ticket"]["adultsAge"]}
-                </div>
-                <Input
-                  min={0}
-                  type={"number"}
-                  placeholder={
-                    translations["pages"]["add-ticket"]["adultsHint"]
-                  }
-                  variant="outline"
-                  inputMode="numeric"
-                  {...register("adults")}
-                />
-              </Stack>
+            <FormField
+              title={translations["pages"]["add-ticket"]["children"]}
+              disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
+            >
+              <Input
+                min={0}
+                type={"number"}
+                placeholder={
+                  translations["pages"]["add-ticket"]["childrenHint"]
+                }
+                variant="outline"
+                inputMode="numeric"
+                {...register("children")}
+              />
+            </FormField>
 
-              <Stack marginBottom="16px">
-                <div className="flex justify-between">
-                  <Heading as="h2" size="l">
-                    {translations["pages"]["add-ticket"]["children"]}
-                  </Heading>
-                  {translations["pages"]["add-ticket"]["childrenAge"]}
-                </div>
-                <Input
-                  min={0}
-                  type={"number"}
-                  placeholder={
-                    translations["pages"]["add-ticket"]["childrenHint"]
-                  }
-                  variant="outline"
-                  inputMode="numeric"
-                  {...register("children")}
-                />
-              </Stack>
+            <Checkbox
+              value={1}
+              defaultChecked={false}
+              {...register("has_pets")}
+            >
+              {translations["pages"]["add-ticket"]["has-pets"]}
+            </Checkbox>
 
-              <Checkbox
-                value={1}
-                defaultChecked={false}
-                {...register("has_pets")}
-              >
-                {translations["pages"]["add-ticket"]["has-pets"]}
-              </Checkbox>
-            </div>
-
-            <div className="hidden md:flex justify-between items-start mb-16">
-              <Stack>
-                <div className="flex justify-between">
-                  <Heading as="h2" size="l">
-                    {translations["pages"]["add-ticket"]["adults"]}
-                  </Heading>
-                  {translations["pages"]["add-ticket"]["adultsAge"]}
-                </div>
-                <Input
-                  min={0}
-                  type="number"
-                  placeholder={
-                    translations["pages"]["add-ticket"]["adultsHint"]
-                  }
-                  variant="outline"
-                  inputMode="tel"
-                  {...register("adults")}
-                />
-              </Stack>
-
-              <Stack>
-                <div className="flex justify-between">
-                  <Heading as="h2" size="l">
-                    {translations["pages"]["add-ticket"]["children"]}
-                  </Heading>
-                  {translations["pages"]["add-ticket"]["childrenAge"]}
-                </div>
-                <Input
-                  min={0}
-                  type="number"
-                  placeholder={
-                    translations["pages"]["add-ticket"]["childrenHint"]
-                  }
-                  variant="outline"
-                  {...register("children")}
-                />
-              </Stack>
-
-              <Checkbox
-                value={1}
-                defaultChecked={false}
-                {...register("has_pets")}
-              >
-                {translations["pages"]["add-ticket"]["has-pets"]}
-              </Checkbox>
-            </div>
-
-            <div className="h-4 hidden md:block" />
-
-            <div className="h-4 hidden md:block" />
-            {/* TITLE  */}
-            <Stack>
-              <Heading as="h2" size="l">
-                {translations["pages"]["add-ticket"].title}
-              </Heading>
+            <FormField title={translations["pages"]["add-ticket"].title}>
               <Input
                 placeholder={translations["pages"]["add-ticket"].title}
                 variant="outline"
                 {...register("what")}
               />
-            </Stack>
-            {/* DEscription  */}
-            <Stack>
-              <Heading as="h2" size="l">
-                {translations["pages"]["add-ticket"]["what-do-you-need"]}
-              </Heading>
+            </FormField>
+
+            <FormField
+              title={translations["pages"]["add-ticket"]["what-do-you-need"]}
+            >
               <Textarea
                 rows={6}
                 placeholder={
@@ -327,16 +257,15 @@ const AddTicketOld: NextPage = () => {
                 variant="outline"
                 {...register("description")}
               />
-            </Stack>
+            </FormField>
 
-            <Stack>
-              <Heading as="h2" size="l">
-                {
-                  translations["pages"]["add-ticket"][
-                    "where-do-you-need-it-delivered"
-                  ]
-                }
-              </Heading>
+            <FormField
+              title={
+                translations["pages"]["add-ticket"][
+                  "where-do-you-need-it-delivered"
+                ]
+              }
+            >
               <Textarea
                 placeholder={
                   translations["pages"]["add-ticket"]["address-or-gps"]
@@ -344,19 +273,14 @@ const AddTicketOld: NextPage = () => {
                 variant="outline"
                 {...register("where")}
               />
-            </Stack>
+            </FormField>
 
-            <Stack>
-              <Heading as="h2" size="l">
-                {translations["pages"]["add-ticket"]["who-needs-it"]}
-              </Heading>
-              <Text fontSize={"sm"}>
-                {
-                  translations["pages"]["add-ticket"][
-                    "name-surname-or-org-name"
-                  ]
-                }
-              </Text>
+            <FormField
+              title={translations["pages"]["add-ticket"]["who-needs-it"]}
+              disclaimer={
+                translations["pages"]["add-ticket"]["name-surname-or-org-name"]
+              }
+            >
               <Textarea
                 placeholder={
                   translations["pages"]["add-ticket"]["who-needs-it"]
@@ -364,7 +288,7 @@ const AddTicketOld: NextPage = () => {
                 variant="outline"
                 {...register("who")}
               />
-            </Stack>
+            </FormField>
 
             {addTicketMutation.isError ? (
               <Text color={"red"}>
@@ -379,10 +303,9 @@ const AddTicketOld: NextPage = () => {
               </Text>
             ) : null}
 
-            <div className="h-4 hidden md:block" />
-
             <Checkbox
               value={1}
+              my={2}
               defaultChecked={true}
               {...register("phone_public")}
               onChange={(e) => {
@@ -405,16 +328,16 @@ const AddTicketOld: NextPage = () => {
             <button
               type="submit"
               disabled={isDisabled}
-              className={`w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${
+              className={`w-full mt-2 relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${
                 isDisabled ? "bg-gray-300" : "bg-amber-300 hover:bg-amber-400"
               } shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
             >
               <PlusSVG />
               <span>{translations["/tickets/add"]}</span>
             </button>
-          </Stack>
-        </form>
-      </Container>
+          </form>
+        </div>
+      </div>
     </div>
   )
 }

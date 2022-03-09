@@ -76,7 +76,9 @@ export const AddTicketForm = () => {
       <div className="p-4">
         <TicketTypeSwitcher opts={typeSwitcherOpts} />
 
-        {isTicketTypeNeed && <TicketTypeSwitcher opts={needSwitcherOpts} />}
+        {isTicketTypeNeed && (
+          <TicketTypeSwitcher opts={needSwitcherOpts} isColumn />
+        )}
 
         {isTicketTypeOffer && <TicketTypeOffer />}
 
