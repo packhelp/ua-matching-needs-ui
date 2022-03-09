@@ -89,9 +89,12 @@ export const TicketsListSingleTicket = (
           {need.isTrip && <LocationSection trip={need.trip}></LocationSection>}
 
           <div className="py-1">
-            <p className="text-xl font-medium text-gray-900 truncate">
-              {need.title}
-            </p>
+            {!need.isTrip && (
+              <p className="text-xl font-medium text-gray-900 truncate">
+                {need.title}
+              </p>
+            )}
+
             {ticket.where ? (
               <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
                 <svg
@@ -118,7 +121,7 @@ export const TicketsListSingleTicket = (
               </div>
             ) : (
               <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
-                <span className="w-5 h-5"></span>
+                {need.isTrip && <span className="w-5 h-5">{need.title}</span>}
               </div>
             )}
           </div>
