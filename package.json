@@ -11,6 +11,7 @@
     "-----------LINTERS------------": "",
     "lint": "next lint && yarn lint:prettier",
     "lint:prettier": "prettier --check './{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "lint:prettier:windows": "prettier --check ./{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
     "pretty": "prettier --write './{pages,src,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
   },
   "dependencies": {
