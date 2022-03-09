@@ -1,4 +1,4 @@
-import { Center, Spinner, Tooltip } from "@chakra-ui/react"
+import { Center, Spinner } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { useQuery, useQueryClient } from "react-query"
@@ -13,14 +13,7 @@ import { Pagination } from "./Pagination"
 import { TicketsListHeader } from "./TicketsListHeader"
 import { TicketsListFilters } from "./TicketsListFilters"
 import { NextApiClient } from "../../services/directus-signed-user-api"
-import { RouteDefinitions } from "../../utils/routes"
-import { Ticket } from "../../services/ticket.class"
-import Link from "next/link"
-import { Tag } from "../Tag"
-import { Hand } from "../hero-icons/Hand"
-import { useTranslations } from "../../hooks/translations"
 import { TicketsListSingleTicket } from "./TicketsListSingleTicket"
-const ts = getRootContainer().containers.ticketService
 
 export const TRANSPORT_TAG = 5
 
@@ -57,13 +50,8 @@ export const TicketsList = ({
 
   const nextClient = new NextApiClient()
 
-  const {
-    data: ticketsData,
-    isLoading,
-    isRefetching,
-    refetch,
-  } = useQuery(
-    queryKey,
+  const { data: ticketsData, isLoading } = useQuery(
+    [queryKey, whereFromTag, whereToTag, selectedTag, selectedPage],
     () => {
       return nextClient.getTicket({
         mineOnly: mineOnly,
@@ -75,7 +63,6 @@ export const TicketsList = ({
       })
     },
     {
-      refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       refetchOnMount: false,
     }
@@ -109,15 +96,19 @@ export const TicketsList = ({
   }, [router.query["where_from"]])
 
   useEffect(() => {
-    queryClient.cancelQueries(queryKey)
-    void refetch()
+    queryClient.invalidateQueries([
+      queryKey,
+      whereFromTag,
+      whereToTag,
+      selectedTag,
+      selectedPage,
+    ])
   }, [
     selectedTag,
     selectedPage,
     whereToTag,
     whereFromTag,
     queryKey,
-    refetch,
     queryClient,
   ])
 
@@ -135,7 +126,7 @@ export const TicketsList = ({
           whereToTag={whereToTag}
         />
 
-        {isLoading || isRefetching ? (
+        {isLoading ? (
           <Center h="100px" color="yellow.400">
             <Spinner size="xl" thickness="6px" />
           </Center>
