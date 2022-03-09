@@ -95,7 +95,7 @@ export const TicketsListSingleTicket = (
               </p>
             )}
 
-            {ticket.where ? (
+            {ticket.where && !need.isTrip ? (
               <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
