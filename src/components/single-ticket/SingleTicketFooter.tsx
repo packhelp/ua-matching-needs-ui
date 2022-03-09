@@ -219,14 +219,17 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
                 "inline-flex gap-1 cursor-pointer align-middle items-center"
               }
             >
-              <Hand em="1.3em" /> {need.responsesLength} {translations["pages"]["ticket"]["claimedToHelp"]}
+              <Hand em="1.3em" /> {need.responsesLength}{" "}
+              {translations["pages"]["ticket"]["claimedToHelp"]}
             </div>
           )}
 
           <div
             className={"flex gap-1 cursor-pointer align-middle items-center"}
           >
-            {need.hasResponses && <div>{translations["pages"]["ticket"]["hasResponses"]}</div>}
+            {need.hasResponses && (
+              <div>{translations["pages"]["ticket"]["hasResponses"]}</div>
+            )}
           </div>
         </>
       )}

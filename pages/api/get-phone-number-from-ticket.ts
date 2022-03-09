@@ -6,7 +6,10 @@ const root = getRootContainer()
 const ticketService = root.containers.ticketService
 
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
-  if (req.headers.authorization !== `Bearer ${process.env.TWILIO_PHONE_PROXY_TOKEN}`) {
+  if (
+    req.headers.authorization !==
+    `Bearer ${process.env.TWILIO_PHONE_PROXY_TOKEN}`
+  ) {
     return res.status(401).json({ error: "Unauthorized!" })
   }
 

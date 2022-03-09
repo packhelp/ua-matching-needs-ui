@@ -110,7 +110,7 @@ export const PL = {
       errorOnClaim: "Wystąpił błąd z przejęciem tej potrzeby",
       claim: "Zgłaszam się do pomocy!",
       claimedToHelp: "zgłosiło się do pomocy!",
-      hasResponses: "Są zgłoszenia! Świetnie!"
+      hasResponses: "Są zgłoszenia! Świetnie!",
     },
     "add-ticket": {
       "add-need": "Dodaj potrzebę",
