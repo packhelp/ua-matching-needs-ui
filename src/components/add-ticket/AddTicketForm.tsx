@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { TicketType, TicketTypeSwitcher } from "./TicketTypeSwitcher"
+import { TicketTypeSwitcher } from "./TicketTypeSwitcher"
 import { TicketTypeOffer } from "./TicketTypeOffer"
 import { useTranslations } from "../../hooks/translations"
 import { useRouter } from "next/router"
@@ -7,6 +7,11 @@ import { FormNeedTransport } from "./FormNeedTransport"
 import { TagConstIds } from "../../services/types.tag"
 import { RouteDefinitions } from "../../utils/routes"
 import { FaHandsHelping, FaHandHoldingHeart } from "react-icons/fa"
+
+export enum TicketType {
+  Offer = "offer",
+  Need = "need",
+}
 
 // const ticketService = getRootContainer().containers.ticketService
 
@@ -20,8 +25,8 @@ export const AddTicketForm = () => {
 
   const [tag, setTag] = useState<TagConstIds | undefined | null>(undefined)
 
-  const typeSwitcherOpts = {
-    optionOne: {
+  const typeSwitcherOpts = [
+    {
       name: i18n.addTicket.wizard.iNeedHelp,
       active: ticketType === TicketType.Need,
       onClick: () => setTicketType(TicketType.Need),
@@ -32,7 +37,7 @@ export const AddTicketForm = () => {
         />
       ),
     },
-    optionTwo: {
+    {
       name: i18n.addTicket.wizard.iCanHelp,
       active: ticketType === TicketType.Offer,
       onClick: () => setTicketType(TicketType.Offer),
@@ -43,22 +48,22 @@ export const AddTicketForm = () => {
         />
       ),
     },
-  }
+  ]
 
-  const needSwitcherOpts = {
-    optionOne: {
+  const needSwitcherOpts = [
+    {
       name: i18n.addTicket.wizard.formNameTransport,
       active: tag === TagConstIds.transport,
       onClick: () => setTag(TagConstIds.transport),
     },
-    optionTwo: {
+    {
       name: i18n.addTicket.wizard.formNameOther,
       active: tag === null,
       onClick: () => {
         router.push(RouteDefinitions.AddTicketOld)
       },
     },
-  }
+  ]
 
   // const showTransportLocationSection = tag === TagConstIds.transport
 
