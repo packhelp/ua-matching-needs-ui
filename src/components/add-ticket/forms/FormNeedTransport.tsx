@@ -6,7 +6,7 @@ import {
   Textarea,
 } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
 import axios from "axios"
 import { useRouter } from "next/router"
@@ -22,6 +22,7 @@ import { RouteDefinitions } from "../../../utils/routes"
 import { NeedTripPostData } from "../../../services/ticket.type"
 import { TagConstIds } from "../../../services/types.tag"
 import { FormField } from "../FormField"
+import { ErrorMessage } from '@hookform/error-message';
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {
@@ -40,9 +41,6 @@ export const FormNeedTransport = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [exactDate, setExactDate] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
-  const [whereFromTag, setWhereFromTag] = useState<number | undefined>(
-    undefined
-  )
   const [whereToTag, setWhereToTag] = useState<number | undefined>(undefined)
   const { data: locationTags = [] } = useQuery(`location-tags`, () => {
     return ticketService.locationTags()
@@ -93,6 +91,7 @@ export const FormNeedTransport = () => {
         trip_when_text,
         trip_when_date, // TODO:
         trip_extra_luggage,
+        where_from_tag
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
@@ -119,7 +118,7 @@ export const FormNeedTransport = () => {
         // tripe specific
         need_type: "trip",
         where_to_tag: whereToTag,
-        where_from_tag: whereFromTag,
+        where_from_tag,
         trip_when_text,
         trip_when_date: when_date,
         trip_extra_luggage,
@@ -134,7 +133,7 @@ export const FormNeedTransport = () => {
 
   const useFormOptions = {}
 
-  const { register, handleSubmit } = useForm<NeedTripPostData>(useFormOptions)
+  const { register, handleSubmit, control, formState: { errors } } = useForm<NeedTripPostData>(useFormOptions)
 
   const submitNeed = async (data: NeedTripPostData) => {
     setIsSubmitting(true)
@@ -164,18 +163,28 @@ export const FormNeedTransport = () => {
           <FormField
             title={translations["pages"]["add-ticket"]["whereFrom"]}
           >
-            <Select
-              options={mappedLocationTags}
-              onChange={(
-                newValue: SingleValue<{ value: number; label: string }>
-              ) => {
-                setWhereFromTag(newValue ? newValue.value : undefined)
-              }}
-              placeholder={
-                translations["pages"]["add-ticket"]["chooseLocation"]
-              }
-              isClearable
-              isSearchable={false}
+            <Controller
+              name="where_from_tag"
+              control={control}
+              rules={{ required: translations["pages"]["add-ticket"]["required"] }}
+              render={( {field}) => (
+                <Select
+                  options={mappedLocationTags}
+                  onChange={(e) => field.onChange(e!.value)}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["chooseLocation"]
+                  }
+                  isClearable
+                  isSearchable={false}
+                  ref={field.ref}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors} name="where_from_tag"
+              render={({ message }) => (
+                <p className="text-red-500 text-xs mt-1">{message}</p>
+              )}
             />
           </FormField>
 

@@ -143,6 +143,7 @@ export const PL = {
       whereTo: "Dokąd?",
       "hide-phone-disclaimer":
         "Pamiętaj ze osoba oferująca pomoc musi mieć jak się z Tobą kontaktować. Jeśli nie chcesz udostępniać telefonu podaj w opisie inną formę kontaktu.",
+      required: "To pole jest wymagane",
     },
     claimed: {
       title: "Moje przejęte potrzeby",
