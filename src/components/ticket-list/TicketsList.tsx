@@ -82,7 +82,7 @@ export const TicketsList = ({
   )
 
   const queryClient = useQueryClient()
-
+  console.log(ticketsData)
   useEffect(() => {
     const tag = parseInt((router.query.tag as string) || "0")
     if (
