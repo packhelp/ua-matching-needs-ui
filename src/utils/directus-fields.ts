@@ -25,6 +25,8 @@ export const TICKET_DETAILS_FIELDS = [
   "*",
   "need_tag_id.need_tag_id.*",
   "need_responses.*",
+  "where_from_tag.*",
+  "where_to_tag.*",
 ]
 
 export const TAG_FIELDS = ["*"]
