@@ -1,10 +1,4 @@
-import {
-  Checkbox,
-  Input,
-  Stack,
-  Text,
-  Textarea,
-} from "@chakra-ui/react"
+import { Checkbox, Input, Stack, Text, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
 import { useForm } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
@@ -161,9 +155,7 @@ export const FormNeedTransport = () => {
     <>
       <div className="mb-8 bg-white">
         <form onSubmit={handleSubmit(submitNeed)}>
-          <FormField
-            title={translations["pages"]["add-ticket"]["whereFrom"]}
-          >
+          <FormField title={translations["pages"]["add-ticket"]["whereFrom"]}>
             <Select
               options={mappedLocationTags}
               onChange={(
@@ -179,9 +171,7 @@ export const FormNeedTransport = () => {
             />
           </FormField>
 
-          <FormField
-            title={translations["pages"]["add-ticket"]["whereTo"]}
-          >
+          <FormField title={translations["pages"]["add-ticket"]["whereTo"]}>
             <Select
               options={mappedLocationTags}
               onChange={(
@@ -244,9 +234,7 @@ export const FormNeedTransport = () => {
             </Checkbox>
           </div>
 
-          <FormField
-            title={translations["addTicket"]["need"]["when"]}
-          >
+          <FormField title={translations["addTicket"]["need"]["when"]}>
             <Input
               type={"text"}
               placeholder={translations["addTicket"]["need"]["when"]}
@@ -277,7 +265,9 @@ export const FormNeedTransport = () => {
 
           <FormField
             title={translations["pages"]["add-ticket"]["who-needs-it"]}
-            disclaimer={translations["pages"]["add-ticket"]["name-surname-or-org-name"]}
+            disclaimer={
+              translations["pages"]["add-ticket"]["name-surname-or-org-name"]
+            }
           >
             <Textarea
               placeholder={translations["pages"]["add-ticket"]["who-needs-it"]}
@@ -323,13 +313,12 @@ export const FormNeedTransport = () => {
                 {translations["pages"]["add-ticket"]["request-added"]}
               </Text>
             ) : null}
-
-            <div className="h-4 hidden md:block" />
           </Stack>
+
           <button
             type="submit"
             disabled={isDisabled}
-            className={`w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${
+            className={`mt-4 w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${
               isDisabled ? "bg-gray-300" : "bg-amber-300 hover:bg-amber-400"
             } shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           >
