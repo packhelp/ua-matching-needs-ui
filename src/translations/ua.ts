@@ -137,9 +137,9 @@ export const UA: Translation = {
         "Пам’ятайте, що особа, яка пропонує допомогу, повинна мати спосіб зв’язатися з вами. Якщо ви не хочете ділитися телефоном, вкажіть іншу форму контакту в описі.",
     },
     extended: {
-      title: "Aktualizacja ogłoszenia",
-      description: "Ważność twojego ogłoszenia zostało przedłużone o 24h",
-      showTicket: "Przejdź do ogłoszenia",
+      title: "Оновлення оголошення",
+      description: "Ваше оголошення продовжено на 24 години",
+      showTicket: "Перейти до оголошення",
     },
   },
   "sign-out": "Вийти",

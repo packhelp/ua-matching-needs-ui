@@ -28,6 +28,8 @@ const notifyBySMS = async function (need, token) {
   const senderNumber = process.env.TWILIO_SENDER_NUMBER
   const client = require("twilio")(accountSid, authToken)
   const url = `${process.env.SERVER_URL}/api/extend-ticket?t=${token}`
+
+  // 94 symbold text + 36 symbols for URL
   const body = `[potrzeby-ua.org]: Twoje ogłoszenie się przedawniło, wejdź na stronę aby przedłużyć je o 24h: ${url}`
 
   console.log(

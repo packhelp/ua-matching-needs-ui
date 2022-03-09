@@ -137,7 +137,7 @@ export const PL = {
     },
     extended: {
       title: "Aktualizacja ogłoszenia",
-      description: "Ważność twojego ogłoszenia zostało przedłużone o 24h",
+      description: "Przedłużyliśmy ważność twojego ogłoszenia o 24h",
       showTicket: "Przejdź do ogłoszenia",
     },
   },
