@@ -12,7 +12,9 @@ export const FormField = (props: FormFieldProps) => {
     <div className="mt-4">
       <div className="font-bold text-sm mb-1">{title}</div>
       {children}
-      <div className="flex justify-end text-xs text-slate-400 pr-2">{disclaimer}</div>
+      <div className="flex justify-end text-xs text-slate-400 pr-2">
+        {disclaimer}
+      </div>
     </div>
   )
 }

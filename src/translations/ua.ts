@@ -142,6 +142,7 @@ export const UA: Translation = {
       whereTo: "Куди?",
       "hide-phone-disclaimer":
         "Пам’ятайте, що особа, яка пропонує допомогу, повинна мати спосіб зв’язатися з вами. Якщо ви не хочете ділитися телефоном, вкажіть іншу форму контакту в описі.",
+      required: "Це поле є обов'язковим",
     },
     claimed: {
       title: "Moje przejęte potrzeby",
