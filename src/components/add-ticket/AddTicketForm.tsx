@@ -63,8 +63,8 @@ export const AddTicketForm = () => {
   // const showTransportLocationSection = tag === TagConstIds.transport
 
   return (
-    <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
-      <div className="p-8">
+    <div className="bg-white shadow max-w-2xl mx-auto">
+      <div className="p-4">
         <TicketTypeSwitcher opts={typeSwitcherOpts} />
 
         {ticketType === TicketType.Need && (
