@@ -4,7 +4,7 @@ import { withSentry } from "@sentry/nextjs"
 import { TicketDetailsType } from "../../src/services/ticket.type"
 import { getAdminAuthToken } from "../../src/services/admin-auth-token"
 
-const authHeaders = function(authToken) {
+const authHeaders = function (authToken) {
   return {
     headers: {
       Authorization: `Bearer ${authToken}`,
@@ -15,7 +15,7 @@ const authHeaders = function(authToken) {
 
 const isProduction: boolean = process.env.ENV?.toUpperCase() === "PRODUCTION"
 
-const notifyBySMS = async function(need, token) {
+const notifyBySMS = async function (need, token) {
   const id = need.id
   let phone = need.phone
 
@@ -30,20 +30,23 @@ const notifyBySMS = async function(need, token) {
   const url = `${process.env.SERVER_URL}/api/extend-ticket?t=${token}`
   const body = `[potrzeby-ua.org]: Twoje ogłoszenie się przedawniło, wejdź na stronę aby przedłużyć je o 24h: ${url}`
 
-  console.log(`Sending sms for need[${id}]: ${need.what}, phone: ${phone} with body: ${body}`)
+  console.log(
+    `Sending sms for need[${id}]: ${need.what}, phone: ${phone} with body: ${body}`
+  )
 
   if (!phone) {
-    console.log("Process env is not production, SMS_DEV_NUMBER is empty, skipping sending sms")
+    console.log(
+      "Process env is not production, SMS_DEV_NUMBER is empty, skipping sending sms"
+    )
     return
   }
 
   client.messages
     .create({ body: body, from: senderNumber, to: phone })
-    .then(message => console.log(message.sid))
-
+    .then((message) => console.log(message.sid))
 }
 
-const markAsNotified = async function(authToken, need) {
+const markAsNotified = async function (authToken, need) {
   const id = need.id
   console.log(`Marking need[${id}] as notified: ${need.what}`)
 
@@ -51,25 +54,27 @@ const markAsNotified = async function(authToken, need) {
     `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
     {
       expiry_notified: true,
-    }, authHeaders(authToken),
+    },
+    authHeaders(authToken)
   )
 }
 
-const setExtendToken = async function(authToken, need, extendToken) {
+const setExtendToken = async function (authToken, need, extendToken) {
   const id = need.id
   console.log(`Setting need[${id}] extend token: ${extendToken}`)
   return await axios.patch(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
     {
       extend_token: extendToken,
-    }, authHeaders(authToken),
+    },
+    authHeaders(authToken)
   )
 }
 
-const generateToken = function() {
+const generateToken = function () {
   return require("crypto").randomBytes(16).toString("hex")
 }
-const handler = async function(req: NextApiRequest, res: NextApiResponse) {
+const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const authToken = getAdminAuthToken()
   const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status]=active&filter[expirationTimestampSane][_lt]=now&filter[expiry_notified]=false`
   const requestOptions = {}
@@ -77,7 +82,7 @@ const handler = async function(req: NextApiRequest, res: NextApiResponse) {
   const response = await axios
     .get(url, requestOptions)
     .then((response) => response.data)
-    .catch(err => console.error(err))
+    .catch((err) => console.error(err))
 
   let needs: TicketDetailsType[] = response.data
   const notifiedNeeds: TicketDetailsType[] = []

@@ -135,11 +135,11 @@ export const PL = {
       "hide-phone-disclaimer":
         "Pamiętaj ze osoba oferująca pomoc musi mieć jak się z Tobą kontaktować. Jeśli nie chcesz udostępniać telefonu podaj w opisie inną formę kontaktu.",
     },
-    "extended": {
-      "title": "Aktualizacja ogłoszenia",
-      "description":"Ważność twojego ogłoszenia zostało przedłużone o 24h",
-      "showTicket":"Przejdź do ogłoszenia"
-    }
+    extended: {
+      title: "Aktualizacja ogłoszenia",
+      description: "Ważność twojego ogłoszenia zostało przedłużone o 24h",
+      showTicket: "Przejdź do ogłoszenia",
+    },
   },
   "sign-out": "Wyloguj się",
   "terms-of-service": {

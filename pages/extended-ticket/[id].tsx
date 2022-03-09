@@ -19,13 +19,15 @@ export async function getServerSideProps(context) {
   return { props: { ticket } }
 }
 
-const ExtendedTicket: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => {
+const ExtendedTicket: NextPage<{ ticket: TicketDetailsType }> = ({
+  ticket,
+}) => {
   const router = useRouter()
   const translations = useTranslations()
   const { locale } = router
   const ticketUrl = RouteDefinitions.TicketDetails.replace(
     ":id",
-    String(ticket.id),
+    String(ticket.id)
   )
 
   return (
@@ -54,12 +56,10 @@ const ExtendedTicket: NextPage<{ ticket: TicketDetailsType }> = ({ ticket }) => 
               <Link href={ticketUrl}>
                 {translations["pages"]["extended"]["showTicket"]}
               </Link>
-
             </Stack>
           </Stack>
         </Container>
       </Box>
-
     </div>
   )
 }

@@ -137,11 +137,11 @@ export const EN: Translation = {
       "hide-phone-disclaimer":
         "Remember that the person offering help must have a way of contacting you. If you do not want to share the phone, please provide a different form of contact in the description.",
     },
-    "extended": {
-      "title": "Ticket updated",
-      "description":"Your ticket is extended for next 24h",
-      "showTicket":"Show your ticket"
-    }
+    extended: {
+      title: "Ticket updated",
+      description: "Your ticket is extended for next 24h",
+      showTicket: "Show your ticket",
+    },
   },
   "sign-out": "Sign out",
   "terms-of-service": {

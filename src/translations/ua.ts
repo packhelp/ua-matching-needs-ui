@@ -136,11 +136,11 @@ export const UA: Translation = {
       "hide-phone-disclaimer":
         "Пам’ятайте, що особа, яка пропонує допомогу, повинна мати спосіб зв’язатися з вами. Якщо ви не хочете ділитися телефоном, вкажіть іншу форму контакту в описі.",
     },
-    "extended": {
-      "title": "Aktualizacja ogłoszenia",
-      "description":"Ważność twojego ogłoszenia zostało przedłużone o 24h",
-      "showTicket":"Przejdź do ogłoszenia"
-    }
+    extended: {
+      title: "Aktualizacja ogłoszenia",
+      description: "Ważność twojego ogłoszenia zostało przedłużone o 24h",
+      showTicket: "Przejdź do ogłoszenia",
+    },
   },
   "sign-out": "Вийти",
   "terms-of-service": {

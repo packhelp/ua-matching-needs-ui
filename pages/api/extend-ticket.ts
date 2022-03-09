@@ -5,7 +5,7 @@ import { TicketDetailsType } from "../../src/services/ticket.type"
 import { getAdminAuthToken } from "../../src/services/admin-auth-token"
 import dayjs from "dayjs"
 
-const authHeaders = function(authToken) {
+const authHeaders = function (authToken) {
   return {
     headers: {
       Authorization: `Bearer ${authToken}`,
@@ -14,7 +14,7 @@ const authHeaders = function(authToken) {
   }
 }
 
-const extendTicket = async function(authToken, need) {
+const extendTicket = async function (authToken, need) {
   const id = need.id
   const newDate = dayjs().add(1, "day")
   console.log(`Extending need[${id}] with new date: ${newDate}`)
@@ -23,15 +23,14 @@ const extendTicket = async function(authToken, need) {
     {
       extend_token: null,
       expiry_notified: false,
-      expirationTimestamp: newDate.format('YYYY-MM-DD HH:mm:ss'),
-      expirationTimestampSane: newDate,
-
-    }, authHeaders(authToken),
+      expirationTimestampSane: newDate.format("YYYY-MM-DD HH:mm:ss"),
+    },
+    authHeaders(authToken)
   )
   return response.data
 }
 
-const handler = async function(req: NextApiRequest, res: NextApiResponse) {
+const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const extend_token = req.query.t
   const authToken = getAdminAuthToken()
 
@@ -41,7 +40,7 @@ const handler = async function(req: NextApiRequest, res: NextApiResponse) {
   const response = await axios
     .get(url, requestOptions)
     .then((response) => response.data)
-    .catch(err => console.error(err))
+    .catch((err) => console.error(err))
   let needs: TicketDetailsType[] = response.data
   if (needs.length === 0) {
     return res.status(404).send("ticket not found")
