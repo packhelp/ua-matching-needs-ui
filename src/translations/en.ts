@@ -139,7 +139,7 @@ export const EN: Translation = {
     },
     extended: {
       title: "Ticket updated",
-      description: "Your ticket is extended for next 24h",
+      description: "Your ticket is extended to:",
       showTicket: "Show your ticket",
     },
   },

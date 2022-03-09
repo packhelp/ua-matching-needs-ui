@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
-import { TicketDetailsType } from "../../src/services/ticket.type"
+import { TICKET_STATUS, TicketDetailsType } from "../../src/services/ticket.type"
 import { getAdminAuthToken } from "../../src/services/admin-auth-token"
 import dayjs from "dayjs"
 
@@ -16,14 +16,15 @@ const authHeaders = function (authToken) {
 
 const extendTicket = async function (authToken, need) {
   const id = need.id
-  const newDate = dayjs().add(1, "day")
+  const newDate = dayjs().add(3, "day")
   console.log(`Extending need[${id}] with new date: ${newDate}`)
   const response = await axios.patch(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
     {
       extend_token: null,
       expiry_notified: false,
-      expirationTimestampSane: newDate.format("YYYY-MM-DD HH:mm:ss"),
+      expirationTimestampSane: newDate,
+      ticket_status: TICKET_STATUS.ACTIVE
     },
     authHeaders(authToken)
   )

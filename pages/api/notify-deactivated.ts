@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
-import { TicketDetailsType } from "../../src/services/ticket.type"
+import { TICKET_STATUS, TicketDetailsType } from "../../src/services/ticket.type"
 import { getAdminAuthToken } from "../../src/services/admin-auth-token"
 import { getAdminContainer } from "../../src/services/_container.admin"
 
@@ -17,6 +17,19 @@ const authHeaders = function (authToken) {
 const adminContainer = getAdminContainer().containers
 const isProduction = adminContainer.nextEnv.isProduction
 const twilioEnv = adminContainer.twilioEnv
+
+
+const shortenUrl = async function (url) {
+  const endpoint = 'https://u-6228-dev.twil.io/create'
+  const response = await axios
+    .post(endpoint, {
+      url: url
+    })
+    .then((response) => response.data)
+    .catch((err) => console.error(err))
+  console.log('rs',response)
+  return response.shortUrl
+}
 
 const notifyBySMS = async function (need, token) {
   const id = need.id
@@ -38,9 +51,9 @@ const notifyBySMS = async function (need, token) {
   const client = adminContainer.twilioInstance
 
   const url = `${process.env.SERVER_URL}/api/extend-ticket?t=${token}`
-
+  const shortenedUrl = await shortenUrl(url)
   // 94 symbold text + 36 symbols for URL
-  const body = `[potrzeby-ua.org]: Twoje ogłoszenie się przedawniło, wejdź na stronę aby przedłużyć je o 24h: ${url}`
+  const body = `[potrzeby-ua.org]: Twoje ogłoszenie się przedawniło, wejdź na stronę aby je przedłużyć: ${shortenedUrl}`
 
   console.log(
     `Sending sms for need[${id}]: ${need.what}, phone: ${phone} with body: ${body}`
@@ -51,7 +64,7 @@ const notifyBySMS = async function (need, token) {
     .then((message) => console.log(message.sid))
 }
 
-const markAsNotified = async function (authToken, need) {
+const markAsNotifiedAndExpired = async function (authToken, need) {
   const id = need.id
   console.log(`Marking need[${id}] as notified: ${need.what}`)
 
@@ -59,6 +72,7 @@ const markAsNotified = async function (authToken, need) {
     `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
     {
       expiry_notified: true,
+      ticket_status: TICKET_STATUS.EXPIRED
     },
     authHeaders(authToken)
   )
@@ -81,7 +95,11 @@ const generateToken = function () {
 }
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const authToken = getAdminAuthToken()
-  const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status]=active&filter[expirationTimestampSane][_lt]=now&filter[expiry_notified]=false`
+  let limit = 1
+  if (req.query.limit) {
+    limit = Number(req.query.limit)
+  }
+  const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status]=active&filter[expirationTimestampSane][_lt]=now&filter[expiry_notified]=false&limit=${limit}`
   const requestOptions = {}
 
   const response = await axios
@@ -91,14 +109,12 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
 
   let needs: TicketDetailsType[] = response.data
   const notifiedNeeds: TicketDetailsType[] = []
-  needs = [needs[0]]
-
   for (let i in needs) {
     const need = needs[i]
     const token = generateToken()
     await setExtendToken(authToken, need, token)
     await notifyBySMS(need, token)
-    await markAsNotified(authToken, need)
+    await markAsNotifiedAndExpired(authToken, need)
     notifiedNeeds.push(need)
   }
 

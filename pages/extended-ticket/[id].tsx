@@ -8,6 +8,7 @@ import { TicketDetailsType } from "../../src/services/ticket.type"
 import { getRootContainer } from "../../src/services/_root-container"
 import { useRouter } from "next/router"
 import { Box, Container, Heading, Link, Stack, Text } from "@chakra-ui/react"
+import dayjs from "dayjs"
 
 const root = getRootContainer()
 const ticketService = root.containers.ticketService
@@ -29,6 +30,10 @@ const ExtendedTicket: NextPage<{ ticket: TicketDetailsType }> = ({
     ":id",
     String(ticket.id)
   )
+  const formattedExpiration = dayjs(ticket.expirationTimestampSane)
+    .locale("pl")
+    .format("DD.MM.YYYY HH:mm")
+    .toString()
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
@@ -50,7 +55,7 @@ const ExtendedTicket: NextPage<{ ticket: TicketDetailsType }> = ({
                 fontSize="md"
                 textColor="gray.600"
               >
-                {translations["pages"]["extended"]["description"]}
+                {translations["pages"]["extended"]["description"]} {formattedExpiration}
               </Text>
 
               <Link href={ticketUrl}>

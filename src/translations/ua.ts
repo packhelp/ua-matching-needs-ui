@@ -138,7 +138,7 @@ export const UA: Translation = {
     },
     extended: {
       title: "Оновлення оголошення",
-      description: "Ваше оголошення продовжено на 24 години",
+      description: "Ваше оголошення продовжено: ",
       showTicket: "Перейти до оголошення",
     },
   },
