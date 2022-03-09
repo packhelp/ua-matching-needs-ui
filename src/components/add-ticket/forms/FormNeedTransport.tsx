@@ -1,6 +1,5 @@
 import {
   Checkbox,
-  Heading,
   Input,
   Stack,
   Text,
@@ -22,6 +21,7 @@ import Select, { SingleValue } from "react-select"
 import { RouteDefinitions } from "../../../utils/routes"
 import { NeedTripPostData } from "../../../services/ticket.type"
 import { TagConstIds } from "../../../services/types.tag"
+import { FormField } from "../FormField"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {
@@ -161,10 +161,9 @@ export const FormNeedTransport = () => {
     <>
       <div className="mb-8 bg-white">
         <form onSubmit={handleSubmit(submitNeed)}>
-          <Stack>
-            <Heading as="h2" size="l">
-              {translations["pages"]["add-ticket"]["whereFrom"]}
-            </Heading>
+          <FormField
+            title={translations["pages"]["add-ticket"]["whereFrom"]}
+          >
             <Select
               options={mappedLocationTags}
               onChange={(
@@ -178,12 +177,11 @@ export const FormNeedTransport = () => {
               isClearable
               isSearchable={false}
             />
-          </Stack>
+          </FormField>
 
-          <Stack>
-            <Heading as="h2" size="l" mt="4">
-              {translations["pages"]["add-ticket"]["whereTo"]}
-            </Heading>
+          <FormField
+            title={translations["pages"]["add-ticket"]["whereTo"]}
+          >
             <Select
               options={mappedLocationTags}
               onChange={(
@@ -197,14 +195,12 @@ export const FormNeedTransport = () => {
               isClearable
               isSearchable={false}
             />
-          </Stack>
+          </FormField>
 
-          <Stack>
-            <Heading as="h2" size="l" mt="4">
-              {translations["pages"]["add-ticket"]["adults"]}
-            </Heading>
-            {translations["pages"]["add-ticket"]["adultsAge"]}
-
+          <FormField
+            title={translations["pages"]["add-ticket"]["adults"]}
+            disclaimer={translations["pages"]["add-ticket"]["adultsAge"]}
+          >
             <Input
               min={0}
               type={"number"}
@@ -213,13 +209,12 @@ export const FormNeedTransport = () => {
               inputMode="numeric"
               {...register("adults")}
             />
-          </Stack>
-          <Stack>
-            <Heading as="h2" size="l" mt="4">
-              {translations["pages"]["add-ticket"]["children"]}
-            </Heading>
-            {translations["pages"]["add-ticket"]["childrenAge"]}
+          </FormField>
 
+          <FormField
+            title={translations["pages"]["add-ticket"]["children"]}
+            disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
+          >
             <Input
               min={0}
               type={"number"}
@@ -228,32 +223,30 @@ export const FormNeedTransport = () => {
               inputMode="numeric"
               {...register("children")}
             />
-          </Stack>
-          <Stack>
-            <div className="mr-4">
-              <Checkbox
-                mt={1}
-                value={1}
-                defaultChecked={false}
-                {...register("has_pets")}
-              >
-                {translations["pages"]["add-ticket"]["has-pets"]}
-              </Checkbox>
-            </div>
+          </FormField>
 
+          <div className="flex flex-col">
             <Checkbox
+              ml={2}
+              value={1}
+              defaultChecked={false}
+              {...register("has_pets")}
+            >
+              {translations["pages"]["add-ticket"]["has-pets"]}
+            </Checkbox>
+            <Checkbox
+              ml={2}
               value={1}
               defaultChecked={false}
               {...register("trip_extra_luggage")}
             >
               {translations["addTicket"]["need"]["extraLuggage"]}
             </Checkbox>
-          </Stack>
-          <Stack>
-            <Heading as="h2" size="l" mt="4">
-              {translations["addTicket"]["need"]["when"]}
-            </Heading>
+          </div>
 
+          <FormField
+            title={translations["addTicket"]["need"]["when"]}
+          >
             <Input
               type={"text"}
               placeholder={translations["addTicket"]["need"]["when"]}
@@ -261,10 +254,11 @@ export const FormNeedTransport = () => {
               inputMode="text"
               {...register("trip_when_text")}
             />
-          </Stack>
-          <Stack>
+          </FormField>
+
+          <div>
             <Checkbox
-              mt={2}
+              m={2}
               checked={exactDate}
               onChange={() => setExactDate(!exactDate)}
             >
@@ -279,37 +273,33 @@ export const FormNeedTransport = () => {
                 {...register("trip_when_date")}
               />
             )}
-          </Stack>
+          </div>
 
-          <Stack className="mt-6">
-            <Heading as="h2" size="l">
-              {translations["pages"]["add-ticket"]["who-needs-it"]}
-            </Heading>
-            <Text fontSize={"sm"}>
-              {translations["pages"]["add-ticket"]["name-surname-or-org-name"]}
-            </Text>
+          <FormField
+            title={translations["pages"]["add-ticket"]["who-needs-it"]}
+            disclaimer={translations["pages"]["add-ticket"]["name-surname-or-org-name"]}
+          >
             <Textarea
               placeholder={translations["pages"]["add-ticket"]["who-needs-it"]}
               variant="outline"
               {...register("who")}
             />
-          </Stack>
-          <Stack>
-            {/* TITLE  */}
-            <Heading as="h2" size="l" mt="4">
-              {translations["pages"]["add-ticket"].title}
-            </Heading>
+          </FormField>
+
+          <FormField
+            title={translations["pages"]["add-ticket"].title}
+            disclaimer={translations["pages"]["add-ticket"]["title-hint"]}
+          >
             <Input
               placeholder={translations["pages"]["add-ticket"].title}
               variant="outline"
               {...register("what")}
             />
-          </Stack>
-          <Stack>
-            <Heading as="h2" size="l" mt="4">
-              {translations["pages"]["add-ticket"]["what-do-you-need"]}
-            </Heading>
+          </FormField>
 
+          <FormField
+            title={translations["pages"]["add-ticket"]["what-do-you-need"]}
+          >
             <Textarea
               rows={4}
               placeholder={
@@ -318,7 +308,8 @@ export const FormNeedTransport = () => {
               variant="outline"
               {...register("description")}
             />
-          </Stack>
+          </FormField>
+
           <Stack>
             {addTicketMutation.isError ? (
               <Text color={"red"}>
