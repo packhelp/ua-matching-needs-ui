@@ -1,44 +1,48 @@
-import { useTranslations } from "../../hooks/translations"
+import React from "react"
 
 export enum TicketType {
   Offer = "offer",
   Need = "need",
 }
 
-type TicketTypeSwitcherProps = {
-  setType: (type: TicketType.Need | TicketType.Offer) => void
-  selectedType: TicketType.Need | TicketType.Offer | undefined
+type Option = {
+  name: string
+  active: boolean
+  onClick: () => void
+  icon?: React.ReactNode
 }
 
-export const TicketTypeSwitcher = (props: TicketTypeSwitcherProps) => {
-  const { setType, selectedType } = props
-  const i18n = useTranslations().addTicket.wizard
+type TicketTypeSwitcherProps = {
+  opts: {
+    optionOne: Option
+    optionTwo: Option
+  }
+}
 
-  const isOffer = selectedType === TicketType.Offer
-  const isNeed = selectedType === TicketType.Need
+// should be changed to [] to handle more opts
+export const TicketTypeSwitcher = (props: TicketTypeSwitcherProps) => {
+  const { opts } = props
+  const { optionOne, optionTwo } = opts
 
   return (
-    <div className="flex justify-between cursor-pointer">
+    <div className="flex justify-between cursor-pointer mb-4 text-center">
       <div
-        onClick={() => setType(TicketType.Need)}
+        onClick={optionOne.onClick}
         className={`${
-          isNeed
-            ? "border border-transparent bg-blue-500 shadow-sm hover:bg-blue-600 text-white"
-            : "border border-blue-500 text-black"
-        } w-full relative inline-flex justify-center items-center ml-auto px-2 py-2 text-xs font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+          optionOne.active && "bg-blue-500 text-white"
+        } border-r-0 flex-col w-full relative inline-flex justify-center items-center ml-auto px-2 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
       >
-        <span>{i18n.iNeedHelp}</span>
+        {optionOne.icon && <div className="mb-2">{optionOne.icon}</div>}
+        <span>{optionOne.name}</span>
       </div>
-      <div className="w-16" />
       <div
-        onClick={() => setType(TicketType.Offer)}
+        onClick={optionTwo.onClick}
         className={`${
-          isOffer
-            ? "border border-transparent bg-amber-300 shadow-sm hover:bg-amber-400 text-black"
-            : "border border-amber-300 text-black"
-        } w-full relative inline-flex justify-center items-center ml-auto px-2 py-2 text-xs font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+          optionTwo.active && "bg-blue-500 text-white"
+        } flex-col w-full relative inline-flex justify-center items-center ml-auto px-2 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
       >
-        <span>{i18n.iCanHelp}</span>
+        {optionTwo.icon && <div className="mb-2">{optionTwo.icon}</div>}
+        <span>{optionTwo.name}</span>
       </div>
     </div>
   )

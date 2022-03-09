@@ -1,25 +1,18 @@
-import { useState, useMemo } from "react"
-import { Button, Container } from "@chakra-ui/react"
-import { useForm } from "react-hook-form"
-import { TicketFormData } from "../../services/ticket.type"
-import { TicketTypeSwitcher, TicketType } from "./TicketTypeSwitcher"
+import React, { useState } from "react"
+import { TicketType, TicketTypeSwitcher } from "./TicketTypeSwitcher"
 import { TicketTypeOffer } from "./TicketTypeOffer"
-import { useQuery } from "react-query"
-import { getRootContainer } from "../../services/_root-container"
-import Select, { SingleValue } from "react-select"
 import { useTranslations } from "../../hooks/translations"
-import { useTagTranslation } from "../../hooks/useTagTranslation"
 import { useRouter } from "next/router"
 import { FormNeedTransport } from "./FormNeedTransport"
-import { NeedCategorySwitcher } from "./NeedCategorySwitcher"
 import { TagConstIds } from "../../services/types.tag"
 import { RouteDefinitions } from "../../utils/routes"
+import { FaHandsHelping, FaHandHoldingHeart } from "react-icons/fa"
 
 // const ticketService = getRootContainer().containers.ticketService
 
 export const AddTicketForm = () => {
   const router = useRouter()
-  const i18n = useTranslations().addTicket
+  const i18n = useTranslations()
 
   const [ticketType, setTicketType] = useState<
     TicketType.Offer | TicketType.Need | undefined
@@ -27,14 +20,39 @@ export const AddTicketForm = () => {
 
   const [tag, setTag] = useState<TagConstIds | undefined | null>(undefined)
 
-  const opts = {
-    transport: {
-      name: i18n.wizard.formNameTransport,
+  const typeSwitcherOpts = {
+    optionOne: {
+      name: i18n.addTicket.wizard.iNeedHelp,
+      active: ticketType === TicketType.Need,
+      onClick: () => setTicketType(TicketType.Need),
+      icon: (
+        <FaHandsHelping
+          size={30}
+          className={`${ticketType !== TicketType.Need && "fill-blue-500"}`}
+        />
+      ),
+    },
+    optionTwo: {
+      name: i18n.addTicket.wizard.iCanHelp,
+      active: ticketType === TicketType.Offer,
+      onClick: () => setTicketType(TicketType.Offer),
+      icon: (
+        <FaHandHoldingHeart
+          size={30}
+          className={`${ticketType !== TicketType.Offer && "fill-blue-500"}`}
+        />
+      ),
+    },
+  }
+
+  const needSwitcherOpts = {
+    optionOne: {
+      name: i18n.addTicket.wizard.formNameTransport,
       active: tag === TagConstIds.transport,
       onClick: () => setTag(TagConstIds.transport),
     },
-    other: {
-      name: i18n.wizard.formNameOther,
+    optionTwo: {
+      name: i18n.addTicket.wizard.formNameOther,
       active: tag === null,
       onClick: () => {
         router.push(RouteDefinitions.AddTicketOld)
@@ -46,22 +64,18 @@ export const AddTicketForm = () => {
 
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
-      <Container className="gap-4 px-4 py-5 sm:p-6">
-        <TicketTypeSwitcher setType={setTicketType} selectedType={ticketType} />
-        <br />
+      <div className="p-8">
+        <TicketTypeSwitcher opts={typeSwitcherOpts} />
 
         {ticketType === TicketType.Need && (
-          <div className="mb-4">
-            <NeedCategorySwitcher {...opts} />
-          </div>
+          <TicketTypeSwitcher opts={needSwitcherOpts} />
         )}
         {ticketType === TicketType.Offer && <TicketTypeOffer />}
 
-        {/* NEED TRANSPORT FORM */}
         {ticketType === TicketType.Need && tag === TagConstIds.transport && (
           <FormNeedTransport />
         )}
-      </Container>
+      </div>
     </div>
   )
 }

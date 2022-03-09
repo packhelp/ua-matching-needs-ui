@@ -43,6 +43,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.27.1",
+    "react-icons": "^4.3.1",
     "react-map-gl": "^7.0.7",
     "react-notion-x": "^4.16.0",
     "react-paginate": "^8.1.2",

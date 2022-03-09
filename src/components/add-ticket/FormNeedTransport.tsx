@@ -159,7 +159,7 @@ export const FormNeedTransport = () => {
 
   return (
     <>
-      <div className="mb-8">
+      <div className="mb-8 bg-white">
         <form onSubmit={handleSubmit(submitNeed)}>
           <Stack>
             <Heading as="h2" size="l">
