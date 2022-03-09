@@ -1,4 +1,4 @@
-import { Checkbox, Input, Stack, Text, Textarea } from "@chakra-ui/react"
+import { Checkbox, Input, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
 import { useForm, Controller } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
@@ -10,7 +10,7 @@ import React, { useState, useMemo } from "react"
 import { PlusSVG } from "../../../assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
 import { getRootContainer } from "../../../services/_root-container"
-import Select, { SingleValue } from "react-select"
+import Select from "react-select"
 
 import { RouteDefinitions } from "../../../utils/routes"
 import { NeedTripPostData } from "../../../services/ticket.type"
@@ -35,7 +35,6 @@ export const FormNeedTransport = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [exactDate, setExactDate] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
-  const [whereToTag, setWhereToTag] = useState<number | undefined>(undefined)
   const { data: locationTags = [] } = useQuery(`location-tags`, () => {
     return ticketService.locationTags()
   })
@@ -88,6 +87,7 @@ export const FormNeedTransport = () => {
         trip_when_date, // TODO:
         trip_extra_luggage,
         where_from_tag,
+        where_to_tag,
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
@@ -113,7 +113,7 @@ export const FormNeedTransport = () => {
 
         // tripe specific
         need_type: "trip",
-        where_to_tag: whereToTag,
+        where_to_tag,
         where_from_tag,
         trip_when_text,
         trip_when_date: when_date,
