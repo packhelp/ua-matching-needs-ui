@@ -1,4 +1,4 @@
-import { Checkbox, Input, Textarea } from "@chakra-ui/react"
+import { Checkbox, Input, Stack, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
 import { useForm, Controller } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
@@ -361,13 +361,11 @@ export const FormNeedTransport = () => {
                 </div>
               </div>
             ) : null}
-
-            <div className="h-2 hidden md:block" />
           </div>
           <button
             type="submit"
             disabled={isDisabled}
-            className={`w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${
+            className={`mt-4 w-full relative inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black ${
               isDisabled ? "bg-gray-300" : "bg-amber-300 hover:bg-amber-400"
             } shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           >
