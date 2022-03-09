@@ -41,18 +41,20 @@ export const FormNeedTransport = () => {
   })
 
   const mappedLocationTags = useMemo(() => {
-    return locationTags.map((tag) => {
-      let name = tag.name
+    return locationTags
+      .map((tag) => {
+        let name = tag.name
 
-      if (tag.location_type === "help_center" && tag.short_name != null) {
-        name = tag.short_name
-      }
+        if (tag.location_type === "help_center" && tag.short_name != null) {
+          name = tag.short_name
+        }
 
-      return {
-        value: tag.id,
-        label: name,
-      }
-    })
+        return {
+          value: tag.id,
+          label: name,
+        }
+      })
+      .sort((a, b) => a.label.localeCompare(b.label))
   }, [locationTags])
 
   const onSuccess = (rawResponse) => {
@@ -189,18 +191,31 @@ export const FormNeedTransport = () => {
           </FormField>
 
           <FormField title={translations["pages"]["add-ticket"]["whereTo"]}>
-            <Select
-              options={mappedLocationTags}
-              onChange={(
-                newValue: SingleValue<{ value: number; label: string }>
-              ) => {
-                setWhereToTag(newValue ? newValue.value : undefined)
+            <Controller
+              name="where_to_tag"
+              control={control}
+              rules={{
+                required: translations["pages"]["add-ticket"]["required"],
               }}
-              placeholder={
-                translations["pages"]["add-ticket"]["chooseLocation"]
-              }
-              isClearable
-              isSearchable={false}
+              render={({ field }) => (
+                <Select
+                  options={mappedLocationTags}
+                  onChange={(e) => field.onChange(e!.value)}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["chooseLocation"]
+                  }
+                  isClearable
+                  isSearchable={false}
+                  ref={field.ref}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="where_to_tag"
+              render={({ message }) => (
+                <p className="text-red-500 text-xs mt-1">{message}</p>
+              )}
             />
           </FormField>
 
