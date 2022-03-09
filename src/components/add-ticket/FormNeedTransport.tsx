@@ -22,6 +22,7 @@ import Select, { SingleValue } from "react-select"
 import { RouteDefinitions } from "../../utils/routes"
 import { NeedTripPostData } from "../../services/ticket.type"
 import { TagConstIds } from "../../services/types.tag"
+import { FormSectionHeader } from "./partials/FormSectionHeader"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {
@@ -161,6 +162,7 @@ export const FormNeedTransport = () => {
     <>
       <div className="mb-8">
         <form onSubmit={handleSubmit(submitNeed)}>
+          <FormSectionHeader step={"1. step"}/>
           <Stack>
             <Heading as="h2" size="l">
               {translations["pages"]["add-ticket"]["whereFrom"]}

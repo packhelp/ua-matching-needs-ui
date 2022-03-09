@@ -1,17 +1,10 @@
-import { useState, useMemo } from "react"
-import { Button, Container } from "@chakra-ui/react"
-import { useForm } from "react-hook-form"
-import { TicketFormData } from "../../services/ticket.type"
-import { TicketTypeSwitcher, TicketType } from "./TicketTypeSwitcher"
+import React, { useState } from "react"
+import { Container } from "@chakra-ui/react"
+import { TicketType, TicketTypeSwitcher } from "./TicketTypeSwitcher"
 import { TicketTypeOffer } from "./TicketTypeOffer"
-import { useQuery } from "react-query"
-import { getRootContainer } from "../../services/_root-container"
-import Select, { SingleValue } from "react-select"
 import { useTranslations } from "../../hooks/translations"
-import { useTagTranslation } from "../../hooks/useTagTranslation"
 import { useRouter } from "next/router"
 import { FormNeedTransport } from "./FormNeedTransport"
-import { NeedCategorySwitcher } from "./NeedCategorySwitcher"
 import { TagConstIds } from "../../services/types.tag"
 import { RouteDefinitions } from "../../utils/routes"
 
@@ -19,22 +12,35 @@ import { RouteDefinitions } from "../../utils/routes"
 
 export const AddTicketForm = () => {
   const router = useRouter()
-  const i18n = useTranslations().addTicket
+  const i18n = useTranslations()
 
   const [ticketType, setTicketType] = useState<
-    TicketType.Offer | TicketType.Need | undefined
-  >(undefined)
+    TicketType.Offer | TicketType.Need
+  >(TicketType.Need)
 
   const [tag, setTag] = useState<TagConstIds | undefined | null>(undefined)
 
-  const opts = {
-    transport: {
-      name: i18n.wizard.formNameTransport,
+  const typeSwitcherOpts = {
+    optionOne: {
+      name: i18n.addTicket.wizard.iNeedHelp,
+      active: ticketType === TicketType.Need,
+      onClick: () => setTicketType(TicketType.Need)
+    },
+    optionTwo: {
+      name: i18n.addTicket.wizard.iCanHelp,
+      active: ticketType === TicketType.Offer,
+      onClick: () => setTicketType(TicketType.Offer)
+    },
+  }
+
+  const needSwitcherOpts = {
+    optionOne: {
+      name: i18n.addTicket.wizard.formNameTransport,
       active: tag === TagConstIds.transport,
       onClick: () => setTag(TagConstIds.transport),
     },
-    other: {
-      name: i18n.wizard.formNameOther,
+    optionTwo: {
+      name: i18n.addTicket.wizard.formNameOther,
       active: tag === null,
       onClick: () => {
         router.push(RouteDefinitions.AddTicketOld)
@@ -47,17 +53,19 @@ export const AddTicketForm = () => {
   return (
     <div className="bg-white shadow rounded-lg max-w-2xl mx-auto">
       <Container className="gap-4 px-4 py-5 sm:p-6">
-        <TicketTypeSwitcher setType={setTicketType} selectedType={ticketType} />
-        <br />
+        <TicketTypeSwitcher opts={typeSwitcherOpts} />
 
         {ticketType === TicketType.Need && (
-          <div className="mb-4">
-            <NeedCategorySwitcher {...opts} />
-          </div>
+          <>
+            <h4 className="mb-4 text-center b-4 text-md font-semibold text-gray-900 dark:text-black">
+              {i18n.filters.selectNeeds}
+            </h4>
+            <TicketTypeSwitcher opts={needSwitcherOpts} />
+          </>
         )}
+
         {ticketType === TicketType.Offer && <TicketTypeOffer />}
 
-        {/* NEED TRANSPORT FORM */}
         {ticketType === TicketType.Need && tag === TagConstIds.transport && (
           <FormNeedTransport />
         )}
