@@ -9,7 +9,8 @@ const ticketService = root.containers.ticketService
 const validateRequest = (req: NextApiRequest, res: NextApiResponse) => {
   if (
     req.headers.authorization !==
-    `Bearer ${process.env.TWILIO_PHONE_PROXY_TOKEN}`) {
+    `Bearer ${process.env.TWILIO_PHONE_PROXY_TOKEN}`
+  ) {
     return res.status(401).json({ error: "Unauthorized!" })
   }
 
@@ -18,7 +19,7 @@ const validateRequest = (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-const handler = async function(req: NextApiRequest, res: NextApiResponse) {
+const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   let ticket: TicketDetailsType | null
   validateRequest(req, res)
 
