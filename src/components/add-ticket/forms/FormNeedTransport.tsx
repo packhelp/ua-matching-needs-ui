@@ -1,21 +1,22 @@
-import { Checkbox, Input, Stack, Text, Textarea } from "@chakra-ui/react"
+import { Checkbox, Input, Stack, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
 import axios from "axios"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
-import { useState, useMemo } from "react"
+import React, { useState, useMemo } from "react"
 import { PlusSVG } from "../../../assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
 import { getRootContainer } from "../../../services/_root-container"
-import Select, { SingleValue } from "react-select"
+import Select from "react-select"
 
 import { RouteDefinitions } from "../../../utils/routes"
 import { NeedTripPostData } from "../../../services/ticket.type"
 import { TagConstIds } from "../../../services/types.tag"
 import { FormField } from "../FormField"
+import { ErrorMessage } from "@hookform/error-message"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {
@@ -34,27 +35,25 @@ export const FormNeedTransport = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [exactDate, setExactDate] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
-  const [whereFromTag, setWhereFromTag] = useState<number | undefined>(
-    undefined
-  )
-  const [whereToTag, setWhereToTag] = useState<number | undefined>(undefined)
   const { data: locationTags = [] } = useQuery(`location-tags`, () => {
     return ticketService.locationTags()
   })
 
   const mappedLocationTags = useMemo(() => {
-    return locationTags.map((tag) => {
-      let name = tag.name
+    return locationTags
+      .map((tag) => {
+        let name = tag.name
 
-      if (tag.location_type === "help_center" && tag.short_name != null) {
-        name = tag.short_name
-      }
+        if (tag.location_type === "help_center" && tag.short_name != null) {
+          name = tag.short_name
+        }
 
-      return {
-        value: tag.id,
-        label: name,
-      }
-    })
+        return {
+          value: tag.id,
+          label: name,
+        }
+      })
+      .sort((a, b) => a.label.localeCompare(b.label))
   }, [locationTags])
 
   const onSuccess = (rawResponse) => {
@@ -87,6 +86,8 @@ export const FormNeedTransport = () => {
         trip_when_text,
         trip_when_date, // TODO:
         trip_extra_luggage,
+        where_from_tag,
+        where_to_tag,
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
@@ -112,8 +113,8 @@ export const FormNeedTransport = () => {
 
         // tripe specific
         need_type: "trip",
-        where_to_tag: whereToTag,
-        where_from_tag: whereFromTag,
+        where_to_tag,
+        where_from_tag,
         trip_when_text,
         trip_when_date: when_date,
         trip_extra_luggage,
@@ -128,7 +129,12 @@ export const FormNeedTransport = () => {
 
   const useFormOptions = {}
 
-  const { register, handleSubmit } = useForm<NeedTripPostData>(useFormOptions)
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<NeedTripPostData>(useFormOptions)
 
   const submitNeed = async (data: NeedTripPostData) => {
     setIsSubmitting(true)
@@ -156,34 +162,60 @@ export const FormNeedTransport = () => {
       <div className="mb-8 bg-white">
         <form onSubmit={handleSubmit(submitNeed)}>
           <FormField title={translations["pages"]["add-ticket"]["whereFrom"]}>
-            <Select
-              options={mappedLocationTags}
-              onChange={(
-                newValue: SingleValue<{ value: number; label: string }>
-              ) => {
-                setWhereFromTag(newValue ? newValue.value : undefined)
+            <Controller
+              name="where_from_tag"
+              control={control}
+              rules={{
+                required: translations["pages"]["add-ticket"]["required"],
               }}
-              placeholder={
-                translations["pages"]["add-ticket"]["chooseLocation"]
-              }
-              isClearable
-              isSearchable={false}
+              render={({ field }) => (
+                <Select
+                  options={mappedLocationTags}
+                  onChange={(e) => field.onChange(e!.value)}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["chooseLocation"]
+                  }
+                  isClearable
+                  isSearchable={false}
+                  ref={field.ref}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="where_from_tag"
+              render={({ message }) => (
+                <p className="text-red-500 text-xs mt-1">{message}</p>
+              )}
             />
           </FormField>
 
           <FormField title={translations["pages"]["add-ticket"]["whereTo"]}>
-            <Select
-              options={mappedLocationTags}
-              onChange={(
-                newValue: SingleValue<{ value: number; label: string }>
-              ) => {
-                setWhereToTag(newValue ? newValue.value : undefined)
+            <Controller
+              name="where_to_tag"
+              control={control}
+              rules={{
+                required: translations["pages"]["add-ticket"]["required"],
               }}
-              placeholder={
-                translations["pages"]["add-ticket"]["chooseLocation"]
-              }
-              isClearable
-              isSearchable={false}
+              render={({ field }) => (
+                <Select
+                  options={mappedLocationTags}
+                  onChange={(e) => field.onChange(e!.value)}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["chooseLocation"]
+                  }
+                  isClearable
+                  isSearchable={false}
+                  ref={field.ref}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="where_to_tag"
+              render={({ message }) => (
+                <p className="text-red-500 text-xs mt-1">{message}</p>
+              )}
             />
           </FormField>
 
@@ -300,21 +332,36 @@ export const FormNeedTransport = () => {
             />
           </FormField>
 
-          <Stack>
+          <div>
             {addTicketMutation.isError ? (
-              <Text color={"red"}>
-                {translations["errors"]["error-occured-while-adding"]}
-                {addTicketMutation.error.message}
-              </Text>
+              <div className="flex space-x-1 mt-2 items-center justify-center">
+                <div
+                  className="inline-flex items-center w-full place-content-center
+                py-1 border border-transparent shadow-sm text-sm
+                font-medium text-white bg-red-600
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                text-white cursor-default"
+                >
+                  {translations["errors"]["error-occured-while-adding"]}
+                  {addTicketMutation.error.message}
+                </div>
+              </div>
             ) : null}
 
             {addTicketMutation.isSuccess ? (
-              <Text>
-                {translations["pages"]["add-ticket"]["request-added"]}
-              </Text>
+              <div className="flex space-x-1 mt-2 items-center justify-center">
+                <div
+                  className="inline-flex items-center w-full place-content-center
+                py-1 border border-transparent shadow-sm text-sm
+                font-medium text-white bg-green-600
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                text-white cursor-default"
+                >
+                  {translations["pages"]["add-ticket"]["request-added"]}
+                </div>
+              </div>
             ) : null}
-          </Stack>
-
+          </div>
           <button
             type="submit"
             disabled={isDisabled}

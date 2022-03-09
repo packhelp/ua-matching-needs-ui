@@ -144,6 +144,7 @@ export const EN: Translation = {
       whereTo: "To where?",
       "hide-phone-disclaimer":
         "Remember that the person offering help must have a way of contacting you. If you do not want to share the phone, please provide a different form of contact in the description.",
+      required: "This field is required",
     },
     claimed: {
       title: "Moje przejęte potrzeby",
