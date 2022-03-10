@@ -44,11 +44,18 @@ const notifyBySMS = async function (need, token) {
    * https://potrzeby-ua.org/api/extend-ticket?t=d45e90fa
    * https://potrzeby-ua.org/extend?t=d45e90fa
    *
-   *
    * /extend?t=123 -> redirects to `/api/extend-ticket?t=123` via next.config.js
    */
   const url = `${process.env.SERVER_URL}/extend?t=${token}`
-  // 94 symbold text + 36 symbols for URL ~= 135 out of 160 limit
+
+  /**
+   * SMS Body Size
+   *
+   * ~ 96 symbols for the body
+   * 41 symbols for the URL
+   *
+   * 147 / 160 symbols
+   */
   const body = `[potrzeby-ua.org]: Twoje ogłoszenie #${id} się przedawniło, wejdź na stronę aby je przedłużyć: ${url}`
 
   console.log(
