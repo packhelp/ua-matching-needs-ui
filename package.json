@@ -38,6 +38,7 @@
     "maplibre-gl": "^2.1.6",
     "mobx": "^6.4.2",
     "mobx-react-lite": "^3.3.0",
+    "nanoid": "^3.3.1",
     "next": "12.1.0",
     "next-auth": "^4.2.1",
     "notion-client": "^4.16.1",
