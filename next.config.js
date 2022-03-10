@@ -21,6 +21,15 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  redirects: async function redirects() {
+    return [
+      {
+        source: "/extend",
+        destination: "/api/extend-ticket", // Matched parameters can be used in the destination
+        permanent: false,
+      },
+    ]
+  },
 }
 
 const sentryWebpackPluginOptions = {
