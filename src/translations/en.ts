@@ -146,7 +146,7 @@ export const EN: Translation = {
         "Remember that the person offering help must have a way of contacting you. If you do not want to share the phone, please provide a different form of contact in the description.",
       required: "This field is required",
       where: "Where?",
-      petsHint: "How many pets?"
+      petsHint: "How many pets?",
     },
     claimed: {
       title: "Moje przejęte potrzeby",
