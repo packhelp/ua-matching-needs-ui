@@ -13,7 +13,8 @@ export type NeedHousingTypeFormData = {
    */
   who: string
   phone: string
-  alternative_contacts
+
+  alternative_contacts: string // new email, telegram etc.
 
   /**
    * Description
@@ -42,8 +43,19 @@ export type NeedHousingTypeFormData = {
    */
   where_tag: number // LocationTag ID - filter out not cit
   housing_where_string: string // plain string harder to place on map
+
   /**
-   * Duration of stay
+   * Housing times
+   * In case of places to sleep dates/time is the most important.
+   *
+   * I need it right now for about 10 days
+   * I need it from March 15th
+   * I need it for 2 night next week
+   *
+   * When?
+   * How long
+   *
+   * # Duration of stay
    *
    * could have simple options like:
    * - 1 day
@@ -57,6 +69,12 @@ export type NeedHousingTypeFormData = {
    * - until find something different
    */
   housing_how_long_text?: string
+
+  /**
+   * Payments
+   *
+   * I am willing to pay
+   */
 
   // Pets
   housing_pets: boolean
