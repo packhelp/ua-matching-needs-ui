@@ -39,6 +39,8 @@ const shortenUrl = async function (url) {
     "u-6228-dev.twil.io",
     "r.potrzeby-ua.org"
   )
+  console.log("short twilio url: ", shortUrlTwilio)
+  console.log("short ___our url: ", shortUrl)
   return shortUrl
 }
 
