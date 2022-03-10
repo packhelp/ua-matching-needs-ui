@@ -9,6 +9,7 @@ import { useTranslations } from "../../hooks/translations"
 import { useRouter } from "next/router"
 import { TicketDetailsType } from "../../services/ticket.type"
 import { LocationSection } from "./list-parts/LocationSection"
+import { Plausible } from "../../services/plausible"
 
 type TicketsListSingleTicketProps = {
   ticket: TicketDetailsType
@@ -178,6 +179,9 @@ export const TicketsListSingleTicket = (
           <div className="flex flex-1 w-0 -ml-px">
             <a
               href={`tel:${ticket.phone}`}
+              onClick={() => {
+                Plausible.registerIntentionPhoneCall()
+              }}
               className="relative inline-flex items-center justify-center flex-1 w-0 py-3 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500"
             >
               <svg
