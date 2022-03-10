@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form"
 import { useQuery } from "react-query"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 import { PlusSVG } from "../../../assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
 import { getRootContainer } from "../../../services/_root-container"
@@ -22,7 +22,7 @@ const ticketService = getRootContainer().containers.ticketService
 export const FormNeedHousing = () => {
   const router = useRouter()
   const translations = useTranslations()
-
+  const [hasPets, setHasPets] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
   const { data: locationTags = [] } = useQuery(`location-tags`, () => {
@@ -72,6 +72,7 @@ export const FormNeedHousing = () => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm<NeedHousingPostData>(useFormOptions)
 
@@ -94,8 +95,17 @@ export const FormNeedHousing = () => {
     })
   }
 
-  const isDisabled = addTicketMutation.isLoading || isSubmitting
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (name === "has_pets") {
+        console.log(Boolean(value))
+        setHasPets(Boolean(value?.has_pets))
+      }
+    })
+    return () => subscription.unsubscribe()
+  }, [watch])
 
+  const isDisabled = addTicketMutation.isLoading || isSubmitting
   return (
     <>
       <div className="mb-8 bg-white">
@@ -167,6 +177,15 @@ export const FormNeedHousing = () => {
               {translations["pages"]["add-ticket"]["has-pets"]}
             </Checkbox>
           </div>
+          {hasPets && (
+            <FormField title={translations["pages"]["add-ticket"]["has-pets"]}>
+              <Input
+                placeholder={translations["pages"]["add-ticket"]["petsHint"]}
+                variant="outline"
+                {...register("petsNumber")}
+              />
+            </FormField>
+          )}
 
           <FormField title={translations["addTicket"]["need"]["howLong"]}>
             <Input
