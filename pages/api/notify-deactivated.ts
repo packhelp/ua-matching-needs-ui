@@ -20,6 +20,11 @@ const adminContainer = getAdminContainer().containers
 const isProduction = adminContainer.nextEnv.isProduction
 const twilioEnv = adminContainer.twilioEnv
 
+/**
+ * We also must Transform string
+ * from: https://u-6228-dev.twil.io/r?u=jLKhp3
+ * to:   https://r.potrzeby-ua.org/r?u=jLKhp3
+ */
 const shortenUrl = async function (url) {
   const endpoint = "https://u-6228-dev.twil.io/create"
   const response = await axios
@@ -28,7 +33,13 @@ const shortenUrl = async function (url) {
     })
     .then((response) => response.data)
     .catch((err) => console.error(err))
-  return response.shortUrl
+
+  const shortUrlTwilio = response.shortUrl
+  const shortUrl = shortUrlTwilio.replace(
+    "u-6228-dev.twil.io",
+    "r.potrzeby-ua.org"
+  )
+  return shortUrl
 }
 
 const notifyBySMS = async function (need, token) {
