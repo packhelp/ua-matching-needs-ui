@@ -112,7 +112,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
       }
 
       console.log(newTicketData)
-      // return axios.post(`/api/add-ticket`, newTicketData)
+      return axios.post(`/api/add-ticket`, newTicketData)
     },
     {
       onSuccess,
