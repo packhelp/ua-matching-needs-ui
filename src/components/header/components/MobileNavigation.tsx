@@ -2,7 +2,7 @@ import { Box, useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { createPortal } from "react-dom"
-import { userIsLoggedIn } from "../../../hooks/is-logged"
+import { useUserIsLoggedIn } from "../../../hooks/is-logged"
 import { useRouteChanged } from "../../../hooks/root-changed"
 import { useTranslations } from "../../../hooks/translations"
 import Link from "next/link"
@@ -38,6 +38,7 @@ export const MobileNavigation = () => {
       return onClose()
     }
     onOpen()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
   return (
@@ -61,7 +62,7 @@ export const MobileNavigation = () => {
 }
 
 const MobilePopup = ({ isOpen }: { isOpen: boolean }) => {
-  const isLogged = userIsLoggedIn()
+  const isLogged = useUserIsLoggedIn()
   const translations = useTranslations()
   const router = useRouter()
 

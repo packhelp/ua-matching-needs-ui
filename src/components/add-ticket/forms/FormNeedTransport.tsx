@@ -1,4 +1,4 @@
-import { Checkbox, Input, Stack, Textarea } from "@chakra-ui/react"
+import { Checkbox, Input, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
 import { useForm, Controller } from "react-hook-form"
 import { useMutation, useQuery } from "react-query"
@@ -338,7 +338,7 @@ export const FormNeedTransport = () => {
                 <div
                   className="inline-flex items-center w-full place-content-center
                 py-1 border border-transparent shadow-sm text-sm
-                font-medium text-white bg-red-600
+                font-medium bg-red-600
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
                 text-white cursor-default"
                 >
@@ -354,8 +354,7 @@ export const FormNeedTransport = () => {
                   className="inline-flex items-center w-full place-content-center
                 py-1 border border-transparent shadow-sm text-sm
                 font-medium text-white bg-green-600
-                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-                text-white cursor-default"
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-default"
                 >
                   {translations["pages"]["add-ticket"]["request-added"]}
                 </div>

@@ -1,6 +1,4 @@
 import React from "react"
-import { isTicketActive } from "../../../pages/ticket/[id]"
-import dayjs from "dayjs"
 import { useTranslations } from "../../hooks/translations"
 import { useSession } from "next-auth/react"
 import { toast } from "react-toastify"
@@ -11,7 +9,7 @@ import axios from "axios"
 import { RouteDefinitions } from "../../utils/routes"
 import { TicketDetailsType } from "../../services/ticket.type"
 import { ReportTicket } from "./ReportTicket"
-import { userIsLoggedIn } from "../../hooks/is-logged"
+import { useUserIsLoggedIn } from "../../hooks/is-logged"
 import { Ticket } from "../../services/ticket.class"
 import { Hand } from "../hero-icons/Hand"
 
@@ -24,7 +22,7 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
   const { data: authSession } = useSession()
   const router = useRouter()
   const translations = useTranslations()
-  const isLogged = userIsLoggedIn()
+  const isLogged = useUserIsLoggedIn()
 
   const { id } = router.query
 
@@ -110,11 +108,6 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
       })
     }
   }
-
-  const formattedExpiration = dayjs(ticket.expirationTimestampSane)
-    .locale("pl")
-    .format("DD.MM.YYYY HH:mm")
-    .toString()
 
   const isOwner = authSession?.phoneNumber === ticket.phone
   const need = new Ticket(ticket)

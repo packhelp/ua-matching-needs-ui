@@ -1,14 +1,16 @@
 import Everify from "everify"
 import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
+import CredentialsProvider, {
+  CredentialInput,
+} from "next-auth/providers/credentials"
 import { NextApiRequest, NextApiResponse } from "next"
 import Error from "next/error"
 import { parsePhoneNumberFromString } from "libphonenumber-js/max"
 import axios from "axios"
 
-const everifyAuthToken: string = `${process.env.EVERIFY_AUTH_TOKEN}`
-const secretAuthSalt: string = `${process.env.SECRET_AUTH_SALT}`
-const directusApiToken: string = `${process.env.DIRECTUS_API_AUTH}`
+const everifyAuthToken = `${process.env.EVERIFY_AUTH_TOKEN}`
+const secretAuthSalt = `${process.env.SECRET_AUTH_SALT}`
+const directusApiToken = `${process.env.DIRECTUS_API_AUTH}`
 const env: string = `${process.env.ENV}`.toUpperCase()
 import { withSentry } from "@sentry/nextjs"
 
@@ -40,7 +42,7 @@ interface DirectusAuthResponse {
 
 const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
   const providers = [
-    CredentialsProvider<{}>({
+    CredentialsProvider<Record<string, CredentialInput>>({
       name: "Credentials",
       credentials: {
         phoneNumber: {

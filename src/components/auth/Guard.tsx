@@ -33,11 +33,13 @@ export const Guard: FC = ({ children }) => {
     //     Sentry.setUser({ email: session.user.email });
     //   } catch (e) {}
     // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authSession, authStatus])
 
   if (isPathRestricted) {
     if (authStatus === "loading") {
       return <div>loading</div>
+      // @ts-ignore
     } else if (!authSession || authStatus === "unauthenticated") {
       router.push({
         pathname: RouteDefinitions.SignIn,

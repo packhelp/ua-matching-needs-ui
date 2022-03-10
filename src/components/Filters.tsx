@@ -29,7 +29,7 @@ export const FiltersDropdown = (props: FiltersDropdownProps) => {
       value: tag.id,
       label: getTranslation(tag),
     }))
-  }, [data])
+  }, [data, getTranslation])
 
   /* hax - without it value is not refreshed 🤷 */
   const currentActiveTag = useMemo(

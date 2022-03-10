@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('next').NextConfig} */
 const { withSentryConfig } = require("@sentry/nextjs")
 const { verifyEnvs } = require("./verify-envs")

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 export const usePosition = () => {
   const [position, setPosition] = useState<
-    { latitude: number; longitude: number } | {}
+    { latitude: number; longitude: number } | Record<string, never>
   >({})
   const [error, setError] = useState<string | undefined>(undefined)
 

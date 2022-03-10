@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Center, Spinner } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
@@ -7,7 +8,6 @@ import {
   NeedTagType,
   TICKET_STATUS,
 } from "../../services/ticket.type"
-import { getRootContainer } from "../../services/_root-container"
 import { TicketsListMetaData } from "./TicketsListMetaData"
 import { Pagination } from "./Pagination"
 import { TicketsListHeader } from "./TicketsListHeader"

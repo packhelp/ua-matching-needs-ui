@@ -1,10 +1,8 @@
 import { useTranslations } from "../../hooks/translations"
 import { Modal } from "../Modal"
-import { Dispatch, SetStateAction, useMemo, useState } from "react"
+import { Dispatch, SetStateAction, useMemo } from "react"
 import { getRootContainer } from "../../services/_root-container"
 import { useQuery } from "react-query"
-import { useRouter } from "next/router"
-import { LocationFromNavigator } from "./partials/LocationFromNavigator"
 import Select, { SingleValue } from "react-select"
 import {
   InputValuesType,
@@ -31,7 +29,6 @@ export const TransportNeededModal = (props: TransportNeededModalType) => {
   const { closeModal, resetModal, variant, selected, setSelected, setCoords } =
     props
 
-  const { locale } = useRouter()
   const translations = useTranslations()
   const translationAddTicket = translations.addTicket.need
 
@@ -58,7 +55,7 @@ export const TransportNeededModal = (props: TransportNeededModalType) => {
           label: name,
         }
       }),
-    [locationTags, locale]
+    [locationTags]
   )
 
   const handleChangeLocation = (

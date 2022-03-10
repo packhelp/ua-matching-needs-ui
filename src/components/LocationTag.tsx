@@ -1,26 +1,5 @@
 import React from "react"
-import { NeedTagType } from "../services/ticket.type"
-import { useTagTranslation } from "../hooks/useTagTranslation"
-import { propNames } from "@chakra-ui/react"
-const Color = require("color")
-
-const TagCOPY = ({
-  tag,
-  onClick,
-  active = true,
-  className,
-  children,
-}: {
-  tag: Partial<NeedTagType>
-  onClick?: (tagId: number | undefined) => void
-  active?: boolean
-  className?: string
-  children: React.ReactNode
-}) => {
-  const { getTranslation } = useTagTranslation()
-
-  return <LocationTagHtml>{children}</LocationTagHtml>
-}
+import Color from "color"
 
 export const LocationTagHtml = ({
   onClick,

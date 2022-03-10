@@ -1,7 +1,7 @@
 import React from "react"
 import { NeedTagType } from "../services/ticket.type"
 import { useTagTranslation } from "../hooks/useTagTranslation"
-const Color = require("color")
+import Color from "color"
 
 export const Tag = ({
   tag,
