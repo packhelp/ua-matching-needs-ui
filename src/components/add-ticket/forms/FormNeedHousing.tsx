@@ -1,11 +1,9 @@
-import { Checkbox, Input, Stack, Textarea } from "@chakra-ui/react"
+import { Checkbox, Input, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
 import { useForm, Controller } from "react-hook-form"
-import { useMutation, useQuery } from "react-query"
-import axios from "axios"
+import { useQuery } from "react-query"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
-import dayjs from "dayjs"
 import React, { useState, useMemo } from "react"
 import { PlusSVG } from "../../../assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
@@ -14,17 +12,10 @@ import Select from "react-select"
 
 import { RouteDefinitions } from "../../../utils/routes"
 import { NeedHousingPostData } from "../../../services/ticket.type"
-import { TagConstIds } from "../../../services/types.tag"
 import { FormField } from "../FormField"
 import { ErrorMessage } from "@hookform/error-message"
-
-export type TransportNeededVariant = "whereFrom" | "whereTo"
-export type InputValuesType = {
-  [key in TransportNeededVariant]: {
-    value: number | undefined
-    label: string | undefined
-  }
-}
+import { FormFeedback } from "./Feedback"
+import { useAddHousingTicket } from "./hooks"
 
 const ticketService = getRootContainer().containers.ticketService
 
@@ -33,10 +24,23 @@ export const FormNeedHousing = () => {
   const translations = useTranslations()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [exactDate, setExactDate] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
   const { data: locationTags = [] } = useQuery(`location-tags`, () => {
     return ticketService.locationTags()
+  })
+  const addTicketMutation = useAddHousingTicket({
+    onSuccess: (rawResponse) => {
+      const { data } = rawResponse.data
+      const id = data.id
+
+      toast.success(translations["pages"]["add-ticket"]["need-added"])
+
+      setTimeout(() => {
+        return router.push(
+          RouteDefinitions.TicketDetails.replace(":id", String(id))
+        )
+      }, 1000)
+    },
   })
 
   const mappedLocationTags = useMemo(() => {
@@ -61,65 +65,6 @@ export const FormNeedHousing = () => {
         .sort((a, b) => a.label.localeCompare(b.label)),
     ]
   }, [locationTags])
-
-  const onSuccess = (rawResponse) => {
-    const { data } = rawResponse.data
-    const id = data.id
-
-    toast.success(translations["pages"]["add-ticket"]["need-added"])
-
-    setTimeout(() => {
-      return router.push(
-        RouteDefinitions.TicketDetails.replace(":id", String(id))
-      )
-    }, 1000)
-  }
-
-  const addTicketMutation = useMutation<
-    NeedHousingPostData,
-    Error,
-    NeedHousingPostData
-  >(
-    (newTicket) => {
-      const {
-        phone,
-        who,
-        what,
-        description,
-        adults,
-        children,
-        has_pets,
-        where_tag,
-        housing_how_long_text,
-      } = newTicket
-      const expirationTimestampSane = dayjs().add(24, "hour").format()
-
-      const newTicketData = {
-        what,
-        description,
-        expirationTimestampSane,
-        phone,
-        who,
-        count: 0,
-        adults: adults ? adults : 0,
-        children: children ? children : 0,
-        has_pets: !has_pets ? "0" : "1",
-
-        // This is housing request, so hardcore a trip tag
-        need_tag_id: [{ need_tag_id: { id: TagConstIds.housing } }],
-
-        // tripe specific
-        need_type: "trip",
-        where_tag,
-        housing_how_long_text,
-      }
-
-      return axios.post(`/api/add-ticket`, newTicketData)
-    },
-    {
-      onSuccess,
-    }
-  )
 
   const useFormOptions = {}
 
@@ -269,35 +214,7 @@ export const FormNeedHousing = () => {
               {...register("description")}
             />
           </FormField>
-
-          <div>
-            {addTicketMutation.isError ? (
-              <div className="flex space-x-1 mt-2 items-center justify-center">
-                <div
-                  className="inline-flex items-center w-full place-content-center
-                py-1 border border-transparent shadow-sm text-sm
-                font-medium text-white bg-red-600
-                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-default"
-                >
-                  {translations["errors"]["error-occured-while-adding"]}
-                  {addTicketMutation.error.message}
-                </div>
-              </div>
-            ) : null}
-
-            {addTicketMutation.isSuccess ? (
-              <div className="flex space-x-1 mt-2 items-center justify-center">
-                <div
-                  className="inline-flex items-center w-full place-content-center
-                py-1 border border-transparent shadow-sm text-sm
-                font-medium text-white bg-green-600
-                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-default"
-                >
-                  {translations["pages"]["add-ticket"]["request-added"]}
-                </div>
-              </div>
-            ) : null}
-          </div>
+          <FormFeedback mutation={addTicketMutation} />
           <button
             type="submit"
             disabled={isDisabled}
