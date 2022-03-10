@@ -145,6 +145,7 @@ export const PL = {
       "hide-phone-disclaimer":
         "Pamiętaj ze osoba oferująca pomoc musi mieć jak się z Tobą kontaktować. Jeśli nie chcesz udostępniać telefonu podaj w opisie inną formę kontaktu.",
       required: "To pole jest wymagane",
+      where: "Where? NEEDS TRANSLATION",
     },
     claimed: {
       title: "Moje przejęte potrzeby",
@@ -271,6 +272,7 @@ export const PL = {
       whereToNeeded: "Dokąd potrzebujesz transportu?",
       when: "Kiedy",
       extraLuggage: "Dodatkowy Bagaż",
+      howLong: "how long? NEEDS TRANSLATION",
     },
     offer: {
       title: "Jeśli chcesz pomóc, przejrzyj bazę potrzeb",

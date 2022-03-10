@@ -168,10 +168,10 @@ export const FormNeedHousing = () => {
             </Checkbox>
           </div>
 
-          <FormField title={translations["addTicket"]["need"]["how_long"]}>
+          <FormField title={translations["addTicket"]["need"]["howLong"]}>
             <Input
               type={"text"}
-              placeholder={translations["addTicket"]["need"]["how_long"]}
+              placeholder={translations["addTicket"]["need"]["howLong"]}
               variant="outline"
               inputMode="text"
               {...register("housing_how_long_text")}
