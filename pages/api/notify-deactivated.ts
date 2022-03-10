@@ -20,13 +20,6 @@ const adminContainer = getAdminContainer().containers
 const isProduction = adminContainer.nextEnv.isProduction
 const twilioEnv = adminContainer.twilioEnv
 
-/**
- * 41 symbols
- * https://potrzeby-ua.org/extend?t=d45e90fa
- * @param need
- * @param token
- * @returns
- */
 const notifyBySMS = async function (need, token) {
   const id = need.id
 
