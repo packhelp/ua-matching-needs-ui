@@ -143,7 +143,7 @@ export const UA: Translation = {
       "hide-phone-disclaimer":
         "Пам’ятайте, що особа, яка пропонує допомогу, повинна мати спосіб зв’язатися з вами. Якщо ви не хочете ділитися телефоном, вкажіть іншу форму контакту в описі.",
       required: "Це поле є обов'язковим",
-      where: "Where? NEEDS TRANSLATION",
+      where: "куди?",
     },
     claimed: {
       title: "Moje przejęte potrzeby",
@@ -269,7 +269,8 @@ export const UA: Translation = {
       whereFromNeeded: "<miss> Skąd potrzebujesz transportu?",
       whereToNeeded: "<miss> Dokąd potrzebujesz transportu?",
       when: "Коли?",
-      extraLuggage: "додатковий багаж", howLong: "how long? NEEDS TRANSLATION",
+      extraLuggage: "додатковий багаж",
+      howLong: "На який термін потрібне житло?",
     },
     offer: {
       title: "<miss> Jeśli chcesz pomóc, przejrzyj bazę ofert",
