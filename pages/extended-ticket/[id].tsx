@@ -55,7 +55,8 @@ const ExtendedTicket: NextPage<{ ticket: TicketDetailsType }> = ({
                 fontSize="md"
                 textColor="gray.600"
               >
-                {translations["pages"]["extended"]["description"]} {formattedExpiration}
+                {translations["pages"]["extended"]["description"]}{" "}
+                {formattedExpiration}
               </Text>
 
               <Link href={ticketUrl}>

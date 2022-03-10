@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
-import { TICKET_STATUS, TicketDetailsType } from "../../src/services/ticket.type"
+import {
+  TICKET_STATUS,
+  TicketDetailsType,
+} from "../../src/services/ticket.type"
 import { getAdminContainer } from "../../src/services/_container.admin"
 
 const authHeaders = function (authToken) {
@@ -17,16 +20,15 @@ const adminContainer = getAdminContainer().containers
 const isProduction = adminContainer.nextEnv.isProduction
 const twilioEnv = adminContainer.twilioEnv
 
-
 const shortenUrl = async function (url) {
-  const endpoint = 'https://u-6228-dev.twil.io/create'
+  const endpoint = "https://u-6228-dev.twil.io/create"
   const response = await axios
     .post(endpoint, {
-      url: url
+      url: url,
     })
     .then((response) => response.data)
     .catch((err) => console.error(err))
-  console.log('rs',response)
+  console.log("rs", response)
   return response.shortUrl
 }
 
@@ -71,7 +73,7 @@ const markAsNotifiedAndExpired = async function (authToken, need) {
     `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${id}`,
     {
       expiry_notified: true,
-      ticket_status: TICKET_STATUS.EXPIRED
+      ticket_status: TICKET_STATUS.EXPIRED,
     },
     authHeaders(authToken)
   )

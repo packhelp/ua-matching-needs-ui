@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
-import { TICKET_STATUS, TicketDetailsType } from "../../src/services/ticket.type"
+import {
+  TICKET_STATUS,
+  TicketDetailsType,
+} from "../../src/services/ticket.type"
 import dayjs from "dayjs"
 import { getAdminContainer } from "../../src/services/_container.admin"
 
@@ -24,7 +27,7 @@ const extendTicket = async function (authToken, need) {
       extend_token: null,
       expiry_notified: false,
       expirationTimestampSane: newDate,
-      ticket_status: TICKET_STATUS.ACTIVE
+      ticket_status: TICKET_STATUS.ACTIVE,
     },
     authHeaders(authToken)
   )
