@@ -71,7 +71,7 @@ export type NeedHousingTypeDTO = {
   need_type: "trip"
 
   where_tag: number // LocationTag
-  housing_how_long_text?: string;
+  housing_how_long_text?: string
 }
 
 export type NeedTripTypeDTONested = {

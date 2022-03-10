@@ -25,6 +25,7 @@ export const TicketsListMetaData = (props: MetaDataProps) => {
     const title = `${getTranslation(tag)} - ${translations.metaData.title}`
 
     return truncate(title, 60)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tag, ticketsListTitle])
 
   return (
