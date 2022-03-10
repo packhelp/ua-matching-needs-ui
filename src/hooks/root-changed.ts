@@ -5,7 +5,7 @@ export const useRouteChanged = (callbacks: Array<() => void>) => {
   const router = useRouter()
 
   useEffect(() => {
-    router.events.on("routeChangeStart", () => {
+    return router.events.on("routeChangeStart", () => {
       callbacks.forEach((callback) => callback())
     })
   }, [callbacks, router.events])
