@@ -54,7 +54,7 @@ const notifyBySMS = async function (need, token) {
   const url = `${process.env.SERVER_URL}/api/extend-ticket?t=${token}`
   const shortenedUrl = await shortenUrl(url)
   // 94 symbold text + 36 symbols for URL
-  const body = `[potrzeby-ua.org]: Twoje ogłoszenie się przedawniło, wejdź na stronę aby je przedłużyć: ${shortenedUrl}`
+  const body = `[potrzeby-ua.org]: Twoje ogłoszenie #${id} się przedawniło, wejdź na stronę aby je przedłużyć: ${shortenedUrl}`
 
   console.log(
     `Sending sms for need[${id}]: ${need.what}, phone: ${phone} with body: ${body}`

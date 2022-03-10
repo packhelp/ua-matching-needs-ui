@@ -25,7 +25,7 @@ export type TwilioEnvVars = ReturnType<typeof getTwilioSMS_envVariables>
 export function getNextEnvVariables() {
   const adminTokenDanger = process.env.DIRECTUS_API_AUTH
 
-  if (!adminTokenDanger) throw "DIRECTUS_ADMIN_TOKEN not defined"
+  if (!adminTokenDanger) throw "DIRECTUS_API_AUTH not defined"
 
   // what about NODE_ENV=production ....Yeah, staging is also production
   // not sure how we use this thing honestly
