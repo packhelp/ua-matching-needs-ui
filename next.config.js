@@ -5,11 +5,13 @@ const { verifyEnvs } = require("./verify-envs")
 verifyEnvs()
 
 const nextConfig = {
+  experimental: {
+    scrollRestoration: true,
+  },
   reactStrictMode: true,
   i18n: {
     locales: ["pl-PL", "uk-UA", "en-US"],
     defaultLocale: "pl-PL",
-    localeDetection: false,
   },
   trailingSlash: true,
   env: {

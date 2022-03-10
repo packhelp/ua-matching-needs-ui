@@ -5,6 +5,7 @@ export const EN: Translation = {
   "/tickets/active": "Requests",
   "/tickets/active/mine": "My requests",
   "/tickets/inactive/mine": "My inactive requests",
+  "/tickets/claimed": "Moje przejęte potrzeby",
   "/sign-in": "Sign in",
   "/contact": "Contact",
   "/faq": "FAQ",
@@ -30,6 +31,7 @@ export const EN: Translation = {
           "We've sent a verification code to the number provided. Enter the code below to sign in.",
         placeholder: "123 456",
         next: "Next",
+        error: "Your phone could not be authorized. Try again!",
       },
     },
     main: {
@@ -105,6 +107,12 @@ export const EN: Translation = {
       problemSolved: "Mark the request as handled!",
       remove: "Delete",
       needExpired: "The request expired",
+      ticketClaimed:
+        "Ticket was taken over by you. It is now in the your claimed requests tab",
+      errorOnClaim: "(Some) error occurred while claiming request.",
+      claim: "Claim",
+      claimedToHelp: "want to help!",
+      hasResponses: "There are responses! Great!",
     },
     "add-ticket": {
       "add-need": "Post a request",
@@ -118,7 +126,7 @@ export const EN: Translation = {
       "has-pets": "Animals",
       "children-hint": "Number of people younger than 12",
       title: "Title (short)",
-      "title-hint": "Housing in Poznan for 2 adults",
+      "title-hint": "Example: Housing in Poznan for 2 adults",
       "what-do-you-need": "What is it that you need?",
       "what-do-you-need-hint":
         "For example: A 2-person mattress for mother and child. Context and urgency: We were to take refugees (mother and child) to our home, but now we are finally hosting a grandmother, 3 mothers and 2 children. We don't have enough beds for them. Extra information: We don't have access to a car. We kindly ask anyone to bring it to us.",
@@ -136,6 +144,10 @@ export const EN: Translation = {
       whereTo: "To where?",
       "hide-phone-disclaimer":
         "Remember that the person offering help must have a way of contacting you. If you do not want to share the phone, please provide a different form of contact in the description.",
+      required: "This field is required",
+    },
+    claimed: {
+      title: "Moje przejęte potrzeby",
     },
     extended: {
       title: "Ticket updated",
@@ -248,5 +260,29 @@ export const EN: Translation = {
     thankYou: "Thank you!",
     thankYouForReport:
       "Thank you! Your application will allow us to improve the provision of assistance. Our moderators will take a look at your report in a moment.",
+  },
+  addTicket: {
+    transport: {
+      iKnowExactDate: "Exact date",
+    },
+    wizard: {
+      iNeedHelp: "I need help",
+      iCanHelp: "I can help!",
+      formNameTransport: "Transport",
+      formNameOther: "Other",
+    },
+    need: {
+      whereFromNeeded: "<miss> Skąd potrzebujesz transportu?",
+      whereToNeeded: "<miss> Dokąd potrzebujesz transportu?",
+      when: "When",
+      extraLuggage: "Additional luggage",
+    },
+    offer: {
+      title: "If you want to help, check our list of needs",
+      howToFilter: "<miss> Zobacz jak skutecznie filtrować",
+      chooseCategory: "<miss> Wybierz kategorię:",
+      youCanAlsoApply:
+        "<miss> Możesz się też zgłosić do pomocy do jednego z naszych partnerów:",
+    },
   },
 }

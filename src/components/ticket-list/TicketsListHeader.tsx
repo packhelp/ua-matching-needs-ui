@@ -10,7 +10,7 @@ export const TicketsListHeader = (props: TicketsListHeaderProps) => {
   return (
     <h1 className="my-4 text-3xl font-semibold text-center">
       {title}
-      {count && <span className="ml-2">({count})</span>}
+      {count ? <span className="ml-2">({count})</span> : null}
     </h1>
   )
 }

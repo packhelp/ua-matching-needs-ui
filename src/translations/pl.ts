@@ -3,6 +3,7 @@ export const PL = {
   "/tickets/active": "Potrzeby",
   "/tickets/active/mine": "Moje potrzeby",
   "/tickets/inactive/mine": "Moje nieaktywne potrzeby",
+  "/tickets/claimed": "Moje przejęte potrzeby",
   "/sign-in": "Zaloguj się",
   "/contact": "Kontakt",
   "/faq": "FAQ",
@@ -28,6 +29,8 @@ export const PL = {
           "Wysłaliśmy kod weryfikacyjny, na twój numer telefonu, w wiadomości SMS. Wpisz go poniżej aby zalogować się.",
         placeholder: "123 456",
         next: "Dalej",
+        error:
+          "Nie udało się autoryzować twojego telefonu. Spróbuj jeszcze raz!",
       },
     },
     main: {
@@ -47,7 +50,7 @@ export const PL = {
           "My zajmiemy się wyszukaniem organizacji lub osób, które zorganizują pomoc.",
         "step-3-title": "Pomagaj odpowiadając na potrzeby",
         "step-3-description":
-          "Możesz samemu pomóc? Sprawdź aktualne potrzeby i... działaj!",
+          "Możesz pomóc!? Sprawdź aktualne potrzeby i... działaj! ♥️",
       },
       "for-whom-section": {
         header: "Dla kogo jest ta platforma?",
@@ -102,6 +105,12 @@ export const PL = {
       problemSolved: "Problem rozwiązany!",
       remove: "Usuń",
       needExpired: "Zgłoszenie wygasło",
+      ticketClaimed:
+        "Ogłoszenie zostało przez Ciebię przejęte. Znajduje się ono teraz w zakładce Twoje przyjęte ogłoszenia",
+      errorOnClaim: "Wystąpił błąd z przejęciem tej potrzeby",
+      claim: "Zgłaszam się do pomocy!",
+      claimedToHelp: "zgłosiło się do pomocy!",
+      hasResponses: "Są zgłoszenia! Świetnie!",
     },
     "add-ticket": {
       "add-need": "Dodaj potrzebę",
@@ -115,7 +124,8 @@ export const PL = {
       "has-pets": "Zwierzęta",
       "children-hint": "Liczba osób < 12 lat",
       title: "Krótki tytuł",
-      "title-hint": "Nocleg w Poznaniu, 4 os.",
+      "title-hint":
+        "Krótki tytuł pomoże szybciej znaleźć pomoc! np. Nocleg w Poznaniu, 4 os.",
       "what-do-you-need": "Opis potrzeby",
       "what-do-you-need-hint":
         "Na przykład: Materac 2-osobowy dla mamy z dzieckiem. Dlaczego i jak pilnie jest potrzebne: miałyśmy przyjąć uchodźców (mamę z dzieckiem) do naszego domu, ale ostatecznnie teraz gościmy już babcię, 3 mamy i 2 dzieci. Nie mamy gdzie ich położyć. Dodatkowe informacje: Nie mamy transportu. Prośba o przywiezienie do nas.",
@@ -134,6 +144,10 @@ export const PL = {
       whereTo: "Dokąd?",
       "hide-phone-disclaimer":
         "Pamiętaj ze osoba oferująca pomoc musi mieć jak się z Tobą kontaktować. Jeśli nie chcesz udostępniać telefonu podaj w opisie inną formę kontaktu.",
+      required: "To pole jest wymagane",
+    },
+    claimed: {
+      title: "Moje przejęte potrzeby",
     },
     extended: {
       title: "Aktualizacja ogłoszenia",
@@ -245,5 +259,29 @@ export const PL = {
     thankYou: "Dziękujemy!",
     thankYouForReport:
       "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
+  },
+  addTicket: {
+    transport: {
+      iKnowExactDate: "Dokładna data",
+    },
+    wizard: {
+      iNeedHelp: "Potrzebuję pomocy",
+      iCanHelp: "Mogę pomóc!",
+      formNameTransport: "Transport",
+      formNameOther: "Inne",
+    },
+    need: {
+      whereFromNeeded: "Skąd potrzebujesz transportu?",
+      whereToNeeded: "Dokąd potrzebujesz transportu?",
+      when: "Kiedy",
+      extraLuggage: "Dodatkowy Bagaż",
+    },
+    offer: {
+      title: "Jeśli chcesz pomóc, przejrzyj bazę potrzeb",
+      howToFilter: "Zobacz jak skutecznie filtrować",
+      chooseCategory: "Wybierz kategorię:",
+      youCanAlsoApply:
+        "Możesz się też zgłosić do pomocy do jednego z naszych partnerów:",
+    },
   },
 }

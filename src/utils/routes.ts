@@ -4,9 +4,11 @@ import { Locale, LocaleDefinitions } from "../translations/definitions"
 export enum RouteDefinitions {
   Main = "/",
   AddTicket = "/tickets/add",
+  AddTicketOld = "/tickets/add-old",
   AllActiveTickets = "/tickets/active",
   MyActiveTickets = "/tickets/active/mine",
   MyInactiveTickets = "/tickets/inactive/mine",
+  MyClaimedTickets = "/tickets/claimed",
   SignIn = "/sign-in",
   TicketDetails = "/ticket/:id",
   Contact = "/contact",
@@ -16,9 +18,11 @@ export enum RouteDefinitions {
 export type Routes =
   | RouteDefinitions.Main
   | RouteDefinitions.AddTicket
+  | RouteDefinitions.AddTicketOld
   | RouteDefinitions.AllActiveTickets
   | RouteDefinitions.MyActiveTickets
   | RouteDefinitions.MyInactiveTickets
+  | RouteDefinitions.MyClaimedTickets
   | RouteDefinitions.SignIn
   | RouteDefinitions.TicketDetails
   | RouteDefinitions.Contact

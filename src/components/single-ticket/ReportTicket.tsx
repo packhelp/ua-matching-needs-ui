@@ -151,7 +151,7 @@ const ReportTicketButtons: VFC<ReportTicketButton> = ({
   return (
     <div
       className={
-        "flex justify-around text-lg py-4 w-100 flex-col sm:flex-row flex-col-reverse gap-2 sm:gap-0"
+        "flex justify-around align-start text-lg mt-4 w-100 flex-col sm:flex-row flex-col-reverse gap-2 sm:gap-0"
       }
     >
       <BasicReportButton onClick={onClick}>

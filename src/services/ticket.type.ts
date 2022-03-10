@@ -42,6 +42,7 @@ export enum TICKET_STATUS {
   DELETED = "deleted",
   CANCELED = "canceled",
   HIDDEN = "hidden",
+  // CLAIMED = "claimed", <-- WE DON"T HAVE CLAIMED STATUS. Check responses field insted!!!
 }
 
 export type TicketFormData = {
@@ -56,17 +57,43 @@ export type TicketFormData = {
   has_pets: boolean
 }
 
-export type TicketPostData = TicketFormData & {
+export type NeedTripTypeDTO = {
+  need_type: "trip"
+
+  where_to_tag: number // LocationTag
+  where_from_tag: number // LocationTag
+  trip_when_text?: string
+  trip_when_date?: string // Date
+  trip_extra_luggage: boolean
+}
+
+export type NeedTripTypeDTONested = {
+  need_type: "trip"
+
+  where_to_tag: LocationTag // LocationTag
+  where_from_tag: LocationTag // LocationTag
+  trip_when_text?: string
+  trip_when_date?: string // Date
+  trip_extra_luggage: boolean
+}
+
+export type PostDataDefaults = {
   phone: string
   need_tag_id: {
     need_tag_id: Partial<NeedTagType>
   }[]
 }
 
+export type NeedTripPostData = TicketFormData &
+  PostDataDefaults &
+  NeedTripTypeDTO
+
+export type GenericTicketPostData = TicketFormData & PostDataDefaults
+
 export type TicketData = TicketFormData & {
   id: number
   expirationTimestampSane: string
-  date_created: number
+  need_type: "trip" | "housing" | "generic" | null
   ticket_status: TICKET_STATUS
   organization_id?: Organization
   description: string
@@ -75,9 +102,22 @@ export type TicketData = TicketFormData & {
   }[]
   visits: number
 
-  // SMS data section
+  need_responses: NeedResponse[]
+
+  // SMS and Ticket Extend Token el
   expiry_notified: boolean
   extend_token: string
 }
 
-export type TicketDetailsType = TicketPostData & TicketData
+export interface NeedResponse {
+  id: number
+  user_created: string
+  date_created: Date
+  comment: string
+  // need_id: number
+}
+
+export type TicketDetailsType = GenericTicketPostData & TicketData
+export type TicketTripDetailsType = GenericTicketPostData &
+  TicketData &
+  NeedTripTypeDTONested

@@ -11,6 +11,9 @@ import axios from "axios"
 import { RouteDefinitions } from "../../utils/routes"
 import { TicketDetailsType } from "../../services/ticket.type"
 import { ReportTicket } from "./ReportTicket"
+import { userIsLoggedIn } from "../../hooks/is-logged"
+import { Ticket } from "../../services/ticket.class"
+import { Hand } from "../hero-icons/Hand"
 
 type SingleTicketFooterProps = {
   ticket: TicketDetailsType
@@ -21,6 +24,7 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
   const { data: authSession } = useSession()
   const router = useRouter()
   const translations = useTranslations()
+  const isLogged = userIsLoggedIn()
 
   const { id } = router.query
 
@@ -50,6 +54,26 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
     }
   )
 
+  const markClaimedTicketMutation = useMutation<number, NextError, number>(
+    (id: number) => {
+      return axios.post(`/api/add-need-response`, {
+        id: id,
+        date_claimed: Date.now(),
+      })
+    },
+    {
+      onSuccess: () => {
+        toast.success(translations["pages"]["ticket"]["ticketClaimed"])
+        return router.push(
+          RouteDefinitions.TicketDetails.replace(":id", String(id))
+        )
+      },
+      onError: () => {
+        toast.error(translations["pages"]["ticket"]["errorOnClaim"])
+      },
+    }
+  )
+
   const markAsSolvedTicket = () => {
     if (id) {
       markSolvedTicketMutation.mutate(Number(id))
@@ -66,13 +90,35 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
     }
   }
 
+  const markAsCalimedTicket = () => {
+    if (id) {
+      markClaimedTicketMutation.mutate(Number(id))
+    } else {
+      toast.error(translations["pages"]["ticket"]["errorOnClaim"])
+    }
+  }
+
+  const claimTicket = () => {
+    if (isLogged) {
+      markAsCalimedTicket()
+    } else {
+      router.push({
+        pathname: RouteDefinitions.SignIn,
+        query: {
+          returnPath: RouteDefinitions.TicketDetails.replace(":id", String(id)),
+        },
+      })
+    }
+  }
+
   const formattedExpiration = dayjs(ticket.expirationTimestampSane)
     .locale("pl")
     .format("DD.MM.YYYY HH:mm")
     .toString()
 
   const isOwner = authSession?.phoneNumber === ticket.phone
-  const isActive = isTicketActive(ticket)
+  const need = new Ticket(ticket)
+  const isActive = need.isActive
 
   /**
    *
@@ -118,34 +164,28 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
             </a>
           )}
 
+          {!isOwner && (
+            <div className="flex space-x-1 my-2 items-center justify-center">
+              <button
+                type="button"
+                className="inline-flex items-center w-full place-content-center
+                rounded-md py-4 border border-transparent shadow-sm text-xl
+                font-medium text-white bg-green-600 hover:bg-green-700
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                text-white"
+                onClick={claimTicket}
+              >
+                {translations["pages"]["ticket"]["claim"]}
+              </button>
+            </div>
+          )}
+
           {isOwner && (
-            <div className="px-2 py-2 text-center">
+            <div className="px-2 py-4 text-center">
               <span className="text-sm mr-2 text-gray-500 font-medium">
                 {translations["pages"]["ticket"]["areYouTheAuthorOfThisTicket"]}
               </span>
-              <div className="flex space-x-1 items-center justify-center">
-                <button
-                  onClick={markAsSolvedTicket}
-                  type="button"
-                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                >
-                  {translations["pages"]["ticket"]["problemSolved"]}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 ml-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                    />
-                  </svg>
-                </button>
-
+              <div className="flex space-x-1 justify-center mt-2">
                 <button
                   onClick={removeTicket}
                   type="button"
@@ -167,9 +207,49 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
                     />
                   </svg>
                 </button>
+                <button
+                  onClick={markAsSolvedTicket}
+                  type="button"
+                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                >
+                  {translations["pages"]["ticket"]["problemSolved"]}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           )}
+
+          {need.responsesLength > 0 && (
+            <div
+              className={
+                "inline-flex gap-1 cursor-pointer align-middle items-center"
+              }
+            >
+              <Hand em="1.3em" /> {need.responsesLength}{" "}
+              {translations["pages"]["ticket"]["claimedToHelp"]}
+            </div>
+          )}
+
+          <div
+            className={"flex gap-1 cursor-pointer align-middle items-center"}
+          >
+            {need.hasResponses && (
+              <div>{translations["pages"]["ticket"]["hasResponses"]}</div>
+            )}
+          </div>
         </>
       )}
 

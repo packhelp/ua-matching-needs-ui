@@ -6,9 +6,9 @@ import {
   RouteDefinitions,
   Routes,
 } from "../../../utils/routes"
-import { Locale } from "../../../translations/definitions"
 import { useRouter } from "next/router"
 import { AddIcon, SearchIcon } from "@chakra-ui/icons"
+import { Locale } from "../../../translations/definitions"
 
 type NavigationLinkProps = {
   route: Routes

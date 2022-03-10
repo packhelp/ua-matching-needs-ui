@@ -6,7 +6,7 @@ import { Footer } from "../src/components/footer/Footer"
 import { SessionProvider } from "next-auth/react"
 
 import "react-toastify/dist/ReactToastify.css"
-
+import { ReactQueryDevtools } from "react-query/devtools"
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query"
 
 // core styles shared by all of react-notion-x (required)
@@ -30,7 +30,16 @@ import { useState } from "react"
 import { ToastContainer } from "react-toastify"
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  )
 
   return (
     <SessionProvider session={session}>
@@ -48,6 +57,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
               <Footer />
             </RootContainerWrapper>
           </ChakraProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>
       </QueryClientProvider>
     </SessionProvider>

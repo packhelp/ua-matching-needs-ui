@@ -5,6 +5,7 @@ export const UA: Translation = {
   "/tickets/active": "Потреби",
   "/tickets/active/mine": "Мої потреби",
   "/tickets/inactive/mine": "Мої неактивні потреби",
+  "/tickets/claimed": "Moje przejęte potrzeby",
   "/sign-in": "Увійти",
   "/contact": "Сконтактуватись",
   "/faq": "FAQ",
@@ -30,6 +31,7 @@ export const UA: Translation = {
           "Ми вислали вам код верифікаціі у повідомленні СМС. Введіть йогу щоб залогуватись",
         placeholder: "123 456",
         next: "Далі",
+        error: "<need translation>",
       },
     },
     main: {
@@ -105,6 +107,11 @@ export const UA: Translation = {
       problemSolved: "Проблема вирішена!",
       remove: "Видалити",
       needExpired: "Оголошення не актуальне",
+      ticketClaimed: "<need translation>",
+      errorOnClaim: "<need translation>",
+      claim: "<need translation>",
+      claimedToHelp: "<need translation>",
+      hasResponses: "<need translation>",
     },
     "add-ticket": {
       "add-need": "Додай потребу",
@@ -118,7 +125,7 @@ export const UA: Translation = {
       "has-pets": "Тварини",
       "children-hint": "Дітей менш ніж 12 років",
       title: "Назва (коротка)",
-      "title-hint": "Проживання у Poznań для 4",
+      "title-hint": "приклад: Проживання у Poznań для 4",
       "what-do-you-need": "Що за потреба?",
       "what-do-you-need-hint":
         "Наприклад: 2-місний матрац для матері з дитиною. Навіщо і як терміново це потрібн:  ми хочемо прийняти маму і дитину додому, але вийшло що ми приймаємо бабусю, 3 матерів і 2 дітей. Нам їх нікуди подіти. Додаткова інформація: транспорту у нас немає. Прохання привести до нас",
@@ -135,6 +142,10 @@ export const UA: Translation = {
       whereTo: "Куди?",
       "hide-phone-disclaimer":
         "Пам’ятайте, що особа, яка пропонує допомогу, повинна мати спосіб зв’язатися з вами. Якщо ви не хочете ділитися телефоном, вкажіть іншу форму контакту в описі.",
+      required: "Це поле є обов'язковим",
+    },
+    claimed: {
+      title: "Moje przejęte potrzeby",
     },
     extended: {
       title: "Оновлення оголошення",
@@ -246,5 +257,29 @@ export const UA: Translation = {
     thankYou: "Дякую!",
     thankYouForReport:
       "Дякую! Ваша заявка дозволить нам покращити надання допомоги. Наші модератори розглянуть це найближчим часом",
+  },
+  addTicket: {
+    transport: {
+      iKnowExactDate: "Точна дата",
+    },
+    wizard: {
+      iNeedHelp: "Потрібна допомога",
+      iCanHelp: "Я можу допомогти!",
+      formNameTransport: "Транспорт",
+      formNameOther: "Інше",
+    },
+    need: {
+      whereFromNeeded: "<miss> Skąd potrzebujesz transportu?",
+      whereToNeeded: "<miss> Dokąd potrzebujesz transportu?",
+      when: "Коли?",
+      extraLuggage: "додатковий багаж",
+    },
+    offer: {
+      title: "<miss> Jeśli chcesz pomóc, przejrzyj bazę ofert",
+      howToFilter: "<miss> Zobacz jak skutecznie filtrować",
+      chooseCategory: "<miss> Wybierz kategorię:",
+      youCanAlsoApply:
+        "<miss> Możesz się też zgłosić do pomocy do jednego z naszych partnerów:",
+    },
   },
 }
