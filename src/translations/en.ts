@@ -151,6 +151,11 @@ export const EN: Translation = {
     claimed: {
       title: "Moje przejęte potrzeby",
     },
+    extended: {
+      title: "Ticket updated",
+      description: "Your ticket is extended to:",
+      showTicket: "Show your ticket",
+    },
   },
   "sign-out": "Sign out",
   "terms-of-service": {

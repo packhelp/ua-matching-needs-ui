@@ -152,6 +152,11 @@ export const PL = {
     claimed: {
       title: "Moje przejęte potrzeby",
     },
+    extended: {
+      title: "Aktualizacja ogłoszenia",
+      description: "Przedłużyliśmy ważność twojego ogłoszenia do:",
+      showTicket: "Przejdź do ogłoszenia",
+    },
   },
   "sign-out": "Wyloguj się",
   "terms-of-service": {

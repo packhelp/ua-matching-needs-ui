@@ -150,6 +150,11 @@ export const UA: Translation = {
     claimed: {
       title: "Moje przejęte potrzeby",
     },
+    extended: {
+      title: "Оновлення оголошення",
+      description: "Ваше оголошення продовжено: ",
+      showTicket: "Перейти до оголошення",
+    },
   },
   "sign-out": "Вийти",
   "terms-of-service": {
