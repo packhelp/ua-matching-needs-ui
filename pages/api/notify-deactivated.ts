@@ -28,7 +28,6 @@ const shortenUrl = async function (url) {
     })
     .then((response) => response.data)
     .catch((err) => console.error(err))
-  console.log("rs", response)
   return response.shortUrl
 }
 

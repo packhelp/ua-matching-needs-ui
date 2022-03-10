@@ -15,8 +15,6 @@ export function getTwilioSMS_envVariables() {
     SMS_DEV_NUMBER,
   }
 
-  console.log("twilio env vars", envVars)
-
   return envVars
 }
 
