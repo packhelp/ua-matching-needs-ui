@@ -1,10 +1,5 @@
-import {
-  TICKET_STATUS,
-  TicketDetailsType,
-  NeedTagType,
-  LocationTag,
-} from "./ticket.type"
-import axios, { AxiosRequestConfig, AxiosInstance } from "axios"
+import { TicketDetailsType, NeedTagType, LocationTag } from "./ticket.type"
+import axios, { AxiosInstance } from "axios"
 import {
   LOCATION_HUB_FIELDS,
   TAG_FIELDS,

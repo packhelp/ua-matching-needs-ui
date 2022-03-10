@@ -4,7 +4,7 @@ import { withSentry } from "@sentry/nextjs"
 import { parsePhoneNumberFromString } from "libphonenumber-js/max"
 import { NextApiRequest, NextApiResponse } from "next"
 
-const everifyAuthToken: string = `${process.env.EVERIFY_AUTH_TOKEN}`
+const everifyAuthToken = `${process.env.EVERIFY_AUTH_TOKEN}`
 const env: string = `${process.env.ENV}`.toUpperCase()
 
 if (!everifyAuthToken) {

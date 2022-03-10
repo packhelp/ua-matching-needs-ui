@@ -2,8 +2,8 @@ import { useState, useEffect } from "react"
 
 export const usePosition = () => {
   const [position, setPosition] = useState<
-    { latitude: number; longitude: number } | {}
-  >({})
+    { latitude: number; longitude: number } | undefined
+  >(undefined)
   const [error, setError] = useState<string | undefined>(undefined)
 
   const onChange = ({ coords }) => {
@@ -21,8 +21,7 @@ export const usePosition = () => {
       setError("Geolocation is not supported")
       return
     }
-    const watcher = geo.watchPosition(onChange, onError)
-    return () => geo.clearWatch(watcher)
+    return
   }, [])
   return { ...position, error }
 }

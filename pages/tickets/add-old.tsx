@@ -1,10 +1,8 @@
 import {
   Box,
   Checkbox,
-  Container,
   Heading,
   Input,
-  Stack,
   Tag,
   Text,
   Textarea,
@@ -18,7 +16,7 @@ import { RouteDefinitions } from "../../src/utils/routes"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
 import { useTranslations } from "../../src/hooks/translations"
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
 import {
@@ -28,10 +26,7 @@ import {
 } from "../../src/services/ticket.type"
 import { useTagTranslation } from "../../src/hooks/useTagTranslation"
 import { getRootContainer } from "../../src/services/_root-container"
-import Select, { SingleValue } from "react-select"
 
-import { AddTicketForm } from "../../src/components/add-ticket/AddTicketForm"
-import { TagConstIds } from "../../src/services/types.tag"
 import { FormField } from "../../src/components/add-ticket/FormField"
 
 const TagsChooseForm = (props: {
@@ -109,7 +104,6 @@ const AddTicketOld: NextPage = () => {
         description,
         where,
         who,
-        count,
         need_tag_id,
         phone_public,
         adults,
@@ -118,7 +112,7 @@ const AddTicketOld: NextPage = () => {
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
-      let newTicketData = {
+      const newTicketData = {
         phone,
         what,
         description,

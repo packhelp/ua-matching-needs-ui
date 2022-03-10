@@ -71,7 +71,8 @@ const TicketsMap: NextPage = () => {
 
   useEffect(() => {
     if (map) {
-      ;(tickets || []).forEach((ticket) => {
+      const t = tickets || []
+      t.forEach((ticket) => {
         const [lat, lng] = ticket.location.coordinates
 
         const description = ticket.description

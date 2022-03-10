@@ -74,7 +74,7 @@ const getTicketsUrl = ({
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
   const phoneNumber = session?.user?.name?.replace("+", "%2B")
-  let { mineOnly, tagId, ticketStatus, page, whereFromTag, whereToTag } =
+  const { mineOnly, tagId, ticketStatus, page, whereFromTag, whereToTag } =
     req.query
 
   console.debug(req.query)

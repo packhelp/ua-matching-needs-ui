@@ -1,6 +1,5 @@
 import React from "react"
 import { useTranslations } from "../../hooks/translations"
-import { isTicketActive } from "../../../pages/ticket/[id]"
 import { TicketDetailsType } from "../../services/ticket.type"
 import styles from "./SingleTicketHeader.module.scss"
 import { LocationSection } from "../ticket-list/list-parts/LocationSection"

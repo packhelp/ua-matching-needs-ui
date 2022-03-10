@@ -6,7 +6,6 @@ import React from "react"
 import { useTranslations } from "../../src/hooks/translations"
 import { TicketDetailsType } from "../../src/services/ticket.type"
 import { getRootContainer } from "../../src/services/_root-container"
-import { useRouter } from "next/router"
 import { Box, Container, Heading, Link, Stack, Text } from "@chakra-ui/react"
 import dayjs from "dayjs"
 
@@ -23,9 +22,7 @@ export async function getServerSideProps(context) {
 const ExtendedTicket: NextPage<{ ticket: TicketDetailsType }> = ({
   ticket,
 }) => {
-  const router = useRouter()
   const translations = useTranslations()
-  const { locale } = router
   const ticketUrl = RouteDefinitions.TicketDetails.replace(
     ":id",
     String(ticket.id)

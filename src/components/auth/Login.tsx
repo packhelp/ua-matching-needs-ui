@@ -9,7 +9,7 @@ import { LocaleDefinitions } from "../../translations/definitions"
 
 export const Login: FC = () => {
   const router = useRouter()
-  const { error: errorInUrlQuery, returnPath } = router.query
+  const { error: errorInUrlQuery } = router.query
   const [hasStartedVerification, setHasStartedVerification] = useState(false)
   const [credentials, setCredentials] = useState({ phoneNumber: null })
   const [error, setError] = useState<string>()

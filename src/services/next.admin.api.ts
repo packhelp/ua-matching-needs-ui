@@ -1,20 +1,6 @@
-import {
-  TICKET_STATUS,
-  TicketDetailsType,
-  NeedTagType,
-  LocationTag,
-} from "./ticket.type"
-import axios, { AxiosRequestConfig, AxiosInstance } from "axios"
-import {
-  LOCATION_HUB_FIELDS,
-  TAG_FIELDS,
-  TICKET_DETAILS_FIELDS,
-} from "../utils/directus-fields"
-import { NextEnvVars } from "./next.env-variables"
+import axios, { AxiosInstance } from "axios"
 
-export function directusAdminApiInstance(
-  nextEnvVariables: NextEnvVars
-): AxiosInstance {
+export function directusAdminApiInstance(): AxiosInstance {
   const endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT_URL
   if (endpoint == "" || endpoint == null || typeof endpoint !== "string") {
     console.error("endpoint val", endpoint)

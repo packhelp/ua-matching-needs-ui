@@ -3,7 +3,7 @@ import { useDisclosure } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useCallback, useMemo } from "react"
 import { DesktopNavigationElement } from "./DesktopNavigation"
-import { userIsLoggedIn } from "../../../hooks/is-logged"
+import { useUserIsLoggedIn } from "../../../hooks/is-logged"
 import { useRouteChanged } from "../../../hooks/root-changed"
 import { useTranslations } from "../../../hooks/translations"
 import { getRouteNameForLocale, RouteDefinitions } from "../../../utils/routes"
@@ -23,7 +23,7 @@ type UserNavigationElementProps =
   | UserNavigationElementPropsWithOnClick
 
 export const UserNavigation = () => {
-  const isLogged = userIsLoggedIn()
+  const isLogged = useUserIsLoggedIn()
   const { isOpen = false, onOpen, onClose } = useDisclosure()
 
   useRouteChanged([onClose])
@@ -33,7 +33,7 @@ export const UserNavigation = () => {
       return onClose()
     }
     onOpen()
-  }, [isOpen])
+  }, [isOpen, onClose, onOpen])
 
   return (
     <div className="hidden md:flex-shrink-0 md:flex md:items-center h-full">
