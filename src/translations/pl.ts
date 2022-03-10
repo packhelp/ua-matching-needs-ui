@@ -263,6 +263,7 @@ export const PL = {
       iNeedHelp: "Potrzebuję pomocy",
       iCanHelp: "Mogę pomóc!",
       formNameTransport: "Transport",
+      formNameHousing: "Housing",
       formNameOther: "Inne",
     },
     need: {

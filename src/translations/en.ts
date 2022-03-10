@@ -265,6 +265,7 @@ export const EN: Translation = {
       iCanHelp: "I can help!",
       formNameTransport: "Transport",
       formNameOther: "Other",
+      formNameHousing: "Housing",
     },
     need: {
       whereFromNeeded: "<miss> Skąd potrzebujesz transportu?",

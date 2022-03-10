@@ -67,6 +67,13 @@ export type NeedTripTypeDTO = {
   trip_extra_luggage: boolean
 }
 
+export type NeedHousingTypeDTO = {
+  need_type: "trip"
+
+  where_tag: number // LocationTag
+  housing_how_long_text?: string;
+}
+
 export type NeedTripTypeDTONested = {
   need_type: "trip"
 
@@ -87,6 +94,10 @@ export type PostDataDefaults = {
 export type NeedTripPostData = TicketFormData &
   PostDataDefaults &
   NeedTripTypeDTO
+
+export type NeedHousingPostData = TicketFormData &
+  PostDataDefaults &
+  NeedHousingTypeDTO
 
 export type GenericTicketPostData = TicketFormData & PostDataDefaults
 

@@ -261,6 +261,7 @@ export const UA: Translation = {
       iNeedHelp: "Потрібна допомога",
       iCanHelp: "Я можу допомогти!",
       formNameTransport: "Транспорт",
+      formNameHousing: "Housing",
       formNameOther: "Інше",
     },
     need: {
