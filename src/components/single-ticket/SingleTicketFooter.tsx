@@ -12,6 +12,7 @@ import { ReportTicket } from "./ReportTicket"
 import { useUserIsLoggedIn } from "../../hooks/is-logged"
 import { Ticket } from "../../services/ticket.class"
 import { Hand } from "../hero-icons/Hand"
+import { Plausible } from "../../services/plausible"
 
 type SingleTicketFooterProps = {
   ticket: TicketDetailsType
@@ -97,6 +98,7 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
   }
 
   const claimTicket = () => {
+    Plausible.registerIntentionClaim()
     if (isLogged) {
       markAsCalimedTicket()
     } else {
@@ -143,6 +145,9 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
                 font-medium text-white bg-blue-600 hover:bg-blue-700
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
                 text-white"
+              onClick={() => {
+                Plausible.registerIntentionPhoneCall()
+              }}
             >
               {translations["pages"]["ticket"]["call"]} {ticket.phone}{" "}
               <svg
