@@ -40,7 +40,7 @@ export const NavigationLink = (props: NavigationLinkProps) => {
     ) : undefined
 
   return (
-    <Link href={route}>
+    <Link href={route} passHref>
       <Button
         colorScheme={colorScheme}
         size="sm"

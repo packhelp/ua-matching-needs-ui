@@ -1,4 +1,4 @@
-import { Checkbox, Input, Stack, Textarea } from "@chakra-ui/react"
+import { Checkbox, Input, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
 import { useForm, Controller } from "react-hook-form"
 import { useQuery } from "react-query"

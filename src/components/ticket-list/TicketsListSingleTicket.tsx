@@ -8,7 +8,6 @@ import { Ticket } from "../../services/ticket.class"
 import { useTranslations } from "../../hooks/translations"
 import { useRouter } from "next/router"
 import { TicketDetailsType } from "../../services/ticket.type"
-import { LocationTagHtml } from "../LocationTag"
 import { LocationSection } from "./list-parts/LocationSection"
 
 type TicketsListSingleTicketProps = {
@@ -38,7 +37,7 @@ export const TicketsListSingleTicket = (
         ticket.organization_id ? "verified" : ""
       }`}
     >
-      <Link href={ticketUrl} locale={locale}>
+      <Link href={ticketUrl} locale={locale} passHref>
         <div className="px-4 py-5 border-gray-200 sm:px-6 cursor-pointer">
           <div className="mb-2 flex justify-between">
             <div className="flex items-center max-w-2xl mb-1 text-sm text-gray-400 space-x-1">

@@ -6,7 +6,7 @@ import styles from "./Logo.module.scss"
 export const Logo = () => {
   return (
     <div className={styles.logo}>
-      <Link href="/">
+      <Link href="/" passHref>
         <Image src="/svg/logo.svg" alt="IniSync" className={styles.image} />
       </Link>
     </div>

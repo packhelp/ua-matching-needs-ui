@@ -9,7 +9,6 @@ import {
   Image,
   Input,
 } from "@chakra-ui/react"
-import { useFinalLocale } from "../../hooks/final-locale"
 import { useTranslations } from "../../hooks/translations"
 
 interface EnterPhoneNumberProps {

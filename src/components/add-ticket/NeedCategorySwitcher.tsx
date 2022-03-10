@@ -1,15 +1,9 @@
-import { useState } from "react"
-import { useTranslations } from "../../hooks/translations"
-import { TagConstIds } from "../../services/types.tag"
-
 type NeedCategorySwitcherProps = {
   transport: TagOption
   other: TagOption
 }
 
 export const NeedCategorySwitcher = (props: NeedCategorySwitcherProps) => {
-  const translations = useTranslations()
-
   return (
     <div className="flex justify-between cursor-pointer">
       <NeedCategorySwitcherHtml {...props} />

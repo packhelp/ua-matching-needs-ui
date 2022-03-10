@@ -31,6 +31,7 @@ export const SingleTicketMetaData = (props: MetaDataProps) => {
 
     const i18n = translations["pages"]["ticket"]["metaTitle"]
     return truncate(`${i18n["need"]}: ${title}`, 60)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ticket, finalLocale])
 
   const metaDescription = useMemo(() => {
@@ -43,7 +44,7 @@ export const SingleTicketMetaData = (props: MetaDataProps) => {
       : translations.metaData.description
 
     return truncate(description, 100)
-  }, [ticket])
+  }, [ticket, translations?.metaData?.description])
 
   return (
     <Head>

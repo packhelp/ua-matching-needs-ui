@@ -4,6 +4,6 @@ import { RootContainer } from "./_root-container"
 
 export const RootContext = React.createContext<RootContainer>({} as any)
 
-let mega = getContainerSetHooks(RootContext)
+const mega = getContainerSetHooks(RootContext)
 export const useContainerSet = mega.useContainerSet
 export const useContainer = mega.useContainer

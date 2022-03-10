@@ -1,15 +1,5 @@
-import {
-  TicketDetailsType,
-  NeedTagType,
-  LocationTag,
-  TICKET_STATUS,
-} from "./ticket.type"
-import axios, { AxiosRequestConfig, AxiosInstance } from "axios"
-import {
-  LOCATION_HUB_FIELDS,
-  TAG_FIELDS,
-  TICKET_DETAILS_FIELDS,
-} from "../utils/directus-fields"
+import { TICKET_STATUS } from "./ticket.type"
+import axios from "axios"
 
 // export function directusApiInstance(): AxiosInstance {
 //   const endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT_URL
@@ -34,7 +24,9 @@ interface getTicketQueryParams {
 }
 
 export class NextApiClient {
-  constructor() {}
+  constructor() {
+    // empty
+  }
 
   public getTicket(params: getTicketQueryParams) {
     return axios

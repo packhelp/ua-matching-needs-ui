@@ -46,7 +46,7 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
     .get(url, requestOptions)
     .then((response) => response.data)
     .catch((err) => console.error(err))
-  let needs: TicketDetailsType[] = response.data
+  const needs: TicketDetailsType[] = response.data
   if (needs.length === 0) {
     return res.status(404).send("ticket not found")
   }

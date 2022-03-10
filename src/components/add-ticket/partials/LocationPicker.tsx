@@ -1,5 +1,4 @@
 import { Heading, Input } from "@chakra-ui/react"
-import { LocationFromNavigator } from "./LocationFromNavigator"
 
 type LocationPickerProps = {
   value: string

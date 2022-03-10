@@ -98,6 +98,7 @@ const setExtendToken = async function (authToken, need, extendToken) {
  * ~15 days needed, in order to have a 1% probability of at least one collision.
  */
 const generateToken = function () {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { nanoid } = require("nanoid")
   return nanoid(6) //=> "xSuZ1p"
 }
@@ -118,9 +119,9 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
     .then((response) => response.data)
     .catch((err) => console.error(err))
 
-  let needs: TicketDetailsType[] = response.data
+  const needs: TicketDetailsType[] = response.data
   const notifiedNeeds: TicketDetailsType[] = []
-  for (let i in needs) {
+  for (const i in needs) {
     const need = needs[i]
     const token = generateToken()
     await setExtendToken(authToken, need, token)

@@ -28,7 +28,7 @@ export const RegionSwitcher = () => {
           <MenuList p={0} minW="0" w={"100px"}>
             {locales.map((locale) => {
               return (
-                <Link key={locale} href={asPath} locale={locale}>
+                <Link passHref key={locale} href={asPath} locale={locale}>
                   <MenuItem justifyContent={"center"}>
                     <Image
                       src={LocaleFlags[locale]}
