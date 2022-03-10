@@ -21,29 +21,12 @@ const isProduction = adminContainer.nextEnv.isProduction
 const twilioEnv = adminContainer.twilioEnv
 
 /**
- * We also must Transform string
- * from: https://u-6228-dev.twil.io/r?u=jLKhp3
- * to:   https://r.potrzeby-ua.org/r?u=jLKhp3
+ * 41 symbols
+ * https://potrzeby-ua.org/extend?t=d45e90fa
+ * @param need
+ * @param token
+ * @returns
  */
-const shortenUrl = async function (url) {
-  const endpoint = "https://u-6228-dev.twil.io/create"
-  const response = await axios
-    .post(endpoint, {
-      url: url,
-    })
-    .then((response) => response.data)
-    .catch((err) => console.error(err))
-
-  const shortUrlTwilio = response.shortUrl
-  const shortUrl = shortUrlTwilio.replace(
-    "u-6228-dev.twil.io",
-    "r.potrzeby-ua.org"
-  )
-  console.log("short twilio url: ", shortUrlTwilio)
-  console.log("short ___our url: ", shortUrl)
-  return shortUrl
-}
-
 const notifyBySMS = async function (need, token) {
   const id = need.id
 
@@ -63,10 +46,17 @@ const notifyBySMS = async function (need, token) {
   const senderNumber = twilioEnv.TWILIO_SENDER_NUMBER
   const client = adminContainer.twilioInstance
 
-  const url = `${process.env.SERVER_URL}/api/extend-ticket?t=${token}`
-  const shortenedUrl = await shortenUrl(url)
-  // 94 symbold text + 36 symbols for URL
-  const body = `[potrzeby-ua.org]: Twoje ogłoszenie #${id} się przedawniło, wejdź na stronę aby je przedłużyć: ${shortenedUrl}`
+  /**
+   * 41 vs 52 symbols
+   * https://potrzeby-ua.org/api/extend-ticket?t=d45e90fa
+   * https://potrzeby-ua.org/extend?t=d45e90fa
+   *
+   *
+   * /extend?t=123 -> redirects to `/api/extend-ticket?t=123` via next.config.js
+   */
+  const url = `${process.env.SERVER_URL}/extend?t=${token}`
+  // 94 symbold text + 36 symbols for URL ~= 135 out of 160 limit
+  const body = `[potrzeby-ua.org]: Twoje ogłoszenie #${id} się przedawniło, wejdź na stronę aby je przedłużyć: ${url}`
 
   console.log(
     `Sending sms for need[${id}]: ${need.what}, phone: ${phone} with body: ${body}`
@@ -102,9 +92,14 @@ const setExtendToken = async function (authToken, need, extendToken) {
     authHeaders(authToken)
   )
 }
-
+/**
+ * ID length: 6
+ * Speed: 100 IDs per hour
+ * ~15 days needed, in order to have a 1% probability of at least one collision.
+ */
 const generateToken = function () {
-  return require("crypto").randomBytes(16).toString("hex")
+  const { nanoid } = require("nanoid")
+  return nanoid(6) //=> "xSuZ1p"
 }
 
 const admin = getAdminContainer().containers
