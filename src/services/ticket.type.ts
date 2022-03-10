@@ -101,8 +101,22 @@ export type TicketData = TicketFormData & {
     need_tag_id: NeedTagType
   }[]
   visits: number
+
   need_responses: NeedResponse[]
-  date_created: number
+
+  // SMS and Ticket Extend Token el
+  expiry_notified: boolean
+  extend_token: string
+}
+
+/**
+ * Raw response, not model yet
+ */
+type TicketDTO = {
+  user_created: string
+  date_created: string
+  user_updated: string
+  date_updated: string
 }
 
 export interface NeedResponse {
@@ -113,7 +127,7 @@ export interface NeedResponse {
   // need_id: number
 }
 
-export type TicketDetailsType = GenericTicketPostData & TicketData
+export type TicketDetailsType = TicketDTO & GenericTicketPostData & TicketData
 export type TicketTripDetailsType = GenericTicketPostData &
   TicketData &
   NeedTripTypeDTONested

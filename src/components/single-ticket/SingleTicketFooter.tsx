@@ -112,6 +112,25 @@ export const SingleTicketFooter = (props: SingleTicketFooterProps) => {
   const isOwner = authSession?.phoneNumber === ticket.phone
   const need = new Ticket(ticket)
   const isActive = need.isActive
+
+  /**
+   *
+   * HErere we shoudl add a new Extend button
+   * pages/api/notify-deactivated.ts
+   *
+  const url = `${process.env.SERVER_URL}/api/extend-ticket?t=${token}`
+  const shortenedUrl = await shortenUrl(url)
+  // 94 symbold text + 36 symbols for URL
+  const body = `[potrzeby-ua.org]: Twoje ogłoszenie #${id} się przedawniło, wejdź na stronę aby je przedłużyć: ${shortenedUrl}`
+   extend_token: null,
+      expiry_notified: false,
+
+    expiry_notified: true,
+      ticket_status: TICKET_STATUS.EXPIRED,
+   *
+   *
+   */
+
   return (
     <div className="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">
       {isActive && (
