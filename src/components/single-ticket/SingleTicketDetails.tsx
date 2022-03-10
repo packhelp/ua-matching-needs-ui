@@ -241,15 +241,6 @@ export const SingleTicketDetails = (props: SingleTicketDetailsProps) => {
             </div>
           )}
 
-          {ticket.count && ticket.count > 0 ? (
-            <div className="col-span-3">
-              <dt className="text-sm font-medium text-gray-500">
-                {translations["pages"]["ticket"]["howMuchIsNeeded"]}
-              </dt>
-              <dd className="mt-1 text-lg text-gray-900">{ticket.count}</dd>
-            </div>
-          ) : null}
-
           {ticket.who && (
             <div className="col-span-3">
               <dt className="text-sm font-medium text-gray-500">

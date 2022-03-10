@@ -118,9 +118,7 @@ const AddTicketOld: NextPage = () => {
         description,
         where,
         who,
-        // @deprecated - I've set to 0, because it was fetched from my localStorage from the days when it was used.
-        // Now it is not, but if it is set, it will be shown in ticket details view, so we don't want to set it.
-        count: 0,
+
         expirationTimestampSane,
         phone_public,
         need_tag_id,
