@@ -109,6 +109,16 @@ export type TicketData = TicketFormData & {
   extend_token: string
 }
 
+/**
+ * Raw response, not model yet
+ */
+type TicketDTO = {
+  user_created: string
+  date_created: string
+  user_updated: string
+  date_updated: string
+}
+
 export interface NeedResponse {
   id: number
   user_created: string
@@ -117,7 +127,7 @@ export interface NeedResponse {
   // need_id: number
 }
 
-export type TicketDetailsType = GenericTicketPostData & TicketData
+export type TicketDetailsType = TicketDTO & GenericTicketPostData & TicketData
 export type TicketTripDetailsType = GenericTicketPostData &
   TicketData &
   NeedTripTypeDTONested

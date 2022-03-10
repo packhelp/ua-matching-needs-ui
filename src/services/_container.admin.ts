@@ -1,6 +1,4 @@
 import { makeRoot } from "iti"
-import { getAdminAuthToken } from "./admin-auth-token"
-import { directusApiInstance, TicketService } from "./directus-api"
 import {
   getNextEnvVariables,
   getTwilioSMS_envVariables,
