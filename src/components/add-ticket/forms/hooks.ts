@@ -87,6 +87,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
         petsNumber,
         where_tag,
         housing_how_long_text,
+        rentHelp,
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
@@ -96,6 +97,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
         expirationTimestampSane,
         phone,
         who,
+        rentHelp: !rentHelp ? "0" : "1",
         petsNumber: has_pets ? petsNumber : 0,
         count: 0,
         adults: adults ? adults : 0,

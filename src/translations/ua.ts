@@ -123,6 +123,7 @@ export const UA: Translation = {
       childrenAge: "до 12 років",
       chooseLocation: "Виберіть місце",
       "has-pets": "Тварини",
+      rentHelp: "Я можу допомогти з орендою",
       "children-hint": "Дітей менш ніж 12 років",
       title: "Назва (коротка)",
       "title-hint": "приклад: Проживання у Poznań для 4",

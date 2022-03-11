@@ -122,6 +122,7 @@ export const PL = {
       childrenAge: "< 12 lat",
       chooseLocation: "Wybierz miejsce",
       "has-pets": "Zwierzęta",
+      rentHelp: "Pomogę w wynajmie",
       "children-hint": "Liczba osób < 12 lat",
       title: "Krótki tytuł",
       "title-hint":

@@ -124,6 +124,7 @@ export const EN: Translation = {
       childrenAge: "< 12 years",
       chooseLocation: "Choose location",
       "has-pets": "Animals",
+      rentHelp: "I can help with rent",
       "children-hint": "Number of people younger than 12",
       title: "Title (short)",
       "title-hint": "Example: Housing in Poznan for 2 adults",

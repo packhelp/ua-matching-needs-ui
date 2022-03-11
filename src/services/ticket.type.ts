@@ -73,6 +73,7 @@ export type NeedHousingTypeDTO = {
   where_tag: number // LocationTag
   housing_how_long_text?: string
   petsNumber: number
+  rentHelp?: boolean
 }
 
 export type NeedTripTypeDTONested = {

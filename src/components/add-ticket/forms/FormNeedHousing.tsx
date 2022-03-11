@@ -196,7 +196,15 @@ export const FormNeedHousing = () => {
               {...register("housing_how_long_text")}
             />
           </FormField>
-
+          <div className="flex flex-col mt-4">
+            <Checkbox
+              value={1}
+              defaultChecked={false}
+              {...register("rentHelp")}
+            >
+              {translations["pages"]["add-ticket"]["rentHelp"]}
+            </Checkbox>
+          </div>
           <FormField
             title={translations["pages"]["add-ticket"]["who-needs-it"]}
             disclaimer={
