@@ -78,7 +78,6 @@ export const useAddHousingTicket = ({ onSuccess }) => {
   >(
     (newTicket) => {
       const expirationTimestampSane = dayjs().add(72, "hour").format()
-      console.log("nt", newTicket)
 
       function toIso(dateString: string) {
         if (dateString != null) {
@@ -88,14 +87,25 @@ export const useAddHousingTicket = ({ onSuccess }) => {
         }
       }
 
+      function toNumberOrUndefined(someNumber: any) {
+        const parsed = Number.parseInt(someNumber)
+        if (Number.isNaN(parsed)) {
+          return undefined
+        }
+        if (parsed == 0) {
+          return undefined
+        }
+        return parsed
+      }
+
       const newTicketData = {
         // Contact
         who: newTicket.who,
         phone: newTicket.phone,
 
         // ppl
-        adults: Number(newTicket.adults),
-        children: Number(newTicket.children),
+        adults: toNumberOrUndefined(newTicket.adults),
+        children: toNumberOrUndefined(newTicket.children),
 
         // descriopption
         what: newTicket.what,
@@ -127,7 +137,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
         housing_pets_description: newTicket.housing_pets_description,
       }
 
-      console.log(newTicketData)
+      console.log("sfsdfs", newTicketData)
       return axios.post(`/api/add-ticket`, newTicketData)
     },
     {

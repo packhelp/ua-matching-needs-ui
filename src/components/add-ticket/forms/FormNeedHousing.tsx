@@ -48,19 +48,14 @@ export const FormNeedHousing = () => {
   })
 
   const mappedLocationTags = useMemo(() => {
-    return [
-      ...locationTags.map((tag) => {
-        return {
-          value: tag.id,
-          label: tag.name,
-        }
-      }),
-    ]
+    return locationTags.map((tag) => ({
+      value: tag.id,
+      label: tag.name,
+    }))
   }, [locationTags])
 
   const useFormOptions = {}
 
-  // type CurrentHousingPostData = NeedHousingPostData
   type CurrentHousingPostData = NeedHousingTypeFormData
 
   const {
@@ -94,7 +89,6 @@ export const FormNeedHousing = () => {
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       if (name === "housing_pets") {
-        console.log(Boolean(value))
         setHasPets(Boolean(value?.housing_pets))
       }
     })
