@@ -265,6 +265,9 @@ export const EN: Translation = {
       "Thank you! Your application will allow us to improve the provision of assistance. Our moderators will take a look at your report in a moment.",
   },
   addTicket: {
+    form: {
+      required: "This field is required",
+    },
     transport: {
       iKnowExactDate: "Exact date",
     },

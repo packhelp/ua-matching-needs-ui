@@ -20,6 +20,10 @@ import { NeedHousingTypeFormData } from "../../../services/type.need"
 
 const ticketService = getRootContainer().containers.ticketService
 
+const GenericError = ({ message }: { message: React.ReactNode }) => (
+  <p className="text-red-500 text-xs mt-1">{message}</p>
+)
+
 export const FormNeedHousing = () => {
   const router = useRouter()
   const translations = useTranslations()
@@ -123,9 +127,7 @@ export const FormNeedHousing = () => {
             <ErrorMessage
               errors={errors}
               name="housing_where_location_tag"
-              render={({ message }) => (
-                <p className="text-red-500 text-xs mt-1">{message}</p>
-              )}
+              render={GenericError}
             />
           </FormField>
 
@@ -174,11 +176,25 @@ export const FormNeedHousing = () => {
               title={"Starting When?"}
               disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
             >
-              <Input
-                type="date"
-                placeholder={translations["addTicket"]["need"]["when"]}
-                variant="outline"
-                {...register("housing_when_arrive")}
+              <Controller
+                name="housing_when_arrive"
+                control={control}
+                rules={{
+                  required: translations.addTicket.form.required,
+                }}
+                render={({ field }) => (
+                  <Input
+                    type="date"
+                    placeholder={translations["addTicket"]["need"]["when"]}
+                    variant="outline"
+                    {...register("housing_when_arrive")}
+                  />
+                )}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="housing_when_arrive"
+                render={GenericError}
               />
             </FormField>
 
@@ -199,11 +215,25 @@ export const FormNeedHousing = () => {
               title={"Leaving when?"}
               disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
             >
-              <Input
-                type="date"
-                placeholder={translations["addTicket"]["need"]["when"]}
-                variant="outline"
-                {...register("housing_when_leave")}
+              <Controller
+                name="housing_when_leave"
+                control={control}
+                rules={{
+                  required: translations.addTicket.form.required,
+                }}
+                render={({ field }) => (
+                  <Input
+                    type="date"
+                    placeholder={translations["addTicket"]["need"]["when"]}
+                    variant="outline"
+                    {...register("housing_when_leave")}
+                  />
+                )}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="housing_when_leave"
+                render={GenericError}
               />
             </FormField>
 
