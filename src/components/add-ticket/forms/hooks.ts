@@ -85,6 +85,8 @@ export const useAddHousingTicket = ({ onSuccess }) => {
           const iso = date.toISOString()
           return iso
         }
+        console.error(dateString)
+        throw "Date must be defined"
       }
 
       function toNumberOrUndefined(someNumber: any) {
@@ -98,7 +100,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
         return parsed
       }
 
-      const newTicketData = {
+      const newTicketData: NeedHousingTypeFormData = {
         // Contact
         who: newTicket.who,
         phone: newTicket.phone,
@@ -116,7 +118,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
         expirationTimestampSane: expirationTimestampSane,
 
         // Housing - core where
-        need_type: "housing",
+        need_type: "housing_v2",
         housing_where_location_tag: Number(
           newTicket.housing_where_location_tag
         ),
@@ -137,7 +139,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
         housing_pets_description: newTicket.housing_pets_description,
       }
 
-      console.log("sfsdfs", newTicketData)
+      console.log("Sending this need to the server", newTicketData)
       return axios.post(`/api/add-ticket`, newTicketData)
     },
     {

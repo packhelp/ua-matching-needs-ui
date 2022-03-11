@@ -16,8 +16,8 @@ export type NeedHousingTypeFormData = {
    * Number of people
    * Can kinda work for demand side
    */
-  adults: number
-  children: number
+  adults?: number
+  children?: number
 
   alternative_contacts?: string // new email, telegram etc.
 
@@ -27,15 +27,16 @@ export type NeedHousingTypeFormData = {
 
   what: string
   description: string
+  expirationTimestampSane: string // Date
 
   /**
    * for display leftoevers
    */
-  need_tag_id: []
+  need_tag_id: [any]
 
   // GENERIC END
 
-  need_type: "housing"
+  need_type: "housing_v2"
 
   /**
    * Locations
