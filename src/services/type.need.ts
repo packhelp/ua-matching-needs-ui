@@ -1,6 +1,17 @@
+/**
+ * Required
+ * Where - location
+ * Date In
+ * Date Out
+ */
 export type NeedHousingTypeFormData = {
   // GENERIC START
 
+  /**
+   * contact
+   */
+  who: string
+  phone: string
   /**
    * Number of people
    * Can kinda work for demand side
@@ -8,13 +19,7 @@ export type NeedHousingTypeFormData = {
   adults: number
   children: number
 
-  /**
-   * contact
-   */
-  who: string
-  phone: string
-
-  alternative_contacts: string // new email, telegram etc.
+  alternative_contacts?: string // new email, telegram etc.
 
   /**
    * Description
@@ -22,6 +27,11 @@ export type NeedHousingTypeFormData = {
 
   what: string
   description: string
+
+  /**
+   * for display leftoevers
+   */
+  need_tag_id: []
 
   // GENERIC END
 
@@ -41,8 +51,9 @@ export type NeedHousingTypeFormData = {
    * dropdown is long and hard to populate
    *
    */
-  where_tag: number // LocationTag ID - filter out not cit
-  housing_where_string: string // plain string harder to place on map
+
+  housing_where_location_tag: number // Location TAG for now. In v2 we can add Google Location
+  //_DROP_housing_where_string: string // plain string harder to place on map
 
   /**
    * Housing times
@@ -68,16 +79,22 @@ export type NeedHousingTypeFormData = {
    * - until the war ends
    * - until find something different
    */
-  housing_how_long_text?: string
+  housing_arrive_exact: boolean // a separate
+  housing_when_arrive: string // Date
+
+  housing_leave_exact: boolean // In V2 we can have pills to indicate uncertain duration like "couple of days" etc.
+  housing_when_leave: string // Date  Calendar (UI)
 
   /**
    * Payments
    *
    * I am willing to pay
    */
+  //  housing_can_help_with_rent   /V2
+  //  housing_can_help_with_description
+  housing_can_help_with_rent: boolean
 
   // Pets
   housing_pets: boolean
-  housing_pets_description?: number
-  housing_pets_number?: number
+  housing_pets_description?: string
 }

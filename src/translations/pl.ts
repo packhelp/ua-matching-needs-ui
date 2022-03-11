@@ -268,6 +268,10 @@ export const PL = {
     transport: {
       iKnowExactDate: "Dokładna data",
     },
+    housing: {
+      arrivalDateIsFlexible: "Exact date",
+      departureDateIsFlexible: "Exact date",
+    },
     wizard: {
       iNeedHelp: "Potrzebuję pomocy",
       iCanHelp: "Mogę pomóc!",

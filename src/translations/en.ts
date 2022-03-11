@@ -268,6 +268,11 @@ export const EN: Translation = {
     transport: {
       iKnowExactDate: "Exact date",
     },
+    housing: {
+      // arrivalDate: "When do you need it?",
+      arrivalDateIsFlexible: "Exact date",
+      departureDateIsFlexible: "Exact date",
+    },
     wizard: {
       iNeedHelp: "I need help",
       iCanHelp: "I can help!",

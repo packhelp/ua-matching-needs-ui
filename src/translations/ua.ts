@@ -266,6 +266,10 @@ export const UA: Translation = {
     transport: {
       iKnowExactDate: "Точна дата",
     },
+    housing: {
+      arrivalDateIsFlexible: "Exact date",
+      departureDateIsFlexible: "Exact date",
+    },
     wizard: {
       iNeedHelp: "Потрібна допомога",
       iCanHelp: "Я можу допомогти!",

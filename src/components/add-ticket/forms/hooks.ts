@@ -5,6 +5,7 @@ import {
   NeedHousingPostData,
   NeedTripPostData,
 } from "../../../services/ticket.type"
+import { NeedHousingTypeFormData } from "../../../services/type.need"
 import { TagConstIds } from "../../../services/types.tag"
 
 export const useAddTransportTicket = ({ onSuccess }) => {
@@ -71,46 +72,59 @@ export const useAddTransportTicket = ({ onSuccess }) => {
 
 export const useAddHousingTicket = ({ onSuccess }) => {
   const addTicketMutation = useMutation<
-    NeedHousingPostData,
+    NeedHousingTypeFormData,
     Error,
-    NeedHousingPostData
+    NeedHousingTypeFormData
   >(
     (newTicket) => {
-      const {
-        phone,
-        who,
-        what,
-        description,
-        adults,
-        children,
-        has_pets,
-        petsNumber,
-        where_tag,
-        housing_how_long_text,
-        rentHelp,
-      } = newTicket
-      const expirationTimestampSane = dayjs().add(24, "hour").format()
+      const expirationTimestampSane = dayjs().add(72, "hour").format()
+      console.log("nt", newTicket)
+
+      function toIso(dateString: string) {
+        if (dateString != null) {
+          const date = new Date(dateString)
+          const iso = date.toISOString()
+          return iso
+        }
+      }
 
       const newTicketData = {
-        what,
-        description,
-        expirationTimestampSane,
-        phone,
-        who,
-        rentHelp: !rentHelp ? "0" : "1",
-        petsNumber: has_pets ? petsNumber : 0,
-        count: 0,
-        adults: adults ? adults : 0,
-        children: children ? children : 0,
-        has_pets: !has_pets ? "0" : "1",
+        // Contact
+        who: newTicket.who,
+        phone: newTicket.phone,
 
-        // This is housing request, so hardcore a trip tag
+        // ppl
+        adults: Number(newTicket.adults),
+        children: Number(newTicket.children),
+
+        // descriopption
+        what: newTicket.what,
+        description: newTicket.description,
+
+        // // // Old tags
         need_tag_id: [{ need_tag_id: { id: TagConstIds.housing } }],
+        expirationTimestampSane: expirationTimestampSane,
 
-        // tripe specific
+        // Housing - core where
         need_type: "housing",
-        where_tag,
-        housing_how_long_text,
+        housing_where_location_tag: Number(
+          newTicket.housing_where_location_tag
+        ),
+
+        // // // Housing - when
+        housing_arrive_exact: newTicket.housing_arrive_exact,
+        housing_when_arrive: toIso(newTicket.housing_when_arrive),
+
+        housing_leave_exact: newTicket.housing_leave_exact,
+        housing_when_leave: toIso(newTicket.housing_when_leave),
+
+        // // Housing - payments & pets
+        housing_can_help_with_rent: newTicket.housing_can_help_with_rent,
+
+        //works
+
+        housing_pets: newTicket.housing_pets,
+        housing_pets_description: newTicket.housing_pets_description,
       }
 
       console.log(newTicketData)
