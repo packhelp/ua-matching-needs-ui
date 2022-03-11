@@ -263,8 +263,15 @@ export const UA: Translation = {
       "Дякую! Ваша заявка дозволить нам покращити надання допомоги. Наші модератори розглянуть це найближчим часом",
   },
   addTicket: {
+    form: {
+      required: "Це поле є обов'язковим",
+    },
     transport: {
       iKnowExactDate: "Точна дата",
+    },
+    housing: {
+      arrivalDateIsFlexible: "Exact date",
+      departureDateIsFlexible: "Exact date",
     },
     wizard: {
       iNeedHelp: "Потрібна допомога",

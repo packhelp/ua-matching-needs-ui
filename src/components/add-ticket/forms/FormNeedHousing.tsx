@@ -16,17 +16,25 @@ import { FormField } from "../FormField"
 import { ErrorMessage } from "@hookform/error-message"
 import { FormFeedback } from "./Feedback"
 import { useAddHousingTicket } from "./hooks"
+import { NeedHousingTypeFormData } from "../../../services/type.need"
 
 const ticketService = getRootContainer().containers.ticketService
+
+const GenericError = ({ message }: { message: React.ReactNode }) => (
+  <p className="text-red-500 text-xs mt-1">{message}</p>
+)
 
 export const FormNeedHousing = () => {
   const router = useRouter()
   const translations = useTranslations()
+
+  // Silly State
   const [hasPets, setHasPets] = useState(false)
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
   const { data: locationTags = [] } = useQuery(`location-tags`, () => {
-    return ticketService.locationTags()
+    return ticketService.locationTagsForHousing()
   })
   const addTicketMutation = useAddHousingTicket({
     onSuccess: (rawResponse) => {
@@ -44,29 +52,15 @@ export const FormNeedHousing = () => {
   })
 
   const mappedLocationTags = useMemo(() => {
-    return [
-      {
-        value: 99,
-        label: "Anywhere",
-      },
-      ...locationTags
-        .map((tag) => {
-          let name = tag.name
-
-          if (tag.location_type === "help_center" && tag.short_name != null) {
-            name = tag.short_name
-          }
-
-          return {
-            value: tag.id,
-            label: name,
-          }
-        })
-        .sort((a, b) => a.label.localeCompare(b.label)),
-    ]
+    return locationTags.map((tag) => ({
+      value: tag.id,
+      label: tag.name,
+    }))
   }, [locationTags])
 
   const useFormOptions = {}
+
+  type CurrentHousingPostData = NeedHousingTypeFormData
 
   const {
     register,
@@ -74,9 +68,9 @@ export const FormNeedHousing = () => {
     control,
     watch,
     formState: { errors },
-  } = useForm<NeedHousingPostData>(useFormOptions)
+  } = useForm<CurrentHousingPostData>(useFormOptions)
 
-  const submitNeed = async (data: NeedHousingPostData) => {
+  const submitNeed = async (data: CurrentHousingPostData) => {
     setIsSubmitting(true)
 
     if (authStatus === "unauthenticated" || !authSession?.user) {
@@ -84,10 +78,9 @@ export const FormNeedHousing = () => {
       return router.push(RouteDefinitions.SignIn)
     }
 
-    const postData: NeedHousingPostData = {
+    const postData: CurrentHousingPostData = {
       ...data,
       phone: authSession.phoneNumber,
-      need_tag_id: [],
     }
 
     addTicketMutation.mutate(postData, {
@@ -95,11 +88,11 @@ export const FormNeedHousing = () => {
     })
   }
 
+  // On Form Data change
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      if (name === "has_pets") {
-        console.log(Boolean(value))
-        setHasPets(Boolean(value?.has_pets))
+      if (name === "housing_pets") {
+        setHasPets(Boolean(value?.housing_pets))
       }
     })
     return () => subscription.unsubscribe()
@@ -112,7 +105,7 @@ export const FormNeedHousing = () => {
         <form onSubmit={handleSubmit(submitNeed)}>
           <FormField title={translations["pages"]["add-ticket"]["where"]}>
             <Controller
-              name="where_tag"
+              name="housing_where_location_tag"
               control={control}
               rules={{
                 required: translations["pages"]["add-ticket"]["required"],
@@ -132,10 +125,8 @@ export const FormNeedHousing = () => {
             />
             <ErrorMessage
               errors={errors}
-              name="where_tag"
-              render={({ message }) => (
-                <p className="text-red-500 text-xs mt-1">{message}</p>
-              )}
+              name="housing_where_location_tag"
+              render={GenericError}
             />
           </FormField>
 
@@ -167,27 +158,7 @@ export const FormNeedHousing = () => {
             />
           </FormField>
 
-          <div className="flex flex-col">
-            <Checkbox
-              ml={2}
-              value={1}
-              defaultChecked={false}
-              {...register("has_pets")}
-            >
-              {translations["pages"]["add-ticket"]["has-pets"]}
-            </Checkbox>
-          </div>
-          {hasPets && (
-            <FormField title={translations["pages"]["add-ticket"]["has-pets"]}>
-              <Input
-                placeholder={translations["pages"]["add-ticket"]["petsHint"]}
-                variant="outline"
-                {...register("petsNumber")}
-              />
-            </FormField>
-          )}
-
-          <FormField title={translations["addTicket"]["need"]["howLong"]}>
+          {/* <FormField title={translations["addTicket"]["need"]["howLong"]}>
             <Input
               type={"text"}
               placeholder={translations["addTicket"]["need"]["howLong"]}
@@ -195,12 +166,115 @@ export const FormNeedHousing = () => {
               inputMode="text"
               {...register("housing_how_long_text")}
             />
-          </FormField>
+          </FormField> */}
+
+          {/* TIME  START */}
+          <div className="bg-gray-300">
+            <h3>Starting when?</h3>
+            <FormField
+              title={"Starting When?"}
+              disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
+            >
+              <Controller
+                name="housing_when_arrive"
+                control={control}
+                rules={{
+                  required: translations.addTicket.form.required,
+                }}
+                render={({ field }) => (
+                  <Input
+                    type="date"
+                    placeholder={translations["addTicket"]["need"]["when"]}
+                    variant="outline"
+                    {...register("housing_when_arrive")}
+                  />
+                )}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="housing_when_arrive"
+                render={GenericError}
+              />
+            </FormField>
+
+            <Checkbox
+              ml={2}
+              value={1}
+              defaultChecked={false}
+              {...register("housing_arrive_exact")}
+            >
+              {/* {translations.addTicket.housing.arrivalDateIsFlexible} */}
+              My arrival date can change
+            </Checkbox>
+          </div>
+
+          <div className="bg-blue-300">
+            <h3>I need housing until</h3>
+            <FormField
+              title={"Leaving when?"}
+              disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
+            >
+              <Controller
+                name="housing_when_leave"
+                control={control}
+                rules={{
+                  required: translations.addTicket.form.required,
+                }}
+                render={({ field }) => (
+                  <Input
+                    type="date"
+                    placeholder={translations["addTicket"]["need"]["when"]}
+                    variant="outline"
+                    {...register("housing_when_leave")}
+                  />
+                )}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="housing_when_leave"
+                render={GenericError}
+              />
+            </FormField>
+
+            <Checkbox
+              ml={2}
+              value={1}
+              defaultChecked={false}
+              {...register("housing_leave_exact")}
+            >
+              {/* {translations.addTicket.housing.arrivalDateIsFlexible} */}
+              My departure date can change
+            </Checkbox>
+          </div>
+
+          {/* TIME  END */}
+
+          <div className="flex flex-col">
+            <Checkbox
+              ml={2}
+              value={1}
+              defaultChecked={false}
+              {...register("housing_pets")}
+            >
+              {translations["pages"]["add-ticket"]["has-pets"]}
+            </Checkbox>
+          </div>
+          {hasPets && (
+            <FormField title={translations["pages"]["add-ticket"]["has-pets"]}>
+              <Input
+                type="text"
+                placeholder={translations["pages"]["add-ticket"]["petsHint"]}
+                variant="outline"
+                {...register("housing_pets_description")}
+              />
+            </FormField>
+          )}
+
           <div className="flex flex-col mt-4">
             <Checkbox
               value={1}
               defaultChecked={false}
-              {...register("rentHelp")}
+              {...register("housing_can_help_with_rent")}
             >
               {translations["pages"]["add-ticket"]["rentHelp"]}
             </Checkbox>

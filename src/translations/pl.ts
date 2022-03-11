@@ -265,8 +265,16 @@ export const PL = {
       "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
   },
   addTicket: {
+    form: {
+      required: "To pole jest wymagane",
+    },
+
     transport: {
       iKnowExactDate: "Dokładna data",
+    },
+    housing: {
+      arrivalDateIsFlexible: "Exact date",
+      departureDateIsFlexible: "Exact date",
     },
     wizard: {
       iNeedHelp: "Potrzebuję pomocy",

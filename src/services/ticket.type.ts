@@ -97,6 +97,9 @@ export type NeedTripPostData = TicketFormData &
   PostDataDefaults &
   NeedTripTypeDTO
 
+/**
+ * @deprecated
+ */
 export type NeedHousingPostData = TicketFormData &
   PostDataDefaults &
   NeedHousingTypeDTO
