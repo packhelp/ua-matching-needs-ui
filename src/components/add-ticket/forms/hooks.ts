@@ -1,6 +1,7 @@
 import axios from "axios"
 import dayjs from "dayjs"
 import { useMutation } from "react-query"
+import { NextPublicApi } from "../../../services/next.public-user.api"
 import {
   NeedHousingPostData,
   NeedTripPostData,
@@ -77,68 +78,8 @@ export const useAddHousingTicket = ({ onSuccess }) => {
     NeedHousingTypeFormData
   >(
     (newTicket) => {
-      const expirationTimestampSane = dayjs().add(72, "hour").format()
-
-      function toIso(dateString: string) {
-        if (dateString != null) {
-          const date = new Date(dateString)
-          const iso = date.toISOString()
-          return iso
-        }
-        console.error(dateString)
-        throw "Date must be defined"
-      }
-
-      function toNumberOrUndefined(someNumber: any) {
-        const parsed = Number.parseInt(someNumber)
-        if (Number.isNaN(parsed)) {
-          return undefined
-        }
-        if (parsed == 0) {
-          return undefined
-        }
-        return parsed
-      }
-
-      const newTicketData: NeedHousingTypeFormData = {
-        // Contact
-        who: newTicket.who,
-        phone: newTicket.phone,
-
-        // ppl
-        adults: toNumberOrUndefined(newTicket.adults),
-        children: toNumberOrUndefined(newTicket.children),
-
-        // descriopption
-        what: newTicket.what,
-        description: newTicket.description,
-
-        //  Old tags
-        need_tag_id: [{ need_tag_id: { id: TagConstIds.housing } }],
-        expirationTimestampSane: expirationTimestampSane,
-
-        // Housing - core where
-        need_type: "housing_v2",
-        housing_where_location_tag: Number(
-          newTicket.housing_where_location_tag
-        ),
-
-        //  Housing - when
-        housing_arrive_exact: newTicket.housing_arrive_exact,
-        housing_when_arrive: toIso(newTicket.housing_when_arrive),
-
-        housing_leave_exact: newTicket.housing_leave_exact,
-        housing_when_leave: toIso(newTicket.housing_when_leave),
-
-        // // Housing - payments & pets
-        housing_can_help_with_rent: newTicket.housing_can_help_with_rent,
-
-        housing_pets: newTicket.housing_pets,
-        housing_pets_description: newTicket.housing_pets_description,
-      }
-
-      console.log("Sending this need to the server", newTicketData)
-      return axios.post(`/api/add-ticket`, newTicketData)
+      const api = new NextPublicApi()
+      return api.sendHousingNeed(newTicket)
     },
     {
       onSuccess,

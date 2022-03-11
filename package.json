@@ -63,7 +63,8 @@
     "toastify": "^2.0.1",
     "truncate": "^3.0.0",
     "tsdef": "^0.0.14",
-    "twilio": "^3.75.0"
+    "twilio": "^3.75.0",
+    "type-fest": "^2.12.0"
   },
   "devDependencies": {
     "@types/node": "17.0.21",
