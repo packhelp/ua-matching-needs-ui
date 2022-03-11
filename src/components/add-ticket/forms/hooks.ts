@@ -113,7 +113,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
         what: newTicket.what,
         description: newTicket.description,
 
-        // // // Old tags
+        //  Old tags
         need_tag_id: [{ need_tag_id: { id: TagConstIds.housing } }],
         expirationTimestampSane: expirationTimestampSane,
 
@@ -123,7 +123,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
           newTicket.housing_where_location_tag
         ),
 
-        // // // Housing - when
+        //  Housing - when
         housing_arrive_exact: newTicket.housing_arrive_exact,
         housing_when_arrive: toIso(newTicket.housing_when_arrive),
 
@@ -132,8 +132,6 @@ export const useAddHousingTicket = ({ onSuccess }) => {
 
         // // Housing - payments & pets
         housing_can_help_with_rent: newTicket.housing_can_help_with_rent,
-
-        //works
 
         housing_pets: newTicket.housing_pets,
         housing_pets_description: newTicket.housing_pets_description,

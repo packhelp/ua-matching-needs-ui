@@ -81,7 +81,6 @@ export const FormNeedHousing = () => {
     const postData: CurrentHousingPostData = {
       ...data,
       phone: authSession.phoneNumber,
-      need_tag_id: [],
     }
 
     addTicketMutation.mutate(postData, {

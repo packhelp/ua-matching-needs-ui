@@ -1,3 +1,5 @@
+import { TagConstIds } from "./types.tag"
+
 /**
  * Required
  * Where - location
@@ -32,7 +34,7 @@ export type NeedHousingTypeFormData = {
   /**
    * for display leftoevers
    */
-  need_tag_id: [any]
+  need_tag_id: [{ need_tag_id: { id: TagConstIds } }]
 
   // GENERIC END
 
