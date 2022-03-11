@@ -30,7 +30,7 @@ export const FormNeedHousing = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
   const { data: locationTags = [] } = useQuery(`location-tags`, () => {
-    return ticketService.locationTags()
+    return ticketService.locationTagsForHousing()
   })
   const addTicketMutation = useAddHousingTicket({
     onSuccess: (rawResponse) => {
@@ -49,24 +49,12 @@ export const FormNeedHousing = () => {
 
   const mappedLocationTags = useMemo(() => {
     return [
-      {
-        value: 99,
-        label: "Anywhere",
-      },
-      ...locationTags
-        .map((tag) => {
-          let name = tag.name
-
-          if (tag.location_type === "help_center" && tag.short_name != null) {
-            name = tag.short_name
-          }
-
-          return {
-            value: tag.id,
-            label: name,
-          }
-        })
-        .sort((a, b) => a.label.localeCompare(b.label)),
+      ...locationTags.map((tag) => {
+        return {
+          value: tag.id,
+          label: tag.name,
+        }
+      }),
     ]
   }, [locationTags])
 
