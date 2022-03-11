@@ -15,7 +15,7 @@ export const TicketTypeSwitcher = (props: TicketTypeSwitcherProps) => {
   const { opts } = props
 
   return (
-    <div className="flex justify-between cursor-pointer mb-4 text-center">
+    <div className="sm:flex justify-between cursor-pointer mb-4 text-center">
       {opts.map((option) => {
         return (
           <div
