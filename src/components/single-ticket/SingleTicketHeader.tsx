@@ -2,7 +2,7 @@ import React from "react"
 import { useTranslations } from "../../hooks/translations"
 import { TicketDetailsType } from "../../services/ticket.type"
 import styles from "./SingleTicketHeader.module.scss"
-import { LocationSection } from "../ticket-list/list-parts/LocationSection"
+import { LocationSection } from "../ticket-list/single-ticket/LocationSection"
 import { Ticket } from "../../services/ticket.class"
 
 type SingleTicketHeaderProps = {

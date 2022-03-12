@@ -13,7 +13,7 @@ import { Pagination } from "./Pagination"
 import { TicketsListHeader } from "./TicketsListHeader"
 import { TicketsListFilters } from "./TicketsListFilters"
 import { NextApiClient } from "../../services/directus-signed-user-api"
-import { TicketsListSingleTicket } from "./TicketsListSingleTicket"
+import { TicketsListSingleTicket } from "./single-ticket"
 
 export const TRANSPORT_TAG = 5
 
