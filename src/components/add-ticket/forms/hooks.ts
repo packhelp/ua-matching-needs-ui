@@ -93,6 +93,12 @@ function toBool(t: any): boolean {
   return Boolean(t)
 }
 
+function fmtString(s: any): string | undefined {
+  if (s === "") return undefined
+  if (typeof s !== "string") return undefined
+  return s
+}
+
 export const useAddHousingTicket = ({ onSuccess }) => {
   const addTicketMutation = useMutation<
     NeedHousingTypeFormData,
@@ -121,6 +127,11 @@ export const useAddHousingTicket = ({ onSuccess }) => {
       newTicket.housing_when_leave = toIsoOrUndefined(
         newTicket.housing_when_leave
       )
+
+      // What
+      newTicket.who = fmtString(newTicket.who)
+      newTicket.what = fmtString(newTicket.what)
+      newTicket.description = fmtString(newTicket.description)
 
       return api.sendHousingNeed(newTicket)
     },

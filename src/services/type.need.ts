@@ -12,7 +12,7 @@ export type NeedHousingTypeFormData = {
   /**
    * contact
    */
-  who: string
+  who?: string
   phone: string
   /**
    * Number of people
@@ -27,8 +27,8 @@ export type NeedHousingTypeFormData = {
    * Description
    */
 
-  what: string
-  description: string
+  what?: string
+  description?: string
   expirationTimestampSane: string // Date
 
   /**
