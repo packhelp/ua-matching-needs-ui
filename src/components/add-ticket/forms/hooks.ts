@@ -48,7 +48,6 @@ export const useAddTransportTicket = ({ onSuccess }) => {
         expirationTimestampSane,
         phone,
         who,
-        count: 0,
         adults: adults ? adults : 0,
         children: children ? children : 0,
         has_pets: !has_pets ? "0" : "1",

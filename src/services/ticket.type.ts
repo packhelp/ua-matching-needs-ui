@@ -48,7 +48,6 @@ export enum TICKET_STATUS {
 export type TicketFormData = {
   what?: string
   description?: string
-  count?: number
   where?: string
   who?: string
   phone_public: boolean
@@ -117,7 +116,6 @@ export type TicketData = TicketFormData & {
   need_tag_id: {
     need_tag_id: NeedTagType
   }[]
-  visits: number
 
   need_responses: NeedResponse[]
 
