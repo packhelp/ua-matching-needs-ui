@@ -99,7 +99,7 @@ export const FormNeedHousing = () => {
         setHasPets(Boolean(value?.housing_pets))
       }
       if (name === "housing_leave_exact") {
-        setExactLeaveDate(value?.housing_leave_exact)
+        setExactLeaveDate(value?.housing_leave_exact || false)
       }
     })
     return () => subscription.unsubscribe()
@@ -107,10 +107,24 @@ export const FormNeedHousing = () => {
   useWatch({ name: "housing_when_leave", control })
 
   const housingUntilOptions = [
-    { value: dayjs().add(2, "day").toString(), label: "A night or two" },
-    { value: dayjs().add(5, "day").toString(), label: "A couple of days" },
-    { value: dayjs().add(2, "weeks").toString(), label: "A couple of weeks" },
+    {
+      value: dayjs().add(2, "day").format("YYYY-MM-DD"),
+      label: "A night or two",
+    },
+    {
+      value: dayjs().add(5, "day").format("YYYY-MM-DD"),
+      label: "A couple of days",
+    },
+    {
+      value: dayjs().add(2, "weeks").format("YYYY-MM-DD"),
+      label: "A couple of weeks",
+    },
     { value: "", label: "No idea" },
+  ]
+
+  const housingFromOptions = [
+    { value: dayjs().format("YYYY-MM-DD"), label: "Today" },
+    { value: dayjs().add(1, "day").format("YYYY-MM-DD"), label: "Tomorrow" },
   ]
 
   const isDisabled = addTicketMutation.isLoading || isSubmitting
@@ -147,21 +161,42 @@ export const FormNeedHousing = () => {
 
           <div>
             <FormField title={translations.addTicket.housing.housingFrom}>
-              <Controller
-                name="housing_when_arrive"
-                control={control}
-                rules={{
-                  required: translations.addTicket.form.required,
-                }}
-                render={() => (
-                  <Input
-                    type="date"
-                    placeholder={translations["addTicket"]["need"]["when"]}
-                    variant="outline"
-                    {...register("housing_when_arrive")}
-                  />
-                )}
-              />
+              <div className="sm:flex gap-2">
+                <span className="relative z-0 inline-flex shadow-sm rounded-md">
+                  {housingFromOptions.map(({ label, value }, idx) => (
+                    <button
+                      onClick={() => setValue("housing_when_arrive", value)}
+                      key={value}
+                      type="button"
+                      className={classNames(
+                        getValues("housing_when_arrive") === value
+                          ? "bg-indigo-500 text-white"
+                          : "bg-white hover:bg-gray-50 text-gray-700",
+                        idx === 0 && "rounded-l-md",
+                        idx === housingFromOptions.length - 1 && "rounded-r-md",
+                        "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                      )}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </span>
+                <Controller
+                  name="housing_when_arrive"
+                  control={control}
+                  rules={{
+                    required: translations.addTicket.form.required,
+                  }}
+                  render={() => (
+                    <Input
+                      type="date"
+                      placeholder={translations["addTicket"]["need"]["when"]}
+                      variant="outline"
+                      {...register("housing_when_arrive")}
+                    />
+                  )}
+                />
+              </div>
               <ErrorMessage
                 errors={errors}
                 name="housing_when_arrive"
