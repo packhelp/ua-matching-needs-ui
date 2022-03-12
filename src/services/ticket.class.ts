@@ -4,6 +4,7 @@ import {
   TicketTripDetailsType,
   TICKET_STATUS,
 } from "./ticket.type"
+import { NeedHousingTypeFormData } from "./type.need"
 
 export class Ticket {
   constructor(private dto: TicketDetailsType) {}
@@ -36,11 +37,31 @@ export class Ticket {
     return this.dto.need_type === "trip"
   }
 
+  get isHousing() {
+    return this.dto.need_type === "housing_v2"
+  }
+
+  get hasAdults() {
+    return this.dto?.adults > 0
+  }
+  get hasChildren() {
+    return this.dto?.children > 0
+  }
+  get hasPets() {
+    return this.dto.has_pets
+  }
+
+  get getHousing(): NeedHousing {
+    if (this.isHousing) {
+      return new NeedHousing(this.dto as any)
+    }
+    return this as any
+  }
+
   get trip() {
     if (this.isTrip) {
       return new NeedTransport(this.dto as any)
     }
-    // safety fallback
     return this
   }
 
@@ -62,4 +83,18 @@ export class NeedTransport {
   get toTag(): LocationTag {
     return this.dto.where_to_tag
   }
+}
+
+export class NeedHousing extends Ticket {
+  constructor(public dtoHousing: NeedHousingTypeFormData) {
+    super(dtoHousing as any)
+  }
+
+  // get fromTag(): LocationTag {
+  //   return this.dto.where_from_tag
+  // }
+
+  // get toTag(): LocationTag {
+  //   return this.dto.where_to_tag
+  // }
 }

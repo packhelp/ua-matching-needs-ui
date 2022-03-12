@@ -14,8 +14,9 @@ import { TicketsListHeader } from "./TicketsListHeader"
 import { TicketsListFilters } from "./TicketsListFilters"
 import { NextApiClient } from "../../services/directus-signed-user-api"
 import { TicketsListSingleTicket } from "./single-ticket"
+import { TagConstIds } from "../../services/types.tag"
 
-export const TRANSPORT_TAG = 5
+export const TRANSPORT_TAG = TagConstIds.transport
 
 export const TicketsList = ({
   mineOnly,
