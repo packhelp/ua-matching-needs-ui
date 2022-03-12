@@ -91,12 +91,13 @@ export class TicketService {
     const locationTags = await this.locationTags()
     // Step 1 get tags
     const anywhere = locationTags.find(
-      (tag) => (tag.id = LocationTagConstIds.anywhere)
+      (tag) => tag.id == LocationTagConstIds.anywhere
     )
     const citiesAndGeneralLocations = locationTags.filter((tag) => {
       return (
         tag.location_type !== "help_center" &&
-        tag.location_type !== "border_crossing"
+        tag.location_type !== "border_crossing" &&
+        tag.id !== LocationTagConstIds.anywhere
       )
     })
 
