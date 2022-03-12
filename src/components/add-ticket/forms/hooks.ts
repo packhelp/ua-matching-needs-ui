@@ -1,7 +1,12 @@
 import axios from "axios"
 import dayjs from "dayjs"
 import { useMutation } from "react-query"
-import { NextPublicApi } from "../../../services/next.public-user.api"
+import {
+  NextPublicApi,
+  toIso,
+  toIsoOrUndefined,
+  toNumberOrUndefined,
+} from "../../../services/next.public-user.api"
 import {
   NeedHousingPostData,
   NeedTripPostData,
@@ -71,14 +76,52 @@ export const useAddTransportTicket = ({ onSuccess }) => {
   return addTicketMutation
 }
 
+/**
+ * Boolean("false") // true
+ * Boolean("0") // true
+ *
+ * Hence this manual check
+ */
+function toBool(t: any): boolean {
+  if (typeof t === "boolean") return t
+  if (t === 0) return false
+  if (t === "0") return false
+  if (t === "false") return false
+  if (t === 1) return true
+  if (t === "1") return true
+  if (t === "true") return true
+  return Boolean(t)
+}
+
 export const useAddHousingTicket = ({ onSuccess }) => {
   const addTicketMutation = useMutation<
     NeedHousingTypeFormData,
     Error,
     NeedHousingTypeFormData
   >(
+    //@ts-ignore
     (newTicket) => {
       const api = new NextPublicApi()
+
+      newTicket.housing_arrive_exact = toBool(newTicket.housing_arrive_exact)
+      newTicket.housing_leave_exact = toBool(newTicket.housing_leave_exact)
+      newTicket.housing_pets = toBool(newTicket.housing_pets)
+      newTicket.housing_can_help_with_rent = toBool(
+        newTicket.housing_can_help_with_rent
+      )
+
+      newTicket.housing_pets_number = toNumberOrUndefined(
+        newTicket.housing_pets_number
+      )
+      newTicket.adults = toNumberOrUndefined(newTicket.adults)
+      newTicket.children = toNumberOrUndefined(newTicket.children)
+
+      // Dates
+      newTicket.housing_when_arrive = toIso(newTicket.housing_when_arrive)
+      newTicket.housing_when_leave = toIsoOrUndefined(
+        newTicket.housing_when_leave
+      )
+
       return api.sendHousingNeed(newTicket)
     },
     {

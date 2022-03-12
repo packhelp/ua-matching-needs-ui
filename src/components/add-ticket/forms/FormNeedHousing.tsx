@@ -129,34 +129,6 @@ export const FormNeedHousing = () => {
             />
           </FormField>
 
-          <FormField
-            title={translations["pages"]["add-ticket"]["adults"]}
-            disclaimer={translations["pages"]["add-ticket"]["adultsAge"]}
-          >
-            <Input
-              min={0}
-              type={"number"}
-              placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
-              variant="outline"
-              inputMode="numeric"
-              {...register("adults")}
-            />
-          </FormField>
-
-          <FormField
-            title={translations["pages"]["add-ticket"]["children"]}
-            disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
-          >
-            <Input
-              min={0}
-              type={"number"}
-              placeholder={translations["pages"]["add-ticket"]["childrenHint"]}
-              variant="outline"
-              inputMode="numeric"
-              {...register("children")}
-            />
-          </FormField>
-
           <div>
             <FormField title={translations.addTicket.housing.housingFrom}>
               <Controller
@@ -193,11 +165,19 @@ export const FormNeedHousing = () => {
 
           <FormField title={translations.addTicket.housing.housingUntil}>
             <Input
-              type="text"
+              type="date"
               placeholder={translations["addTicket"]["need"]["when"]}
               variant="outline"
               {...register("housing_when_leave")}
             />
+            <Checkbox
+              mt={4}
+              value={1}
+              defaultChecked={false}
+              {...register("housing_leave_exact")}
+            >
+              {translations.addTicket.housing.departureDateIsFlexible}
+            </Checkbox>
           </FormField>
 
           <div className="flex flex-col mt-4">
@@ -239,6 +219,34 @@ export const FormNeedHousing = () => {
               placeholder={translations["pages"]["add-ticket"]["who-needs-it"]}
               variant="outline"
               {...register("who")}
+            />
+          </FormField>
+
+          <FormField
+            title={translations["pages"]["add-ticket"]["adults"]}
+            disclaimer={translations["pages"]["add-ticket"]["adultsAge"]}
+          >
+            <Input
+              min={0}
+              type={"number"}
+              placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
+              variant="outline"
+              inputMode="numeric"
+              {...register("adults")}
+            />
+          </FormField>
+
+          <FormField
+            title={translations["pages"]["add-ticket"]["children"]}
+            disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
+          >
+            <Input
+              min={0}
+              type={"number"}
+              placeholder={translations["pages"]["add-ticket"]["childrenHint"]}
+              variant="outline"
+              inputMode="numeric"
+              {...register("children")}
             />
           </FormField>
 
