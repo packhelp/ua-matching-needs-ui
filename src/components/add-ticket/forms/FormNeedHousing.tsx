@@ -1,6 +1,6 @@
 import { Checkbox, Input, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
-import { useForm, Controller } from "react-hook-form"
+import { useForm, Controller, useWatch } from "react-hook-form"
 import { useQuery } from "react-query"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
@@ -16,6 +16,8 @@ import { ErrorMessage } from "@hookform/error-message"
 import { FormFeedback } from "./Feedback"
 import { useAddHousingTicket } from "./hooks"
 import { NeedHousingTypeFormData } from "../../../services/type.need"
+import dayjs from "dayjs"
+import classNames from "classnames"
 
 const ticketService = getRootContainer().containers.ticketService
 
@@ -29,6 +31,7 @@ export const FormNeedHousing = () => {
 
   // Silly State
   const [hasPets, setHasPets] = useState(false)
+  const [exactLeaveDate, setExactLeaveDate] = useState(false)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
@@ -64,8 +67,10 @@ export const FormNeedHousing = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     control,
     watch,
+    getValues,
     formState: { errors },
   } = useForm<CurrentHousingPostData>(useFormOptions)
 
@@ -93,9 +98,20 @@ export const FormNeedHousing = () => {
       if (name === "housing_pets") {
         setHasPets(Boolean(value?.housing_pets))
       }
+      if (name === "housing_when_leave_exact") {
+        setExactLeaveDate(value?.housing_when_leave_exact)
+      }
     })
     return () => subscription.unsubscribe()
   }, [watch])
+  useWatch({ name: "housing_when_leave", control })
+
+  const housingUntilOptions = [
+    { value: dayjs().add(2, "day").toString(), label: "A night or two" },
+    { value: dayjs().add(5, "day").toString(), label: "A couple of days" },
+    { value: dayjs().add(2, "weeks").toString(), label: "A couple of weeks" },
+    { value: "", label: "No idea" },
+  ]
 
   const isDisabled = addTicketMutation.isLoading || isSubmitting
   return (
@@ -192,12 +208,46 @@ export const FormNeedHousing = () => {
           </div>
 
           <FormField title={translations.addTicket.housing.housingUntil}>
-            <Input
-              type="text"
-              placeholder={translations["addTicket"]["need"]["when"]}
-              variant="outline"
-              {...register("housing_when_leave")}
-            />
+            {exactLeaveDate ? (
+              <Input
+                type="date"
+                placeholder={translations["addTicket"]["need"]["when"]}
+                variant="outline"
+                {...register("housing_when_leave")}
+              />
+            ) : (
+              <span className="relative z-0 inline-flex shadow-sm rounded-md">
+                {housingUntilOptions.map(({ label, value }, idx) => (
+                  <button
+                    onClick={() => {
+                      setValue("housing_when_leave", value)
+                      setValue("housing_when_leave_hint", label)
+                    }}
+                    key={value}
+                    type="button"
+                    className={classNames(
+                      getValues("housing_when_leave_hint") === label
+                        ? "bg-indigo-500 text-white"
+                        : "bg-white hover:bg-gray-50 text-gray-700",
+                      idx === 0 && "rounded-l-md",
+                      idx === housingUntilOptions.length - 1 && "rounded-r-md",
+                      "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                    )}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </span>
+            )}
+            <Checkbox
+              value={1}
+              mt={2}
+              defaultChecked={false}
+              {...register("housing_when_leave_exact")}
+            >
+              I know the exact date
+              {/* {translations["pages"]["add-ticket"]["has-pets"]} */}
+            </Checkbox>
           </FormField>
 
           <div className="flex flex-col mt-4">
