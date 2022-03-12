@@ -7,7 +7,6 @@ import type { JsonObject } from "type-fest"
 export function toIsoOrUndefined(
   dateString: string | undefined | null
 ): string | undefined {
-  console.log(dateString)
   if (dateString != null) {
     try {
       const date = new Date(dateString)
@@ -91,7 +90,7 @@ export class NextPublicApi {
       housing_pets_description: newTicket.housing_pets_description,
     }
 
-    console.log("Sending this need to the server", newTicketData)
+    console.info("Sending need to the server", newTicketData)
     return this.postNeed(newTicketData) as any
   }
 }

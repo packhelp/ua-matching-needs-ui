@@ -145,9 +145,8 @@ export const useAddHousingTicket = ({ onSuccess }) => {
 export const useLocations = () => {
   const ticketService = getRootContainer().containers.ticketService
 
-  const { data: locationTags = [] } = useQuery(
-    `location-tags`,
-    ticketService.locationTagsForHousing
+  const { data: locationTags = [] } = useQuery(`location-tags`, () =>
+    ticketService.locationTagsForHousing()
   )
 
   const mappedLocationTags = locationTags.map((tag) => ({

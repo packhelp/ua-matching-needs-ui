@@ -89,7 +89,6 @@ export class TicketService {
 
   public async locationTagsForHousing(): Promise<LocationTag[]> {
     const locationTags = await this.locationTags()
-    console.log("HJHH", locationTags)
     // Step 1 get tags
     const anywhere = locationTags.find(
       (tag) => (tag.id = LocationTagConstIds.anywhere)
