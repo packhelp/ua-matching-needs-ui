@@ -272,9 +272,10 @@ export const EN: Translation = {
       iKnowExactDate: "Exact date",
     },
     housing: {
-      // arrivalDate: "When do you need it?",
-      arrivalDateIsFlexible: "Exact date",
-      departureDateIsFlexible: "Exact date",
+      arrivalDateIsFlexible: "My arrival date can change",
+      departureDateIsFlexible: "My departure date can change",
+      housingUntil: "For how long do you need housing?",
+      housingFrom: "Starting When?",
     },
     wizard: {
       iNeedHelp: "I need help",

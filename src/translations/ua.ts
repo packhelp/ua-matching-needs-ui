@@ -270,8 +270,10 @@ export const UA: Translation = {
       iKnowExactDate: "Точна дата",
     },
     housing: {
-      arrivalDateIsFlexible: "Exact date",
-      departureDateIsFlexible: "Exact date",
+      arrivalDateIsFlexible: "Моя дата прибуття може змінитися",
+      departureDateIsFlexible: "Моя дата від'їзду може змінитися",
+      housingUntil: "На який термін потрібне житло?",
+      housingFrom: "Коли починається?",
     },
     wizard: {
       iNeedHelp: "Потрібна допомога",

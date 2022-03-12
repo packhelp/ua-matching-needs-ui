@@ -273,8 +273,10 @@ export const PL = {
       iKnowExactDate: "Dokładna data",
     },
     housing: {
-      arrivalDateIsFlexible: "Exact date",
-      departureDateIsFlexible: "Exact date",
+      arrivalDateIsFlexible: "Moja data przyjazdu może się zmienić",
+      departureDateIsFlexible: "Moja data wyjazdu może się zmienić",
+      housingUntil: "Na jak długo potrzebujesz mieszkania?",
+      housingFrom: "Od kiedy?",
     },
     wizard: {
       iNeedHelp: "Potrzebuję pomocy",

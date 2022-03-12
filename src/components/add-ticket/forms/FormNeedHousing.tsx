@@ -11,7 +11,6 @@ import { getRootContainer } from "../../../services/_root-container"
 import Select from "react-select"
 
 import { RouteDefinitions } from "../../../utils/routes"
-import { NeedHousingPostData } from "../../../services/ticket.type"
 import { FormField } from "../FormField"
 import { ErrorMessage } from "@hookform/error-message"
 import { FormFeedback } from "./Feedback"
@@ -90,7 +89,7 @@ export const FormNeedHousing = () => {
 
   // On Form Data change
   useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
+    const subscription = watch((value, { name }) => {
       if (name === "housing_pets") {
         setHasPets(Boolean(value?.housing_pets))
       }
@@ -158,30 +157,15 @@ export const FormNeedHousing = () => {
             />
           </FormField>
 
-          {/* <FormField title={translations["addTicket"]["need"]["howLong"]}>
-            <Input
-              type={"text"}
-              placeholder={translations["addTicket"]["need"]["howLong"]}
-              variant="outline"
-              inputMode="text"
-              {...register("housing_how_long_text")}
-            />
-          </FormField> */}
-
-          {/* TIME  START */}
-          <div className="bg-gray-300">
-            <h3>Starting when?</h3>
-            <FormField
-              title={"Starting When?"}
-              disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
-            >
+          <div>
+            <FormField title={translations.addTicket.housing.housingFrom}>
               <Controller
                 name="housing_when_arrive"
                 control={control}
                 rules={{
                   required: translations.addTicket.form.required,
                 }}
-                render={({ field }) => (
+                render={() => (
                   <Input
                     type="date"
                     placeholder={translations["addTicket"]["need"]["when"]}
@@ -198,60 +182,26 @@ export const FormNeedHousing = () => {
             </FormField>
 
             <Checkbox
-              ml={2}
+              mt={4}
               value={1}
               defaultChecked={false}
               {...register("housing_arrive_exact")}
             >
-              {/* {translations.addTicket.housing.arrivalDateIsFlexible} */}
-              My arrival date can change
+              {translations.addTicket.housing.arrivalDateIsFlexible}
             </Checkbox>
           </div>
 
-          <div className="bg-blue-300">
-            <h3>I need housing until</h3>
-            <FormField
-              title={"Leaving when?"}
-              disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
-            >
-              <Controller
-                name="housing_when_leave"
-                control={control}
-                rules={{
-                  required: translations.addTicket.form.required,
-                }}
-                render={({ field }) => (
-                  <Input
-                    type="date"
-                    placeholder={translations["addTicket"]["need"]["when"]}
-                    variant="outline"
-                    {...register("housing_when_leave")}
-                  />
-                )}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="housing_when_leave"
-                render={GenericError}
-              />
-            </FormField>
+          <FormField title={translations.addTicket.housing.housingUntil}>
+            <Input
+              type="text"
+              placeholder={translations["addTicket"]["need"]["when"]}
+              variant="outline"
+              {...register("housing_when_leave")}
+            />
+          </FormField>
 
+          <div className="flex flex-col mt-4">
             <Checkbox
-              ml={2}
-              value={1}
-              defaultChecked={false}
-              {...register("housing_leave_exact")}
-            >
-              {/* {translations.addTicket.housing.arrivalDateIsFlexible} */}
-              My departure date can change
-            </Checkbox>
-          </div>
-
-          {/* TIME  END */}
-
-          <div className="flex flex-col">
-            <Checkbox
-              ml={2}
               value={1}
               defaultChecked={false}
               {...register("housing_pets")}

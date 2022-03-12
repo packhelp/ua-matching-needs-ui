@@ -64,8 +64,7 @@ export class NextPublicApi {
       housing_arrive_exact: newTicket.housing_arrive_exact,
       housing_when_arrive: toIso(newTicket.housing_when_arrive),
 
-      housing_leave_exact: newTicket.housing_leave_exact,
-      housing_when_leave: toIso(newTicket.housing_when_leave),
+      housing_when_leave: newTicket.housing_when_leave,
 
       // // Housing - payments & pets
       housing_can_help_with_rent: newTicket.housing_can_help_with_rent,
