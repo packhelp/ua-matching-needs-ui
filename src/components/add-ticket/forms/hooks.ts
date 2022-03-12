@@ -1,18 +1,17 @@
 import axios from "axios"
 import dayjs from "dayjs"
-import { useMutation } from "react-query"
+import { useMemo } from "react"
+import { useMutation, useQuery } from "react-query"
 import {
   NextPublicApi,
   toIso,
   toIsoOrUndefined,
   toNumberOrUndefined,
 } from "../../../services/next.public-user.api"
-import {
-  NeedHousingPostData,
-  NeedTripPostData,
-} from "../../../services/ticket.type"
+import { NeedTripPostData } from "../../../services/ticket.type"
 import { NeedHousingTypeFormData } from "../../../services/type.need"
 import { TagConstIds } from "../../../services/types.tag"
+import { getRootContainer } from "../../../services/_root-container"
 
 export const useAddTransportTicket = ({ onSuccess }) => {
   const addTicketMutation = useMutation<
@@ -141,4 +140,20 @@ export const useAddHousingTicket = ({ onSuccess }) => {
   )
 
   return addTicketMutation
+}
+
+export const useLocations = () => {
+  const ticketService = getRootContainer().containers.ticketService
+
+  const { data: locationTags = [] } = useQuery(
+    `location-tags`,
+    ticketService.locationTagsForHousing
+  )
+
+  const mappedLocationTags = locationTags.map((tag) => ({
+    value: tag.id,
+    label: tag.name,
+  }))
+
+  return { mappedLocationTags, locationTags }
 }

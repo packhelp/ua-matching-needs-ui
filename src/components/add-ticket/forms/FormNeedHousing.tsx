@@ -1,14 +1,11 @@
 import { Checkbox, Input, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
-import { useForm, Controller, useWatch } from "react-hook-form"
-import { useQuery } from "react-query"
+import { useForm, Controller } from "react-hook-form"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
-import React, { useState, useMemo, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { PlusSVG } from "../../../assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
-import { getRootContainer } from "../../../services/_root-container"
-import Select from "react-select"
 
 import { RouteDefinitions } from "../../../utils/routes"
 import { FormField } from "../FormField"
@@ -16,28 +13,26 @@ import { ErrorMessage } from "@hookform/error-message"
 import { FormFeedback } from "./Feedback"
 import { useAddHousingTicket } from "./hooks"
 import { NeedHousingTypeFormData } from "../../../services/type.need"
-import dayjs from "dayjs"
 import classNames from "classnames"
-
-const ticketService = getRootContainer().containers.ticketService
-
-const GenericError = ({ message }: { message: React.ReactNode }) => (
-  <p className="text-red-500 text-xs mt-1">{message}</p>
-)
+import { housingFromOptions, housingUntilOptions, TODAY } from "./constants"
+import { LocationField } from "./Fields/Location"
+import { GenericError } from "./Fields/GenericError"
 
 export const FormNeedHousing = () => {
   const router = useRouter()
   const translations = useTranslations()
 
   // Silly State
-  const [hasPets, setHasPets] = useState(false)
-  const [exactLeaveDate, setExactLeaveDate] = useState(false)
-
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { data: authSession, status: authStatus } = useSession()
-  const { data: locationTags = [] } = useQuery(`location-tags`, () => {
-    return ticketService.locationTagsForHousing()
+  const [formState, setFormState] = useState({
+    exactLeaveDate: false,
+    hasPets: false,
+    isSubmitting: false,
+    housing_when_arrive: TODAY,
+    housing_when_leave_text: null,
   })
+
+  const { data: authSession, status: authStatus } = useSession()
+
   const addTicketMutation = useAddHousingTicket({
     onSuccess: (rawResponse) => {
       const { data } = rawResponse.data
@@ -53,15 +48,6 @@ export const FormNeedHousing = () => {
     },
   })
 
-  const mappedLocationTags = useMemo(() => {
-    return locationTags.map((tag) => ({
-      value: tag.id,
-      label: tag.name,
-    }))
-  }, [locationTags])
-
-  const useFormOptions = {}
-
   type CurrentHousingPostData = NeedHousingTypeFormData
 
   const {
@@ -70,12 +56,18 @@ export const FormNeedHousing = () => {
     setValue,
     control,
     watch,
-    getValues,
     formState: { errors },
-  } = useForm<CurrentHousingPostData>(useFormOptions)
+  } = useForm<CurrentHousingPostData>({
+    defaultValues: {
+      housing_when_arrive: TODAY,
+    },
+  })
 
   const submitNeed = async (data: CurrentHousingPostData) => {
-    setIsSubmitting(true)
+    setFormState((state) => ({
+      ...state,
+      isSubmitting: true,
+    }))
 
     if (authStatus === "unauthenticated" || !authSession?.user) {
       toast.error(translations["pages"]["auth"]["you-have-been-logged-out"])
@@ -88,93 +80,53 @@ export const FormNeedHousing = () => {
     }
 
     addTicketMutation.mutate(postData, {
-      onError: () => setIsSubmitting(false),
+      onError: () =>
+        setFormState((state) => ({
+          ...state,
+          isSubmitting: false,
+        })),
     })
   }
 
   // On Form Data change
   useEffect(() => {
     const subscription = watch((value, { name }) => {
-      if (name === "housing_pets") {
-        setHasPets(Boolean(value?.housing_pets))
-      }
-      if (name === "housing_leave_exact") {
-        setExactLeaveDate(value?.housing_leave_exact || false)
-      }
+      const formName = name as string
+      setFormState((state) => ({
+        ...state,
+        [formName]: value[formName],
+      }))
     })
     return () => subscription.unsubscribe()
   }, [watch])
-  useWatch({ name: "housing_when_leave", control })
 
-  const housingUntilOptions = [
-    {
-      value: dayjs().add(2, "day").format("YYYY-MM-DD"),
-      label: "A night or two",
-    },
-    {
-      value: dayjs().add(5, "day").format("YYYY-MM-DD"),
-      label: "A couple of days",
-    },
-    {
-      value: dayjs().add(2, "weeks").format("YYYY-MM-DD"),
-      label: "A couple of weeks",
-    },
-    { value: "", label: "No idea" },
-  ]
+  const isDisabled = addTicketMutation.isLoading || formState.isSubmitting
 
-  const housingFromOptions = [
-    { value: dayjs().format("YYYY-MM-DD"), label: "Today" },
-    { value: dayjs().add(1, "day").format("YYYY-MM-DD"), label: "Tomorrow" },
-  ]
-
-  const isDisabled = addTicketMutation.isLoading || isSubmitting
   return (
     <>
       <div className="mb-8 bg-white">
         <form onSubmit={handleSubmit(submitNeed)}>
-          <FormField title={translations["pages"]["add-ticket"]["where"]}>
-            <Controller
-              name="housing_where_location_tag"
-              control={control}
-              rules={{
-                required: translations["pages"]["add-ticket"]["required"],
-              }}
-              render={({ field }) => (
-                <Select
-                  options={mappedLocationTags}
-                  onChange={(e) => field.onChange(e!.value)}
-                  placeholder={
-                    translations["pages"]["add-ticket"]["chooseLocation"]
-                  }
-                  isClearable
-                  isSearchable={false}
-                  ref={field.ref}
-                />
-              )}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="housing_where_location_tag"
-              render={GenericError}
-            />
-          </FormField>
-
+          <LocationField
+            control={control}
+            name="housing_where_location_tag"
+            errors={errors}
+          />
           <div>
             <FormField title={translations.addTicket.housing.housingFrom}>
               <div className="sm:flex gap-2">
-                <span className="relative z-0 inline-flex shadow-sm rounded-md">
+                <span className="relative z-0 flex sm:inline-flex shadow-sm rounded-md mb-2 sm:mb-0">
                   {housingFromOptions.map(({ label, value }, idx) => (
                     <button
                       onClick={() => setValue("housing_when_arrive", value)}
                       key={value}
                       type="button"
                       className={classNames(
-                        getValues("housing_when_arrive") === value
+                        formState.housing_when_arrive === value
                           ? "bg-indigo-500 text-white"
                           : "bg-white hover:bg-gray-50 text-gray-700",
                         idx === 0 && "rounded-l-md",
                         idx === housingFromOptions.length - 1 && "rounded-r-md",
-                        "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                        "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-full sm:w-auto justify-center"
                       )}
                     >
                       {label}
@@ -215,7 +167,7 @@ export const FormNeedHousing = () => {
           </div>
 
           <FormField title={translations.addTicket.housing.housingUntil}>
-            {exactLeaveDate ? (
+            {formState.exactLeaveDate ? (
               <Input
                 type="date"
                 placeholder={translations["addTicket"]["need"]["when"]}
@@ -223,7 +175,7 @@ export const FormNeedHousing = () => {
                 {...register("housing_when_leave")}
               />
             ) : (
-              <span className="relative z-0 inline-flex shadow-sm rounded-md">
+              <span className="relative z-0 flex shadow-sm rounded-md">
                 {housingUntilOptions.map(({ label, value }, idx) => (
                   <button
                     onClick={() => {
@@ -233,12 +185,12 @@ export const FormNeedHousing = () => {
                     key={value}
                     type="button"
                     className={classNames(
-                      getValues("housing_when_leave_text") === label
+                      formState.housing_when_leave_text === label
                         ? "bg-indigo-500 text-white"
                         : "bg-white hover:bg-gray-50 text-gray-700",
                       idx === 0 && "rounded-l-md",
                       idx === housingUntilOptions.length - 1 && "rounded-r-md",
-                      "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                      "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-full justify-center"
                     )}
                   >
                     {label}
@@ -266,7 +218,7 @@ export const FormNeedHousing = () => {
               {translations["pages"]["add-ticket"]["has-pets"]}
             </Checkbox>
           </div>
-          {hasPets && (
+          {formState.hasPets && (
             <FormField title={translations["pages"]["add-ticket"]["has-pets"]}>
               <Input
                 type="text"

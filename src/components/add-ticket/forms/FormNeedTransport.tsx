@@ -16,6 +16,7 @@ import { FormField } from "../FormField"
 import { ErrorMessage } from "@hookform/error-message"
 import { FormFeedback } from "./Feedback"
 import { useAddTransportTicket } from "./hooks"
+import { LocationField } from "./Fields/Location"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {
@@ -25,8 +26,6 @@ export type InputValuesType = {
   }
 }
 
-const ticketService = getRootContainer().containers.ticketService
-
 export const FormNeedTransport = () => {
   const router = useRouter()
   const translations = useTranslations()
@@ -34,9 +33,6 @@ export const FormNeedTransport = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [exactDate, setExactDate] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
-  const { data: locationTags = [] } = useQuery(`location-tags`, () => {
-    return ticketService.locationTags()
-  })
   const addTicketMutation = useAddTransportTicket({
     onSuccess: (rawResponse) => {
       const { data } = rawResponse.data
@@ -52,22 +48,6 @@ export const FormNeedTransport = () => {
     },
   })
 
-  const mappedLocationTags = useMemo(() => {
-    return locationTags
-      .map((tag) => {
-        let name = tag.name
-
-        if (tag.location_type === "help_center" && tag.short_name != null) {
-          name = tag.short_name
-        }
-
-        return {
-          value: tag.id,
-          label: name,
-        }
-      })
-      .sort((a, b) => a.label.localeCompare(b.label))
-  }, [locationTags])
   const useFormOptions = {}
   const {
     register,
@@ -101,63 +81,17 @@ export const FormNeedTransport = () => {
     <>
       <div className="mb-8 bg-white">
         <form onSubmit={handleSubmit(submitNeed)}>
-          <FormField title={translations["pages"]["add-ticket"]["whereFrom"]}>
-            <Controller
-              name="where_from_tag"
-              control={control}
-              rules={{
-                required: translations["pages"]["add-ticket"]["required"],
-              }}
-              render={({ field }) => (
-                <Select
-                  options={mappedLocationTags}
-                  onChange={(e) => field.onChange(e!.value)}
-                  placeholder={
-                    translations["pages"]["add-ticket"]["chooseLocation"]
-                  }
-                  isClearable
-                  isSearchable={false}
-                  ref={field.ref}
-                />
-              )}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="where_from_tag"
-              render={({ message }) => (
-                <p className="text-red-500 text-xs mt-1">{message}</p>
-              )}
-            />
-          </FormField>
-
-          <FormField title={translations["pages"]["add-ticket"]["whereTo"]}>
-            <Controller
-              name="where_to_tag"
-              control={control}
-              rules={{
-                required: translations["pages"]["add-ticket"]["required"],
-              }}
-              render={({ field }) => (
-                <Select
-                  options={mappedLocationTags}
-                  onChange={(e) => field.onChange(e!.value)}
-                  placeholder={
-                    translations["pages"]["add-ticket"]["chooseLocation"]
-                  }
-                  isClearable
-                  isSearchable={false}
-                  ref={field.ref}
-                />
-              )}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="where_to_tag"
-              render={({ message }) => (
-                <p className="text-red-500 text-xs mt-1">{message}</p>
-              )}
-            />
-          </FormField>
+          <LocationField
+            errors={errors}
+            control={control}
+            name="where_from_tag"
+          />
+          <LocationField
+            errors={errors}
+            control={control}
+            name="where_to_tag"
+            title={translations["pages"]["add-ticket"]["whereTo"]}
+          />
 
           <FormField
             title={translations["pages"]["add-ticket"]["adults"]}
