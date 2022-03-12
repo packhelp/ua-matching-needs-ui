@@ -1,3 +1,6 @@
+import { GoPerson } from "react-icons/go"
+import { FaDog } from "react-icons/fa"
+import { MdChildFriendly } from "react-icons/md"
 import Link from "next/link"
 import { Tooltip } from "@chakra-ui/react"
 import { Tag } from "../../Tag"
@@ -11,6 +14,7 @@ import { TicketDetailsType } from "../../../services/ticket.type"
 import { LocationSection } from "./LocationSection"
 import { SingleTicketFooter } from "./Footer"
 import { LocationIcon, OrganizationIcon } from "./Icons"
+import { SingleTicketDetails } from "./Details"
 
 type TicketsListSingleTicketProps = {
   ticket: TicketDetailsType
@@ -25,14 +29,12 @@ export const TicketsListSingleTicket = (
   const { locale } = router
 
   const need = new Ticket(ticket)
-  const dateFormatted = need.createdDateFormattedString
 
   const ticketUrl = RouteDefinitions.TicketDetails.replace(
     ":id",
     String(ticket.id)
   )
-
-  console.log(need)
+  const isHousingTickets = ticket.need_type === "housing_v2"
 
   return (
     <li
@@ -77,9 +79,23 @@ export const TicketsListSingleTicket = (
               </span>
             </div>
           </div>
-
           {need.isTrip && <LocationSection trip={need.trip}></LocationSection>}
+          {isHousingTickets && (
+            <div className="flex justify-around border-t border-b border-gray-200 bg-slate-50 px-4 py-5 p-1">
+              <div className="flex gap-2 items-center">
+                <GoPerson /> {ticket.adults}
+              </div>
+              <div className="flex gap-2 items-center">
+                <MdChildFriendly />
+                {ticket.children || 0}
+              </div>
 
+              <div className="flex gap-2 items-center">
+                <FaDog />
+                {ticket.has_pets ? ticket.housing_pets_description : 0}
+              </div>
+            </div>
+          )}
           <div className="py-1">
             {!need.isTrip && (
               <p className="text-xl font-medium text-gray-900 truncate">
@@ -98,29 +114,7 @@ export const TicketsListSingleTicket = (
               </div>
             )}
           </div>
-          <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-8">
-            <div className="sm:col-span-1">
-              <dt className="text-xs font-medium text-gray-400">
-                {translations["pages"]["ticket"]["whoRequested"]}
-              </dt>
-              <dd className="flex items-center text-sm text-gray-900 truncate">
-                {ticket.organization_id ? (
-                  <span className="truncate">
-                    {ticket.organization_id.name}
-                  </span>
-                ) : (
-                  <span className="truncate">{ticket.who}</span>
-                )}
-              </dd>
-            </div>
-
-            <div className="sm:col-span-1">
-              <dt className="text-xs font-medium text-gray-400">
-                {translations["pages"]["ticket"]["added"]}
-              </dt>
-              <dd className="text-sm text-gray-900 ">{dateFormatted}</dd>
-            </div>
-          </dl>
+          <SingleTicketDetails ticket={ticket} need={need} />
         </div>
       </Link>
       <SingleTicketFooter ticket={ticket} />

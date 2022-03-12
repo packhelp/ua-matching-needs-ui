@@ -55,6 +55,7 @@ export type TicketFormData = {
   adults: number
   children: number
   has_pets: boolean
+  housing_pets_description?: string
 }
 
 export type NeedTripTypeDTO = {
@@ -109,7 +110,7 @@ export type GenericTicketPostData = TicketFormData & PostDataDefaults
 export type TicketData = TicketFormData & {
   id: number
   expirationTimestampSane: string
-  need_type: "trip" | "housing" | "generic" | null
+  need_type: "trip" | "housing" | "generic" | "housing_v2" | null
   ticket_status: TICKET_STATUS
   organization_id?: Organization
   description: string
