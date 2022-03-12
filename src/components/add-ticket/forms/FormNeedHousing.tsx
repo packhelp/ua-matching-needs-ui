@@ -191,26 +191,29 @@ export const FormNeedHousing = () => {
               />
             ) : (
               <span className="relative z-0 flex shadow-sm rounded-md">
-                {housingUntilOptions.map(({ label, value }, idx) => (
-                  <button
-                    onClick={() => {
-                      setValue("housing_when_leave", value)
-                      setValue("housing_when_leave_text", label)
-                    }}
-                    key={value}
-                    type="button"
-                    className={classNames(
-                      formState.housing_when_leave_text === label
-                        ? "bg-indigo-500 text-white"
-                        : "bg-white hover:bg-gray-50 text-gray-700",
-                      idx === 0 && "rounded-l-md",
-                      idx === housingUntilOptions.length - 1 && "rounded-r-md",
-                      "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-full justify-center"
-                    )}
-                  >
-                    {label}
-                  </button>
-                ))}
+                {housingUntilOptions.map(
+                  ({ label, description, value }, idx) => (
+                    <button
+                      onClick={() => {
+                        setValue("housing_when_leave", value)
+                        setValue("housing_when_leave_text", label)
+                      }}
+                      key={value}
+                      type="button"
+                      className={classNames(
+                        formState.housing_when_leave_text === label
+                          ? "bg-indigo-500 text-white"
+                          : "bg-white hover:bg-gray-50 text-gray-700",
+                        idx === 0 && "rounded-l-md",
+                        idx === housingUntilOptions.length - 1 &&
+                          "rounded-r-md",
+                        "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-full justify-center"
+                      )}
+                    >
+                      {description}
+                    </button>
+                  )
+                )}
               </span>
             )}
             <Checkbox

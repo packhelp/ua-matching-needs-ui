@@ -1,13 +1,10 @@
-import { GoPerson } from "react-icons/go"
-import { FaDog } from "react-icons/fa"
-import { MdChildFriendly } from "react-icons/md"
 import Link from "next/link"
 import { Tooltip } from "@chakra-ui/react"
 import { Tag } from "../../Tag"
 import { Hand } from "../../hero-icons/Hand"
 import React from "react"
 import { RouteDefinitions } from "../../../utils/routes"
-import { NeedHousing, Ticket } from "../../../services/ticket.class"
+import { Ticket } from "../../../services/ticket.class"
 import { useTranslations } from "../../../hooks/translations"
 import { useRouter } from "next/router"
 import { TicketDetailsType } from "../../../services/ticket.type"
@@ -15,35 +12,10 @@ import { LocationSection } from "./LocationSection"
 import { SingleTicketFooter } from "./Footer"
 import { LocationIcon, OrganizationIcon } from "./Icons"
 import { SingleTicketDetails } from "./Details"
+import { HousingSection } from "./HousingSection"
 
 type TicketsListSingleTicketProps = {
   ticket: TicketDetailsType
-}
-const HousingSection = ({ need }: { need: NeedHousing }) => {
-  return (
-    <div className="flex justify-around border-t border-b border-gray-200 bg-slate-50 px-4 py-5 p-1">
-      {need.hasAdults && (
-        <div className="flex gap-2 items-center">
-          <GoPerson /> {need.dtoHousing.adults}
-        </div>
-      )}
-
-      {need.hasChildren && (
-        <div className="flex gap-2 items-center">
-          <MdChildFriendly />
-          {need.dtoHousing.children}
-        </div>
-      )}
-      {need.hasPets && (
-        <div className="flex gap-2 items-center">
-          <FaDog />
-          {need.dtoHousing.housing_pets
-            ? need.dtoHousing.housing_pets_description
-            : 0}
-        </div>
-      )}
-    </div>
-  )
 }
 
 export const TicketsListSingleTicket = (
@@ -109,18 +81,18 @@ export const TicketsListSingleTicket = (
           {isHousingTickets && <HousingSection need={need.getHousing} />}
           <div className="py-1">
             {!need.isTrip && (
-              <p className="text-xl font-medium text-gray-900 truncate">
+              <p className="text-xl font-medium text-gray-900 line-clamp-2">
                 {need.title}
               </p>
             )}
 
             {ticket.where && !need.isTrip ? (
-              <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
+              <div className="flex items-center text-sm font-medium text-gray-400 line-clamp-2 space-x-1">
                 <LocationIcon />
                 <span>{ticket.where}</span>
               </div>
             ) : (
-              <div className="flex items-center text-sm font-medium text-gray-400 truncate space-x-1">
+              <div className="flex items-center text-sm font-medium text-gray-400 line-clamp-2 space-x-1">
                 {need.isTrip && <span className="w-5 h-5">{need.title}</span>}
               </div>
             )}
