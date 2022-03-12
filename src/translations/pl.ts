@@ -122,6 +122,7 @@ export const PL = {
       childrenAge: "< 12 lat",
       chooseLocation: "Wybierz miejsce",
       "has-pets": "Zwierzęta",
+      rentHelp: "Pomogę w wynajmie",
       "children-hint": "Liczba osób < 12 lat",
       title: "Krótki tytuł",
       "title-hint":
@@ -264,8 +265,18 @@ export const PL = {
       "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
   },
   addTicket: {
+    form: {
+      required: "To pole jest wymagane",
+    },
+
     transport: {
       iKnowExactDate: "Dokładna data",
+    },
+    housing: {
+      arrivalDateIsFlexible: "Moja data przyjazdu może się zmienić",
+      departureDateIsFlexible: "Moja data wyjazdu może się zmienić",
+      housingUntil: "Na jak długo potrzebujesz mieszkania?",
+      housingFrom: "Od kiedy?",
     },
     wizard: {
       iNeedHelp: "Potrzebuję pomocy",

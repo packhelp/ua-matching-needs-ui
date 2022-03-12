@@ -123,6 +123,7 @@ export const UA: Translation = {
       childrenAge: "до 12 років",
       chooseLocation: "Виберіть місце",
       "has-pets": "Тварини",
+      rentHelp: "Я можу допомогти з орендою",
       "children-hint": "Дітей менш ніж 12 років",
       title: "Назва (коротка)",
       "title-hint": "приклад: Проживання у Poznań для 4",
@@ -262,8 +263,17 @@ export const UA: Translation = {
       "Дякую! Ваша заявка дозволить нам покращити надання допомоги. Наші модератори розглянуть це найближчим часом",
   },
   addTicket: {
+    form: {
+      required: "Це поле є обов'язковим",
+    },
     transport: {
       iKnowExactDate: "Точна дата",
+    },
+    housing: {
+      arrivalDateIsFlexible: "Моя дата прибуття може змінитися",
+      departureDateIsFlexible: "Моя дата від'їзду може змінитися",
+      housingUntil: "На який термін потрібне житло?",
+      housingFrom: "Коли починається?",
     },
     wizard: {
       iNeedHelp: "Потрібна допомога",

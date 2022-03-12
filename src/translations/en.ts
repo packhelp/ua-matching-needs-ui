@@ -124,6 +124,7 @@ export const EN: Translation = {
       childrenAge: "< 12 years",
       chooseLocation: "Choose location",
       "has-pets": "Animals",
+      rentHelp: "I can help with rent",
       "children-hint": "Number of people younger than 12",
       title: "Title (short)",
       "title-hint": "Example: Housing in Poznan for 2 adults",
@@ -264,8 +265,17 @@ export const EN: Translation = {
       "Thank you! Your application will allow us to improve the provision of assistance. Our moderators will take a look at your report in a moment.",
   },
   addTicket: {
+    form: {
+      required: "This field is required",
+    },
     transport: {
       iKnowExactDate: "Exact date",
+    },
+    housing: {
+      arrivalDateIsFlexible: "My arrival date can change",
+      departureDateIsFlexible: "My departure date can change",
+      housingUntil: "For how long do you need housing?",
+      housingFrom: "Starting When?",
     },
     wizard: {
       iNeedHelp: "I need help",
