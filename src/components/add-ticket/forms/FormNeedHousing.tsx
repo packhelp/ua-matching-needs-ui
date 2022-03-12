@@ -98,8 +98,8 @@ export const FormNeedHousing = () => {
       if (name === "housing_pets") {
         setHasPets(Boolean(value?.housing_pets))
       }
-      if (name === "housing_when_leave_exact") {
-        setExactLeaveDate(value?.housing_when_leave_exact)
+      if (name === "housing_leave_exact") {
+        setExactLeaveDate(value?.housing_leave_exact)
       }
     })
     return () => subscription.unsubscribe()
@@ -142,34 +142,6 @@ export const FormNeedHousing = () => {
               errors={errors}
               name="housing_where_location_tag"
               render={GenericError}
-            />
-          </FormField>
-
-          <FormField
-            title={translations["pages"]["add-ticket"]["adults"]}
-            disclaimer={translations["pages"]["add-ticket"]["adultsAge"]}
-          >
-            <Input
-              min={0}
-              type={"number"}
-              placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
-              variant="outline"
-              inputMode="numeric"
-              {...register("adults")}
-            />
-          </FormField>
-
-          <FormField
-            title={translations["pages"]["add-ticket"]["children"]}
-            disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
-          >
-            <Input
-              min={0}
-              type={"number"}
-              placeholder={translations["pages"]["add-ticket"]["childrenHint"]}
-              variant="outline"
-              inputMode="numeric"
-              {...register("children")}
             />
           </FormField>
 
@@ -221,12 +193,12 @@ export const FormNeedHousing = () => {
                   <button
                     onClick={() => {
                       setValue("housing_when_leave", value)
-                      setValue("housing_when_leave_hint", label)
+                      setValue("housing_when_leave_text", label)
                     }}
                     key={value}
                     type="button"
                     className={classNames(
-                      getValues("housing_when_leave_hint") === label
+                      getValues("housing_when_leave_text") === label
                         ? "bg-indigo-500 text-white"
                         : "bg-white hover:bg-gray-50 text-gray-700",
                       idx === 0 && "rounded-l-md",
@@ -243,7 +215,7 @@ export const FormNeedHousing = () => {
               value={1}
               mt={2}
               defaultChecked={false}
-              {...register("housing_when_leave_exact")}
+              {...register("housing_leave_exact")}
             >
               I know the exact date
               {/* {translations["pages"]["add-ticket"]["has-pets"]} */}
@@ -289,6 +261,34 @@ export const FormNeedHousing = () => {
               placeholder={translations["pages"]["add-ticket"]["who-needs-it"]}
               variant="outline"
               {...register("who")}
+            />
+          </FormField>
+
+          <FormField
+            title={translations["pages"]["add-ticket"]["adults"]}
+            disclaimer={translations["pages"]["add-ticket"]["adultsAge"]}
+          >
+            <Input
+              min={0}
+              type={"number"}
+              placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
+              variant="outline"
+              inputMode="numeric"
+              {...register("adults")}
+            />
+          </FormField>
+
+          <FormField
+            title={translations["pages"]["add-ticket"]["children"]}
+            disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
+          >
+            <Input
+              min={0}
+              type={"number"}
+              placeholder={translations["pages"]["add-ticket"]["childrenHint"]}
+              variant="outline"
+              inputMode="numeric"
+              {...register("children")}
             />
           </FormField>
 

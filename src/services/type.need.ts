@@ -82,11 +82,13 @@ export type NeedHousingTypeFormData = {
    * - until the war ends
    * - until find something different
    */
-  housing_arrive_exact: boolean // a separate
+  housing_when_arrive_text?: string
   housing_when_arrive: string // Date
+  housing_arrive_exact: boolean // a separate
 
+  housing_when_leave_text?: string
+  housing_when_leave: string | undefined // Date  Calendar (UI)
   housing_leave_exact: boolean // In V2 we can have pills to indicate uncertain duration like "couple of days" etc.
-  housing_when_leave: string // Date  Calendar (UI)
 
   /**
    * Payments
@@ -99,5 +101,6 @@ export type NeedHousingTypeFormData = {
 
   // Pets
   housing_pets: boolean
+  housing_pets_number?: number
   housing_pets_description?: string
 }

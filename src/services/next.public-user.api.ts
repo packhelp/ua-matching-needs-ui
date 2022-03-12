@@ -4,17 +4,32 @@ import { NeedHousingTypeFormData } from "./type.need"
 import { TagConstIds } from "./types.tag"
 import type { JsonObject } from "type-fest"
 
-function toIso(dateString: string) {
+export function toIsoOrUndefined(
+  dateString: string | undefined | null
+): string | undefined {
+  console.log(dateString)
   if (dateString != null) {
-    const date = new Date(dateString)
-    const iso = date.toISOString()
-    return iso
+    try {
+      const date = new Date(dateString)
+      const iso = date.toISOString()
+      return iso
+    } catch (e) {
+      return undefined
+    }
   }
-  console.error(dateString)
-  throw "Date must be defined"
+  return undefined
 }
 
-function toNumberOrUndefined(someNumber: any) {
+export function toIso(dateString: string): string {
+  const date = dateString != null ? new Date(dateString) : new Date()
+  return date.toISOString()
+}
+
+export function toNumberOrUndefined(someNumber: any) {
+  if (typeof someNumber === "number" && !Number.isNaN(someNumber)) {
+    return someNumber
+  }
+
   const parsed = Number.parseInt(someNumber)
   if (Number.isNaN(parsed)) {
     return undefined
@@ -61,15 +76,18 @@ export class NextPublicApi {
       housing_where_location_tag: Number(newTicket.housing_where_location_tag),
 
       //  Housing - when
-      housing_arrive_exact: newTicket.housing_arrive_exact,
       housing_when_arrive: toIso(newTicket.housing_when_arrive),
+      housing_arrive_exact: newTicket.housing_arrive_exact,
 
-      housing_when_leave: newTicket.housing_when_leave,
+      // If this is undefined, this means
+      housing_when_leave: toIsoOrUndefined(newTicket.housing_when_leave),
+      housing_leave_exact: newTicket.housing_leave_exact,
 
       // // Housing - payments & pets
       housing_can_help_with_rent: newTicket.housing_can_help_with_rent,
 
       housing_pets: newTicket.housing_pets,
+      housing_pets_number: newTicket.housing_pets_number,
       housing_pets_description: newTicket.housing_pets_description,
     }
 
