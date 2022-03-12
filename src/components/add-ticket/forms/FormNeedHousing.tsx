@@ -17,6 +17,7 @@ import classNames from "classnames"
 import { housingFromOptions, housingUntilOptions, TODAY } from "./constants"
 import { LocationField } from "./Fields/Location"
 import { GenericError } from "./Fields/GenericError"
+import { toBool } from "./hooks"
 
 export const FormNeedHousing = () => {
   const router = useRouter()
@@ -24,11 +25,18 @@ export const FormNeedHousing = () => {
 
   // Silly State
   const [formState, setFormState] = useState({
-    exactLeaveDate: false,
-    hasPets: false,
-    isSubmitting: false,
+    housing_pets: false,
+    // arrive
+    housing_arrive_exact: false,
     housing_when_arrive: TODAY,
+    housing_when_arrive_text: null,
+
+    // leave
+    housing_leave_exact: false,
     housing_when_leave_text: null,
+
+    // non form
+    isSubmitting: false,
   })
 
   const { data: authSession, status: authStatus } = useSession()
@@ -100,6 +108,13 @@ export const FormNeedHousing = () => {
     return () => subscription.unsubscribe()
   }, [watch])
 
+  const formStateNormal = Object.assign({}, formState)
+
+  formStateNormal.housing_pets = toBool(formState.housing_pets)
+  formStateNormal.housing_arrive_exact = toBool(formState.housing_arrive_exact)
+  formStateNormal.housing_leave_exact = toBool(formState.housing_leave_exact)
+  formStateNormal.isSubmitting = toBool(formState.isSubmitting)
+
   const isDisabled = addTicketMutation.isLoading || formState.isSubmitting
 
   return (
@@ -121,7 +136,7 @@ export const FormNeedHousing = () => {
                       key={value}
                       type="button"
                       className={classNames(
-                        formState.housing_when_arrive === value
+                        formStateNormal.housing_when_arrive === value
                           ? "bg-indigo-500 text-white"
                           : "bg-white hover:bg-gray-50 text-gray-700",
                         idx === 0 && "rounded-l-md",
@@ -167,7 +182,7 @@ export const FormNeedHousing = () => {
           </div>
 
           <FormField title={translations.addTicket.housing.housingUntil}>
-            {formState.exactLeaveDate ? (
+            {formStateNormal.housing_leave_exact ? (
               <Input
                 type="date"
                 placeholder={translations["addTicket"]["need"]["when"]}
@@ -185,7 +200,7 @@ export const FormNeedHousing = () => {
                     key={value}
                     type="button"
                     className={classNames(
-                      formState.housing_when_leave_text === label
+                      formStateNormal.housing_when_leave_text === label
                         ? "bg-indigo-500 text-white"
                         : "bg-white hover:bg-gray-50 text-gray-700",
                       idx === 0 && "rounded-l-md",
@@ -218,7 +233,7 @@ export const FormNeedHousing = () => {
               {translations["pages"]["add-ticket"]["has-pets"]}
             </Checkbox>
           </div>
-          {formState.hasPets && (
+          {formStateNormal.housing_pets && (
             <FormField title={translations["pages"]["add-ticket"]["has-pets"]}>
               <Input
                 type="text"

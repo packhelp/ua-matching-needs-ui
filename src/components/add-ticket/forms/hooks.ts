@@ -81,7 +81,7 @@ export const useAddTransportTicket = ({ onSuccess }) => {
  *
  * Hence this manual check
  */
-function toBool(t: any): boolean {
+export function toBool(t: any): boolean {
   if (typeof t === "boolean") return t
   if (t === 0) return false
   if (t === "0") return false
