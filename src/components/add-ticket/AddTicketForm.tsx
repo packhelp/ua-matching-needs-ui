@@ -7,6 +7,7 @@ import { FormNeedTransport } from "./forms/FormNeedTransport"
 import { TagConstIds } from "../../services/types.tag"
 import { RouteDefinitions } from "../../utils/routes"
 import { FaHandsHelping, FaHandHoldingHeart } from "react-icons/fa"
+import { FormNeedHousing } from "./forms/FormNeedHousing"
 
 export enum TicketType {
   Offer = "offer",
@@ -57,6 +58,11 @@ export const AddTicketForm = () => {
       onClick: () => setTag(TagConstIds.transport),
     },
     {
+      name: i18n.addTicket.wizard.formNameHousing,
+      active: tag === TagConstIds.housing,
+      onClick: () => setTag(TagConstIds.housing),
+    },
+    {
       name: i18n.addTicket.wizard.formNameOther,
       active: tag === null,
       onClick: () => {
@@ -70,6 +76,8 @@ export const AddTicketForm = () => {
 
   const showTransportForm =
     ticketType === TicketType.Need && tag === TagConstIds.transport
+  const showHousingForm =
+    ticketType === TicketType.Need && tag === TagConstIds.housing
 
   return (
     <div className="bg-white shadow max-w-2xl mx-auto">
@@ -81,6 +89,7 @@ export const AddTicketForm = () => {
         {isTicketTypeOffer && <TicketTypeOffer />}
 
         {showTransportForm && <FormNeedTransport />}
+        {showHousingForm && <FormNeedHousing />}
       </div>
     </div>
   )

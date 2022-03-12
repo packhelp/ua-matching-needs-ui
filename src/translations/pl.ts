@@ -122,6 +122,7 @@ export const PL = {
       childrenAge: "< 12 lat",
       chooseLocation: "Wybierz miejsce",
       "has-pets": "Zwierzęta",
+      rentHelp: "Pomogę w wynajmie",
       "children-hint": "Liczba osób < 12 lat",
       title: "Krótki tytuł",
       "title-hint":
@@ -145,6 +146,9 @@ export const PL = {
       "hide-phone-disclaimer":
         "Pamiętaj ze osoba oferująca pomoc musi mieć jak się z Tobą kontaktować. Jeśli nie chcesz udostępniać telefonu podaj w opisie inną formę kontaktu.",
       required: "To pole jest wymagane",
+      where: "Gdzie?",
+
+      petsHint: "Ile zwierząt domowych?",
     },
     claimed: {
       title: "Moje przejęte potrzeby",
@@ -261,13 +265,24 @@ export const PL = {
       "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
   },
   addTicket: {
+    form: {
+      required: "To pole jest wymagane",
+    },
+
     transport: {
       iKnowExactDate: "Dokładna data",
+    },
+    housing: {
+      arrivalDateIsFlexible: "Moja data przyjazdu może się zmienić",
+      departureDateIsFlexible: "Moja data wyjazdu może się zmienić",
+      housingUntil: "Na jak długo potrzebujesz mieszkania?",
+      housingFrom: "Od kiedy?",
     },
     wizard: {
       iNeedHelp: "Potrzebuję pomocy",
       iCanHelp: "Mogę pomóc!",
       formNameTransport: "Transport",
+      formNameHousing: "Housing",
       formNameOther: "Inne",
     },
     need: {
@@ -275,6 +290,7 @@ export const PL = {
       whereToNeeded: "Dokąd potrzebujesz transportu?",
       when: "Kiedy",
       extraLuggage: "Dodatkowy Bagaż",
+      howLong: "Na jak długo potrzebujesz mieszkania?",
     },
     offer: {
       title: "Jeśli chcesz pomóc, przejrzyj bazę potrzeb",

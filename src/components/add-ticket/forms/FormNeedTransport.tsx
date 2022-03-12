@@ -1,11 +1,9 @@
 import { Checkbox, Input, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
 import { useForm, Controller } from "react-hook-form"
-import { useMutation, useQuery } from "react-query"
-import axios from "axios"
+import { useQuery } from "react-query"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
-import dayjs from "dayjs"
 import React, { useState, useMemo } from "react"
 import { PlusSVG } from "../../../assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
@@ -14,9 +12,11 @@ import Select from "react-select"
 
 import { RouteDefinitions } from "../../../utils/routes"
 import { NeedTripPostData } from "../../../services/ticket.type"
-import { TagConstIds } from "../../../services/types.tag"
 import { FormField } from "../FormField"
 import { ErrorMessage } from "@hookform/error-message"
+import { FormFeedback } from "./Feedback"
+import { useAddTransportTicket } from "./hooks"
+import { LocationField } from "./Fields/Location"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {
@@ -26,8 +26,6 @@ export type InputValuesType = {
   }
 }
 
-const ticketService = getRootContainer().containers.ticketService
-
 export const FormNeedTransport = () => {
   const router = useRouter()
   const translations = useTranslations()
@@ -35,100 +33,22 @@ export const FormNeedTransport = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [exactDate, setExactDate] = useState(false)
   const { data: authSession, status: authStatus } = useSession()
-  const { data: locationTags = [] } = useQuery(`location-tags`, () => {
-    return ticketService.locationTags()
+  const addTicketMutation = useAddTransportTicket({
+    onSuccess: (rawResponse) => {
+      const { data } = rawResponse.data
+      const id = data.id
+
+      toast.success(translations["pages"]["add-ticket"]["need-added"])
+
+      setTimeout(() => {
+        return router.push(
+          RouteDefinitions.TicketDetails.replace(":id", String(id))
+        )
+      }, 1000)
+    },
   })
 
-  const mappedLocationTags = useMemo(() => {
-    return locationTags
-      .map((tag) => {
-        let name = tag.name
-
-        if (tag.location_type === "help_center" && tag.short_name != null) {
-          name = tag.short_name
-        }
-
-        return {
-          value: tag.id,
-          label: name,
-        }
-      })
-      .sort((a, b) => a.label.localeCompare(b.label))
-  }, [locationTags])
-
-  const onSuccess = (rawResponse) => {
-    const { data } = rawResponse.data
-    const id = data.id
-
-    toast.success(translations["pages"]["add-ticket"]["need-added"])
-
-    setTimeout(() => {
-      return router.push(
-        RouteDefinitions.TicketDetails.replace(":id", String(id))
-      )
-    }, 1000)
-  }
-
-  const addTicketMutation = useMutation<
-    NeedTripPostData,
-    Error,
-    NeedTripPostData
-  >(
-    (newTicket) => {
-      const {
-        phone,
-        who,
-        what,
-        description,
-        adults,
-        children,
-        has_pets,
-        trip_when_text,
-        trip_when_date, // TODO:
-        trip_extra_luggage,
-        where_from_tag,
-        where_to_tag,
-      } = newTicket
-      const expirationTimestampSane = dayjs().add(24, "hour").format()
-
-      let when_date: string | undefined = undefined
-      if (trip_when_date != null) {
-        const date = new Date(trip_when_date)
-        when_date = date.toISOString()
-      }
-
-      const newTicketData = {
-        what,
-        description,
-        expirationTimestampSane,
-        phone,
-        who,
-        count: 0,
-        adults: adults ? adults : 0,
-        children: children ? children : 0,
-        has_pets: !has_pets ? "0" : "1",
-
-        // This is trip, so hardcore a trip tag
-        need_tag_id: [{ need_tag_id: { id: TagConstIds.transport } }],
-
-        // tripe specific
-        need_type: "trip",
-        where_to_tag,
-        where_from_tag,
-        trip_when_text,
-        trip_when_date: when_date,
-        trip_extra_luggage,
-      }
-
-      return axios.post(`/api/add-ticket`, newTicketData)
-    },
-    {
-      onSuccess,
-    }
-  )
-
   const useFormOptions = {}
-
   const {
     register,
     handleSubmit,
@@ -161,63 +81,17 @@ export const FormNeedTransport = () => {
     <>
       <div className="mb-8 bg-white">
         <form onSubmit={handleSubmit(submitNeed)}>
-          <FormField title={translations["pages"]["add-ticket"]["whereFrom"]}>
-            <Controller
-              name="where_from_tag"
-              control={control}
-              rules={{
-                required: translations["pages"]["add-ticket"]["required"],
-              }}
-              render={({ field }) => (
-                <Select
-                  options={mappedLocationTags}
-                  onChange={(e) => field.onChange(e!.value)}
-                  placeholder={
-                    translations["pages"]["add-ticket"]["chooseLocation"]
-                  }
-                  isClearable
-                  isSearchable={false}
-                  ref={field.ref}
-                />
-              )}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="where_from_tag"
-              render={({ message }) => (
-                <p className="text-red-500 text-xs mt-1">{message}</p>
-              )}
-            />
-          </FormField>
-
-          <FormField title={translations["pages"]["add-ticket"]["whereTo"]}>
-            <Controller
-              name="where_to_tag"
-              control={control}
-              rules={{
-                required: translations["pages"]["add-ticket"]["required"],
-              }}
-              render={({ field }) => (
-                <Select
-                  options={mappedLocationTags}
-                  onChange={(e) => field.onChange(e!.value)}
-                  placeholder={
-                    translations["pages"]["add-ticket"]["chooseLocation"]
-                  }
-                  isClearable
-                  isSearchable={false}
-                  ref={field.ref}
-                />
-              )}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="where_to_tag"
-              render={({ message }) => (
-                <p className="text-red-500 text-xs mt-1">{message}</p>
-              )}
-            />
-          </FormField>
+          <LocationField
+            errors={errors}
+            control={control}
+            name="where_from_tag"
+          />
+          <LocationField
+            errors={errors}
+            control={control}
+            name="where_to_tag"
+            title={translations["pages"]["add-ticket"]["whereTo"]}
+          />
 
           <FormField
             title={translations["pages"]["add-ticket"]["adults"]}
@@ -332,35 +206,7 @@ export const FormNeedTransport = () => {
             />
           </FormField>
 
-          <div>
-            {addTicketMutation.isError ? (
-              <div className="flex space-x-1 mt-2 items-center justify-center">
-                <div
-                  className="inline-flex items-center w-full place-content-center
-                py-1 border border-transparent shadow-sm text-sm
-                font-medium bg-red-600
-                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-                text-white cursor-default"
-                >
-                  {translations["errors"]["error-occured-while-adding"]}
-                  {addTicketMutation.error.message}
-                </div>
-              </div>
-            ) : null}
-
-            {addTicketMutation.isSuccess ? (
-              <div className="flex space-x-1 mt-2 items-center justify-center">
-                <div
-                  className="inline-flex items-center w-full place-content-center
-                py-1 border border-transparent shadow-sm text-sm
-                font-medium text-white bg-green-600
-                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-default"
-                >
-                  {translations["pages"]["add-ticket"]["request-added"]}
-                </div>
-              </div>
-            ) : null}
-          </div>
+          <FormFeedback mutation={addTicketMutation} />
           <button
             type="submit"
             disabled={isDisabled}

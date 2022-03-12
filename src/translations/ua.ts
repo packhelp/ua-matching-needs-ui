@@ -123,6 +123,7 @@ export const UA: Translation = {
       childrenAge: "до 12 років",
       chooseLocation: "Виберіть місце",
       "has-pets": "Тварини",
+      rentHelp: "Я можу допомогти з орендою",
       "children-hint": "Дітей менш ніж 12 років",
       title: "Назва (коротка)",
       "title-hint": "приклад: Проживання у Poznań для 4",
@@ -143,6 +144,9 @@ export const UA: Translation = {
       "hide-phone-disclaimer":
         "Пам’ятайте, що особа, яка пропонує допомогу, повинна мати спосіб зв’язатися з вами. Якщо ви не хочете ділитися телефоном, вкажіть іншу форму контакту в описі.",
       required: "Це поле є обов'язковим",
+      where: "куди?",
+
+      petsHint: "Скільки домашніх тварин?",
     },
     claimed: {
       title: "Moje przejęte potrzeby",
@@ -259,13 +263,23 @@ export const UA: Translation = {
       "Дякую! Ваша заявка дозволить нам покращити надання допомоги. Наші модератори розглянуть це найближчим часом",
   },
   addTicket: {
+    form: {
+      required: "Це поле є обов'язковим",
+    },
     transport: {
       iKnowExactDate: "Точна дата",
+    },
+    housing: {
+      arrivalDateIsFlexible: "Моя дата прибуття може змінитися",
+      departureDateIsFlexible: "Моя дата від'їзду може змінитися",
+      housingUntil: "На який термін потрібне житло?",
+      housingFrom: "Коли починається?",
     },
     wizard: {
       iNeedHelp: "Потрібна допомога",
       iCanHelp: "Я можу допомогти!",
       formNameTransport: "Транспорт",
+      formNameHousing: "Housing",
       formNameOther: "Інше",
     },
     need: {
@@ -273,6 +287,7 @@ export const UA: Translation = {
       whereToNeeded: "<miss> Dokąd potrzebujesz transportu?",
       when: "Коли?",
       extraLuggage: "додатковий багаж",
+      howLong: "На який термін потрібне житло?",
     },
     offer: {
       title: "<miss> Jeśli chcesz pomóc, przejrzyj bazę ofert",

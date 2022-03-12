@@ -55,6 +55,7 @@ export type TicketFormData = {
   adults: number
   children: number
   has_pets: boolean
+  housing_pets_description?: string
 }
 
 export type NeedTripTypeDTO = {
@@ -65,6 +66,15 @@ export type NeedTripTypeDTO = {
   trip_when_text?: string
   trip_when_date?: string // Date
   trip_extra_luggage: boolean
+}
+
+export type NeedHousingTypeDTO = {
+  need_type: "trip"
+
+  where_tag: number // LocationTag
+  housing_how_long_text?: string
+  petsNumber: number
+  rentHelp?: boolean
 }
 
 export type NeedTripTypeDTONested = {
@@ -88,12 +98,19 @@ export type NeedTripPostData = TicketFormData &
   PostDataDefaults &
   NeedTripTypeDTO
 
+/**
+ * @deprecated
+ */
+export type NeedHousingPostData = TicketFormData &
+  PostDataDefaults &
+  NeedHousingTypeDTO
+
 export type GenericTicketPostData = TicketFormData & PostDataDefaults
 
 export type TicketData = TicketFormData & {
   id: number
   expirationTimestampSane: string
-  need_type: "trip" | "housing" | "generic" | null
+  need_type: "trip" | "housing" | "generic" | "housing_v2" | null
   ticket_status: TICKET_STATUS
   organization_id?: Organization
   description: string

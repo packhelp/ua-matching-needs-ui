@@ -5,6 +5,7 @@ import {
   TAG_FIELDS,
   TICKET_DETAILS_FIELDS,
 } from "../utils/directus-fields"
+import { LocationTagConstIds } from "./types.tag"
 
 export function directusApiInstance(): AxiosInstance {
   const endpoint = process.env.NEXT_PUBLIC_API_ENDPOINT_URL
@@ -84,5 +85,41 @@ export class TicketService {
     const fields = LOCATION_HUB_FIELDS.join(",")
     const response = await this.api.get(`/items/location_hub?fields=${fields}`)
     return response.data.data
+  }
+
+  public async locationTagsForHousing(): Promise<LocationTag[]> {
+    const locationTags = await this.locationTags()
+    // Step 1 get tags
+    const anywhere = locationTags.find(
+      (tag) => tag.id == LocationTagConstIds.anywhere
+    )
+    const citiesAndGeneralLocations = locationTags.filter((tag) => {
+      return (
+        tag.location_type !== "help_center" &&
+        tag.location_type !== "border_crossing" &&
+        tag.id !== LocationTagConstIds.anywhere
+      )
+    })
+
+    // Step 2 concat
+    let finalTags: LocationTag[] = []
+    if (anywhere) {
+      finalTags.push(anywhere)
+    }
+
+    finalTags = finalTags.concat(citiesAndGeneralLocations)
+
+    // Step 3 sort and ui  / Establish "ui" name
+    finalTags = finalTags.map((tag) => {
+      let name = tag.name
+      if (tag.short_name != null) {
+        name = tag.short_name
+      }
+      return tag
+    })
+
+    finalTags.sort((a, b) => a.name.localeCompare(b.name))
+
+    return finalTags
   }
 }
