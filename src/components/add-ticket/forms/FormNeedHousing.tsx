@@ -200,7 +200,7 @@ export const FormNeedHousing = () => {
                     key={value}
                     type="button"
                     className={classNames(
-                      formStateNormal.housing_when_leave_text === label
+                      formState.housing_when_leave_text === label
                         ? "bg-indigo-500 text-white"
                         : "bg-white hover:bg-gray-50 text-gray-700",
                       idx === 0 && "rounded-l-md",

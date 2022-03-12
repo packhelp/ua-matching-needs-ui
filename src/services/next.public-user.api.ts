@@ -81,6 +81,7 @@ export class NextPublicApi {
       // If this is undefined, this means
       housing_when_leave: toIsoOrUndefined(newTicket.housing_when_leave),
       housing_leave_exact: newTicket.housing_leave_exact,
+      housing_when_leave_text: newTicket.housing_when_leave_text,
 
       // // Housing - payments & pets
       housing_can_help_with_rent: newTicket.housing_can_help_with_rent,
@@ -91,6 +92,7 @@ export class NextPublicApi {
     }
 
     console.info("Sending need to the server", newTicketData)
+
     return this.postNeed(newTicketData) as any
   }
 }
