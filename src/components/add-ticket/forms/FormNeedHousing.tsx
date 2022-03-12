@@ -270,14 +270,26 @@ export const FormNeedHousing = () => {
             title={translations["pages"]["add-ticket"]["adults"]}
             disclaimer={translations["pages"]["add-ticket"]["adultsAge"]}
           >
-            <Input
-              min={0}
-              type={"number"}
-              placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
-              variant="outline"
-              inputMode="numeric"
-              {...register("adults")}
+            <Controller
+              name="adults"
+              control={control}
+              rules={{
+                required: translations.addTicket.form.required,
+              }}
+              render={() => (
+                <Input
+                  min={0}
+                  type={"number"}
+                  placeholder={
+                    translations["pages"]["add-ticket"]["adultsHint"]
+                  }
+                  variant="outline"
+                  inputMode="numeric"
+                  {...register("adults")}
+                />
+              )}
             />
+            <ErrorMessage errors={errors} name="adults" render={GenericError} />
           </FormField>
 
           <FormField
