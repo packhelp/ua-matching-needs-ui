@@ -15,9 +15,9 @@ import { useAddHousingTicket } from "../hooks/use-add-ticket"
 import { NeedHousingTypeFormData } from "../../../services/type.need"
 import classNames from "classnames"
 import { LocationField } from "./fields/Location"
-import { GenericError } from "./fields/GenericError"
 import { toBool } from "../hooks/helpers"
 import { useHousingOptions, TODAY } from "../hooks/use-housing-options"
+import { GenericError } from "./Fields/GenericError"
 
 export const FormNeedHousing = () => {
   const router = useRouter()
