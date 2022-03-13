@@ -1,7 +1,6 @@
 import axios from "axios"
 import dayjs from "dayjs"
-import { useMemo } from "react"
-import { useMutation, useQuery } from "react-query"
+import { useMutation } from "react-query"
 import {
   NextPublicApi,
   toIso,
@@ -11,7 +10,7 @@ import {
 import { NeedTripPostData } from "../../../services/ticket.type"
 import { NeedHousingTypeFormData } from "../../../services/type.need"
 import { TagConstIds } from "../../../services/types.tag"
-import { getRootContainer } from "../../../services/_root-container"
+import { toBool, fmtString } from "./helpers"
 
 export const useAddTransportTicket = ({ onSuccess }) => {
   const addTicketMutation = useMutation<
@@ -74,29 +73,6 @@ export const useAddTransportTicket = ({ onSuccess }) => {
   return addTicketMutation
 }
 
-/**
- * Boolean("false") // true
- * Boolean("0") // true
- *
- * Hence this manual check
- */
-export function toBool(t: any): boolean {
-  if (typeof t === "boolean") return t
-  if (t === 0) return false
-  if (t === "0") return false
-  if (t === "false") return false
-  if (t === 1) return true
-  if (t === "1") return true
-  if (t === "true") return true
-  return Boolean(t)
-}
-
-function fmtString(s: any): string | undefined {
-  if (s === "") return undefined
-  if (typeof s !== "string") return undefined
-  return s
-}
-
 export const useAddHousingTicket = ({ onSuccess }) => {
   const addTicketMutation = useMutation<
     NeedHousingTypeFormData,
@@ -139,19 +115,4 @@ export const useAddHousingTicket = ({ onSuccess }) => {
   )
 
   return addTicketMutation
-}
-
-export const useLocations = () => {
-  const ticketService = getRootContainer().containers.ticketService
-
-  const { data: locationTags = [] } = useQuery(`location-tags`, () =>
-    ticketService.locationTagsForHousing()
-  )
-
-  const mappedLocationTags = locationTags.map((tag) => ({
-    value: tag.id,
-    label: tag.name,
-  }))
-
-  return { mappedLocationTags, locationTags }
 }

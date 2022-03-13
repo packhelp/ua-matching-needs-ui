@@ -265,13 +265,19 @@ export const PL = {
       "Dziękujemy! Twoje zgłoszenie pozwoli nam usprawnić udzielanie pomocy. Nasi moderatorzy za chwilę się temu przyjrzą.",
   },
   addTicket: {
+    date: {
+      today: "Dzisiaj",
+      tomorrow: "Jutro",
+      noIdea: "Nie wiem",
+      iKnowExactDate: "Znam dokladną datę",
+      nightOrTwo: "Noc lub dwie",
+      coupleOfDays: "Kilka dni",
+      coupleOfWeeks: "Kilka tygodni",
+    },
     form: {
       required: "To pole jest wymagane",
     },
 
-    transport: {
-      iKnowExactDate: "Dokładna data",
-    },
     housing: {
       arrivalDateIsFlexible: "Moja data przyjazdu może się zmienić",
       departureDateIsFlexible: "Moja data wyjazdu może się zmienić",
@@ -282,7 +288,7 @@ export const PL = {
       iNeedHelp: "Potrzebuję pomocy",
       iCanHelp: "Mogę pomóc!",
       formNameTransport: "Transport",
-      formNameHousing: "Housing",
+      formNameHousing: "Mieszkanie",
       formNameOther: "Inne",
     },
     need: {

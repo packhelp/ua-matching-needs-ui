@@ -5,9 +5,14 @@ import {
   TICKET_STATUS,
 } from "./ticket.type"
 import { NeedHousingTypeFormData } from "./type.need"
+import { RouteDefinitions } from "../utils/routes"
 
 export class Ticket {
   constructor(private dto: TicketDetailsType) {}
+
+  get id() {
+    return this.dto.id
+  }
 
   get hasResponses() {
     return this.dto.need_responses.length > 0
@@ -15,6 +20,27 @@ export class Ticket {
 
   get responsesLength() {
     return this.dto.need_responses.length
+  }
+
+  get requester() {
+    const organization = this.dto.organization_id
+
+    return {
+      verified: !!organization,
+      name: organization ? organization.name : this.dto.who,
+    }
+  }
+
+  get url() {
+    return RouteDefinitions.TicketDetails.replace(":id", String(this.dto.id))
+  }
+
+  get phone() {
+    return this.dto.phone
+  }
+
+  get isPhonePublic() {
+    return this.dto.phone_public
   }
 
   get isActive() {
@@ -65,11 +91,25 @@ export class Ticket {
     return this
   }
 
+  get where() {
+    return this.dto.where
+  }
+
   /**
    * generic tags like "transport", "hurt" etc.
    */
   get tags() {
     return this.dto.need_tag_id
+  }
+
+  /** Placeholder */
+  get isNeed() {
+    return true
+  }
+
+  /** Placeholder */
+  get isOffer() {
+    return false
   }
 }
 

@@ -1,22 +1,17 @@
 import { Checkbox, Input, Textarea } from "@chakra-ui/react"
 import { useTranslations } from "../../../hooks/translations"
-import { useForm, Controller } from "react-hook-form"
-import { useQuery } from "react-query"
+import { useForm } from "react-hook-form"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
-import React, { useState, useMemo } from "react"
+import React, { useState } from "react"
 import { PlusSVG } from "../../../assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
-import { getRootContainer } from "../../../services/_root-container"
-import Select from "react-select"
-
 import { RouteDefinitions } from "../../../utils/routes"
 import { NeedTripPostData } from "../../../services/ticket.type"
 import { FormField } from "../FormField"
-import { ErrorMessage } from "@hookform/error-message"
 import { FormFeedback } from "./Feedback"
-import { useAddTransportTicket } from "./hooks"
-import { LocationField } from "./Fields/Location"
+import { useAddTransportTicket } from "../hooks/use-add-ticket"
+import { LocationField } from "./fields/Location"
 
 export type TransportNeededVariant = "whereFrom" | "whereTo"
 export type InputValuesType = {
@@ -156,7 +151,7 @@ export const FormNeedTransport = () => {
               checked={exactDate}
               onChange={() => setExactDate(!exactDate)}
             >
-              {translations.addTicket.transport.iKnowExactDate}
+              {translations.addTicket.date.iKnowExactDate}
             </Checkbox>
 
             {exactDate && (

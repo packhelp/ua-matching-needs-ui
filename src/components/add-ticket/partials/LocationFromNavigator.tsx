@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react"
 import React, { Dispatch, SetStateAction } from "react"
-import { usePosition } from "../add-ticket.hooks"
+import { usePosition } from "../hooks/use-position"
 import { InputValuesType } from "../forms/FormNeedTransport"
 
 export const LocationFromNavigator = ({

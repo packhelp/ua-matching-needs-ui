@@ -5,7 +5,7 @@ import { ErrorMessage } from "@hookform/error-message"
 import { FormField } from "../../FormField"
 import { Controller } from "react-hook-form"
 import { GenericError } from "./GenericError"
-import { useLocations } from "../hooks"
+import { useLocationTags } from "../../hooks/use-location-tags"
 
 type LocationFieldProps = {
   control: any
@@ -21,7 +21,7 @@ export const LocationField = ({
   errors,
 }: LocationFieldProps) => {
   const translations = useTranslations()
-  const { mappedLocationTags } = useLocations()
+  const { mappedLocationTags } = useLocationTags()
 
   return (
     <FormField title={title || translations["pages"]["add-ticket"]["where"]}>
