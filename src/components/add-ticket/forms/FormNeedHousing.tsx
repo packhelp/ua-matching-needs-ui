@@ -17,7 +17,7 @@ import classNames from "classnames"
 import { LocationField } from "./fields/Location"
 import { toBool } from "../hooks/helpers"
 import { useHousingOptions, TODAY } from "../hooks/use-housing-options"
-import { GenericError } from "./Fields/GenericError"
+import { GenericError } from "./fields/GenericError"
 
 export const FormNeedHousing = () => {
   const router = useRouter()
