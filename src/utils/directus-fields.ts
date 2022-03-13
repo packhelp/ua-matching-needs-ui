@@ -15,6 +15,9 @@ export const TICKET_LIST_FIELDS = [
   "where_to_tag.translation_uk_UA",
   "where_to_tag.translation_en_US",
 
+  // Housing
+  "housing_where_location_tag.*",
+
   // need responses
   "need_responses.id",
   "need_responses.date_created",
