@@ -15,9 +15,9 @@ import { useAddHousingTicket } from "../hooks/use-add-ticket"
 import { NeedHousingTypeFormData } from "../../../services/type.need"
 import classNames from "classnames"
 import { LocationField } from "./fields/Location"
-import { GenericError } from "./fields/GenericError"
 import { toBool } from "../hooks/helpers"
 import { useHousingOptions, TODAY } from "../hooks/use-housing-options"
+import { GenericError } from "./fields/GenericError"
 
 export const FormNeedHousing = () => {
   const router = useRouter()
@@ -193,7 +193,7 @@ export const FormNeedHousing = () => {
               />
             ) : (
               <span className="relative z-0 flex shadow-sm rounded-md">
-                {housingUntil.map(({ label, value }, idx) => (
+                {housingUntil.map(({ label, description, value }, idx) => (
                   <button
                     onClick={() => {
                       setValue("housing_when_leave", value)
@@ -210,7 +210,7 @@ export const FormNeedHousing = () => {
                       "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-full justify-center"
                     )}
                   >
-                    {label}
+                    {description}
                   </button>
                 ))}
               </span>
