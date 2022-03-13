@@ -40,6 +40,7 @@ export const HousingSection = ({ need }: { need: NeedHousing }) => {
         {housing.housing_when_leave_text && (
           <div className="flex gap-2 items-center">
             <FaMap />
+            {/* @ts-ignore */}
             {housing.housing_where_location_tag.short_name}
           </div>
         )}
