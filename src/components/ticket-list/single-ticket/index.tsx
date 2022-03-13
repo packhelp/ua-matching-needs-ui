@@ -1,49 +1,21 @@
-import { GoPerson } from "react-icons/go"
-import { FaDog } from "react-icons/fa"
-import { MdChildFriendly } from "react-icons/md"
 import Link from "next/link"
 import { Tooltip } from "@chakra-ui/react"
 import { Tag } from "../../Tag"
 import { Hand } from "../../hero-icons/Hand"
 import React from "react"
 import { RouteDefinitions } from "../../../utils/routes"
-import { NeedHousing, Ticket } from "../../../services/ticket.class"
+import { Ticket } from "../../../services/ticket.class"
 import { useTranslations } from "../../../hooks/translations"
 import { useRouter } from "next/router"
 import { TicketDetailsType } from "../../../services/ticket.type"
 import { LocationSection } from "./LocationSection"
+import { HousingSection } from "./HousingSection"
 import { SingleTicketFooter } from "./Footer"
 import { LocationIcon, OrganizationIcon } from "./Icons"
 import { SingleTicketDetails } from "./Details"
 
 type TicketsListSingleTicketProps = {
   ticket: TicketDetailsType
-}
-const HousingSection = ({ need }: { need: NeedHousing }) => {
-  return (
-    <div className="flex justify-around border-t border-b border-gray-200 bg-slate-50 px-4 py-5 p-1">
-      {need.hasAdults && (
-        <div className="flex gap-2 items-center">
-          <GoPerson /> {need.dtoHousing.adults}
-        </div>
-      )}
-
-      {need.hasChildren && (
-        <div className="flex gap-2 items-center">
-          <MdChildFriendly />
-          {need.dtoHousing.children}
-        </div>
-      )}
-      {need.hasPets && (
-        <div className="flex gap-2 items-center">
-          <FaDog />
-          {need.dtoHousing.housing_pets
-            ? need.dtoHousing.housing_pets_description
-            : 0}
-        </div>
-      )}
-    </div>
-  )
 }
 
 export const TicketsListSingleTicket = (
@@ -105,7 +77,7 @@ export const TicketsListSingleTicket = (
               </span>
             </div>
           </div>
-          {need.isTrip && <LocationSection trip={need.trip}></LocationSection>}
+          {need.isTrip && <LocationSection trip={need.trip} />}
           {isHousingTickets && <HousingSection need={need.getHousing} />}
           <div className="py-1">
             {!need.isTrip && (
