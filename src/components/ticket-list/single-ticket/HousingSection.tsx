@@ -9,19 +9,19 @@ export const HousingSection = ({ need }: { need: NeedHousing }) => {
     <div className="flex justify-around border-t border-b border-gray-200 bg-slate-50 px-4 py-5 p-1">
       {need.hasAdults && (
         <div className="flex gap-2 items-center">
-          <GoPerson /> {need.dtoHousing.adults}
+          <GoPerson size={25} /> {need.dtoHousing.adults}
         </div>
       )}
 
       {need.hasChildren && (
         <div className="flex gap-2 items-center">
-          <MdChildFriendly />
+          <MdChildFriendly size={25} />
           {need.dtoHousing.children}
         </div>
       )}
       {need.hasPets && (
         <div className="flex gap-2 items-center">
-          <FaDog />
+          <FaDog size={25} />
           {need.dtoHousing.housing_pets
             ? need.dtoHousing.housing_pets_description
             : 0}

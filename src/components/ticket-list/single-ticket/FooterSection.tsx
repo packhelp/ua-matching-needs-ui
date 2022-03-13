@@ -4,6 +4,7 @@ import { useTranslations } from "../../../hooks/translations"
 import { Plausible } from "../../../services/plausible"
 import { CgArrowRightO } from "react-icons/cg"
 import { BsFillTelephoneFill } from "react-icons/bs"
+import React from "react"
 
 export const FooterSection = ({ need }) => {
   const router = useRouter()
@@ -15,8 +16,7 @@ export const FooterSection = ({ need }) => {
       <div className="flex flex-1 w-0">
         <Link href={need.url} locale={locale}>
           <a className="relative inline-flex items-center justify-center flex-1 w-0 py-3 -mr-px text-sm font-medium text-gray-700 border border-transparent rounded-bl-lg hover:text-gray-500">
-            <CgArrowRightO />
-
+            <CgArrowRightO size={18} />
             <span className="ml-3">
               {translations["pages"]["ticket"]["details"]}
             </span>

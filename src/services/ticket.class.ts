@@ -101,6 +101,16 @@ export class Ticket {
   get tags() {
     return this.dto.need_tag_id
   }
+
+  /** Placeholder */
+  get isNeed() {
+    return true
+  }
+
+  /** Placeholder */
+  get isOffer() {
+    return false
+  }
 }
 
 export class NeedTransport {

@@ -30,16 +30,14 @@ export const TicketsListSingleTicket = (
   return (
     <li
       key={ticket.id}
-      className={`flex flex-col justify-between bg-white rounded-lg shadow outline-blue-200  col-span-1 divide-y divide-gray-200 ticket-item ${
-        need.requester.verified ? "verified" : ""
-      }`}
+      className="flex flex-col justify-between bg-white rounded-lg shadow outline-blue-200  col-span-1 divide-y divide-gray-200 ticket-item"
     >
       <Link href={need.url} locale={locale} passHref>
-        <div className="px-4 py-5 border-gray-200 sm:px-6 cursor-pointer">
+        <div className="p-4 border-gray-200 cursor-pointer">
           <HeaderSection need={need} />
+          <TitleSection need={need} />
           {isTrip && <LocationSection trip={need.trip} />}
           {isHousing && <HousingSection need={need.getHousing} />}
-          <TitleSection need={need} />
           <DetailsSection need={need} />
         </div>
       </Link>
