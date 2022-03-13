@@ -228,26 +228,6 @@ export const FormNeedHousing = () => {
             <Checkbox
               value={1}
               defaultChecked={false}
-              {...register("housing_pets")}
-            >
-              {translations["pages"]["add-ticket"]["has-pets"]}
-            </Checkbox>
-          </div>
-          {formStateNormal.housing_pets && (
-            <FormField title={translations["pages"]["add-ticket"]["has-pets"]}>
-              <Input
-                type="text"
-                placeholder={translations["pages"]["add-ticket"]["petsHint"]}
-                variant="outline"
-                {...register("housing_pets_description")}
-              />
-            </FormField>
-          )}
-
-          <div className="flex flex-col mt-4">
-            <Checkbox
-              value={1}
-              defaultChecked={false}
               {...register("housing_can_help_with_rent")}
             >
               {translations["pages"]["add-ticket"]["rentHelp"]}
@@ -305,6 +285,26 @@ export const FormNeedHousing = () => {
               {...register("children")}
             />
           </FormField>
+
+          <div className="flex flex-col">
+            <Checkbox
+              value={1}
+              defaultChecked={false}
+              {...register("housing_pets")}
+            >
+              {translations["pages"]["add-ticket"]["has-pets"]}
+            </Checkbox>
+          </div>
+          {formStateNormal.housing_pets && (
+            <FormField title={translations["pages"]["add-ticket"]["has-pets"]}>
+              <Input
+                type="text"
+                placeholder={translations["pages"]["add-ticket"]["petsHint"]}
+                variant="outline"
+                {...register("housing_pets_description")}
+              />
+            </FormField>
+          )}
 
           <FormField
             title={translations["pages"]["add-ticket"].title}

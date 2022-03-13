@@ -141,7 +141,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
   return addTicketMutation
 }
 
-export const useLocations = () => {
+export const useLocationTags = () => {
   const ticketService = getRootContainer().containers.ticketService
 
   const { data: locationTags = [] } = useQuery(`location-tags`, () =>
