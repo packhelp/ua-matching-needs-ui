@@ -1,16 +1,20 @@
 import { useTranslations } from "../../../hooks/translations"
 import dayjs from "dayjs"
 
-export const housingLabels = {
-  "a-night": "A night or two",
-  "some-days": "A couple of days",
-  weeks: "A couple of weeks",
-  "no-idea": "No idea",
+export const useHousingLabels = () => {
+  const translations = useTranslations()
+  return {
+    "a-night": translations.addTicket.date.nightOrTwo,
+    "some-days": translations.addTicket.date.coupleOfDays,
+    weeks: translations.addTicket.date.coupleOfWeeks,
+    "no-idea": translations.addTicket.date.noIdea,
+  }
 }
 
 export const TODAY = dayjs().format("YYYY-MM-DD")
 
 export const useHousingOptions = () => {
+  const labels = useHousingLabels()
   const translations = useTranslations()
   return {
     housingFrom: [
@@ -26,24 +30,23 @@ export const useHousingOptions = () => {
     housingUntil: [
       {
         value: dayjs().add(2, "day").format("YYYY-MM-DD"),
-        label: translations.addTicket.date.nightOrTwo,
-        description: housingLabels["a-night"],
+        label: "a-night",
       },
       {
         value: dayjs().add(5, "day").format("YYYY-MM-DD"),
-        label: translations.addTicket.date.coupleOfDays,
-        description: housingLabels["some-days"],
+        label: "some-days",
       },
       {
         value: dayjs().add(2, "weeks").format("YYYY-MM-DD"),
-        label: translations.addTicket.date.coupleOfWeeks,
-        description: housingLabels["weeks"],
+        label: "weeks",
       },
       {
         value: "",
-        label: translations.addTicket.date.noIdea,
-        description: housingLabels["no-idea"],
+        label: "no-idea",
       },
-    ],
+    ].map((option) => ({
+      ...option,
+      description: labels[option.label],
+    })),
   }
 }

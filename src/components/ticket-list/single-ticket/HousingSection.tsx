@@ -2,9 +2,10 @@ import { GoPerson } from "react-icons/go"
 import { FaClock, FaDog, FaMap } from "react-icons/fa"
 import { MdChildFriendly } from "react-icons/md"
 import { NeedHousing } from "../../../services/ticket.class"
-import { housingLabels } from "../../add-ticket/hooks/use-housing-options"
+import { useHousingLabels } from "../../add-ticket/hooks/use-housing-options"
 
 export const HousingSection = ({ need }: { need: NeedHousing }) => {
+  const housingLabels = useHousingLabels()
   const { dtoHousing: housing } = need
   return (
     <div className="border-t border-b border-gray-200 bg-slate-50 px-4 py-5 p-1">
