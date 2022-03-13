@@ -55,7 +55,11 @@ export type NeedHousingTypeFormData = {
    *
    */
 
-  housing_where_location_tag: number // Location TAG for now. In v2 we can add Google Location
+  housing_where_location_tag: {
+    id: number
+    name: string
+    short_name: string
+  } // Location TAG for now. In v2 we can add Google Location
   //_DROP_housing_where_string: string // plain string harder to place on map
 
   /**
