@@ -1,6 +1,6 @@
 import { useTranslations } from "../../../hooks/translations"
 
-export const SingleTicketDetails = ({ ticket, need }) => {
+export const DetailsSection = ({ need }) => {
   const dateFormatted = need.createdDateFormattedString
   const translations = useTranslations()
 
@@ -11,11 +11,7 @@ export const SingleTicketDetails = ({ ticket, need }) => {
           {translations["pages"]["ticket"]["whoRequested"]}
         </dt>
         <dd className="flex items-center text-sm text-gray-900 truncate">
-          {ticket.organization_id ? (
-            <span className="truncate">{ticket.organization_id.name}</span>
-          ) : (
-            <span className="truncate">{ticket.who}</span>
-          )}
+          <span className="truncate">{need.requester.name}</span>
         </dd>
       </div>
 

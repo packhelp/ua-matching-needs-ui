@@ -2,25 +2,20 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useTranslations } from "../../../hooks/translations"
 import { Plausible } from "../../../services/plausible"
-import { RouteDefinitions } from "../../../utils/routes"
-import { ArrowRightIcon, PhoneIcon } from "./Icons"
+import { CgArrowRightO } from "react-icons/cg"
+import { BsFillTelephoneFill } from "react-icons/bs"
 
-export const SingleTicketFooter = ({ ticket }) => {
+export const FooterSection = ({ need }) => {
   const router = useRouter()
   const translations = useTranslations()
   const { locale } = router
 
-  const ticketUrl = RouteDefinitions.TicketDetails.replace(
-    ":id",
-    String(ticket.id)
-  )
-
   return (
     <div className="flex -mt-px divide-x divide-gray-200">
       <div className="flex flex-1 w-0">
-        <Link href={ticketUrl} locale={locale}>
+        <Link href={need.url} locale={locale}>
           <a className="relative inline-flex items-center justify-center flex-1 w-0 py-3 -mr-px text-sm font-medium text-gray-700 border border-transparent rounded-bl-lg hover:text-gray-500">
-            <ArrowRightIcon />
+            <CgArrowRightO />
 
             <span className="ml-3">
               {translations["pages"]["ticket"]["details"]}
@@ -29,15 +24,15 @@ export const SingleTicketFooter = ({ ticket }) => {
         </Link>
       </div>
 
-      {ticket.phone_public && (
+      {need.isPhonePublic && (
         <div className="flex flex-1 w-0 -ml-px">
           <a
-            href={`tel:${ticket.phone}`}
+            href={`tel:${need.phone}`}
             onClick={Plausible.registerIntentionPhoneCall}
             className="relative inline-flex items-center justify-center flex-1 w-0 py-3 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500"
           >
-            <PhoneIcon />
-            <span className="ml-3">{ticket.phone}</span>
+            <BsFillTelephoneFill />
+            <span className="ml-3">{need.phone}</span>
           </a>
         </div>
       )}
