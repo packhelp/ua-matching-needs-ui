@@ -1,4 +1,4 @@
-import { getRootContainer } from "../../../../services/_root-container"
+import { getRootContainer } from "../../../services/_root-container"
 import { useQuery } from "react-query"
 
 export const useLocationTags = () => {

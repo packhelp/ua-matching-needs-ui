@@ -5,7 +5,7 @@ import { ErrorMessage } from "@hookform/error-message"
 import { FormField } from "../../FormField"
 import { Controller } from "react-hook-form"
 import { GenericError } from "./GenericError"
-import { useLocationTags } from "../hooks"
+import { useLocationTags } from "../../hooks/use-location-tags"
 
 type LocationFieldProps = {
   control: any

@@ -11,13 +11,13 @@ import { RouteDefinitions } from "../../../utils/routes"
 import { FormField } from "../FormField"
 import { ErrorMessage } from "@hookform/error-message"
 import { FormFeedback } from "./Feedback"
-import { useAddHousingTicket } from "./hooks"
+import { useAddHousingTicket } from "../hooks/use-add-ticket"
 import { NeedHousingTypeFormData } from "../../../services/type.need"
 import classNames from "classnames"
-import { housingFromOptions, housingUntilOptions, TODAY } from "./constants"
-import { LocationField } from "./Fields/Location"
-import { GenericError } from "./Fields/GenericError"
-import { toBool } from "./hooks"
+import { LocationField } from "./fields/Location"
+import { GenericError } from "./fields/GenericError"
+import { toBool } from "../hooks/helpers"
+import { useHousingOptions, TODAY } from "../hooks/use-housing-options"
 
 export const FormNeedHousing = () => {
   const router = useRouter()
@@ -117,6 +117,8 @@ export const FormNeedHousing = () => {
 
   const isDisabled = addTicketMutation.isLoading || formState.isSubmitting
 
+  const { housingFrom, housingUntil } = useHousingOptions()
+
   return (
     <>
       <div className="mb-8 bg-white">
@@ -130,7 +132,7 @@ export const FormNeedHousing = () => {
             <FormField title={translations.addTicket.housing.housingFrom}>
               <div className="sm:flex gap-2">
                 <span className="relative z-0 flex sm:inline-flex shadow-sm rounded-md mb-2 sm:mb-0">
-                  {housingFromOptions.map(({ label, value }, idx) => (
+                  {housingFrom.map(({ label, value }, idx) => (
                     <button
                       onClick={() => setValue("housing_when_arrive", value)}
                       key={value}
@@ -140,7 +142,7 @@ export const FormNeedHousing = () => {
                           ? "bg-indigo-500 text-white"
                           : "bg-white hover:bg-gray-50 text-gray-700",
                         idx === 0 && "rounded-l-md",
-                        idx === housingFromOptions.length - 1 && "rounded-r-md",
+                        idx === housingFrom.length - 1 && "rounded-r-md",
                         "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-full sm:w-auto justify-center"
                       )}
                     >
@@ -191,7 +193,7 @@ export const FormNeedHousing = () => {
               />
             ) : (
               <span className="relative z-0 flex shadow-sm rounded-md">
-                {housingUntilOptions.map(({ label, value }, idx) => (
+                {housingUntil.map(({ label, value }, idx) => (
                   <button
                     onClick={() => {
                       setValue("housing_when_leave", value)
@@ -204,7 +206,7 @@ export const FormNeedHousing = () => {
                         ? "bg-indigo-500 text-white"
                         : "bg-white hover:bg-gray-50 text-gray-700",
                       idx === 0 && "rounded-l-md",
-                      idx === housingUntilOptions.length - 1 && "rounded-r-md",
+                      idx === housingUntil.length - 1 && "rounded-r-md",
                       "-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300  text-sm font-medium   focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 w-full justify-center"
                     )}
                   >
@@ -219,8 +221,7 @@ export const FormNeedHousing = () => {
               defaultChecked={false}
               {...register("housing_leave_exact")}
             >
-              I know the exact date
-              {/* {translations["pages"]["add-ticket"]["has-pets"]} */}
+              {translations.addTicket.date.iKnowExactDate}
             </Checkbox>
           </FormField>
 

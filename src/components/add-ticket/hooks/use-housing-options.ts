@@ -1,5 +1,7 @@
-import { useTranslations } from "../../../../hooks/translations"
+import { useTranslations } from "../../../hooks/translations"
 import dayjs from "dayjs"
+
+export const TODAY = dayjs().format("YYYY-MM-DD")
 
 export const useHousingOptions = () => {
   const translations = useTranslations()
