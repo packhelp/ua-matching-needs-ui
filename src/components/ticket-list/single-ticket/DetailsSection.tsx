@@ -9,7 +9,7 @@ export const DetailsSection = ({ need }) => {
   return (
     <div>
       <div className="flex items-center text-xs justify-around mt-2">
-        {need.requester.verified && (
+        {!need.requester.verified && (
           <div className="flex items-center">
             <Organization />
             {translations.pages.ticket.verifiedOrganisation}

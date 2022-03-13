@@ -33,11 +33,13 @@ export const TicketsListSingleTicket = (
       className="flex flex-col justify-between bg-white rounded-lg shadow outline-blue-200  col-span-1 divide-y divide-gray-200 ticket-item"
     >
       <Link href={need.url} locale={locale} passHref>
-        <div className="p-4 border-gray-200 cursor-pointer">
-          <HeaderSection need={need} />
-          <TitleSection need={need} />
-          {isTrip && <LocationSection trip={need.trip} />}
-          {isHousing && <HousingSection need={need.getHousing} />}
+        <div className="p-4 border-gray-200 cursor-pointer h-full flex flex-col justify-between">
+          <div>
+            <HeaderSection need={need} />
+            <TitleSection need={need} />
+            {isTrip && <LocationSection trip={need.trip} />}
+            {isHousing && <HousingSection need={need.getHousing} />}
+          </div>
           <DetailsSection need={need} />
         </div>
       </Link>
