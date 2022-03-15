@@ -21,6 +21,7 @@ export const PlacesInput = ({ onChange }) => {
         types: "country,region,place",
         placeholder: translations["pages"]["add-ticket"]["chooseLocation"],
         proximity: "ip",
+        minLength: 1,
       })
 
       geocoder.addTo(geocoderInput.current)
@@ -57,9 +58,9 @@ export const LocationField = ({
       <Controller
         name={name}
         control={control}
-        // rules={{
-        //   required: translations["pages"]["add-ticket"]["required"],
-        // }}
+        rules={{
+          required: translations["pages"]["add-ticket"]["required"],
+        }}
         render={({ field }) => <PlacesInput onChange={field.onChange} />}
       />
       <ErrorMessage errors={errors} name={name} render={GenericError} />
