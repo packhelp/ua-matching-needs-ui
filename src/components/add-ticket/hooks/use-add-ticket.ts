@@ -34,7 +34,6 @@ export const useAddTransportTicket = ({ onSuccess }) => {
         where_to_tag,
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
-
       let when_date: string | undefined = undefined
       if (trip_when_date != null) {
         const date = new Date(trip_when_date)

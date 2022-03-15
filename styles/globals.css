@@ -35,3 +35,29 @@ button {
 .ticket-item.verified .ticket-item__number {
   color: #4989bb;
 }
+
+/* MAPBOX */
+
+body .mapboxgl-ctrl-geocoder {
+  width: 100%;
+  max-width: 100vw;
+  box-shadow: none;
+  z-index: auto;
+}
+
+body .mapboxgl-ctrl-geocoder input {
+  width: 100%;
+  min-width: 0px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  transition-property: var(--chakra-transition-property-common);
+  transition-duration: var(--chakra-transition-duration-normal);
+  font-size: var(--chakra-fontSizes-md);
+  padding-inline-end: var(--chakra-space-4);
+  height: var(--chakra-sizes-10);
+  border-radius: var(--chakra-radii-md);
+  border: 1px solid;
+  border-color: inherit;
+}

@@ -56,12 +56,48 @@ export type TicketFormData = {
   has_pets: boolean
   housing_pets_description?: string
 }
+export interface MapboxResult {
+  id: string
+  type: string
+  place_type: string[]
+  relevance: number
+  properties: Properties
+  "text_en-US": string
+  "language_en-US": string
+  "place_name_en-US": string
+  text: string
+  language: string
+  place_name: string
+  bbox: number[]
+  center: number[]
+  geometry: Geometry
+  context: Context[]
+}
+
+export interface Context {
+  id: string
+  short_code: string
+  wikidata: string
+  "text_en-US": string
+  "language_en-US": string
+  text: string
+  language: string
+}
+
+export interface Geometry {
+  type: string
+  coordinates: number[]
+}
+
+export interface Properties {
+  wikidata: string
+}
 
 export type NeedTripTypeDTO = {
   need_type: "trip"
 
-  where_to_tag: number // LocationTag
-  where_from_tag: number // LocationTag
+  where_to_tag: MapboxResult // LocationTag
+  where_from_tag: MapboxResult // LocationTag
   trip_when_text?: string
   trip_when_date?: string // Date
   trip_extra_luggage: boolean
@@ -70,7 +106,7 @@ export type NeedTripTypeDTO = {
 export type NeedHousingTypeDTO = {
   need_type: "trip"
 
-  where_tag: number // LocationTag
+  where_tag: MapboxResult // LocationTag
   housing_how_long_text?: string
   petsNumber: number
   rentHelp?: boolean
@@ -79,8 +115,8 @@ export type NeedHousingTypeDTO = {
 export type NeedTripTypeDTONested = {
   need_type: "trip"
 
-  where_to_tag: LocationTag // LocationTag
-  where_from_tag: LocationTag // LocationTag
+  where_to_tag: MapboxResult // LocationTag
+  where_from_tag: MapboxResult // LocationTag
   trip_when_text?: string
   trip_when_date?: string // Date
   trip_extra_luggage: boolean
