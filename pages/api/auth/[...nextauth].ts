@@ -13,6 +13,7 @@ const secretAuthSalt = `${process.env.SECRET_AUTH_SALT}`
 const directusApiToken = `${process.env.DIRECTUS_API_AUTH}`
 const env: string = `${process.env.ENV}`.toUpperCase()
 import { withSentry } from "@sentry/nextjs"
+import type { JWT } from "next-auth/jwt"
 
 if (!everifyAuthToken) {
   // @ts-ignore
@@ -38,6 +39,35 @@ interface DirectusAuthResponse {
   refreshToken: string
   expires: number
   id: string
+}
+
+async function refreshToken(token: JWT) {
+  try {
+    const refreshToken = token.directusRefreshToken
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/auth/refresh`,
+      { refresh_token: refreshToken },
+      {
+        headers: {
+          Authorization: `Bearer ${token.directusAccessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+
+    return {
+      ...token,
+      directusAccessToken: response.data.data.access_token,
+      directusRefreshToken: response.data.data.refresh_token,
+      directusAccessTokenExpire: response.data.data.expires,
+    }
+  } catch (error: any) {
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+      message: error.response.data.errors,
+    }
+  }
 }
 
 const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
@@ -98,6 +128,10 @@ const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
               id: onlyDigitsOfPhoneNumber,
               name: phoneNumber,
               directusAccessToken: directusUserAuthResponse?.data?.accessToken,
+              directusRefreshToken:
+                directusUserAuthResponse?.data?.refreshToken,
+              directusAccessTokenExpire:
+                directusUserAuthResponse?.data?.expires,
               phoneNumber: phoneNumber,
             }
           }
@@ -131,8 +165,19 @@ const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
         // assign the directusAccessToken to the `token` object, so it will be available on the `session` callback
         if (user) {
           token.directusAccessToken = user.directusAccessToken
+          token.directusRefreshToken = user.directusRefreshToken
+          token.directusAccessTokenExpire = user.directusAccessTokenExpire
           token.phoneNumber = user.phoneNumber
         }
+
+        // @ts-expect-error
+        if (
+          token.directusAccessTokenExpire === undefined ||
+          Date.now() >= token.directusAccessTokenExpire
+        ) {
+          return refreshToken(token)
+        }
+
         return token
       },
 
@@ -141,6 +186,8 @@ const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
         // Assign the directusAccessToken to the `session` object, so it will be available on our app through `useSession` hooks
         if (token) {
           session.directusAccessToken = token.directusAccessToken
+          session.directusRefreshToken = token.directusRefreshToken
+          session.directusAccessTokenExpire = token.directusAccessTokenExpire
           // @ts-ignore
           session.phoneNumber = token.phoneNumber
         }
