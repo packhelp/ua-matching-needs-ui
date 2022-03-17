@@ -170,9 +170,9 @@ const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
           token.phoneNumber = user.phoneNumber
         }
 
-        // @ts-expect-error
         if (
           token.directusAccessTokenExpire === undefined ||
+          // @ts-expect-error
           Date.now() >= token.directusAccessTokenExpire
         ) {
           return refreshToken(token)
