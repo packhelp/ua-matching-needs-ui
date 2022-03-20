@@ -1,5 +1,4 @@
 import { JsonObject } from "type-fest"
-import { MapboxResult } from "./ticket.type"
 import { TagConstIds } from "./types.tag"
 
 /**

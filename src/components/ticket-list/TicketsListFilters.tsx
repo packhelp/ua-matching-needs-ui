@@ -1,8 +1,7 @@
 import { FiltersBadges, FiltersDropdown } from "../Filters"
-import React, { useCallback, useMemo } from "react"
+import React, { useCallback } from "react"
 import { useRouter } from "next/router"
 import { NeedTagType } from "../../services/ticket.type"
-import { TagConstIds } from "../../services/types.tag"
 
 type TicketsListFiltersProps = {
   tags: NeedTagType[]
@@ -30,37 +29,6 @@ export const TicketsListFilters = (props: TicketsListFiltersProps) => {
       router.push(router)
     },
     [router]
-  )
-
-  const onWhereToClick = useCallback(
-    (tag?: number) => {
-      if (tag) {
-        router.query.where_to = tag.toString()
-      } else {
-        delete router.query.where_to
-      }
-      router.query.page = "1"
-      router.push(router)
-    },
-    [router]
-  )
-
-  const onWhereFromClick = useCallback(
-    (tag?: number) => {
-      if (tag) {
-        router.query.where_from = tag.toString()
-      } else {
-        delete router.query.where_from
-      }
-      router.query.page = "1"
-      router.push(router)
-    },
-    [router]
-  )
-
-  const isTransport = useMemo(
-    () => selectedTag === TagConstIds.transport,
-    [selectedTag]
   )
 
   return (

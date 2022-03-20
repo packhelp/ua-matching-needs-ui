@@ -1,5 +1,4 @@
 import {
-  LocationTag,
   MapboxResult,
   TicketDetailsType,
   TicketTripDetailsType,

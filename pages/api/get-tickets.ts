@@ -4,7 +4,6 @@ import axios from "axios"
 import { withSentry } from "@sentry/nextjs"
 import _ceil from "lodash/ceil"
 import { TICKET_LIST_FIELDS } from "../../src/utils/directus-fields"
-import { JsonObject } from "type-fest"
 
 const TICKETS_PER_PAGE = 60
 
