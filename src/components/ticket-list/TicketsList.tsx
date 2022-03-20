@@ -41,18 +41,12 @@ export const TicketsList = ({
   const [selectedPage, setSelectedPage] = useState(
     parseInt(router.query.page as string) || 1
   )
-  const [whereToTag, setWhereToTag] = useState(
-    parseInt((router.query["where_to"] as string) || "0")
-  )
-  const [whereFromTag, setWhereFromTag] = useState(
-    parseInt((router.query["where_from"] as string) || "0")
-  )
   const [queryKey] = useState("tickets")
 
   const nextClient = new NextApiClient()
 
   const { data: ticketsData, isLoading } = useQuery(
-    [queryKey, whereFromTag, whereToTag, selectedTag, selectedPage],
+    [queryKey, selectedTag, selectedPage],
     () => {
       return nextClient.getTicket({
         mineOnly: mineOnly,
@@ -87,29 +81,8 @@ export const TicketsList = ({
   }, [router.query.page])
 
   useEffect(() => {
-    setWhereToTag(parseInt((router.query["where_to"] as string) || "0"))
-  }, [router.query["where_to"]])
-
-  useEffect(() => {
-    setWhereFromTag(parseInt((router.query["where_from"] as string) || "0"))
-  }, [router.query["where_from"]])
-
-  useEffect(() => {
-    queryClient.invalidateQueries([
-      queryKey,
-      whereFromTag,
-      whereToTag,
-      selectedTag,
-      selectedPage,
-    ])
-  }, [
-    selectedTag,
-    selectedPage,
-    whereToTag,
-    whereFromTag,
-    queryKey,
-    queryClient,
-  ])
+    queryClient.invalidateQueries([queryKey, selectedTag, selectedPage])
+  }, [selectedTag, selectedPage, queryKey, queryClient])
 
   return (
     <>
@@ -121,8 +94,6 @@ export const TicketsList = ({
           tags={tags}
           locationTags={locationTags}
           selectedTag={selectedTag}
-          whereFromTag={whereFromTag}
-          whereToTag={whereToTag}
         />
 
         {isLoading ? (

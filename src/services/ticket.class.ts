@@ -130,12 +130,4 @@ export class NeedHousing extends Ticket {
   constructor(public dtoHousing: NeedHousingTypeFormData) {
     super(dtoHousing as any)
   }
-
-  // get fromTag(): LocationTag {
-  //   return this.dto.where_from_tag
-  // }
-
-  // get toTag(): LocationTag {
-  //   return this.dto.where_to_tag
-  // }
 }
