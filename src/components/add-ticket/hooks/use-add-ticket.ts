@@ -78,9 +78,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
     Error,
     NeedHousingTypeFormData
   >(
-    //@ts-ignore
     (newTicket) => {
-      console.log(newTicket)
       const api = new NextPublicApi()
 
       newTicket.housing_arrive_exact = toBool(newTicket.housing_arrive_exact)

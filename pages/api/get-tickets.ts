@@ -83,7 +83,6 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const results = await axios
     .get(url, requestOptions)
     .then((response) => response.data)
-    .catch((a) => console.log(a.data))
 
   console.debug(`🔸 Api : ${results.length}`)
 

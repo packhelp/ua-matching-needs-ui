@@ -72,6 +72,7 @@ export const FormNeedHousing = () => {
   })
 
   // adding types here breaks with
+  // Excessive stack depth comparing types '(data: NeedHousingTypeFormData) => Promise<boolean | undefined>' and 'SubmitHandler<NeedHousingTypeFormData>'.
   // Type instantiation is excessively deep and possibly infinite.
   const submitNeed = async (data) => {
     setFormState((state) => ({
@@ -125,7 +126,7 @@ export const FormNeedHousing = () => {
   return (
     <>
       <div className="mb-8 bg-white">
-        <form onSubmit={() => handleSubmit(submitNeed)}>
+        <form onSubmit={handleSubmit(submitNeed)}>
           <LocationField
             control={control}
             name="where_destination"
