@@ -62,7 +62,7 @@ export class NextPublicApi {
       adults: toNumberOrUndefined(newTicket.adults),
       children: toNumberOrUndefined(newTicket.children),
 
-      // descriopption
+      // description
       what: newTicket.what,
       description: newTicket.description,
 

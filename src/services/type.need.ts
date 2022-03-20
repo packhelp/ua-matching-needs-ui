@@ -1,6 +1,5 @@
-import { JsonObject } from "type-fest"
 import { TagConstIds } from "./types.tag"
-import { MapboxResult } from "./ticket.type"
+import { JsonObject } from "type-fest"
 
 /**
  * Required
@@ -87,4 +86,7 @@ export type NeedHousingTypeFormData = {
   housing_pets: boolean
   housing_pets_number?: number
   housing_pets_description?: string
+
+  // location
+  where_destination: JsonObject
 }
