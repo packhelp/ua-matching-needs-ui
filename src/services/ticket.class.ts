@@ -118,11 +118,11 @@ export class NeedTransport {
   constructor(public dto: TicketTripDetailsType) {}
 
   get fromTag(): MapboxResult {
-    return this.dto.where_from_tag
+    return this.dto.where_from
   }
 
   get toTag(): MapboxResult {
-    return this.dto.where_to_tag
+    return this.dto.where_destination
   }
 }
 

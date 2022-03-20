@@ -96,8 +96,8 @@ export interface Properties {
 export type NeedTripTypeDTO = {
   need_type: "trip"
 
-  where_to_tag: MapboxResult // LocationTag
-  where_from_tag: MapboxResult // LocationTag
+  where_destination: MapboxResult // LocationTag
+  where_from: MapboxResult // LocationTag
   trip_when_text?: string
   trip_when_date?: string // Date
   trip_extra_luggage: boolean
@@ -106,7 +106,7 @@ export type NeedTripTypeDTO = {
 export type NeedHousingTypeDTO = {
   need_type: "trip"
 
-  where_tag: MapboxResult // LocationTag
+  where_destination: MapboxResult // LocationTag
   housing_how_long_text?: string
   petsNumber: number
   rentHelp?: boolean
@@ -115,8 +115,8 @@ export type NeedHousingTypeDTO = {
 export type NeedTripTypeDTONested = {
   need_type: "trip"
 
-  where_to_tag: MapboxResult // LocationTag
-  where_from_tag: MapboxResult // LocationTag
+  where_destination: MapboxResult // LocationTag
+  where_from: MapboxResult // LocationTag
   trip_when_text?: string
   trip_when_date?: string // Date
   trip_extra_luggage: boolean

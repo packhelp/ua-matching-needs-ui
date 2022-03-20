@@ -1,3 +1,5 @@
+import { JsonObject } from "type-fest"
+import { MapboxResult } from "./ticket.type"
 import { TagConstIds } from "./types.tag"
 
 /**
@@ -55,7 +57,7 @@ export type NeedHousingTypeFormData = {
    *
    */
 
-  housing_where_location_tag: number // Location TAG for now. In v2 we can add Google Location
+  where_destination: JsonObject // Mapbox Location result
   //_DROP_housing_where_string: string // plain string harder to place on map
 
   /**

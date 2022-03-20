@@ -30,8 +30,8 @@ export const useAddTransportTicket = ({ onSuccess }) => {
         trip_when_text,
         trip_when_date, // TODO:
         trip_extra_luggage,
-        where_from_tag,
-        where_to_tag,
+        where_from,
+        where_destination,
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
       let when_date: string | undefined = undefined
@@ -55,8 +55,8 @@ export const useAddTransportTicket = ({ onSuccess }) => {
 
         // tripe specific
         need_type: "trip",
-        where_to_tag,
-        where_from_tag,
+        where_from,
+        where_destination,
         trip_when_text,
         trip_when_date: when_date,
         trip_extra_luggage,
@@ -80,6 +80,7 @@ export const useAddHousingTicket = ({ onSuccess }) => {
   >(
     //@ts-ignore
     (newTicket) => {
+      console.log(newTicket)
       const api = new NextPublicApi()
 
       newTicket.housing_arrive_exact = toBool(newTicket.housing_arrive_exact)

@@ -23,10 +23,8 @@ export const TicketsListSingleTicket = (
   const { locale } = router
 
   const need = new Ticket(ticket)
-
   const isTrip = need.isTrip
   const isHousing = need.isHousing
-
   return (
     <li
       key={ticket.id}

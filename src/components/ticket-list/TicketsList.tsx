@@ -59,8 +59,6 @@ export const TicketsList = ({
         ticketStatus: ticketStatus,
         tagId: selectedTag,
         page: selectedPage,
-        whereFromTagId: whereFromTag,
-        whereToTagId: whereToTag,
       })
     },
     {
