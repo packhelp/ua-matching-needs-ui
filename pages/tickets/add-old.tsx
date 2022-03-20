@@ -16,7 +16,7 @@ import { RouteDefinitions } from "../../src/utils/routes"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
 import { useTranslations } from "../../src/hooks/translations"
-import { useState } from "react"
+import React, { useState } from "react"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
 import {
@@ -28,6 +28,7 @@ import { useTagTranslation } from "../../src/hooks/useTagTranslation"
 import { getRootContainer } from "../../src/services/_root-container"
 
 import { FormField } from "../../src/components/add-ticket/FormField"
+import { LocationField } from "../../src/components/add-ticket/forms/fields/Location"
 
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
@@ -102,7 +103,8 @@ const AddTicketOld: NextPage = () => {
         phone,
         what,
         description,
-        where,
+        // @ts-ignore
+        where_destination,
         who,
         need_tag_id,
         phone_public,
@@ -116,7 +118,7 @@ const AddTicketOld: NextPage = () => {
         phone,
         what,
         description,
-        where,
+        where_destination,
         who,
 
         expirationTimestampSane,
@@ -139,7 +141,12 @@ const AddTicketOld: NextPage = () => {
   )
 
   const useFormOptions: any = {}
-  const { register, handleSubmit } = useForm<TicketFormData>(useFormOptions)
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<TicketFormData>(useFormOptions)
 
   if (!tags || !locationTags) return null
 
@@ -251,21 +258,11 @@ const AddTicketOld: NextPage = () => {
               />
             </FormField>
 
-            <FormField
-              title={
-                translations["pages"]["add-ticket"][
-                  "where-do-you-need-it-delivered"
-                ]
-              }
-            >
-              <Textarea
-                placeholder={
-                  translations["pages"]["add-ticket"]["address-or-gps"]
-                }
-                variant="outline"
-                {...register("where")}
-              />
-            </FormField>
+            <LocationField
+              control={control}
+              name="where_destination"
+              errors={errors}
+            />
 
             <FormField
               title={translations["pages"]["add-ticket"]["who-needs-it"]}
