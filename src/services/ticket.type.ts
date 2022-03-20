@@ -56,6 +56,7 @@ export type TicketFormData = {
   has_pets: boolean
   housing_pets_description?: string
 }
+
 export interface MapboxResult {
   id: string
   type: string
@@ -72,6 +73,17 @@ export interface MapboxResult {
   center: number[]
   geometry: Geometry
   context: Context[]
+}
+
+export interface SinglePointGeometry {
+  coordinates: [number, number]
+  type: "Point"
+}
+
+export const isSinglePointGeometry = (
+  location: any
+): location is SinglePointGeometry => {
+  return location.type === "Point" && Array.isArray(location.coordinates)
 }
 
 export interface Context {
@@ -149,6 +161,7 @@ export type TicketData = TicketFormData & {
   ticket_status: TICKET_STATUS
   organization_id?: Organization
   description: string
+  where_destination: MapboxResult | SinglePointGeometry
   need_tag_id: {
     need_tag_id: NeedTagType
   }[]

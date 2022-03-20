@@ -7,6 +7,7 @@ import { useHousingLabels } from "../../add-ticket/hooks/use-housing-options"
 export const HousingSection = ({ need }: { need: NeedHousing }) => {
   const housingLabels = useHousingLabels()
   const { dtoHousing: housing } = need
+
   return (
     <div className="border-t border-b border-gray-200 bg-slate-50 px-4 py-5 p-1">
       <div className="flex justify-around ">
@@ -37,15 +38,6 @@ export const HousingSection = ({ need }: { need: NeedHousing }) => {
               {housingLabels[housing.housing_when_leave_text]}
             </div>
           )}
-        {housing.housing_when_leave_text && (
-          <div className="flex gap-2 items-center">
-            <FaMap />
-            {housing.where_destination?.place_name ||
-              // @ts-ignore
-              // remove me 24 hours after deployment
-              housing.housing_where_location_tag?.short_name}
-          </div>
-        )}
       </div>
     </div>
   )

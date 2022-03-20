@@ -2,8 +2,12 @@ import React from "react"
 import { useTranslations } from "../../hooks/translations"
 import { TicketDetailsType } from "../../services/ticket.type"
 import styles from "./SingleTicketHeader.module.scss"
-import { LocationSection } from "../ticket-list/single-ticket/LocationSection"
+import {
+  LocationSection,
+  SingleLocationSection,
+} from "../ticket-list/single-ticket/LocationSection"
 import { Ticket } from "../../services/ticket.class"
+import { LocationTagHtml } from "../LocationTag"
 
 type SingleTicketHeaderProps = {
   ticket: TicketDetailsType
@@ -46,7 +50,13 @@ export const SingleTicketHeader = (props: SingleTicketHeaderProps) => {
           {need.title}
         </h2>
       </div>
-      {need.isTrip && <LocationSection trip={need.trip} />}
+
+      {need.isTrip && <LocationSection clickable={true} trip={need.trip} />}
+
+      {!need.isTrip && need.whereDestination && (
+        <SingleLocationSection location={need.whereDestination} />
+      )}
+
       <div>
         {!need.isActive && (
           <div className="rounded-md mt-4 bg-red-200 p-4">

@@ -1,5 +1,6 @@
 import { JsonObject } from "type-fest"
 import { TagConstIds } from "./types.tag"
+import { MapboxResult } from "./ticket.type"
 
 /**
  * Required
@@ -40,24 +41,6 @@ export type NeedHousingTypeFormData = {
   // GENERIC END
 
   need_type: "housing_v2"
-
-  /**
-   * Locations
-   * - Anywhere
-   * - exact cities
-   * - countries, regions, cities
-   *
-   * Exact:
-   * - exact city
-   * - exact country
-   *
-   * plaintext hard to pinpoint
-   * dropdown is long and hard to populate
-   *
-   */
-
-  where_destination: JsonObject // Mapbox Location result
-  //_DROP_housing_where_string: string // plain string harder to place on map
 
   /**
    * Housing times
