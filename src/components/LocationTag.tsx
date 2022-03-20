@@ -30,7 +30,7 @@ export const LocationTagHtml = ({
 
   return (
     <span
-      className={`flex-shrink-0 inline-block px-2 py-0.5 text-xs font-medium rounded-full mr-1 my-1 ${
+      className={`flex-shrink-0 inline-block px-4 py-2 text-xs font-medium rounded-full mr-1 my-1 ${
         className ? className : ""
       }`}
       style={active ? activeStyles : inactiveStyles}
