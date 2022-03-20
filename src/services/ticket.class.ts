@@ -1,5 +1,6 @@
 import {
   LocationTag,
+  MapboxResult,
   TicketDetailsType,
   TicketTripDetailsType,
   TICKET_STATUS,
@@ -116,11 +117,11 @@ export class Ticket {
 export class NeedTransport {
   constructor(public dto: TicketTripDetailsType) {}
 
-  get fromTag(): LocationTag {
+  get fromTag(): MapboxResult {
     return this.dto.where_from_tag
   }
 
-  get toTag(): LocationTag {
+  get toTag(): MapboxResult {
     return this.dto.where_to_tag
   }
 }

@@ -18,7 +18,7 @@ export const PlacesInput = ({ onChange }) => {
     if (!mounted?.current) {
       const geocoder = new MapboxGeocoder({
         accessToken: process.env.NEXT_PUBLIC_MAPBOX_KEY,
-        types: "country,region,place",
+        types: "country,region,place,postcode,locality,neighborhood,address",
         placeholder: translations["pages"]["add-ticket"]["chooseLocation"],
         proximity: "ip",
         minLength: 1,
