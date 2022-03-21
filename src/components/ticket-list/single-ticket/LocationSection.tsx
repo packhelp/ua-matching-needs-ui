@@ -1,7 +1,6 @@
-import React from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { LocationTagHtml } from "../../LocationTag"
 import { NeedTransport } from "../../../services/ticket.class"
-import truncate from "truncate"
 import {
   isSinglePointGeometry,
   MapboxResult,
@@ -13,23 +12,36 @@ type TicketsListSingleTicketProps = {
   clickable?: boolean
 }
 
+const getPlaceName = async (loc: MapboxResult | SinglePointGeometry) => {
+  if (isSinglePointGeometry(loc)) {
+    const location = await fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${loc.coordinates[0]},${loc.coordinates[1]}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_KEY}`
+    ).then((res) => res.json())
+
+    return location?.features[0]
+  } else {
+    return loc || null
+  }
+}
+
 export const LocationSection = ({
   trip,
   clickable,
 }: TicketsListSingleTicketProps) => {
-  const from = trip.whereFrom ? trip.whereFrom : null
-  const to = trip.whereTo ? trip.whereTo : null
+  const [from, setFrom] = useState<MapboxResult | null>(null)
+  const [to, setTo] = useState<MapboxResult | null>(null)
 
-  const fromPlaceName = from
-    ? isSinglePointGeometry(from)
-      ? from.coordinates.join(",")
-      : from.place_name
-    : null
-  const toPlaceName = to
-    ? isSinglePointGeometry(to)
-      ? to.coordinates.join(",")
-      : to.place_name
-    : null
+  const getReadableLocation = useCallback(async () => {
+    const fromLocation = await getPlaceName(trip.whereFrom)
+    setFrom(fromLocation)
+
+    const toLocation = await getPlaceName(trip.whereTo)
+    setTo(toLocation)
+  }, [trip.whereFrom, trip.whereTo])
+
+  useEffect(() => {
+    getReadableLocation()
+  }, [getReadableLocation])
 
   return (
     <LocationWrapper>
@@ -39,7 +51,7 @@ export const LocationSection = ({
           className={clickable ? "cursor-pointer" : ""}
           onClick={clickable ? getOnClick(from) : undefined}
         >
-          {fromPlaceName}
+          {from.place_name}
         </LocationTagHtml>
       )}
       {from && to && <span> ↓ </span>}
@@ -49,7 +61,7 @@ export const LocationSection = ({
           className={clickable ? "cursor-pointer" : ""}
           onClick={clickable ? getOnClick(to) : undefined}
         >
-          {toPlaceName}{" "}
+          {to.place_name}{" "}
         </LocationTagHtml>
       )}
     </LocationWrapper>
@@ -63,9 +75,16 @@ export const SingleLocationSection = ({
   location: MapboxResult | SinglePointGeometry
   clickable?: boolean
 }) => {
-  const placeName = isSinglePointGeometry(location)
-    ? location.coordinates.join(",")
-    : location.place_name
+  const [place, setPlace] = useState<MapboxResult | null>(null)
+
+  const getReadableLocation = useCallback(async () => {
+    const toLocation = await getPlaceName(location)
+    setPlace(toLocation)
+  }, [location])
+
+  useEffect(() => {
+    getReadableLocation()
+  }, [getReadableLocation])
 
   return (
     <LocationWrapper>
@@ -74,7 +93,7 @@ export const SingleLocationSection = ({
         bgColor="#dedcd6"
         onClick={clickable ? getOnClick(location) : undefined}
       >
-        {placeName}{" "}
+        {place?.place_name}{" "}
       </LocationTagHtml>
     </LocationWrapper>
   )

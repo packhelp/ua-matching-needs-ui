@@ -83,7 +83,9 @@ export interface SinglePointGeometry {
 export const isSinglePointGeometry = (
   location: any
 ): location is SinglePointGeometry => {
-  return location.type === "Point" && Array.isArray(location.coordinates)
+  return (
+    location && location.type === "Point" && Array.isArray(location.coordinates)
+  )
 }
 
 export interface Context {
