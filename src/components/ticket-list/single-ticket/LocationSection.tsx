@@ -14,8 +14,9 @@ type TicketsListSingleTicketProps = {
 
 const getPlaceName = async (loc: MapboxResult | SinglePointGeometry) => {
   if (isSinglePointGeometry(loc)) {
+    const [lat, long] = loc.coordinates
     const location = await fetch(
-      `https://api.mapbox.com/geocoding/v5/mapbox.places/${loc.coordinates[0]},${loc.coordinates[1]}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_KEY}`
+      `/api/get-location/?lat=${lat}&long=${long}`
     ).then((res) => res.json())
 
     return location?.features[0]
