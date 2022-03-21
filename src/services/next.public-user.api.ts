@@ -62,7 +62,7 @@ export class NextPublicApi {
       adults: toNumberOrUndefined(newTicket.adults),
       children: toNumberOrUndefined(newTicket.children),
 
-      // descriopption
+      // description
       what: newTicket.what,
       description: newTicket.description,
 
@@ -72,7 +72,7 @@ export class NextPublicApi {
 
       // Housing - core where
       need_type: "housing_v2",
-      housing_where_location_tag: Number(newTicket.housing_where_location_tag),
+      where_destination: newTicket.where_destination,
 
       //  Housing - when
       housing_when_arrive: toIso(newTicket.housing_when_arrive),

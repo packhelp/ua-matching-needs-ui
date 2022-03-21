@@ -5,7 +5,7 @@ import { useRouter } from "next/router"
 import { TicketDetailsType } from "../../../services/ticket.type"
 
 import { HeaderSection } from "./HeaderSection"
-import { LocationSection } from "./LocationSection"
+import { LocationSection, SingleLocationSection } from "./LocationSection"
 import { HousingSection } from "./HousingSection"
 import { TitleSection } from "./TitleSection"
 import { DetailsSection } from "./DetailsSection"
@@ -23,10 +23,8 @@ export const TicketsListSingleTicket = (
   const { locale } = router
 
   const need = new Ticket(ticket)
-
   const isTrip = need.isTrip
   const isHousing = need.isHousing
-
   return (
     <li
       key={ticket.id}
@@ -37,7 +35,20 @@ export const TicketsListSingleTicket = (
           <div>
             <HeaderSection need={need} />
             <TitleSection need={need} />
-            {isTrip && <LocationSection trip={need.trip} />}
+            {isTrip && (
+              <LocationSection
+                clickable={false}
+                trip={need.trip}
+                needId={need.id}
+              />
+            )}
+
+            {!need.isTrip && need.whereDestination && (
+              <SingleLocationSection
+                location={need.whereDestination}
+                needId={need.id}
+              />
+            )}
             {isHousing && <HousingSection need={need.getHousing} />}
           </div>
           <DetailsSection need={need} />

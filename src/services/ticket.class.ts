@@ -1,8 +1,9 @@
 import {
-  LocationTag,
+  MapboxResult,
   TicketDetailsType,
   TicketTripDetailsType,
   TICKET_STATUS,
+  SinglePointGeometry,
 } from "./ticket.type"
 import { NeedHousingTypeFormData } from "./type.need"
 import { RouteDefinitions } from "../utils/routes"
@@ -95,6 +96,10 @@ export class Ticket {
     return this.dto.where
   }
 
+  get whereDestination() {
+    return this.dto.where_destination
+  }
+
   /**
    * generic tags like "transport", "hurt" etc.
    */
@@ -116,12 +121,12 @@ export class Ticket {
 export class NeedTransport {
   constructor(public dto: TicketTripDetailsType) {}
 
-  get fromTag(): LocationTag {
-    return this.dto.where_from_tag
+  get whereFrom(): MapboxResult | SinglePointGeometry {
+    return this.dto.where_from
   }
 
-  get toTag(): LocationTag {
-    return this.dto.where_to_tag
+  get whereTo(): MapboxResult | SinglePointGeometry {
+    return this.dto.where_destination
   }
 }
 
@@ -129,12 +134,4 @@ export class NeedHousing extends Ticket {
   constructor(public dtoHousing: NeedHousingTypeFormData) {
     super(dtoHousing as any)
   }
-
-  // get fromTag(): LocationTag {
-  //   return this.dto.where_from_tag
-  // }
-
-  // get toTag(): LocationTag {
-  //   return this.dto.where_to_tag
-  // }
 }

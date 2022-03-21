@@ -71,7 +71,10 @@ export const FormNeedHousing = () => {
     },
   })
 
-  const submitNeed = async (data: CurrentHousingPostData) => {
+  // adding types here breaks with
+  // Excessive stack depth comparing types '(data: NeedHousingTypeFormData) => Promise<boolean | undefined>' and 'SubmitHandler<NeedHousingTypeFormData>'.
+  // Type instantiation is excessively deep and possibly infinite.
+  const submitNeed = async (data) => {
     setFormState((state) => ({
       ...state,
       isSubmitting: true,
@@ -98,6 +101,7 @@ export const FormNeedHousing = () => {
 
   // On Form Data change
   useEffect(() => {
+    // @ts-ignore
     const subscription = watch((value, { name }) => {
       const formName = name as string
       setFormState((state) => ({
@@ -125,7 +129,7 @@ export const FormNeedHousing = () => {
         <form onSubmit={handleSubmit(submitNeed)}>
           <LocationField
             control={control}
-            name="housing_where_location_tag"
+            name="where_destination"
             errors={errors}
           />
           <div>

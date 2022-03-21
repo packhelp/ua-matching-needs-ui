@@ -47,7 +47,9 @@ export const SingleTicketDetails = (props: SingleTicketDetailsProps) => {
 
   const ticketTags = need.tags
 
-  if (need.notActive) return <></>
+  if (need.notActive) {
+    return <></>
+  }
 
   return (
     <>

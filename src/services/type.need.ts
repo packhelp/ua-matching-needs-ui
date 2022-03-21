@@ -1,4 +1,5 @@
 import { TagConstIds } from "./types.tag"
+import { JsonObject } from "type-fest"
 
 /**
  * Required
@@ -39,24 +40,6 @@ export type NeedHousingTypeFormData = {
   // GENERIC END
 
   need_type: "housing_v2"
-
-  /**
-   * Locations
-   * - Anywhere
-   * - exact cities
-   * - countries, regions, cities
-   *
-   * Exact:
-   * - exact city
-   * - exact country
-   *
-   * plaintext hard to pinpoint
-   * dropdown is long and hard to populate
-   *
-   */
-
-  housing_where_location_tag: number // Location TAG for now. In v2 we can add Google Location
-  //_DROP_housing_where_string: string // plain string harder to place on map
 
   /**
    * Housing times
@@ -103,4 +86,7 @@ export type NeedHousingTypeFormData = {
   housing_pets: boolean
   housing_pets_number?: number
   housing_pets_description?: string
+
+  // location
+  where_destination: JsonObject
 }

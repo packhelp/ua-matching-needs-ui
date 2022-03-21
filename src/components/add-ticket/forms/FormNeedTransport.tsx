@@ -76,15 +76,11 @@ export const FormNeedTransport = () => {
     <>
       <div className="mb-8 bg-white">
         <form onSubmit={handleSubmit(submitNeed)}>
+          <LocationField errors={errors} control={control} name="where_from" />
           <LocationField
             errors={errors}
             control={control}
-            name="where_from_tag"
-          />
-          <LocationField
-            errors={errors}
-            control={control}
-            name="where_to_tag"
+            name="where_destination"
             title={translations["pages"]["add-ticket"]["whereTo"]}
           />
 

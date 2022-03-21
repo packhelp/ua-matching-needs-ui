@@ -6,26 +6,22 @@ import "maplibre-gl/dist/maplibre-gl.css"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
 import axios from "axios"
-import { isTicketActive } from "../ticket/[id]"
 import { RouteDefinitions } from "../../src/utils/routes"
-import { TICKET_STATUS } from "../../src/services/ticket.type"
-import { TICKET_LIST_FIELDS } from "../../src/utils/directus-fields"
-
-const isActiveWithSingleLocation = (ticket: any): boolean => {
-  return (
-    isTicketActive(ticket) &&
-    !!ticket.location &&
-    ticket.location.type === "Point"
-  )
-}
+import {
+  isSinglePointGeometry,
+  TICKET_STATUS,
+} from "../../src/services/ticket.type"
+import {
+  TICKET_DETAILS_FIELDS,
+  TICKET_LIST_FIELDS,
+} from "../../src/utils/directus-fields"
+import { Ticket } from "../../src/services/ticket.class"
 
 const getAllActiveTicketsWithLocation = async () => {
-  const fields = TICKET_LIST_FIELDS.join(",")
+  const fields = [...TICKET_LIST_FIELDS, ...TICKET_DETAILS_FIELDS].join(",")
   const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need?filter[ticket_status][_eq]=${TICKET_STATUS.ACTIVE}&fields=${fields}&sort[]=-date_created`
 
-  return axios
-    .get(url)
-    .then((response) => response.data.data.filter(isActiveWithSingleLocation))
+  return axios.get(url).then((response) => response.data.data)
 }
 
 const TicketsMap: NextPage = () => {
@@ -59,8 +55,8 @@ const TicketsMap: NextPage = () => {
           },
         ],
       },
-      center: [21.966741438204284, 50.48740809893026],
-      zoom: 6,
+      center: [19.526849, 52.078222],
+      zoom: 5,
     })
     setMap(map)
   }, [])
@@ -72,23 +68,25 @@ const TicketsMap: NextPage = () => {
   useEffect(() => {
     if (map) {
       const t = tickets || []
-      t.forEach((ticket) => {
-        const [lat, lng] = ticket.location.coordinates
+      t.forEach((ticketData) => {
+        const ticket = new Ticket(ticketData)
 
-        const description = ticket.description
-          .replaceAll(/(<([^>]+)>)/gi, "")
-          .slice(0, 150)
-          .replaceAll("\n", "<br />")
+        const [lat, lng] = getCoordinates(ticket)
 
-        const tags = ticket.need_tag_id
-          .map((tag) => tag.need_tag_id.name)
-          .join(", ")
+        const description = ticket.title
+          ? ticket.title
+              .replaceAll(/(<([^>]+)>)/gi, "")
+              .slice(0, 150)
+              .replaceAll("\n", "<br />")
+          : ""
+
+        const tags = ticket.tags.map((tag) => tag.need_tag_id.name).join(", ")
 
         const popup = new maplibregl.Popup({ offset: 25 })
           .setHTML(
             `<p class="font-bold">${tags}</p><p>${description}<br /><br /><a href="${RouteDefinitions.TicketDetails.replace(
               ":id",
-              ticket.id
+              ticket.id.toString()
             )}" style="text-decoration: underline;">czytaj więcej</a></p>`
           )
           .trackPointer()
@@ -112,3 +110,15 @@ const TicketsMap: NextPage = () => {
 }
 
 export default TicketsMap
+
+const getCoordinates = (ticket: Ticket): number[] => {
+  if (ticket.whereDestination) {
+    if (isSinglePointGeometry(ticket.whereDestination)) {
+      return ticket.whereDestination.coordinates
+    } else {
+      return ticket.whereDestination.geometry.coordinates
+    }
+  }
+
+  return [0, 0]
+}

@@ -57,11 +57,61 @@ export type TicketFormData = {
   housing_pets_description?: string
 }
 
+export interface MapboxResult {
+  id: string
+  type: string
+  place_type: string[]
+  relevance: number
+  properties: Properties
+  "text_en-US": string
+  "language_en-US": string
+  "place_name_en-US": string
+  text: string
+  language: string
+  place_name: string
+  bbox: number[]
+  center: number[]
+  geometry: Geometry
+  context: Context[]
+}
+
+export interface SinglePointGeometry {
+  coordinates: [number, number]
+  type: "Point"
+}
+
+export const isSinglePointGeometry = (
+  location: any
+): location is SinglePointGeometry => {
+  return (
+    location && location.type === "Point" && Array.isArray(location.coordinates)
+  )
+}
+
+export interface Context {
+  id: string
+  short_code: string
+  wikidata: string
+  "text_en-US": string
+  "language_en-US": string
+  text: string
+  language: string
+}
+
+export interface Geometry {
+  type: string
+  coordinates: number[]
+}
+
+export interface Properties {
+  wikidata: string
+}
+
 export type NeedTripTypeDTO = {
   need_type: "trip"
 
-  where_to_tag: number // LocationTag
-  where_from_tag: number // LocationTag
+  where_destination: MapboxResult // LocationTag
+  where_from: MapboxResult // LocationTag
   trip_when_text?: string
   trip_when_date?: string // Date
   trip_extra_luggage: boolean
@@ -70,7 +120,7 @@ export type NeedTripTypeDTO = {
 export type NeedHousingTypeDTO = {
   need_type: "trip"
 
-  where_tag: number // LocationTag
+  where_destination: MapboxResult // LocationTag
   housing_how_long_text?: string
   petsNumber: number
   rentHelp?: boolean
@@ -79,8 +129,8 @@ export type NeedHousingTypeDTO = {
 export type NeedTripTypeDTONested = {
   need_type: "trip"
 
-  where_to_tag: LocationTag // LocationTag
-  where_from_tag: LocationTag // LocationTag
+  where_destination: MapboxResult // LocationTag
+  where_from: MapboxResult // LocationTag
   trip_when_text?: string
   trip_when_date?: string // Date
   trip_extra_luggage: boolean
@@ -113,6 +163,7 @@ export type TicketData = TicketFormData & {
   ticket_status: TICKET_STATUS
   organization_id?: Organization
   description: string
+  where_destination: MapboxResult | SinglePointGeometry
   need_tag_id: {
     need_tag_id: NeedTagType
   }[]

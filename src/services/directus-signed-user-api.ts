@@ -19,8 +19,6 @@ interface getTicketQueryParams {
   ticketStatus: TICKET_STATUS
   tagId: number // id - relation
   page: number
-  whereFromTagId: number // id - relation
-  whereToTagId: number // id - relation
 }
 
 export class NextApiClient {
@@ -33,8 +31,6 @@ export class NextApiClient {
       .get(`/api/get-tickets`, {
         params: params,
       })
-      .then((response) => {
-        return response.data
-      })
+      .then((response) => response.data)
   }
 }
