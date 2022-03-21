@@ -16,7 +16,7 @@ import { RouteDefinitions } from "../../src/utils/routes"
 import { toast } from "react-toastify"
 import dayjs from "dayjs"
 import { useTranslations } from "../../src/hooks/translations"
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import { PlusSVG } from "../../src/assets/styled-svgs/plus"
 import { useSession } from "next-auth/react"
 import {
@@ -29,39 +29,57 @@ import { getRootContainer } from "../../src/services/_root-container"
 
 import { FormField } from "../../src/components/add-ticket/FormField"
 import { LocationField } from "../../src/components/add-ticket/forms/fields/Location"
+import Select from "react-select"
 
 const TagsChooseForm = (props: {
   tags: NeedTagType[]
-  tagsSelected: number[] | number | undefined
+  tagsSelected: number | number[] | undefined
   onClickTag: (tagId: number) => void
 }) => {
   const { getTranslation } = useTagTranslation()
+  const translation = useTranslations()
+  const placeholder = translation["filters"]["selectNeeds"]
 
-  function isTagIdSelected(tagId: number): boolean {
-    if (props.tagsSelected === tagId) return true
-    if (props.tagsSelected && typeof props.tagsSelected !== "number") {
-      return props.tagsSelected && props.tagsSelected.includes(tagId)
+  const TRANSPORTATION_TAG_ID = 5
+  const HOUSING_TAG_ID = 20
+
+  const coveredCategories = [TRANSPORTATION_TAG_ID, HOUSING_TAG_ID]
+
+  const whitelistedTags = props.tags.filter(
+    (tag) => !coveredCategories.includes(tag.id)
+  )
+
+  const mappedTags: any = useMemo(() => {
+    return whitelistedTags.map((tag) => ({
+      value: tag.id,
+      label: getTranslation(tag),
+    }))
+  }, [whitelistedTags, getTranslation])
+
+  const onSelectFilter = (tagId: any): void => {
+    if (tagId) {
+      props.onClickTag(tagId)
     }
-    return false
   }
+
+  const selectedTagId =
+    Array.isArray(props.tagsSelected) && props.tagsSelected.length > 0
+      ? props.tagsSelected[0]
+      : null
+
+  const tagSelected = mappedTags.find((tag) => tag.id === selectedTagId)
 
   return (
     <Box>
-      {props.tags.map((tag) => {
-        return (
-          <Tag
-            key={tag.id}
-            mr={2}
-            mb={2}
-            variant={isTagIdSelected(tag.id) ? "solid" : "outline"}
-            onClick={() => props.onClickTag(tag.id)}
-            className={"cursor-pointer "}
-            colorScheme={"blue"}
-          >
-            {getTranslation(tag)}
-          </Tag>
-        )
-      })}
+      <Select
+        instanceId="category"
+        options={mappedTags}
+        onChange={(tag: any) => onSelectFilter(tag?.value)}
+        placeholder={placeholder}
+        value={tagSelected}
+        isClearable
+        isSearchable={false}
+      />
     </Box>
   )
 }
@@ -173,11 +191,8 @@ const AddTicketOld: NextPage = () => {
   }
 
   const toggleTag = (tagId: number) => {
-    if (tagsSelected.includes(tagId)) {
-      setTagsSelected(tagsSelected.filter((id) => id !== tagId))
-    } else {
-      setTagsSelected([...tagsSelected, tagId])
-    }
+    setTagsSelected([])
+    setTagsSelected([tagId])
   }
 
   const isDisabled = addTicketMutation.isLoading || isSubmitting
@@ -198,44 +213,6 @@ const AddTicketOld: NextPage = () => {
                 tagsSelected={tagsSelected}
               />
             </FormField>
-
-            <FormField
-              title={translations["pages"]["add-ticket"]["adults"]}
-              disclaimer={translations["pages"]["add-ticket"]["adultsAge"]}
-            >
-              <Input
-                min={0}
-                type={"number"}
-                placeholder={translations["pages"]["add-ticket"]["adultsHint"]}
-                variant="outline"
-                inputMode="numeric"
-                {...register("adults")}
-              />
-            </FormField>
-
-            <FormField
-              title={translations["pages"]["add-ticket"]["children"]}
-              disclaimer={translations["pages"]["add-ticket"]["childrenAge"]}
-            >
-              <Input
-                min={0}
-                type={"number"}
-                placeholder={
-                  translations["pages"]["add-ticket"]["childrenHint"]
-                }
-                variant="outline"
-                inputMode="numeric"
-                {...register("children")}
-              />
-            </FormField>
-
-            <Checkbox
-              value={1}
-              defaultChecked={false}
-              {...register("has_pets")}
-            >
-              {translations["pages"]["add-ticket"]["has-pets"]}
-            </Checkbox>
 
             <FormField title={translations["pages"]["add-ticket"].title}>
               <Input
