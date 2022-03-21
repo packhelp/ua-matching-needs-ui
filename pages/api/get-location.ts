@@ -10,7 +10,10 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   )
 
   const features = location.data?.features
-  const locationData = features && features[0] ? features[0] : null
+  const locationData =
+    features && Array.isArray(features)
+      ? features.find((feature) => feature.place_type.includes("place"))
+      : null
 
   if (["where_destination", "where_from"].includes(field as string)) {
     const admin = getAdminContainer().containers
@@ -19,11 +22,11 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
     const postData = {}
     postData[field as string] = locationData
 
-    await axios.patch(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${needId}`,
-      postData,
-      authHeaders(authToken)
-    )
+    // await axios.patch(
+    //   `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${needId}`,
+    //   postData,
+    //   authHeaders(authToken)
+    // )
   }
 
   return res.status(200).json(locationData)

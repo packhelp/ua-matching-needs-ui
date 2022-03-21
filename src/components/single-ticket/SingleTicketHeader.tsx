@@ -59,6 +59,7 @@ export const SingleTicketHeader = (props: SingleTicketHeaderProps) => {
         <SingleLocationSection
           location={need.whereDestination}
           needId={need.id}
+          clickable={true}
         />
       )}
 
