@@ -121,11 +121,11 @@ export class Ticket {
 export class NeedTransport {
   constructor(public dto: TicketTripDetailsType) {}
 
-  get fromTag(): MapboxResult | SinglePointGeometry {
+  get whereFrom(): MapboxResult | SinglePointGeometry {
     return this.dto.where_from
   }
 
-  get toTag(): MapboxResult | SinglePointGeometry {
+  get whereTo(): MapboxResult | SinglePointGeometry {
     return this.dto.where_destination
   }
 }

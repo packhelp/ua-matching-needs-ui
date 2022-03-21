@@ -17,8 +17,8 @@ export const LocationSection = ({
   trip,
   clickable,
 }: TicketsListSingleTicketProps) => {
-  const from = trip.fromTag ? trip.fromTag : null
-  const to = trip.toTag ? trip.toTag : null
+  const from = trip.whereFrom ? trip.whereFrom : null
+  const to = trip.whereTo ? trip.whereTo : null
 
   const fromPlaceName = from
     ? isSinglePointGeometry(from)
