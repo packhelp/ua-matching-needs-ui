@@ -51,10 +51,15 @@ export const SingleTicketHeader = (props: SingleTicketHeaderProps) => {
         </h2>
       </div>
 
-      {need.isTrip && <LocationSection clickable={true} trip={need.trip} />}
+      {need.isTrip && (
+        <LocationSection clickable={true} trip={need.trip} needId={need.id} />
+      )}
 
       {!need.isTrip && need.whereDestination && (
-        <SingleLocationSection location={need.whereDestination} />
+        <SingleLocationSection
+          location={need.whereDestination}
+          needId={need.id}
+        />
       )}
 
       <div>

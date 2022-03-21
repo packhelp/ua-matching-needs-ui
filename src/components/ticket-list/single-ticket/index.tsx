@@ -35,10 +35,20 @@ export const TicketsListSingleTicket = (
           <div>
             <HeaderSection need={need} />
             <TitleSection need={need} />
-            {isTrip && <LocationSection clickable={false} trip={need.trip} />}
+            {isTrip && (
+              <LocationSection
+                clickable={false}
+                trip={need.trip}
+                needId={need.id}
+                s
+              />
+            )}
 
             {!need.isTrip && need.whereDestination && (
-              <SingleLocationSection location={need.whereDestination} />
+              <SingleLocationSection
+                location={need.whereDestination}
+                needId={need.id}
+              />
             )}
             {isHousing && <HousingSection need={need.getHousing} />}
           </div>

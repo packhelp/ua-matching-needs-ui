@@ -10,16 +10,21 @@ import {
 type TicketsListSingleTicketProps = {
   trip: NeedTransport
   clickable?: boolean
+  needId: number
 }
 
-const getPlaceName = async (loc: MapboxResult | SinglePointGeometry) => {
+const getUpdatedPlaceName = async (
+  loc: MapboxResult | SinglePointGeometry,
+  needId: number,
+  field: "where_destination" | "where_from"
+) => {
   if (isSinglePointGeometry(loc)) {
     const [lat, long] = loc.coordinates
     const location = await fetch(
-      `/api/get-location/?lat=${lat}&long=${long}`
+      `/api/get-location/?lat=${lat}&long=${long}&needId=${needId}&field=${field}`
     ).then((res) => res.json())
 
-    return location?.features[0]
+    return location
   } else {
     return loc || null
   }
@@ -28,15 +33,24 @@ const getPlaceName = async (loc: MapboxResult | SinglePointGeometry) => {
 export const LocationSection = ({
   trip,
   clickable,
+  needId,
 }: TicketsListSingleTicketProps) => {
   const [from, setFrom] = useState<MapboxResult | null>(null)
   const [to, setTo] = useState<MapboxResult | null>(null)
 
   const getReadableLocation = useCallback(async () => {
-    const fromLocation = await getPlaceName(trip.whereFrom)
+    const fromLocation = await getUpdatedPlaceName(
+      trip.whereFrom,
+      needId,
+      "where_from"
+    )
     setFrom(fromLocation)
 
-    const toLocation = await getPlaceName(trip.whereTo)
+    const toLocation = await getUpdatedPlaceName(
+      trip.whereTo,
+      needId,
+      "where_destination"
+    )
     setTo(toLocation)
   }, [trip.whereFrom, trip.whereTo])
 
@@ -72,14 +86,20 @@ export const LocationSection = ({
 export const SingleLocationSection = ({
   location,
   clickable,
+  needId,
 }: {
   location: MapboxResult | SinglePointGeometry
   clickable?: boolean
+  needId: number
 }) => {
   const [place, setPlace] = useState<MapboxResult | null>(null)
 
   const getReadableLocation = useCallback(async () => {
-    const toLocation = await getPlaceName(location)
+    const toLocation = await getUpdatedPlaceName(
+      location,
+      needId,
+      "where_destination"
+    )
     setPlace(toLocation)
   }, [location])
 
