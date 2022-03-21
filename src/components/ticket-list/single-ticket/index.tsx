@@ -40,7 +40,6 @@ export const TicketsListSingleTicket = (
                 clickable={false}
                 trip={need.trip}
                 needId={need.id}
-                s
               />
             )}
 
