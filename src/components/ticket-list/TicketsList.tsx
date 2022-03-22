@@ -15,6 +15,9 @@ import { TicketsListFilters } from "./TicketsListFilters"
 import { NextApiClient } from "../../services/directus-signed-user-api"
 import { TicketsListSingleTicket } from "./single-ticket"
 import { TagConstIds } from "../../services/types.tag"
+import { TicketsMap } from "../map/TicketsMap"
+import { Ticket } from "../../services/ticket.class"
+import { FiMap } from "react-icons/fi"
 
 export const TRANSPORT_TAG = TagConstIds.transport
 
@@ -41,6 +44,9 @@ export const TicketsList = ({
   const [selectedPage, setSelectedPage] = useState(
     parseInt(router.query.page as string) || 1
   )
+
+  const [isMapEnabled, setMapEnabled] = useState<boolean>(false)
+
   const [queryKey] = useState("tickets")
 
   const nextClient = new NextApiClient()
@@ -84,6 +90,10 @@ export const TicketsList = ({
     queryClient.invalidateQueries([queryKey, selectedTag, selectedPage])
   }, [selectedTag, selectedPage, queryKey, queryClient])
 
+  const toggleMap = () => {
+    setMapEnabled(!isMapEnabled)
+  }
+
   return (
     <>
       <TicketsListMetaData tag={currentTag} ticketsListTitle={title} />
@@ -101,18 +111,79 @@ export const TicketsList = ({
             <Spinner size="xl" thickness="6px" />
           </Center>
         ) : (
-          <ul
-            role="list"
-            className="my-4 grid align-center grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
-          >
-            {ticketsData.tickets.map((ticket) => (
-              <TicketsListSingleTicket key={ticket.id} ticket={ticket} />
-            ))}
-          </ul>
+          <div>
+            <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
+              <ul
+                role="list"
+                className={`my-4 align-center gap-4 flex flex-col ${
+                  isMapEnabled ? "hidden md:block" : "block"
+                }`}
+              >
+                {ticketsData.tickets.map((ticket) => (
+                  <TicketsListSingleTicket key={ticket.id} ticket={ticket} />
+                ))}
+              </ul>
+              <div
+                className={`relative md:fixed w-full md:w-1/2 ${
+                  isMapEnabled ? "block" : "hidden md:block"
+                }`}
+                style={{
+                  height: "calc(100vh - 220px)",
+                  bottom: 0,
+                  right: 0,
+                }}
+              >
+                <TicketsMap
+                  tickets={ticketsData.tickets.map(
+                    (ticket) => new Ticket(ticket)
+                  )}
+                />
+              </div>
+            </div>
+            <MapToggler toggleMap={toggleMap} isMapEnabled={isMapEnabled} />
+          </div>
         )}
 
         <Pagination ticketsData={ticketsData} selectedPage={selectedPage} />
       </div>
     </>
+  )
+}
+
+const MapToggler = ({
+  toggleMap,
+  isMapEnabled,
+}: {
+  toggleMap: () => void
+  isMapEnabled: boolean
+}) => {
+  return (
+    <div
+      className={"fixed w-full px-4 text-center"}
+      style={{
+        zIndex: 999999,
+        bottom: "2rem",
+        left: 0,
+      }}
+    >
+      <div
+        className={
+          "cursor-pointer rounded-full text-3xl inline-flex gap-2 outline bg-white w-auto text-center items-center justify-center px-6 py-2 block md:hidden w-auto m-auto"
+        }
+        onClick={toggleMap}
+      >
+        {isMapEnabled ? (
+          <>
+            <FiMap />
+            <span>List</span>
+          </>
+        ) : (
+          <>
+            <FiMap />
+            <span>Map</span>
+          </>
+        )}
+      </div>
+    </div>
   )
 }
