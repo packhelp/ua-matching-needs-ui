@@ -55,19 +55,15 @@ async function refreshToken(token: JWT) {
       }
     )
 
-    return {
-      ...token,
-      directusAccessToken: response.data.data.access_token,
-      directusRefreshToken: response.data.data.refresh_token,
-      directusAccessTokenExpire: response.data.data.expires,
-    }
+    token.directusAccessToken = response.data.data.access_token
+    token.directusRefreshToken = response.data.data.refresh_token
+    token.directusAccessTokenExpire = response.data.data.expires
   } catch (error: any) {
-    return {
-      ...token,
-      error: "RefreshAccessTokenError",
-      message: error.response.data.errors,
-    }
+    token.error = "RefreshAccessTokenError"
+    token.message = error.response.data.errors
   }
+
+  return token
 }
 
 const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
@@ -131,7 +127,7 @@ const handler = function auth(req: NextApiRequest, res: NextApiResponse) {
               directusRefreshToken:
                 directusUserAuthResponse?.data?.refreshToken,
               directusAccessTokenExpire:
-                directusUserAuthResponse?.data?.expires,
+                directusUserAuthResponse?.data?.expires + Date.now(),
               phoneNumber: phoneNumber,
             }
           }
