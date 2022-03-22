@@ -14,7 +14,7 @@ type TicketsListSingleTicketProps = {
 }
 
 const getUpdatedPlaceName = async (
-  loc: MapboxResult | SinglePointGeometry,
+  loc: MapboxResult | SinglePointGeometry | undefined,
   needId: number,
   field: "where_destination" | "where_from"
 ) => {
@@ -26,7 +26,7 @@ const getUpdatedPlaceName = async (
 
     return location
   } else {
-    return loc || null
+    return loc || undefined
   }
 }
 
@@ -88,7 +88,7 @@ export const SingleLocationSection = ({
   clickable,
   needId,
 }: {
-  location: MapboxResult | SinglePointGeometry
+  location?: MapboxResult | SinglePointGeometry
   clickable?: boolean
   needId: number
 }) => {
@@ -129,13 +129,13 @@ const LocationWrapper = ({ children }) => {
 }
 
 const getCoordinates = (
-  location: MapboxResult | SinglePointGeometry
+  location?: MapboxResult | SinglePointGeometry
 ): number[] => {
   if (isSinglePointGeometry(location)) {
-    return location.coordinates
+    return location?.coordinates
   }
 
-  return location.geometry.coordinates
+  return location?.geometry?.coordinates || [0, 0]
 }
 
 const getOnClick = (location?: MapboxResult | SinglePointGeometry) => {
