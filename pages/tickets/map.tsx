@@ -28,7 +28,12 @@ const TicketsMapPage: NextPage = () => {
     <Container>
       <Stack>
         <Heading>Zgłoszenia na mapie</Heading>
-        <TicketsMap tickets={tickets} />
+        <TicketsMap
+          tickets={tickets}
+          onBoundsChange={(bounds) => {
+            console.log("bounds changed, doing nothing though")
+          }}
+        />
       </Stack>
     </Container>
   )

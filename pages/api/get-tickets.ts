@@ -7,22 +7,33 @@ import { TICKET_LIST_FIELDS } from "../../src/utils/directus-fields"
 
 const TICKETS_PER_PAGE = 60
 
+type Bounds = {
+  _ne: { lat: number; lng: number }
+  _sw: { lat: number; lng: number }
+}
+
 const getTicketsUrl = ({
   mineOnly,
   tagId,
   phoneNumber,
   ticketStatus,
   page = 1,
+  mapBounds,
 }: {
   mineOnly: boolean
   tagId?: number
   phoneNumber: string
   ticketStatus: string
   page: number
+  mapBounds?: Bounds
 }) => {
-  const filters: { key: string; value: any }[] = []
+  const filters: { key: string; value: any; compare?: string }[] = []
   const baseUrl = `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/`
-  const fields = TICKET_LIST_FIELDS.join(",")
+  const fields = [
+    ...TICKET_LIST_FIELDS,
+    "where_destination_lat",
+    "where_destination_lng",
+  ].join(",")
   const baseSettingsUrlPart = `&fields=${fields}&sort[]=-date_created`
   const paginationOffsetMultiplier = page - 1 || 0
   const paginationOffset = TICKETS_PER_PAGE * paginationOffsetMultiplier
@@ -36,6 +47,48 @@ const getTicketsUrl = ({
   }
   if (tagId && tagId !== 0) {
     filters.push({ key: "[need_tag_id][need_tag_id][id]", value: tagId })
+  }
+  if (mapBounds) {
+    // TODO: Prepare different filtering if transportation,
+    //  so that we can filter by where_from instead of where_destination
+    const searchBy = "destination"
+    if (searchBy) {
+      filters.push({
+        key: "[where_destination_lat][_between][]",
+        value: mapBounds._sw.lat,
+      })
+      filters.push({
+        key: "[where_destination_lat][_between][]",
+        value: mapBounds._ne.lat,
+      })
+
+      filters.push({
+        key: "[where_destination_lng][_between][]",
+        value: mapBounds._sw.lng,
+      })
+      filters.push({
+        key: "[where_destination_lng][_between][]",
+        value: mapBounds._ne.lng,
+      })
+    } else {
+      filters.push({
+        key: "[where_from_lat][_between][]",
+        value: mapBounds._sw.lat,
+      })
+      filters.push({
+        key: "[where_from_lat][_between][]",
+        value: mapBounds._ne.lat,
+      })
+
+      filters.push({
+        key: "[where_from_lng][_between][]",
+        value: mapBounds._sw.lng,
+      })
+      filters.push({
+        key: "[where_from_lng][_between][]",
+        value: mapBounds._ne.lng,
+      })
+    }
   }
 
   const filterUrlPart = filters
@@ -57,7 +110,23 @@ const getTicketsUrl = ({
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req })
   const phoneNumber = session?.user?.name?.replace("+", "%2B")
-  const { mineOnly, tagId, ticketStatus, page } = req.query
+  const {
+    mineOnly,
+    tagId,
+    ticketStatus,
+    page,
+    ne_lng,
+    ne_lat,
+    sw_lng,
+    sw_lat,
+  } = req.query
+
+  const mapBounds: Bounds | undefined = getMapBounds({
+    ne_lng,
+    ne_lat,
+    sw_lng,
+    sw_lat,
+  })
 
   if (mineOnly && (!session || !session.user)) {
     res.status(403)
@@ -70,6 +139,7 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
     tagId: parseInt(tagId as string),
     ticketStatus: ticketStatus as string,
     page: parseInt(page as string),
+    mapBounds,
   })
   const authRequestOptions = {
     headers: {
@@ -93,6 +163,33 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
       page_count: _ceil(results.meta.filter_count / TICKETS_PER_PAGE),
     },
   })
+}
+
+const getMapBounds = ({
+  ne_lng,
+  ne_lat,
+  sw_lng,
+  sw_lat,
+}: {
+  ne_lng?: string | string[]
+  ne_lat?: string | string[]
+  sw_lng?: string | string[]
+  sw_lat?: string | string[]
+}): Bounds | undefined => {
+  if (ne_lng && ne_lat && sw_lng && sw_lat) {
+    const mapBounds: Bounds = {
+      _ne: {
+        lng: parseFloat(ne_lng.toString()),
+        lat: parseFloat(ne_lat.toString()),
+      },
+      _sw: {
+        lng: parseFloat(sw_lng.toString()),
+        lat: parseFloat(sw_lat.toString()),
+      },
+    }
+
+    return mapBounds
+  }
 }
 
 export default withSentry(handler)

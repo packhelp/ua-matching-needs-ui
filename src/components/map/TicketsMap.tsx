@@ -1,12 +1,18 @@
 import { Ticket } from "../../services/ticket.class"
-import { useEffect, useState } from "react"
-import maplibregl from "maplibre-gl"
+import { useCallback, useEffect, useState } from "react"
+import maplibregl, { LngLatBounds } from "maplibre-gl"
 import { RouteDefinitions } from "../../utils/routes"
 import { isSinglePointGeometry } from "../../services/ticket.type"
 
 import "maplibre-gl/dist/maplibre-gl.css"
 
-export const TicketsMap = ({ tickets }: { tickets: Ticket[] }) => {
+export const TicketsMap = ({
+  tickets,
+  onBoundsChange,
+}: {
+  tickets: Ticket[]
+  onBoundsChange: (boundaries: LngLatBounds) => void
+}) => {
   const [map, setMap] = useState<any>()
 
   useEffect(() => {
@@ -20,6 +26,8 @@ export const TicketsMap = ({ tickets }: { tickets: Ticket[] }) => {
       t.forEach((ticket) => {
         createMarker(ticket, map)
       })
+
+      listenToBoundariesChanges(map, onBoundsChange)
     }
   }, [tickets, map])
 
@@ -105,4 +113,18 @@ const getCoordinates = (ticket: Ticket): number[] => {
   }
 
   return [0, 0]
+}
+
+const listenToBoundariesChanges = (
+  map: maplibregl.Map,
+  callback: (boundaries: LngLatBounds) => void
+): void => {
+  const onMapChanged = () => {
+    const boundaries = map.getBounds()
+    callback(boundaries)
+  }
+
+  map.on("dragend", onMapChanged)
+  map.on("zoomend", onMapChanged)
+  map.on("rotateend", onMapChanged)
 }
