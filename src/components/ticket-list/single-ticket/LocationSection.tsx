@@ -19,7 +19,7 @@ const getUpdatedPlaceName = async (
   field: "where_destination" | "where_from"
 ) => {
   if (isSinglePointGeometry(loc)) {
-    const [lat, long] = loc.coordinates
+    const [long, lat] = loc.coordinates
     const location = await fetch(
       `/api/get-location/?lat=${lat}&long=${long}&needId=${needId}&field=${field}`
     ).then((res) => res.json())

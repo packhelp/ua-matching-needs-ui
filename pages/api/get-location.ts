@@ -6,7 +6,7 @@ import { getAdminContainer } from "../../src/services/_container.admin"
 const handler = async function (req: NextApiRequest, res: NextApiResponse) {
   const { lat, long, needId, field } = req.query
   const location = await axios.get(
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${lat},${long}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_KEY}`
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${long},${lat}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_KEY}`
   )
 
   const features = location.data?.features
