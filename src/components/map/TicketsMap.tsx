@@ -6,6 +6,8 @@ import { isSinglePointGeometry } from "../../services/ticket.type"
 
 import "maplibre-gl/dist/maplibre-gl.css"
 
+const currentMarkers: any = []
+
 export const TicketsMap = ({
   tickets,
   onBoundsChange,
@@ -22,6 +24,8 @@ export const TicketsMap = ({
   useEffect(() => {
     if (map) {
       const t = tickets || []
+
+      clearAllMarkers()
 
       t.forEach((ticket) => {
         createMarker(ticket, map)
@@ -100,7 +104,17 @@ const createMarker = (ticket: Ticket, map) => {
     )
     .trackPointer()
 
-  new maplibregl.Marker().setLngLat([lat, lng]).setPopup(popup).addTo(map)
+  const marker = new maplibregl.Marker()
+    .setLngLat([lat, lng])
+    .setPopup(popup)
+    .addTo(map)
+  currentMarkers.push(marker)
+}
+
+const clearAllMarkers = () => {
+  for (const marker of currentMarkers) {
+    marker.remove()
+  }
 }
 
 const getCoordinates = (ticket: Ticket): number[] => {
