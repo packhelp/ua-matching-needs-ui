@@ -22,11 +22,19 @@ const handler = async function (req: NextApiRequest, res: NextApiResponse) {
     const postData = {}
     postData[field as string] = locationData
 
-    // await axios.patch(
-    //   `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${needId}`,
-    //   postData,
-    //   authHeaders(authToken)
-    // )
+    if (field === "where_destination") {
+      postData["where_destination_lat"] = lat
+      postData["where_destination_lng"] = long
+    } else {
+      postData["where_from_lat"] = lat
+      postData["where_from_lng"] = long
+    }
+
+    await axios.patch(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT_URL}/items/need/${needId}`,
+      postData,
+      authHeaders(authToken)
+    )
   }
 
   return res.status(200).json(locationData)
