@@ -53,6 +53,15 @@ export class NextPublicApi {
   ): Promise<NeedHousingTypeFormData> {
     const expirationTimestampSane = dateHoursFromNow(72)
 
+    let where_destination_lng: any
+    let where_destination_lat: any
+
+    if (newTicket.where_destination) {
+      const geometry: any = newTicket?.where_destination?.geometry
+      where_destination_lng = geometry?.coordinates[0]
+      where_destination_lat = geometry?.coordinates[1]
+    }
+
     const newTicketData: NeedHousingTypeFormData = {
       // Contact
       who: newTicket.who,
@@ -73,6 +82,8 @@ export class NextPublicApi {
       // Housing - core where
       need_type: "housing_v2",
       where_destination: newTicket.where_destination,
+      where_destination_lng,
+      where_destination_lat,
 
       //  Housing - when
       housing_when_arrive: toIso(newTicket.housing_when_arrive),

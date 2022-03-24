@@ -89,4 +89,6 @@ export type NeedHousingTypeFormData = {
 
   // location
   where_destination: JsonObject
+  where_destination_lat?: number
+  where_destination_lng?: number
 }

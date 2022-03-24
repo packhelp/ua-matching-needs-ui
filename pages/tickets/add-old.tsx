@@ -132,11 +132,21 @@ const AddTicketOld: NextPage = () => {
       } = newTicket
       const expirationTimestampSane = dayjs().add(24, "hour").format()
 
+      let where_destination_lng
+      let where_destination_lat
+      if (where_destination) {
+        where_destination_lng = where_destination.geometry.coordinates[0]
+        where_destination_lat = where_destination.geometry.coordinates[1]
+      }
+
       const newTicketData = {
         phone,
         what,
         description,
         where_destination,
+        where_destination_lng,
+        where_destination_lat,
+
         who,
 
         expirationTimestampSane,

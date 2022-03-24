@@ -15,6 +15,10 @@ import { TicketsListFilters } from "./TicketsListFilters"
 import { NextApiClient } from "../../services/directus-signed-user-api"
 import { TicketsListSingleTicket } from "./single-ticket"
 import { TagConstIds } from "../../services/types.tag"
+import { TicketsMap } from "../map/TicketsMap"
+import { Ticket } from "../../services/ticket.class"
+import { FiMap } from "react-icons/fi"
+import maplibregl from "maplibre-gl"
 
 export const TRANSPORT_TAG = TagConstIds.transport
 
@@ -41,23 +45,31 @@ export const TicketsList = ({
   const [selectedPage, setSelectedPage] = useState(
     parseInt(router.query.page as string) || 1
   )
+  const [mapBounds, setMapBounds] = useState<
+    maplibregl.LngLatBounds | undefined
+  >()
+
+  const [isMapEnabled, setMapEnabled] = useState<boolean>(false)
+
   const [queryKey] = useState("tickets")
 
   const nextClient = new NextApiClient()
 
-  const { data: ticketsData, isLoading } = useQuery(
-    [queryKey, selectedTag, selectedPage],
+  const { data: ticketsData, isFetching } = useQuery(
+    [queryKey, selectedTag, selectedPage, mapBounds],
     () => {
       return nextClient.getTicket({
         mineOnly: mineOnly,
         ticketStatus: ticketStatus,
         tagId: selectedTag,
         page: selectedPage,
+        mapBounds,
       })
     },
     {
       refetchOnReconnect: false,
       refetchOnMount: false,
+      keepPreviousData: true,
     }
   )
 
@@ -65,6 +77,7 @@ export const TicketsList = ({
 
   useEffect(() => {
     const tag = parseInt((router.query.tag as string) || "0")
+
     if (
       tag !== TRANSPORT_TAG &&
       (router.query.where_to || router.query.where_from)
@@ -73,6 +86,7 @@ export const TicketsList = ({
       delete router.query.where_from
       router.push(router)
     }
+
     setSelectedTag(parseInt((router.query.tag as string) || "0"))
   }, [router.query.tag])
 
@@ -84,10 +98,18 @@ export const TicketsList = ({
     queryClient.invalidateQueries([queryKey, selectedTag, selectedPage])
   }, [selectedTag, selectedPage, queryKey, queryClient])
 
+  const toggleMap = () => {
+    setMapEnabled(!isMapEnabled)
+  }
+
   return (
     <>
       <TicketsListMetaData tag={currentTag} ticketsListTitle={title} />
-      <TicketsListHeader title={title} count={ticketsData?.meta.filter_count} />
+      <TicketsListHeader
+        title={title}
+        count={ticketsData?.meta.filter_count}
+        isFetching={isFetching}
+      />
 
       <div className="py-2 mx-auto max-w-7xl sm:px-6 xl:px-0">
         <TicketsListFilters
@@ -96,23 +118,83 @@ export const TicketsList = ({
           selectedTag={selectedTag}
         />
 
-        {isLoading ? (
-          <Center h="100px" color="yellow.400">
-            <Spinner size="xl" thickness="6px" />
-          </Center>
-        ) : (
-          <ul
-            role="list"
-            className="my-4 grid align-center grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
-          >
-            {ticketsData.tickets.map((ticket) => (
-              <TicketsListSingleTicket key={ticket.id} ticket={ticket} />
-            ))}
-          </ul>
-        )}
+        {ticketsData && (
+          <>
+            <div>
+              <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
+                <ul
+                  role="list"
+                  className={`my-4 align-center gap-4 flex flex-col ${
+                    isMapEnabled ? "hidden md:block" : "block"
+                  }`}
+                >
+                  {ticketsData.tickets.map((ticket) => (
+                    <TicketsListSingleTicket key={ticket.id} ticket={ticket} />
+                  ))}
+                </ul>
+                <div
+                  className={`relative md:fixed w-full md:w-1/2 ${
+                    isMapEnabled ? "block" : "hidden md:block"
+                  }`}
+                  style={{
+                    height: "calc(100vh - 220px)",
+                    bottom: 0,
+                    right: 0,
+                  }}
+                >
+                  <TicketsMap
+                    tickets={ticketsData.tickets.map(
+                      (ticket) => new Ticket(ticket)
+                    )}
+                    onBoundsChange={setMapBounds}
+                  />
+                </div>
+              </div>
+              <MapToggler toggleMap={toggleMap} isMapEnabled={isMapEnabled} />
+            </div>
 
-        <Pagination ticketsData={ticketsData} selectedPage={selectedPage} />
+            <Pagination ticketsData={ticketsData} selectedPage={selectedPage} />
+          </>
+        )}
       </div>
     </>
+  )
+}
+
+const MapToggler = ({
+  toggleMap,
+  isMapEnabled,
+}: {
+  toggleMap: () => void
+  isMapEnabled: boolean
+}) => {
+  return (
+    <div
+      className={"fixed w-full px-4 text-center"}
+      style={{
+        zIndex: 999999,
+        bottom: "2rem",
+        left: 0,
+      }}
+    >
+      <div
+        className={
+          "cursor-pointer rounded-full text-3xl inline-flex gap-2 outline bg-white w-auto text-center items-center justify-center px-6 py-2 block md:hidden w-auto m-auto"
+        }
+        onClick={toggleMap}
+      >
+        {isMapEnabled ? (
+          <>
+            <FiMap />
+            <span>List</span>
+          </>
+        ) : (
+          <>
+            <FiMap />
+            <span>Map</span>
+          </>
+        )}
+      </div>
+    </div>
   )
 }

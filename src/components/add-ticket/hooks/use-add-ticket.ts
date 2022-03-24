@@ -40,6 +40,20 @@ export const useAddTransportTicket = ({ onSuccess }) => {
         when_date = date.toISOString()
       }
 
+      let where_from_lng
+      let where_from_lat
+      if (where_from) {
+        where_from_lng = where_from.geometry.coordinates[0]
+        where_from_lat = where_from.geometry.coordinates[1]
+      }
+
+      let where_destination_lng
+      let where_destination_lat
+      if (where_destination) {
+        where_destination_lng = where_destination.geometry.coordinates[0]
+        where_destination_lat = where_destination.geometry.coordinates[1]
+      }
+
       const newTicketData = {
         what,
         description,
@@ -55,11 +69,17 @@ export const useAddTransportTicket = ({ onSuccess }) => {
 
         // tripe specific
         need_type: "trip",
-        where_from,
-        where_destination,
         trip_when_text,
         trip_when_date: when_date,
         trip_extra_luggage,
+
+        // location
+        where_from,
+        where_from_lat,
+        where_from_lng,
+        where_destination,
+        where_destination_lat,
+        where_destination_lng,
       }
 
       return axios.post(`/api/add-ticket`, newTicketData)
