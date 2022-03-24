@@ -163,7 +163,11 @@ export type TicketData = TicketFormData & {
   ticket_status: TICKET_STATUS
   organization_id?: Organization
   description: string
+
   where_destination: MapboxResult | SinglePointGeometry
+  where_destination_lat: number | null
+  where_destination_lng: number | null
+
   need_tag_id: {
     need_tag_id: NeedTagType
   }[]
