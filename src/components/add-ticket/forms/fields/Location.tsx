@@ -28,7 +28,7 @@ export const PlacesInput = ({ onChange }) => {
 
       geocoder.on("result", (e) => onChange(e.result))
 
-      geocoder.on("clear", () => onChange({}))
+      geocoder.on("clear", () => onChange(undefined))
       // @ts-ignore
       mounted?.current = true
     }
